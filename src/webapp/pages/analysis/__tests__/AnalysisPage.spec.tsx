@@ -1,11 +1,11 @@
 import { getReactComponent } from "../../../../utils/tests";
 import { AnalysisPage } from "../../analysis/AnalysisPage";
 
-describe("ExamplePage", () => {
+describe("AnalysisPage", () => {
     it("renders the feedback component", async () => {
         const view = getView();
 
-        expect(await view.findByText("Analysis page")).toBeInTheDocument();
+        expect(await view.findByText("Analysis")).toBeInTheDocument();
         expect(view.asFragment()).toMatchSnapshot();
     });
 });
