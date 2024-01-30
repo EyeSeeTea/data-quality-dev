@@ -9,7 +9,7 @@ type PageProps = {
 };
 
 export const AnalysisPage: React.FC<PageProps> = React.memo(props => {
-    const { name = "Analysis Page" } = props;
+    const { name } = props;
     return (
         <React.Fragment>
             <PageHeader title={i18n.t(name)} />
