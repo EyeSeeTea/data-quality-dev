@@ -576,15 +576,11 @@ exports[`AnalysisPage > renders the feedback component 1`] = `
       class="MuiPaper-root makeStyles-contents-13 MuiPaper-elevation1 MuiPaper-rounded"
       data-wizard-contents="true"
     >
-      <section
-        class="sc-hKMtZM gZZZTm"
-      >
-        <h2
-          class="sc-eCYdqJ bwgRDf"
-        >
+      <div>
+        <h2>
           Configuration
         </h2>
-      </section>
+      </div>
       <div
         class="Wizard-Navigation makeStyles-buttonContainer-18"
       >
