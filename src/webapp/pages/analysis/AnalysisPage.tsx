@@ -1,7 +1,7 @@
 import React from "react";
-import i18n from "../../../utils/i18n";
-import { PageHeader } from "../../components/page-header/PageHeader";
 import { Wizard } from "@eyeseetea/d2-ui-components";
+import { PageHeader } from "$/webapp/components/page-header/PageHeader";
+import i18n from "$/utils/i18n";
 import { steps } from "./steps";
 
 type PageProps = {
