@@ -13,5 +13,3 @@ export const ConfigurationStep: React.FC<PageProps> = React.memo(props => {
         </div>
     );
 });
-
-
