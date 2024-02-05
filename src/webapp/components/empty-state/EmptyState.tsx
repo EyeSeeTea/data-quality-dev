@@ -33,13 +33,11 @@ const Container = styled.section<ContainerProps>`
     height: 39.125rem;
     width: 100%;
 
-    ${({ $variant }) => {
-        if ($variant === "success") {
-            return css`
-                background-color: ${customTheme.color.lightGreen};
-                color: ${customTheme.color.green};
-                border-color: ${customTheme.color.green};
-            `;
-        }
-    }}
+    ${({ $variant }) =>
+        $variant === "success" &&
+        css`
+            background-color: ${customTheme.color.lightGreen};
+            color: ${customTheme.color.green};
+            border-color: ${customTheme.color.green};
+        `};
 `;
