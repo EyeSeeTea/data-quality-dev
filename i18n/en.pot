@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-01-30T10:14:16.375Z\n"
-"PO-Revision-Date: 2024-01-30T10:14:16.375Z\n"
+"POT-Creation-Date: 2024-02-09T09:39:36.745Z\n"
+"PO-Revision-Date: 2024-02-09T09:39:36.746Z\n"
 
 msgid "Add"
 msgstr ""
@@ -21,6 +21,9 @@ msgid "Help"
 msgstr ""
 
 msgid "Analysis Page"
+msgstr ""
+
+msgid "Data Quality Analysis"
 msgstr ""
 
 msgid "Configuration"
@@ -51,6 +54,27 @@ msgid "Density"
 msgstr ""
 
 msgid "Other"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Dataset"
+msgstr ""
+
+msgid "Start Date"
+msgstr ""
+
+msgid "End Date"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Progress"
+msgstr ""
+
+msgid "Last Modification"
 msgstr ""
 
 msgid "Hello {{name}}"
