@@ -3,9 +3,11 @@ const customTheme = {
         white: "#ffffff",
         black: "#111111",
         grey: "#8e8e8e",
-        lightGrey: "#F2F2F2",
-        lightGreen: "#D8EDD9",
+        lightGrey: "#BDBDBD",
+        lighterGrey: "#F2F2F2",
         green: "#355B37",
+        lightGreen: "#4CAF50",
+        lighterGreen: "#D8EDD9",
     },
 };
 
