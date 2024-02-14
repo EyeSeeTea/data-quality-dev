@@ -10,12 +10,12 @@ type Props = {
 };
 
 export type ContainerProps = {
-    $variant: Step["status"];
+    $status: Props["status"];
 };
 
 export const ProgressStatus: React.FC<Props> = React.memo(({ status, position }) => {
     return (
-        <Container $variant={status}>
+        <Container $status={status}>
             <StyledTypography>{position}</StyledTypography>
         </Container>
     );
@@ -31,8 +31,8 @@ const Container = styled.li<ContainerProps>`
     width: 1.75rem;
     background-color: ${customTheme.color.lightGrey};
 
-    ${({ $variant }) =>
-        $variant === "complete" &&
+    ${({ $status }) =>
+        $status === "complete" &&
         css`
             background-color: ${customTheme.color.lightGreen};
             border-color: ${customTheme.color.lightGreen};
