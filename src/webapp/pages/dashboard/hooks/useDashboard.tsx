@@ -23,7 +23,7 @@ export function useDashboard() {
         success("Status changed");
     };
 
-    const onStatingAnalysis = () => {};
+    const onStartingAnalysis = () => {};
 
     const actions = [
         {
@@ -31,7 +31,7 @@ export function useDashboard() {
             name: "Analysis",
             icon: <PlayCircleOutlineIcon />,
             text: i18n.t("Start analysis"),
-            onClick: onStatingAnalysis,
+            onClick: onStartingAnalysis,
         },
         {
             multiple: true,
