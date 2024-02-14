@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-02-09T09:39:36.745Z\n"
-"PO-Revision-Date: 2024-02-09T09:39:36.746Z\n"
+"POT-Creation-Date: 2024-02-12T15:04:41.456Z\n"
+"PO-Revision-Date: 2024-02-12T15:04:41.457Z\n"
 
 msgid "Add"
 msgstr ""
@@ -57,6 +57,18 @@ msgid "Other"
 msgstr ""
 
 msgid "Name"
+msgstr ""
+
+msgid "Ready"
+msgstr ""
+
+msgid "Running"
+msgstr ""
+
+msgid "Failure"
+msgstr ""
+
+msgid "Done"
 msgstr ""
 
 msgid "Dataset"
