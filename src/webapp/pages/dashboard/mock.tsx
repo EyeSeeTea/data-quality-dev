@@ -1,6 +1,7 @@
 import i18n from "$/utils/i18n";
+import styled from "styled-components";
 import { TableColumn } from "@eyeseetea/d2-ui-components";
-import { Progress } from "$/webapp/components/progress/Progress";
+import { ProgressStatus } from "$/webapp/components/progress-status/ProgressStatus";
 
 type ReferenceObject<T> = {
     id: string;
@@ -34,7 +35,17 @@ export const columns: TableColumn<TableModel>[] = [
         text: i18n.t("Progress"),
         sortable: false,
         getValue: row => {
-            return <Progress value={row.progress} />;
+            return (
+                <ProgressContainer>
+                    {row.progress.map(value => (
+                        <ProgressStatus
+                            status={value.status}
+                            position={value.position}
+                            key={value.position}
+                        />
+                    ))}
+                </ProgressContainer>
+            );
         },
     },
     { name: "lastModification", text: i18n.t("Last Modification"), sortable: true },
@@ -105,3 +116,10 @@ export const mockRows: ReferenceObject<TableModel>[] = [
         lastModification: "2021-07-21 11:50:52",
     },
 ];
+
+const ProgressContainer = styled.ul`
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-inline-start: unset;
+`;

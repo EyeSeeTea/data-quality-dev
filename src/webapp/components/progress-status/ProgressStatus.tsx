@@ -5,33 +5,23 @@ import customTheme from "$/webapp/pages/app/themes/customTheme";
 import { Step } from "$/webapp/pages/dashboard/mock";
 
 type Props = {
-    value: Step[];
+    status: Step["status"];
+    position: number;
 };
 
-export type ListElementProps = {
+export type ContainerProps = {
     $variant: Step["status"];
 };
 
-export const Progress: React.FC<Props> = React.memo(({ value }) => {
+export const ProgressStatus: React.FC<Props> = React.memo(({ status, position }) => {
     return (
-        <Container>
-            {value.map(step => (
-                <ListElement $variant={step.status} key={step.position}>
-                    <StyledTypography>{step.position}</StyledTypography>
-                </ListElement>
-            ))}
+        <Container $variant={status}>
+            <StyledTypography>{position}</StyledTypography>
         </Container>
     );
 });
 
-const Container = styled.ul`
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding-inline-start: unset;
-`;
-
-const ListElement = styled.li<ListElementProps>`
+const Container = styled.li<ContainerProps>`
     border-radius: 50%;
     border: 1px solid ${customTheme.color.lightGrey};
     display: flex;
