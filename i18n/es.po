@@ -74,6 +74,27 @@ msgstr ""
 msgid "Other"
 msgstr ""
 
+msgid "Are you sure you want to delete this?"
+msgstr ""
+
+msgid "Yes, Delete"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Start analysis"
+msgstr ""
+
+msgid "Mark as In Progress"
+msgstr ""
+
+msgid "Mark as Complete"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
 msgid "Name"
 msgstr ""
 
