@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-02-12T15:04:41.456Z\n"
-"PO-Revision-Date: 2024-02-12T15:04:41.457Z\n"
+"POT-Creation-Date: 2024-02-16T08:28:36.419Z\n"
+"PO-Revision-Date: 2024-02-16T08:28:36.420Z\n"
 
 msgid "Add"
 msgstr ""
@@ -59,6 +59,15 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
+msgid "Are you sure you want to delete this?"
+msgstr ""
+
+msgid "Yes, Delete"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
 msgid "Ready"
 msgstr ""
 
@@ -81,6 +90,18 @@ msgid "End Date"
 msgstr ""
 
 msgid "Status"
+msgstr ""
+
+msgid "Start analysis"
+msgstr ""
+
+msgid "Mark as In Progress"
+msgstr ""
+
+msgid "Mark as Complete"
+msgstr ""
+
+msgid "Delete"
 msgstr ""
 
 msgid "Progress"
