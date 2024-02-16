@@ -11,6 +11,7 @@ type Props = {
 };
 
 export const DashboardPage: React.FC<Props> = React.memo(props => {
+    const { customFilters, handleSearchChange } = useDashboard();
     const { name } = props;
     const { isDialogOpen, setIsDialogOpen, actions, onDelete } = useDashboard();
     return (
@@ -19,8 +20,11 @@ export const DashboardPage: React.FC<Props> = React.memo(props => {
             <ObjectsTable
                 rows={mockRows}
                 columns={columns}
-                actions={actions}
                 allowReorderingColumns={false}
+                filterComponents={customFilters}
+                searchBoxLabel={i18n.t("Name")}
+                onChangeSearch={handleSearchChange}
+                actions={actions}
             />
             <ConfirmationDialog
                 isOpen={isDialogOpen}
