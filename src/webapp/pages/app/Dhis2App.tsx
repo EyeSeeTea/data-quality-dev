@@ -2,6 +2,7 @@ import React from "react";
 import i18n from "@dhis2/d2-i18n";
 import { Provider } from "@dhis2/app-runtime";
 import { D2Api } from "../../../types/d2-api";
+import { setupLogger } from "../../../utils/logger";
 import App from "./App";
 import { CompositionRoot, getWebappCompositionRoot } from "../../../CompositionRoot";
 import { MetadataD2Repository } from "../../../data/repositories/MetadataD2Repository";
@@ -62,6 +63,8 @@ async function getData(): Promise<CompositionRootResult> {
 
         const userSettings = await api.get<{ keyUiLocale: string }>("/userSettings").getData();
         configI18n(userSettings);
+
+        await setupLogger(env["VITE_DHIS2_BASE_URL"], metadata.programs.qualityIssues.id);
         return { type: "loaded", data: { baseUrl, compositionRoot } };
     } catch (err) {
         return { type: "error", error: { baseUrl, error: err as Error } };
