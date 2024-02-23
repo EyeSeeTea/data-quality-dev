@@ -1,5 +1,5 @@
-import { getReactComponent } from "../../../../utils/tests";
-import { AnalysisPage } from "../../analysis/AnalysisPage";
+import { getReactComponent } from "$/utils/tests";
+import { AnalysisPage } from "$/webapp/pages/analysis/AnalysisPage";
 
 describe("AnalysisPage", () => {
     it("renders the feedback component", async () => {

@@ -1,4 +1,4 @@
-import i18n from "../../../utils/i18n";
+import i18n from "$/utils/i18n";
 import { ConfigurationStep } from "./steps/ConfigurationStep";
 import { DensityStep } from "./steps/DensityStep";
 import { DisaggregatesStep } from "./steps/DisaggregatesStep";
