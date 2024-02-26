@@ -11,7 +11,7 @@ export class QualityAnalysisTestRepository implements QualityAnalysisRepository 
     }
     get(): FutureData<QualityAnalysisPaginated> {
         return Future.success({
-            pagination: { page: 1, total: 10 },
+            pagination: { page: 1, total: 10, pageSize: 5, pageCount: 2 },
             rows: [],
         });
     }

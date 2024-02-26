@@ -20,7 +20,7 @@ export function Router() {
                 />
                 {/* Default route */}
                 <Route
-                    path="/dashboard"
+                    path="/"
                     render={() => <DashboardPage name={i18n.t("Data Quality Analysis")} />}
                 />
                 <Route render={() => <LandingPage />} />

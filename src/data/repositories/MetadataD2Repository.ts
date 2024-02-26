@@ -18,6 +18,7 @@ const metadataCodes = {
         name: "NHWA_DQI_TEA_Name",
         startDate: "NHWA_DQI_TEA_Start_Date",
         status: "NHWA_DQI_TEA_Status",
+        lastModification: "NHWA_DQI_TEA_Last_Modification",
     },
     dataElements: {
         issueNumber: "NHWA_DQI_Issue_Number",

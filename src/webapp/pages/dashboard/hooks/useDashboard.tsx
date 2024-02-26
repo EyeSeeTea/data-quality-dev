@@ -9,7 +9,7 @@ import i18n from "$/utils/i18n";
 import { useCallback } from "react";
 
 export function useDashboard() {
-    const [statusIsCompleted, setStatusIsCompleted] = useState(false);
+    const [statusIsCompleted, _] = useState(false);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const { success } = useSnackbar();
 

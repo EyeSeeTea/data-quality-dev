@@ -62,6 +62,7 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
                 attribute: this.buildFilters(options.filters)?.join(",") || undefined,
                 // @ts-ignore
                 order: this.buildOrder(options.sorting) || undefined,
+                totalPages: true,
             })
         ).flatMap(d2Response => {
             const instances = d2Response.instances;
@@ -77,21 +78,64 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
                 instances,
                 this.getDataElementIdOrThrow("categoryOption")
             );
+            const teiIds = _(d2Response.instances)
+                .map(instance => instance.trackedEntity)
+                .compact()
+                .value();
+
             return Future.joinObj({
                 countries: this.d2OrgUnit.getByIds(orgUnitIds),
                 dataElements: this.d2DataElement.getByIds(dataElementIds),
                 categoryOptions: this.d2CategoryOption.getByIds(categoryOptionIds),
-            }).map(({ countries, dataElements, categoryOptions }) => {
+                sectionInformation: this.getSectionInformation(teiIds),
+            }).map(({ countries, dataElements, categoryOptions, sectionInformation }) => {
                 return {
-                    pagination: { page: d2Response.page, total: d2Response.total || 0 },
+                    pagination: {
+                        pageSize: d2Response.pageSize,
+                        // @ts-ignore
+                        pageCount: d2Response.pageCount,
+                        page: d2Response.page,
+                        total: d2Response.total || 0,
+                    },
                     rows: _(instances)
                         .map(tei =>
-                            this.buildQualityAnalysis(tei, countries, dataElements, categoryOptions)
+                            this.buildQualityAnalysis(
+                                tei,
+                                countries,
+                                dataElements,
+                                categoryOptions,
+                                sectionInformation
+                            )
                         )
                         .compact()
                         .value(),
                 };
             });
+        });
+    }
+
+    private getSectionInformation(teiIds: Id[]) {
+        const dataStore = this.api.dataStore("data-quality");
+        const $requests = _(teiIds)
+            .map(id => {
+                return apiToFuture(dataStore.get<Maybe<D2AnalysisDataStore>>(id)).map(
+                    d2Response => {
+                        return { id: id, extraInfo: d2Response?.sections };
+                    }
+                );
+            })
+            .compact()
+            .value();
+
+        return Future.parallel($requests, { concurrency: 5 }).map(response => {
+            const onlyDefinedStatus = _(response)
+                .map(record => {
+                    if (!record.extraInfo) return undefined;
+                    return record;
+                })
+                .compact()
+                .value();
+            return onlyDefinedStatus;
         });
     }
 
@@ -294,11 +338,11 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
             : undefined;
 
         const startDateFilter = filters.startDate
-            ? `${this.metadata.trackedEntityAttributes.startDate.id}:GE:${filters.startDate}`
+            ? `${this.metadata.trackedEntityAttributes.startDate.id}:EQ:${filters.startDate}`
             : undefined;
 
         const endDateFilter = filters.endDate
-            ? `${this.metadata.trackedEntityAttributes.endDate.id}:LE:${filters.endDate}`
+            ? `${this.metadata.trackedEntityAttributes.endDate.id}:EQ:${filters.endDate}`
             : undefined;
 
         const moduleFilter = filters.module
@@ -338,6 +382,10 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
                 return `${this.getIdOrThrow(this.metadata.trackedEntityAttributes.name.id)}:${
                     sorting.order
                 }`;
+            case "lastModification":
+                return `${this.getIdOrThrow(
+                    this.metadata.trackedEntityAttributes.lastModification.id
+                )}:${sorting.order}`;
         }
         return undefined;
     }
@@ -373,8 +421,10 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
         entity: D2TrackerTrackedEntity,
         countries: Country[],
         dataElements: DataElement[],
-        categoryOptions: CategoryOption[]
+        categoryOptions: CategoryOption[],
+        sectionStatus: AnalysisSectionStatus[]
     ): Maybe<QualityAnalysis> {
+        if (!entity.trackedEntity) return undefined;
         const attributesById = this.buildAttributesById(entity);
 
         const enrollment = _(entity.enrollments || []).first();
@@ -404,38 +454,53 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
             .compact()
             .value();
 
+        const sectionsInfo = sectionStatus.find(section => section.id === entity.trackedEntity);
+        const sections = this.buildSections(sectionsInfo, qaIssues);
+
         return QualityAnalysis.build({
-            id: this.getIdOrThrow(entity.trackedEntity),
+            id: entity.trackedEntity,
             name: this.getValueOrDefault(
                 attributesById.get(this.getIdOrThrow(this.metadata.trackedEntityAttributes.name.id))
             ),
             endDate: this.getValueOrDefault(
                 attributesById.get(
-                    this.getIdOrThrow(this.metadata.trackedEntityAttributes.endDate?.id)
+                    this.getIdOrThrow(this.metadata.trackedEntityAttributes.endDate.id)
                 )
             ),
-            sections: this.metadata.programs.qualityIssues.programStages.map(programStage => {
-                return new QualityAnalysisSection({
-                    id: programStage.id,
-                    type: "pending",
-                    issues: qaIssues.filter(issue => issue.type === programStage.id),
-                    lastModification: "",
-                    status: "",
-                });
-            }),
+            sections: sections,
             module: module,
             startDate: this.getValueOrDefault(
                 attributesById.get(
-                    this.getIdOrThrow(this.metadata.trackedEntityAttributes.startDate?.id)
+                    this.getIdOrThrow(this.metadata.trackedEntityAttributes.startDate.id)
                 )
             ),
             status: status,
+            lastModification: this.getValueOrDefault(
+                attributesById.get(
+                    this.getIdOrThrow(this.metadata.trackedEntityAttributes.lastModification.id)
+                )
+            ),
         }).get();
+    }
+
+    private buildSections(
+        sectionsInfo: Maybe<AnalysisSectionStatus>,
+        qaIssues: QualityAnalysisIssue[]
+    ): QualityAnalysisSection[] {
+        return this.metadata.programs.qualityIssues.programStages.map(programStage => {
+            const sectionData = sectionsInfo?.extraInfo?.[programStage.id];
+            return new QualityAnalysisSection({
+                id: programStage.id,
+                issues: qaIssues.filter(issue => issue.type === programStage.id),
+                // lastModification: sectionData?.lastModification || "",
+                status: sectionData?.status || "",
+            });
+        });
     }
 
     private buildQualityStatus(status: string): QualityAnalysisStatus {
         const statusValue = qualityAnalysisStatus.find(qa => qa === status);
-        return statusValue ?? "pending";
+        return statusValue ?? "In Progress";
     }
 
     private buildQualityAnalysisIssue(
@@ -548,3 +613,6 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
 }
 
 type DataElementKey = keyof MetadataItem["dataElements"];
+type D2AnalysisDataStore = { sections: AnalysisExtraInfo };
+type AnalysisExtraInfo = Record<Id, { status: string }>;
+type AnalysisSectionStatus = { id: Id; extraInfo: Maybe<AnalysisExtraInfo> };

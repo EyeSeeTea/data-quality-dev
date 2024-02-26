@@ -7,8 +7,15 @@ export interface QualityAnalysisRepository {
     save(qualityAnalyses: QualityAnalysis[]): FutureData<void>;
 }
 
+export type Pagination = {
+    page: number;
+    pageCount: number;
+    pageSize: number;
+    total: number;
+};
+
 export type QualityAnalysisOptions = {
-    pagination: { page: number; pageSize: number };
+    pagination: Pick<Pagination, "page" | "pageSize">;
     sorting: { field: string; order: "asc" | "desc" };
     filters: {
         endDate: Maybe<string>;
@@ -21,5 +28,5 @@ export type QualityAnalysisOptions = {
 
 export type QualityAnalysisPaginated = {
     rows: QualityAnalysis[];
-    pagination: { page: number; total: number };
+    pagination: Pagination;
 };

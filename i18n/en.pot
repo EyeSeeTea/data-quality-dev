@@ -23,6 +23,21 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
+msgid "Start analysis"
+msgstr ""
+
+msgid "Mark as In Progress"
+msgstr ""
+
+msgid "Mark as Complete"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
 msgid "Analysis Page"
 msgstr ""
 
@@ -59,9 +74,6 @@ msgstr ""
 msgid "Other"
 msgstr ""
 
-msgid "Name"
-msgstr ""
-
 msgid "Are you sure you want to delete this?"
 msgstr ""
 
@@ -81,30 +93,6 @@ msgid "Failure"
 msgstr ""
 
 msgid "Done"
-msgstr ""
-
-msgid "Dataset"
-msgstr ""
-
-msgid "Start Date"
-msgstr ""
-
-msgid "End Date"
-msgstr ""
-
-msgid "Status"
-msgstr ""
-
-msgid "Start analysis"
-msgstr ""
-
-msgid "Mark as In Progress"
-msgstr ""
-
-msgid "Mark as Complete"
-msgstr ""
-
-msgid "Delete"
 msgstr ""
 
 msgid "Progress"

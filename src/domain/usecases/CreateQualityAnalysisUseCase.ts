@@ -30,7 +30,8 @@ export class CreateQualityAnalysisUseCase {
                 name: qualityAnalysisName,
                 sections: [],
                 startDate: defaultSettings.startDate,
-                status: "pending",
+                status: "In Progress",
+                lastModification: "",
             }).match({
                 error: errors => {
                     const errorMessages = getErrors(errors);

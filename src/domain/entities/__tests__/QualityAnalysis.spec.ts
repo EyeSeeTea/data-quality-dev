@@ -4,13 +4,14 @@ import { QualityAnalysis, QualityAnalysisAttrs } from "../QualityAnalysis";
 function createQualityAnalysis(data: Partial<QualityAnalysisAttrs>) {
     return QualityAnalysis.build({
         ...data,
-        status: data.status || "pending",
+        status: data.status || "In Progress",
         id: "1",
         endDate: "2021-01-01",
         module: { id: "1", name: "Module 1" },
         name: data.name || "",
         startDate: "2021-01-01",
         sections: [],
+        lastModification: "",
     });
 }
 

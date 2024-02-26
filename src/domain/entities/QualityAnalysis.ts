@@ -15,13 +15,17 @@ export interface QualityAnalysisAttrs {
     startDate: string;
     status: QualityAnalysisStatus;
     sections: QualityAnalysisSection[];
+    lastModification: string;
 }
 
 export class QualityAnalysis extends Struct<QualityAnalysisAttrs>() {
     static build(
         attrs: QualityAnalysisAttrs
     ): Either<ValidationError<QualityAnalysis>[], QualityAnalysis> {
-        const qualityAnalysis = new QualityAnalysis({ ...attrs, name: attrs.name });
+        const qualityAnalysis = new QualityAnalysis({
+            ...attrs,
+            name: attrs.name,
+        });
 
         const errors: ValidationError<QualityAnalysis>[] = [
             {
