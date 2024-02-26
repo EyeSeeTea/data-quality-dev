@@ -1,3 +1,5 @@
+import { AnalysisSectionD2Repository } from "./data/repositories/AnalysisSectionD2Repository";
+import { AnalysisSectionTestRepository } from "./data/repositories/AnalysisSectionTestRepository";
 import { MetadataD2Repository } from "./data/repositories/MetadataD2Repository";
 import { MetadataTestRepository } from "./data/repositories/MetadataTestRepository";
 import { ModuleD2Repository } from "./data/repositories/ModuleD2Repository";
@@ -9,6 +11,7 @@ import { SettingsTestRepository } from "./data/repositories/SettingsTestReposito
 import { UserD2Repository } from "./data/repositories/UserD2Repository";
 import { UserTestRepository } from "./data/repositories/UserTestRepository";
 import { MetadataItem } from "./domain/entities/MetadataItem";
+import { AnalysisSectionRepository } from "./domain/repositories/AnalysisSectionRepository";
 import { MetadataRepository } from "./domain/repositories/MetadataRepository";
 import { ModuleRepository } from "./domain/repositories/ModuleRepository";
 import { QualityAnalysisRepository } from "./domain/repositories/QualityAnalysisRepository";
@@ -29,6 +32,7 @@ type Repositories = {
     metadataRepository: MetadataRepository;
     settingsRepository: SettingsRepository;
     moduleRepository: ModuleRepository;
+    analysisSectionRepository: AnalysisSectionRepository;
 };
 
 function getCompositionRoot(repositories: Repositories) {
@@ -41,7 +45,8 @@ function getCompositionRoot(repositories: Repositories) {
             create: new CreateQualityAnalysisUseCase(
                 repositories.qualityAnalysisRepository,
                 repositories.usersRepository,
-                repositories.settingsRepository
+                repositories.settingsRepository,
+                repositories.analysisSectionRepository
             ),
         },
     };
@@ -54,6 +59,7 @@ export function getWebappCompositionRoot(api: D2Api, metadata: MetadataItem) {
         metadataRepository: new MetadataD2Repository(api),
         settingsRepository: new SettingsD2Repository(api),
         moduleRepository: new ModuleD2Repository(metadata),
+        analysisSectionRepository: new AnalysisSectionD2Repository(metadata),
     };
 
     return getCompositionRoot(repositories);
@@ -66,6 +72,7 @@ export function getTestCompositionRoot() {
         metadataRepository: new MetadataTestRepository(),
         settingsRepository: new SettingsTestRepository(),
         moduleRepository: new ModuleTestRepository(),
+        analysisSectionRepository: new AnalysisSectionTestRepository(),
     };
 
     return getCompositionRoot(repositories);

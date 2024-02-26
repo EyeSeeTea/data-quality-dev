@@ -1,32 +1,32 @@
 import React from "react";
 import { Dropdown } from "@eyeseetea/d2-ui-components";
+
 import i18n from "$/utils/i18n";
 import _, { Collection } from "$/domain/entities/generic/Collection";
 import { Module } from "$/domain/entities/Module";
 import { qualityAnalysisStatus } from "$/domain/entities/QualityAnalysisStatus";
 import { Maybe } from "$/utils/ts-utils";
+import { MenuButton } from "../menu-button/MenuButton";
+import { Id } from "$/domain/entities/Ref";
 
 const currentYear = new Date().getFullYear();
 
-function buildPeriods() {
-    return Collection.range(currentYear - 5, currentYear)
-        .map(period => {
-            return { value: period.toString(), text: period.toString() };
-        })
-        .reverse()
-        .value();
-}
+const periods = Collection.range(currentYear - 5, currentYear)
+    .map(period => {
+        return { value: period.toString(), text: period.toString() };
+    })
+    .reverse()
+    .value();
 
 type AnalysisFiltersProps = {
     modules: Module[];
     initialFilters: AnalysisFilterState;
     onChange: React.Dispatch<React.SetStateAction<AnalysisFilterState>>;
+    onCreateAnalysis: (module: Module) => void;
 };
 
 export const AnalysisFilters: React.FC<AnalysisFiltersProps> = props => {
-    const { modules, initialFilters, onChange } = props;
-
-    const periods = buildPeriods();
+    const { modules, initialFilters, onChange, onCreateAnalysis } = props;
 
     const modulesFilters = modules.map(module => {
         return { value: module.id, text: module.name };
@@ -44,6 +44,12 @@ export const AnalysisFilters: React.FC<AnalysisFiltersProps> = props => {
         },
         [onChange]
     );
+
+    const onModuleSelected = (moduleId: Id) => {
+        const selectedModule = modules.find(module => module.id === moduleId);
+        if (!selectedModule) return false;
+        onCreateAnalysis(selectedModule);
+    };
 
     return (
         <>
@@ -70,6 +76,12 @@ export const AnalysisFilters: React.FC<AnalysisFiltersProps> = props => {
                 onChange={value => onFilterChange(value, "status")}
                 value={initialFilters.status}
                 label={i18n.t("Status")}
+            />
+
+            <MenuButton
+                label={i18n.t("New Data Quality")}
+                items={modules.map(module => ({ id: module.id, label: module.name }))}
+                onItemSelected={onModuleSelected}
             />
         </>
     );

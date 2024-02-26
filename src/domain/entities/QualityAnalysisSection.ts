@@ -8,4 +8,8 @@ export interface QualityAnalysisSectionAttrs {
     status: string;
 }
 
-export class QualityAnalysisSection extends Struct<QualityAnalysisSectionAttrs>() {}
+export class QualityAnalysisSection extends Struct<QualityAnalysisSectionAttrs>() {
+    static getInitialStatus(): string {
+        return "In Progress";
+    }
+}

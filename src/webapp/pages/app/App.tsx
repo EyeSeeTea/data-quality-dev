@@ -4,6 +4,7 @@ import { Feedback } from "@eyeseetea/feedback-component";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 //@ts-ignore
 import OldMuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import { LoadingProvider } from "@eyeseetea/d2-ui-components";
 import React, { useEffect, useState } from "react";
 import { appConfig } from "../../../app-config";
 import { CompositionRoot } from "../../../CompositionRoot";
@@ -42,24 +43,27 @@ function App(props: AppProps) {
     return (
         <MuiThemeProvider theme={muiTheme}>
             <OldMuiThemeProvider muiTheme={muiThemeLegacy}>
-                <SnackbarProvider>
-                    <HeaderBar appName="Data Quality" />
+                {/* @ts-ignore */}
+                <LoadingProvider>
+                    <SnackbarProvider>
+                        <HeaderBar appName="Data Quality" />
 
-                    {appConfig.feedback && appContext && (
-                        <Feedback
-                            options={appConfig.feedback}
-                            username={appContext.currentUser.username}
-                        />
-                    )}
+                        {appConfig.feedback && appContext && (
+                            <Feedback
+                                options={appConfig.feedback}
+                                username={appContext.currentUser.username}
+                            />
+                        )}
 
-                    <div id="app" className="content">
-                        <AppContext.Provider value={appContext}>
-                            <Router />
-                        </AppContext.Provider>
-                    </div>
+                        <div id="app" className="content">
+                            <AppContext.Provider value={appContext}>
+                                <Router />
+                            </AppContext.Provider>
+                        </div>
 
-                    <Share visible={showShareButton} />
-                </SnackbarProvider>
+                        <Share visible={showShareButton} />
+                    </SnackbarProvider>
+                </LoadingProvider>
             </OldMuiThemeProvider>
         </MuiThemeProvider>
     );

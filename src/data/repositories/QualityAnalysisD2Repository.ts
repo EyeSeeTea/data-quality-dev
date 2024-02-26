@@ -139,63 +139,15 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
         });
     }
 
-    save(qualityAnalyses: QualityAnalysis[]): FutureData<void> {
-        const qualityIds = qualityAnalyses.map(record => record.id);
+    save(qualityAnalysis: QualityAnalysis[]): FutureData<void> {
+        const qualityIds = qualityAnalysis.map(record => record.id);
         const $requests = Future.sequential(
             _(qualityIds)
                 .chunk(50)
                 .map(qaIds => {
-                    return apiToFuture(
-                        this.api.tracker.trackedEntities.get({
-                            ouMode: "ALL",
-                            program: this.metadata.programs.qualityIssues.id,
-                            fields: { $all: true },
-                            trackedEntity: qaIds.join(";"),
-                        })
-                    ).flatMap(d2Response => {
-                        const qualityAnalysesToPost = qaIds.map(qaId => {
-                            const existingTei = d2Response.instances.find(
-                                d2Tei => d2Tei.trackedEntity === qaId
-                            );
-                            const qualityAnalysis = qualityAnalyses.find(qai => qai.id === qaId);
-                            if (!qualityAnalysis) {
-                                throw Error(`Cannot find qualityAnalysis: ${qaId}`);
-                            }
-
-                            const teiId =
-                                qualityAnalysis.id ||
-                                getUid(`quality-analysis_${new Date().getTime()}`);
-
-                            const enrollments = this.buildEnrollmentsFromQualityAnalysis(
-                                existingTei,
-                                qualityAnalysis,
-                                teiId
-                            );
-
-                            const attributes = this.buildAttributesFromQualityAnalysis(
-                                existingTei,
-                                qualityAnalysis
-                            );
-
-                            return {
-                                ...(existingTei || {}),
-                                trackedEntityType: this.metadata.trackedEntityTypes.dataQuality.id,
-                                trackedEntity: teiId,
-                                orgUnit: this.metadata.organisationUnits.global.id,
-                                attributes: attributes,
-                                enrollments: [enrollments],
-                            };
-                        });
-
-                        return apiToFuture(
-                            this.api.tracker.post({}, { trackedEntities: qualityAnalysesToPost })
-                        ).flatMap(res => {
-                            if (res.status === "ERROR") {
-                                return Future.error(new Error(res.message));
-                            } else {
-                                return Future.success(undefined);
-                            }
-                        });
+                    return Future.joinObj({
+                        saveTeis: this.buildTeisRequests(qaIds, qualityAnalysis),
+                        saveSections: this.buildSectionsRequests(qaIds, qualityAnalysis),
                     });
                 })
                 .value()
@@ -203,6 +155,86 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
 
         return Future.sequential([$requests]).flatMap(() => {
             return Future.success(undefined);
+        });
+    }
+
+    private buildSectionsRequests(qaIds: string[], qualityAnalysis: QualityAnalysis[]) {
+        const dataStore = this.api.dataStore("data-quality");
+        const $requests = _(qaIds)
+            .map(qualityId => {
+                const qAnalysis = qualityAnalysis.find(qa => qa.id === qualityId);
+                if (!qAnalysis) return undefined;
+                if (qAnalysis.sections.length === 0) return undefined;
+                const sections = qAnalysis.sections.map(section => {
+                    return {
+                        [section.id]: {
+                            status: section.status,
+                            lastModification: new Date().toISOString(),
+                        },
+                    };
+                });
+                return apiToFuture(
+                    dataStore.save(qualityId, { sections: sections }).map(response => {
+                        if (response.status >= 400) {
+                            return Future.error(
+                                new Error(`Cannot save section for TEI: ${qualityId}`)
+                            );
+                        } else {
+                            return Future.success(undefined);
+                        }
+                    })
+                );
+            })
+            .compact()
+            .value();
+        return Future.sequential($requests);
+    }
+
+    private buildTeisRequests(qaIds: string[], qualityAnalysis: QualityAnalysis[]) {
+        return apiToFuture(
+            this.api.tracker.trackedEntities.get({
+                ouMode: "ALL",
+                program: this.metadata.programs.qualityIssues.id,
+                fields: { $all: true },
+                trackedEntity: qaIds.join(";"),
+            })
+        ).flatMap(d2Response => {
+            const qualityAnalysisToPost = qaIds.map(qaId => {
+                const existingTei = d2Response.instances.find(
+                    d2Tei => d2Tei.trackedEntity === qaId
+                );
+                const qAnalysis = qualityAnalysis.find(qai => qai.id === qaId);
+                if (!qAnalysis) {
+                    throw Error(`Cannot find qualityAnalysis: ${qaId}`);
+                }
+
+                const enrollments = this.buildEnrollmentsFromQualityAnalysis(
+                    existingTei,
+                    qAnalysis,
+                    qAnalysis.id
+                );
+
+                const attributes = this.buildAttributesFromQualityAnalysis(existingTei, qAnalysis);
+
+                return {
+                    ...(existingTei || {}),
+                    trackedEntityType: this.metadata.trackedEntityTypes.dataQuality.id,
+                    trackedEntity: qAnalysis.id,
+                    orgUnit: this.metadata.organisationUnits.global.id,
+                    attributes: attributes,
+                    enrollments: [enrollments],
+                };
+            });
+
+            return apiToFuture(
+                this.api.tracker.post({}, { trackedEntities: qualityAnalysisToPost })
+            ).flatMap(res => {
+                if (res.status === "ERROR") {
+                    return Future.error(new Error(res.message));
+                } else {
+                    return Future.success(qualityAnalysisToPost);
+                }
+            });
         });
     }
 

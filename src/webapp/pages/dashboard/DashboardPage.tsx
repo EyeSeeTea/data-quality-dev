@@ -9,24 +9,48 @@ import {
     AnalysisFilters,
     initialFilters,
 } from "$/webapp/components/analysis-filter/AnalysisFilter";
-import { useGetRows, useTableConfig } from "$/webapp/hooks/useQualityAnalysisTable";
+import {
+    useCreateQualityAnalysis,
+    useGetRows,
+    useTableConfig,
+} from "$/webapp/hooks/useQualityAnalysisTable";
 import { useModules } from "$/webapp/hooks/useModule";
 import styled from "styled-components";
+import { Module } from "$/domain/entities/Module";
 
 type Props = { name: string };
 
 export const DashboardPage: React.FC<Props> = React.memo(props => {
     const { name } = props;
+    const [reload, refreshReload] = React.useState(0);
     const [filters, setFilters] = React.useState<AnalysisFilterState>(initialFilters);
-
-    const modules = useModules();
+    const createQualityAnalysis = useCreateQualityAnalysis({
+        onSuccess: () => {
+            refreshReload(reload + 1);
+        },
+    });
     const { isDialogOpen, onDelete, setIsDialogOpen, tableConfig } = useTableConfig();
-    const { getRows, loading } = useGetRows(filters);
+    const { getRows, loading } = useGetRows(filters, reload);
+    const modules = useModules();
     const config = useObjectsTable(tableConfig, getRows);
 
+    const onCreateAnalysis = React.useCallback(
+        (selectedModule: Module) => {
+            createQualityAnalysis(selectedModule, "");
+        },
+        [createQualityAnalysis]
+    );
+
     const filterComponents = React.useMemo(() => {
-        return <AnalysisFilters modules={modules} initialFilters={filters} onChange={setFilters} />;
-    }, [filters, modules]);
+        return (
+            <AnalysisFilters
+                modules={modules}
+                initialFilters={filters}
+                onChange={setFilters}
+                onCreateAnalysis={onCreateAnalysis}
+            />
+        );
+    }, [filters, modules, onCreateAnalysis]);
 
     return (
         <DashboardContainer>
