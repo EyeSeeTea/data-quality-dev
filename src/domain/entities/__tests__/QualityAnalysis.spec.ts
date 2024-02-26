@@ -28,10 +28,10 @@ describe("Quality Analysis", () => {
     });
 
     it("should generate a default name with the format: [#{value} - #{currentdate}]", () => {
-        const date = new Date(2024, 0, 31, 8, 22, 51, 51);
+        const date = new Date("2024-01-31T08:22:51.051Z");
         vi.setSystemTime(date);
         const fakeUserName = "john";
         const qualityAnalysisName = QualityAnalysis.buildDefaultName("", fakeUserName);
-        expect(qualityAnalysisName).toBe(`${fakeUserName} - 2024_01_31_13_22_51_051Z`);
+        expect(qualityAnalysisName).toBe(`${fakeUserName} - 2024_01_31_08_22_51_051Z`);
     });
 });
