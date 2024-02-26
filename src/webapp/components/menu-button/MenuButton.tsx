@@ -2,6 +2,9 @@ import i18n from "@eyeseetea/feedback-component/locales";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+
 import { memo, useState, MouseEvent } from "react";
 import styled from "styled-components";
 
@@ -35,6 +38,7 @@ export const MenuButton: React.FC<Props> = memo(({ label, items }) => {
                 variant="contained"
                 color="primary"
                 onClick={onOpenMenu}
+                endIcon={anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             >
                 {i18n.t(label)}
             </Button>
