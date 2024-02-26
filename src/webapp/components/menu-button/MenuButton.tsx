@@ -3,21 +3,23 @@ import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { memo, useState, MouseEvent } from "react";
+import styled from "styled-components";
 
 type Item = {
     label: string;
-    value: string;
+    id: string;
 };
 
 type Props = {
     label: string;
     items: Item[];
+    handleClick: () => void;
 };
 
-export const MenuButton: React.FC<Props> = memo(({ label, items }) => {
+export const MenuButton: React.FC<Props> = memo(({ label, items, handleClick }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    const onOpenMenu = (event: MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
 
@@ -26,13 +28,13 @@ export const MenuButton: React.FC<Props> = memo(({ label, items }) => {
     };
 
     return (
-        <>
+        <Container>
             <Button
                 aria-controls="simple-menu"
                 aria-haspopup="true"
                 variant="contained"
                 color="primary"
-                onClick={handleClick}
+                onClick={onOpenMenu}
             >
                 {i18n.t(label)}
             </Button>
@@ -44,11 +46,17 @@ export const MenuButton: React.FC<Props> = memo(({ label, items }) => {
                 onClose={handleClose}
             >
                 {items.map(item => (
-                    <MenuItem key={item.label} onClick={handleClose}>
-                        {i18n.t(item.label)}
+                    <MenuItem key={item.label}>
+                        <Button variant="text" color="primary" onClick={handleClick}>
+                            {i18n.t(item.label)}
+                        </Button>
                     </MenuItem>
                 ))}
             </Menu>
-        </>
+        </Container>
     );
 });
+
+const Container = styled.div`
+    margin-inline-start: 1rem;
+`;
