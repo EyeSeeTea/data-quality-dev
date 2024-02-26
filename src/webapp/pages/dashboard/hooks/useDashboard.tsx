@@ -45,10 +45,12 @@ export function useDashboard() {
         {
             label: "Module 1",
             id: "module-1",
+            handleClick: () => alert("Module 1"),
         },
         {
             label: "Module 2",
             id: "module-2",
+            handleClick: () => alert("Module 2"),
         },
     ];
 
@@ -82,11 +84,7 @@ export function useDashboard() {
                 value={"somevalue"}
                 label={i18n.t("Status")}
             />
-            <MenuButton
-                label={"New Data Quality"}
-                items={menuButtonItems}
-                handleClick={() => alert("click")}
-            />
+            <MenuButton label={"New Data Quality"} items={menuButtonItems} />
         </>
     );
 

@@ -8,15 +8,15 @@ import styled from "styled-components";
 type Item = {
     label: string;
     id: string;
+    handleClick: () => void;
 };
 
 type Props = {
     label: string;
     items: Item[];
-    handleClick: () => void;
 };
 
-export const MenuButton: React.FC<Props> = memo(({ label, items, handleClick }) => {
+export const MenuButton: React.FC<Props> = memo(({ label, items }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const onOpenMenu = (event: MouseEvent<HTMLButtonElement>) => {
@@ -46,8 +46,8 @@ export const MenuButton: React.FC<Props> = memo(({ label, items, handleClick }) 
                 onClose={handleClose}
             >
                 {items.map(item => (
-                    <MenuItem key={item.label}>
-                        <Button variant="text" color="primary" onClick={handleClick}>
+                    <MenuItem key={item.id} onClick={handleClose}>
+                        <Button variant="text" color="primary" onClick={item.handleClick}>
                             {i18n.t(item.label)}
                         </Button>
                     </MenuItem>
