@@ -50,13 +50,15 @@ const AnalysisHeader = styled.div`
     align-items: center;
     justify-content: space-between;
     height: 5rem;
-    gap: 8rem;
+    gap: 1rem;
     margin-block-end: 1.75rem;
+    flex-wrap: wrap;
 `;
 
 const StyledTypography = styled(Typography)`
     font-size: 1.2rem;
     font-weight: 500;
+    max-width: 22rem;
 `;
 
 const FiltersContainer = styled.div`
