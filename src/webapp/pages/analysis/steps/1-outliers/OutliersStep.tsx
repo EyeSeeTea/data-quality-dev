@@ -3,7 +3,7 @@ import i18n from "$/utils/i18n";
 import styled from "styled-components";
 import { Typography, Button } from "@material-ui/core";
 import { Dropdown } from "@eyeseetea/d2-ui-components";
-import { useOutliers } from "./useOutliers";
+import { useOutliers } from "./hooks/useOutliers";
 import { EmptyState } from "$/webapp/components/empty-state/EmptyState";
 
 interface PageProps {
