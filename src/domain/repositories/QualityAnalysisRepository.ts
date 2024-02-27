@@ -25,6 +25,7 @@ export type QualityAnalysisOptions = {
         name: Maybe<string>;
         startDate: Maybe<string>;
         status: Maybe<string>;
+        ids: Maybe<Id[]>;
     };
 };
 

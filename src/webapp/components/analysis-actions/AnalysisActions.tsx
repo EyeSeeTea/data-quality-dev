@@ -12,7 +12,7 @@ import { Id } from "$/domain/entities/Ref";
 const noop = () => {};
 
 export function useAnalysisTableActions(props: UseAnalysisActionsProps) {
-    const { onDelete, statusIsCompleted } = props;
+    const { onDelete } = props;
 
     const actions = React.useMemo((): TableAction<QualityAnalysis>[] => {
         return [
@@ -25,16 +25,23 @@ export function useAnalysisTableActions(props: UseAnalysisActionsProps) {
             },
             {
                 multiple: true,
-                name: statusIsCompleted ? "InProgress" : "Complete",
-                icon: statusIsCompleted ? (
-                    <AssignmentOutlinedIcon />
-                ) : (
-                    <AssignmentTurnedInOutlinedIcon />
-                ),
-                text: statusIsCompleted
-                    ? i18n.t("Mark as In Progress")
-                    : i18n.t("Mark as Complete"),
-                onClick: noop,
+                name: "Complete",
+                isActive: rows => rows.some(row => row.status === "In Progress"),
+                icon: <AssignmentTurnedInOutlinedIcon />,
+                text: i18n.t("Mark as Complete"),
+                onClick: ids => {
+                    onDelete(ids, "inprogress");
+                },
+            },
+            {
+                multiple: true,
+                name: "In Progress",
+                isActive: rows => rows.some(row => row.status === "Completed"),
+                icon: <AssignmentOutlinedIcon />,
+                text: i18n.t("Mark as In Progress"),
+                onClick: ids => {
+                    onDelete(ids, "completed");
+                },
             },
             {
                 multiple: true,
@@ -42,16 +49,17 @@ export function useAnalysisTableActions(props: UseAnalysisActionsProps) {
                 icon: <DeleteOutlinedIcon />,
                 text: i18n.t("Delete"),
                 onClick: ids => {
-                    onDelete(ids);
+                    onDelete(ids, "delete");
                 },
             },
         ];
-    }, [statusIsCompleted, onDelete]);
+    }, [onDelete]);
 
     return { actions: actions };
 }
 
+export type ActionType = "delete" | "inprogress" | "completed";
+
 type UseAnalysisActionsProps = {
-    statusIsCompleted: boolean;
-    onDelete: (ids: Id[]) => void;
+    onDelete: (ids: Id[], action: ActionType) => void;
 };

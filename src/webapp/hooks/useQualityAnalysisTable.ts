@@ -6,14 +6,16 @@ import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { analysisColumns } from "$/webapp/utils/analysis";
 import { AnalysisFilterState } from "$/webapp/components/analysis-filter/AnalysisFilter";
-import { useAnalysisTableActions } from "$/webapp/components/analysis-actions/AnalysisActions";
+import {
+    ActionType,
+    useAnalysisTableActions,
+} from "$/webapp/components/analysis-actions/AnalysisActions";
 import { Module } from "$/domain/entities/Module";
 import { Id } from "$/domain/entities/Ref";
 
 export function useTableConfig(props: UseTableConfigProps) {
     const { onRemoveQualityAnalysis } = props;
     const { actions } = useAnalysisTableActions({
-        statusIsCompleted: false,
         onDelete: onRemoveQualityAnalysis,
     });
 
@@ -48,6 +50,7 @@ export function useGetRows(filters: AnalysisFilterState, reloadKey: number) {
                             startDate: filters.startDate,
                             status: filters.status,
                             module: filters.module,
+                            ids: undefined,
                         },
                     })
                     .run(
@@ -123,11 +126,28 @@ export function useAnalysisMethods(props: UseAnalysisMethodsProps) {
         [compositionRoot.qualityAnalysis.remove, loading, onRemove, snackbar]
     );
 
-    return { createQualityAnalysis, removeQualityAnalysis };
+    const updateStatusQualityAnalysis = React.useCallback(
+        (selectedIds: Id[], action: ActionType) => {
+            loading.show(true, i18n.t("Updating Status..."));
+            const status = action === "inprogress" ? "Completed" : "In Progress";
+            compositionRoot.qualityAnalysis.updateStatus.execute(selectedIds, status).run(
+                () => {
+                    snackbar.success(i18n.t("Quality Analysis updated"));
+                    loading.hide();
+                    onRemove();
+                },
+                err => {
+                    snackbar.error(err.message);
+                    loading.hide();
+                    onRemove();
+                }
+            );
+        },
+        [compositionRoot.qualityAnalysis.updateStatus, loading, onRemove, snackbar]
+    );
+
+    return { createQualityAnalysis, removeQualityAnalysis, updateStatusQualityAnalysis };
 }
 
 type UseAnalysisMethodsProps = { onSuccess: () => void; onRemove: () => void };
-
-type UseTableConfigProps = {
-    onRemoveQualityAnalysis: (ids: string[]) => void;
-};
+type UseTableConfigProps = { onRemoveQualityAnalysis: (ids: string[], action: ActionType) => void };

@@ -18,26 +18,28 @@ import { useModules } from "$/webapp/hooks/useModule";
 import styled from "styled-components";
 import { Module } from "$/domain/entities/Module";
 import { Id } from "$/domain/entities/Ref";
+import { ActionType } from "$/webapp/components/analysis-actions/AnalysisActions";
 
 type Props = { name: string };
 
 export const DashboardPage: React.FC<Props> = React.memo(props => {
     const { name } = props;
     const [reload, refreshReload] = React.useState(0);
-    const [selectedIds, setSelectedIds] = React.useState<Id[]>([]);
+    const [selectedIds, setSelectedIds] = React.useState<{ action: ActionType; ids: Id[] }>();
     const [filters, setFilters] = React.useState<AnalysisFilterState>(initialFilters);
-    const { createQualityAnalysis, removeQualityAnalysis } = useAnalysisMethods({
-        onSuccess: () => {
-            refreshReload(reload + 1);
-        },
-        onRemove: () => {
-            setSelectedIds([]);
-            refreshReload(reload + 1);
-        },
-    });
+    const { createQualityAnalysis, removeQualityAnalysis, updateStatusQualityAnalysis } =
+        useAnalysisMethods({
+            onSuccess: () => {
+                refreshReload(reload + 1);
+            },
+            onRemove: () => {
+                setSelectedIds(undefined);
+                refreshReload(reload + 1);
+            },
+        });
     const { tableConfig } = useTableConfig({
-        onRemoveQualityAnalysis: React.useCallback(ids => {
-            setSelectedIds(ids);
+        onRemoveQualityAnalysis: React.useCallback((ids, action) => {
+            setSelectedIds({ action, ids });
         }, []),
     });
     const { getRows, loading } = useGetRows(filters, reload);
@@ -52,8 +54,13 @@ export const DashboardPage: React.FC<Props> = React.memo(props => {
     );
 
     const onRemoveAnalysis = React.useCallback(() => {
-        removeQualityAnalysis(selectedIds);
-    }, [removeQualityAnalysis, selectedIds]);
+        if (!selectedIds) return false;
+        if (selectedIds.action === "delete") {
+            removeQualityAnalysis(selectedIds.ids);
+        } else if (selectedIds.action === "inprogress" || selectedIds.action === "completed") {
+            updateStatusQualityAnalysis(selectedIds.ids, selectedIds.action);
+        }
+    }, [removeQualityAnalysis, selectedIds, updateStatusQualityAnalysis]);
 
     const filterComponents = React.useMemo(() => {
         return (
@@ -71,11 +78,15 @@ export const DashboardPage: React.FC<Props> = React.memo(props => {
             <PageHeader title={i18n.t(name)} />
             <ObjectsTable loading={loading} {...config} filterComponents={filterComponents} />
             <ConfirmationDialog
-                isOpen={selectedIds.length > 0}
-                title={i18n.t("Are you sure you want to delete the selected rows?")}
+                isOpen={selectedIds && selectedIds.ids.length > 0}
+                title={i18n.t("Are you sure you want to {{action}} the selected rows?", {
+                    action: selectedIds?.action === "delete" ? "remove" : "update",
+                })}
                 onSave={onRemoveAnalysis}
-                onCancel={() => setSelectedIds([])}
-                saveText={i18n.t("Yes, Delete")}
+                onCancel={() => setSelectedIds(undefined)}
+                saveText={i18n.t("Yes, {{actionButton}}", {
+                    actionButton: selectedIds?.action === "delete" ? "Delete" : "Update",
+                })}
                 cancelText={i18n.t("Cancel")}
                 fullWidth={true}
                 disableEnforceFocus

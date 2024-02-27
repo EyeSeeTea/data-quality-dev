@@ -1,4 +1,5 @@
 import { RemoveQualityUseCase } from "$/domain/usecases/RemoveQualityUseCase";
+import { UpdateStatusAnalysisUseCase } from "$/domain/usecases/UpdateStatusAnalysisUseCase";
 import { AnalysisSectionD2Repository } from "./data/repositories/AnalysisSectionD2Repository";
 import { AnalysisSectionTestRepository } from "./data/repositories/AnalysisSectionTestRepository";
 import { MetadataD2Repository } from "./data/repositories/MetadataD2Repository";
@@ -50,6 +51,7 @@ function getCompositionRoot(repositories: Repositories) {
                 repositories.analysisSectionRepository
             ),
             remove: new RemoveQualityUseCase(repositories.qualityAnalysisRepository),
+            updateStatus: new UpdateStatusAnalysisUseCase(repositories.qualityAnalysisRepository),
         },
     };
 }

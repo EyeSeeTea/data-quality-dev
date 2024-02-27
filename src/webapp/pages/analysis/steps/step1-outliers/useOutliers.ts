@@ -27,7 +27,7 @@ export function useOutliers() {
         alert(`Valor cambiado: ${e.target.value}`);
     };
 
-    const runAnalysis = (e: any) => {
+    const runAnalysis = () => {
         alert(`run analysis`);
     };
 
