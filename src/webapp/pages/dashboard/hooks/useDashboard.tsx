@@ -7,6 +7,7 @@ import AssignmentOutlinedIcon from "@material-ui/icons/AssignmentOutlined";
 import { useSnackbar } from "@eyeseetea/d2-ui-components";
 import i18n from "$/utils/i18n";
 import { useCallback } from "react";
+import { Item, MenuButton } from "$/webapp/components/menu-button/MenuButton";
 
 export function useDashboard() {
     const [statusIsCompleted, setStatusIsCompleted] = useState(false);
@@ -40,6 +41,22 @@ export function useDashboard() {
         alert(newSearch);
     }, []);
 
+    const menuButtonItems = [
+        {
+            label: i18n.t("Module 1"),
+            id: "module-1",
+        },
+        {
+            label: i18n.t("Module 2"),
+            id: "module-2",
+        },
+    ];
+
+    const onMenuItemSelected = (id: Item["id"]) => {
+        const selectedItem = menuButtonItems.find(item => item.id === id);
+        alert(selectedItem?.label);
+    };
+
     const customFilters = (
         <>
             <Dropdown
@@ -70,19 +87,24 @@ export function useDashboard() {
                 value={"somevalue"}
                 label={i18n.t("Status")}
             />
+            <MenuButton
+                label={i18n.t("New Data Quality")}
+                items={menuButtonItems}
+                onItemSelected={onMenuItemSelected}
+            />
         </>
     );
 
     const onDelete = () => {
         alert("delete element");
         setIsDialogOpen(false);
-        success("Selected element deleted successfully");
+        success(i18n.t("Selected element deleted successfully"));
     };
 
     const onToggleStatus = () => {
         alert("status changed");
         setIsDialogOpen(false);
-        success("Status changed");
+        success(i18n.t("Status changed"));
     };
 
     const onStartingAnalysis = () => {};
