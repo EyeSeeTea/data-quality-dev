@@ -1,4 +1,3 @@
-import i18n from "@eyeseetea/feedback-component/locales";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -44,7 +43,7 @@ export const MenuButton: React.FC<Props> = memo(({ label, items, onItemSelected 
                 onClick={onOpenMenu}
                 endIcon={anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             >
-                {i18n.t(label)}
+                {label}
             </Button>
             <Menu
                 id="simple-menu"
@@ -56,7 +55,7 @@ export const MenuButton: React.FC<Props> = memo(({ label, items, onItemSelected 
                 {items.map(item => (
                     <MenuItem key={item.id} onClick={handleClose}>
                         <Button variant="text" color="primary" onClick={() => handleClick(item)}>
-                            {i18n.t(item.label)}
+                            {item.label}
                         </Button>
                     </MenuItem>
                 ))}

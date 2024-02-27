@@ -43,11 +43,11 @@ export function useDashboard() {
 
     const menuButtonItems = [
         {
-            label: "Module 1",
+            label: i18n.t("Module 1"),
             id: "module-1",
         },
         {
-            label: "Module 2",
+            label: i18n.t("Module 2"),
             id: "module-2",
         },
     ];
@@ -88,7 +88,7 @@ export function useDashboard() {
                 label={i18n.t("Status")}
             />
             <MenuButton
-                label={"New Data Quality"}
+                label={i18n.t("New Data Quality")}
                 items={menuButtonItems}
                 onItemSelected={onMenuItemSelected}
             />
@@ -98,13 +98,13 @@ export function useDashboard() {
     const onDelete = () => {
         alert("delete element");
         setIsDialogOpen(false);
-        success("Selected element deleted successfully");
+        success(i18n.t("Selected element deleted successfully"));
     };
 
     const onToggleStatus = () => {
         alert("status changed");
         setIsDialogOpen(false);
-        success("Status changed");
+        success(i18n.t("Status changed"));
     };
 
     const onStartingAnalysis = () => {};

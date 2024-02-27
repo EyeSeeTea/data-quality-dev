@@ -1,6 +1,5 @@
 import Typography from "@material-ui/core/Typography";
 import styled, { css } from "styled-components";
-import i18n from "$/utils/i18n";
 import React from "react";
 import customTheme from "$/webapp/pages/app/themes/customTheme";
 
@@ -16,7 +15,7 @@ export type ContainerProps = {
 export const EmptyState: React.FC<Props> = React.memo(({ message, variant }) => {
     return (
         <Container $variant={variant}>
-            <Typography>{i18n.t(message)}</Typography>
+            <Typography>{message}</Typography>
         </Container>
     );
 });
