@@ -1,7 +1,7 @@
 import i18n from "../../../utils/i18n";
 import { ConfigurationStep } from "./steps/ConfigurationStep";
 import { DensityStep } from "./steps/DensityStep";
-import { DisaggregatesStep } from "./steps/DisaggregatesStep";
+import { DisaggregatesStep } from "./steps/Disaggregates/DisaggregatesStep";
 import { DoctorsStep } from "./steps/DoctorsStep";
 import { MidwiferyStep } from "./steps/MidwiferyStep";
 import { NursingMidwiferyStep } from "./steps/NursingMidwiferyStep";
