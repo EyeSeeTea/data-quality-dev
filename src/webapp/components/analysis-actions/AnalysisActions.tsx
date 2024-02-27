@@ -1,18 +1,20 @@
 import React from "react";
+import { TableAction } from "@eyeseetea/d2-ui-components";
 import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
 import AssignmentTurnedInOutlinedIcon from "@material-ui/icons/AssignmentTurnedInOutlined";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import AssignmentOutlinedIcon from "@material-ui/icons/AssignmentOutlined";
 
 import i18n from "$/utils/i18n";
+import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
+import { Id } from "$/domain/entities/Ref";
 
 const noop = () => {};
 
-export function useAnalysisActions(props: UseAnalysisActionsProps) {
-    const { statusIsCompleted } = props;
-    const [isDialogOpen, setIsDialogOpen] = React.useState(false);
+export function useAnalysisTableActions(props: UseAnalysisActionsProps) {
+    const { onDelete, statusIsCompleted } = props;
 
-    const actions = React.useMemo(() => {
+    const actions = React.useMemo((): TableAction<QualityAnalysis>[] => {
         return [
             {
                 multiple: false,
@@ -39,16 +41,17 @@ export function useAnalysisActions(props: UseAnalysisActionsProps) {
                 name: "Delete",
                 icon: <DeleteOutlinedIcon />,
                 text: i18n.t("Delete"),
-                onClick: () => {
-                    setIsDialogOpen(true);
+                onClick: ids => {
+                    onDelete(ids);
                 },
             },
         ];
-    }, [statusIsCompleted]);
+    }, [statusIsCompleted, onDelete]);
 
-    return { actions: actions, isDialogOpen: isDialogOpen, setIsDialogOpen: setIsDialogOpen };
+    return { actions: actions };
 }
 
 type UseAnalysisActionsProps = {
     statusIsCompleted: boolean;
+    onDelete: (ids: Id[]) => void;
 };

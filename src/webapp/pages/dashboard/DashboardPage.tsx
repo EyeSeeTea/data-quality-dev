@@ -10,26 +10,36 @@ import {
     initialFilters,
 } from "$/webapp/components/analysis-filter/AnalysisFilter";
 import {
-    useCreateQualityAnalysis,
+    useAnalysisMethods,
     useGetRows,
     useTableConfig,
 } from "$/webapp/hooks/useQualityAnalysisTable";
 import { useModules } from "$/webapp/hooks/useModule";
 import styled from "styled-components";
 import { Module } from "$/domain/entities/Module";
+import { Id } from "$/domain/entities/Ref";
 
 type Props = { name: string };
 
 export const DashboardPage: React.FC<Props> = React.memo(props => {
     const { name } = props;
     const [reload, refreshReload] = React.useState(0);
+    const [selectedIds, setSelectedIds] = React.useState<Id[]>([]);
     const [filters, setFilters] = React.useState<AnalysisFilterState>(initialFilters);
-    const createQualityAnalysis = useCreateQualityAnalysis({
+    const { createQualityAnalysis, removeQualityAnalysis } = useAnalysisMethods({
         onSuccess: () => {
             refreshReload(reload + 1);
         },
+        onRemove: () => {
+            setSelectedIds([]);
+            refreshReload(reload + 1);
+        },
     });
-    const { isDialogOpen, onDelete, setIsDialogOpen, tableConfig } = useTableConfig();
+    const { tableConfig } = useTableConfig({
+        onRemoveQualityAnalysis: React.useCallback(ids => {
+            setSelectedIds(ids);
+        }, []),
+    });
     const { getRows, loading } = useGetRows(filters, reload);
     const modules = useModules();
     const config = useObjectsTable(tableConfig, getRows);
@@ -40,6 +50,10 @@ export const DashboardPage: React.FC<Props> = React.memo(props => {
         },
         [createQualityAnalysis]
     );
+
+    const onRemoveAnalysis = React.useCallback(() => {
+        removeQualityAnalysis(selectedIds);
+    }, [removeQualityAnalysis, selectedIds]);
 
     const filterComponents = React.useMemo(() => {
         return (
@@ -57,10 +71,10 @@ export const DashboardPage: React.FC<Props> = React.memo(props => {
             <PageHeader title={i18n.t(name)} />
             <ObjectsTable loading={loading} {...config} filterComponents={filterComponents} />
             <ConfirmationDialog
-                isOpen={isDialogOpen}
-                title={i18n.t("Are you sure you want to delete this?")}
-                onSave={onDelete}
-                onCancel={() => setIsDialogOpen(false)}
+                isOpen={selectedIds.length > 0}
+                title={i18n.t("Are you sure you want to delete the selected rows?")}
+                onSave={onRemoveAnalysis}
+                onCancel={() => setSelectedIds([])}
                 saveText={i18n.t("Yes, Delete")}
                 cancelText={i18n.t("Cancel")}
                 fullWidth={true}

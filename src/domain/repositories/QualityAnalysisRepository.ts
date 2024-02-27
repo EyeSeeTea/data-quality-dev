@@ -1,10 +1,12 @@
 import { FutureData } from "../../data/api-futures";
 import { Maybe } from "../../utils/ts-utils";
 import { QualityAnalysis } from "../entities/QualityAnalysis";
+import { Id } from "$/domain/entities/Ref";
 
 export interface QualityAnalysisRepository {
     get(options: QualityAnalysisOptions): FutureData<QualityAnalysisPaginated>;
-    save(qualityAnalyses: QualityAnalysis[]): FutureData<void>;
+    save(qualityAnalysis: QualityAnalysis[]): FutureData<void>;
+    remove(id: Id[]): FutureData<void>;
 }
 
 export type Pagination = {

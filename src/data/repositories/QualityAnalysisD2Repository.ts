@@ -28,7 +28,7 @@ import {
     QualityAnalysisStatus,
     qualityAnalysisStatus,
 } from "../../domain/entities/QualityAnalysisStatus";
-import { Module } from "../../domain/entities/Module";
+import { Module } from "$/domain/entities/Module";
 import { QualityAnalysisSection } from "../../domain/entities/QualityAnalysisSection";
 import { D2User } from "../common/D2User";
 import { D2CategoryOption } from "../common/D2CategoryOption";
@@ -114,6 +114,40 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
         });
     }
 
+    save(qualityAnalysis: QualityAnalysis[]): FutureData<void> {
+        const qualityIds = qualityAnalysis.map(record => record.id);
+        const $requests = Future.sequential(
+            _(qualityIds)
+                .chunk(50)
+                .map(qaIds => {
+                    return Future.joinObj({
+                        saveTeis: this.buildTeisRequests(qaIds, qualityAnalysis),
+                        saveSections: this.buildSectionsRequests(qaIds, qualityAnalysis),
+                    });
+                })
+                .value()
+        );
+
+        return Future.sequential([$requests]).flatMap(() => {
+            return Future.success(undefined);
+        });
+    }
+
+    remove(id: Id[]): FutureData<void> {
+        return apiToFuture(
+            this.api.tracker.post(
+                { importStrategy: "DELETE" },
+                { trackedEntities: id.map(id => ({ trackedEntity: id })) }
+            )
+        ).flatMap(d2Response => {
+            if (d2Response.status === "ERROR") {
+                return Future.error(new Error(d2Response.message));
+            } else {
+                return Future.success(undefined);
+            }
+        });
+    }
+
     private getSectionInformation(teiIds: Id[]) {
         const dataStore = this.api.dataStore("data-quality");
         const $requests = _(teiIds)
@@ -136,25 +170,6 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
                 .compact()
                 .value();
             return onlyDefinedStatus;
-        });
-    }
-
-    save(qualityAnalysis: QualityAnalysis[]): FutureData<void> {
-        const qualityIds = qualityAnalysis.map(record => record.id);
-        const $requests = Future.sequential(
-            _(qualityIds)
-                .chunk(50)
-                .map(qaIds => {
-                    return Future.joinObj({
-                        saveTeis: this.buildTeisRequests(qaIds, qualityAnalysis),
-                        saveSections: this.buildSectionsRequests(qaIds, qualityAnalysis),
-                    });
-                })
-                .value()
-        );
-
-        return Future.sequential([$requests]).flatMap(() => {
-            return Future.success(undefined);
         });
     }
 

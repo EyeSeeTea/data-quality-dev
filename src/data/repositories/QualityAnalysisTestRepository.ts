@@ -6,6 +6,9 @@ import {
 import { FutureData } from "../api-futures";
 
 export class QualityAnalysisTestRepository implements QualityAnalysisRepository {
+    remove(): FutureData<void> {
+        throw new Error("Method not implemented.");
+    }
     save(): FutureData<any> {
         throw new Error("Method not implemented.");
     }

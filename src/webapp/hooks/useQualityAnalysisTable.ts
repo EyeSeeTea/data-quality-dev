@@ -6,17 +6,16 @@ import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { analysisColumns } from "$/webapp/utils/analysis";
 import { AnalysisFilterState } from "$/webapp/components/analysis-filter/AnalysisFilter";
-import { useAnalysisActions } from "$/webapp/components/analysis-actions/AnalysisActions";
+import { useAnalysisTableActions } from "$/webapp/components/analysis-actions/AnalysisActions";
 import { Module } from "$/domain/entities/Module";
+import { Id } from "$/domain/entities/Ref";
 
-export function useTableConfig() {
-    const { actions, isDialogOpen, setIsDialogOpen } = useAnalysisActions({
+export function useTableConfig(props: UseTableConfigProps) {
+    const { onRemoveQualityAnalysis } = props;
+    const { actions } = useAnalysisTableActions({
         statusIsCompleted: false,
+        onDelete: onRemoveQualityAnalysis,
     });
-
-    const onDelete = () => {
-        setIsDialogOpen(false);
-    };
 
     const tableConfig = React.useMemo<TableConfig<QualityAnalysis>>(() => {
         return {
@@ -28,7 +27,7 @@ export function useTableConfig() {
         };
     }, [actions]);
 
-    return { isDialogOpen, onDelete, setIsDialogOpen, tableConfig };
+    return { tableConfig };
 }
 
 export function useGetRows(filters: AnalysisFilterState, reloadKey: number) {
@@ -79,8 +78,8 @@ export function useGetRows(filters: AnalysisFilterState, reloadKey: number) {
     return { getRows, loading };
 }
 
-export function useCreateQualityAnalysis(props: UseCreateQualityAnalysisProps) {
-    const { onSuccess } = props;
+export function useAnalysisMethods(props: UseAnalysisMethodsProps) {
+    const { onSuccess, onRemove } = props;
     const { compositionRoot } = useAppContext();
     const snackbar = useSnackbar();
     const loading = useLoading();
@@ -105,7 +104,30 @@ export function useCreateQualityAnalysis(props: UseCreateQualityAnalysisProps) {
         [compositionRoot.qualityAnalysis.create, loading, onSuccess, snackbar]
     );
 
-    return createQualityAnalysis;
+    const removeQualityAnalysis = React.useCallback(
+        (selectedIds: Id[]) => {
+            loading.show(true, i18n.t("Removing..."));
+            compositionRoot.qualityAnalysis.remove.execute(selectedIds).run(
+                () => {
+                    snackbar.success(i18n.t("Quality Analysis deleted"));
+                    loading.hide();
+                    onRemove();
+                },
+                err => {
+                    snackbar.error(err.message);
+                    loading.hide();
+                    onRemove();
+                }
+            );
+        },
+        [compositionRoot.qualityAnalysis.remove, loading, onRemove, snackbar]
+    );
+
+    return { createQualityAnalysis, removeQualityAnalysis };
 }
 
-type UseCreateQualityAnalysisProps = { onSuccess: () => void };
+type UseAnalysisMethodsProps = { onSuccess: () => void; onRemove: () => void };
+
+type UseTableConfigProps = {
+    onRemoveQualityAnalysis: (ids: string[]) => void;
+};
