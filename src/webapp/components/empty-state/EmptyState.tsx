@@ -30,7 +30,7 @@ const Container = styled.section<ContainerProps>`
     border-color: ${customTheme.color.grey};
     border: 1px solid;
     border-radius: 4px;
-    height: 39.125rem;
+    height: 28rem;
     width: 100%;
 
     ${({ $variant }) =>

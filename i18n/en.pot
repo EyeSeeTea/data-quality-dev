@@ -26,6 +26,24 @@ msgstr ""
 msgid "Data Quality Analysis"
 msgstr ""
 
+msgid "Algorithm"
+msgstr ""
+
+msgid "Threshold"
+msgstr ""
+
+msgid "Run"
+msgstr ""
+
+msgid "Run to get results"
+msgstr ""
+
+msgid "Ready"
+msgstr ""
+
+msgid "Running"
+msgstr ""
+
 msgid "Configuration"
 msgstr ""
 
