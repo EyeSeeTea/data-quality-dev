@@ -7,7 +7,7 @@ import AssignmentOutlinedIcon from "@material-ui/icons/AssignmentOutlined";
 import { useSnackbar } from "@eyeseetea/d2-ui-components";
 import i18n from "$/utils/i18n";
 import { useCallback } from "react";
-import { MenuButton } from "$/webapp/components/menu-button/MenuButton";
+import { Item, MenuButton } from "$/webapp/components/menu-button/MenuButton";
 
 export function useDashboard() {
     const [statusIsCompleted, setStatusIsCompleted] = useState(false);
@@ -45,14 +45,17 @@ export function useDashboard() {
         {
             label: "Module 1",
             id: "module-1",
-            handleClick: () => alert("Module 1"),
         },
         {
             label: "Module 2",
             id: "module-2",
-            handleClick: () => alert("Module 2"),
         },
     ];
+
+    const onMenuItemSelected = (id: Item["id"]) => {
+        const selectedItem = menuButtonItems.find(item => item.id === id);
+        alert(selectedItem?.label);
+    };
 
     const customFilters = (
         <>
@@ -84,7 +87,11 @@ export function useDashboard() {
                 value={"somevalue"}
                 label={i18n.t("Status")}
             />
-            <MenuButton label={"New Data Quality"} items={menuButtonItems} />
+            <MenuButton
+                label={"New Data Quality"}
+                items={menuButtonItems}
+                onItemSelected={onMenuItemSelected}
+            />
         </>
     );
 

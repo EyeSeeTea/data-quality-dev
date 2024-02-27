@@ -8,18 +8,18 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { memo, useState, MouseEvent } from "react";
 import styled from "styled-components";
 
-type Item = {
+export type Item = {
     label: string;
     id: string;
-    handleClick: () => void;
 };
 
 type Props = {
     label: string;
     items: Item[];
+    onItemSelected: (id: string) => void;
 };
 
-export const MenuButton: React.FC<Props> = memo(({ label, items }) => {
+export const MenuButton: React.FC<Props> = memo(({ label, items, onItemSelected }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const onOpenMenu = (event: MouseEvent<HTMLButtonElement>) => {
@@ -28,6 +28,10 @@ export const MenuButton: React.FC<Props> = memo(({ label, items }) => {
 
     const handleClose = () => {
         setAnchorEl(null);
+    };
+
+    const handleClick = (item: Item) => {
+        onItemSelected(item.id);
     };
 
     return (
@@ -51,7 +55,7 @@ export const MenuButton: React.FC<Props> = memo(({ label, items }) => {
             >
                 {items.map(item => (
                     <MenuItem key={item.id} onClick={handleClose}>
-                        <Button variant="text" color="primary" onClick={item.handleClick}>
+                        <Button variant="text" color="primary" onClick={() => handleClick(item)}>
                             {i18n.t(item.label)}
                         </Button>
                     </MenuItem>
