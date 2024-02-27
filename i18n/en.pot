@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-02-16T08:28:36.419Z\n"
-"PO-Revision-Date: 2024-02-16T08:28:36.420Z\n"
+"POT-Creation-Date: 2024-02-27T13:27:38.303Z\n"
+"PO-Revision-Date: 2024-02-27T13:27:38.304Z\n"
 
 msgid "Add"
 msgstr ""
@@ -98,6 +98,12 @@ msgstr ""
 msgid "Done"
 msgstr ""
 
+msgid "Module 1"
+msgstr ""
+
+msgid "Module 2"
+msgstr ""
+
 msgid "Dataset"
 msgstr ""
 
@@ -108,6 +114,15 @@ msgid "End Date"
 msgstr ""
 
 msgid "Status"
+msgstr ""
+
+msgid "New Data Quality"
+msgstr ""
+
+msgid "Selected element deleted successfully"
+msgstr ""
+
+msgid "Status changed"
 msgstr ""
 
 msgid "Start analysis"
