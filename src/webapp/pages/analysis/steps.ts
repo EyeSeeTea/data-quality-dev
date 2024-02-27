@@ -7,7 +7,7 @@ import { MidwiferyStep } from "./steps/MidwiferyStep";
 import { NursingMidwiferyStep } from "./steps/NursingMidwiferyStep";
 import { NursingStep } from "./steps/NursingStep";
 import { OtherStep } from "./steps/OtherStep";
-import { OutliersStep } from "./steps/OutliersStep";
+import { OutliersStep } from "./steps/step1-outliers/OutliersStep";
 import { TrendsStep } from "./steps/TrendsStep";
 
 export const steps = [
