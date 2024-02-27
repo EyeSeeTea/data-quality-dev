@@ -1,4 +1,3 @@
-import { Maybe } from "../../utils/ts-utils";
 import { Either } from "./generic/Either";
 import { ValidationError } from "./generic/Errors";
 import { Struct } from "./generic/Struct";

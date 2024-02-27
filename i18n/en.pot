@@ -5,8 +5,11 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2023-09-18T13:40:05.079Z\n"
-"PO-Revision-Date: 2023-09-18T13:40:05.079Z\n"
+"POT-Creation-Date: 2024-02-26T11:23:25.158Z\n"
+"PO-Revision-Date: 2024-02-26T11:23:25.158Z\n"
+
+msgid "Cannot be blank: {{fieldName}}"
+msgstr ""
 
 msgid "Add"
 msgstr ""
@@ -18,6 +21,96 @@ msgid "Back"
 msgstr ""
 
 msgid "Help"
+msgstr ""
+
+msgid "Analysis Page"
+msgstr ""
+
+msgid "Data Quality Analysis"
+msgstr ""
+
+msgid "Configuration"
+msgstr ""
+
+msgid "Outliers"
+msgstr ""
+
+msgid "Trends"
+msgstr ""
+
+msgid "Disaggregates"
+msgstr ""
+
+msgid "Doctors"
+msgstr ""
+
+msgid "Nursing"
+msgstr ""
+
+msgid "Midwifery"
+msgstr ""
+
+msgid "Nursing/Midwifery"
+msgstr ""
+
+msgid "Density"
+msgstr ""
+
+msgid "Other"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Are you sure you want to delete this?"
+msgstr ""
+
+msgid "Yes, Delete"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Ready"
+msgstr ""
+
+msgid "Running"
+msgstr ""
+
+msgid "Failure"
+msgstr ""
+
+msgid "Done"
+msgstr ""
+
+msgid "Dataset"
+msgstr ""
+
+msgid "Start Date"
+msgstr ""
+
+msgid "End Date"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Start analysis"
+msgstr ""
+
+msgid "Mark as In Progress"
+msgstr ""
+
+msgid "Mark as Complete"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Progress"
+msgstr ""
+
+msgid "Last Modification"
 msgstr ""
 
 msgid "Hello {{name}}"
