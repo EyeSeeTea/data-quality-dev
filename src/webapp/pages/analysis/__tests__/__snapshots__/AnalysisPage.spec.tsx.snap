@@ -285,7 +285,7 @@ exports[`AnalysisPage > renders the feedback component 1`] = `
               <span
                 class="MuiTypography-root MuiStepLabel-label MuiTypography-body2 MuiTypography-displayBlock"
               >
-                General Practisioners
+                General Practitioners
               </span>
             </span>
           </span>
