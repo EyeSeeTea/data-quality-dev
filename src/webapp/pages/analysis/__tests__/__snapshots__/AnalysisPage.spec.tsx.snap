@@ -11,7 +11,7 @@ exports[`AnalysisPage > renders the feedback component 1`] = `
     </h5>
   </div>
   <div
-    class="sc-ftvSup etlSnh makeStyles-root-10"
+    class="sc-evZas cpAOgk makeStyles-root-10"
   >
     <div
       class="MuiPaper-root MuiStepper-root MuiStepper-horizontal Wizard-Stepper makeStyles-stepper-15 MuiPaper-elevation0"
@@ -285,7 +285,7 @@ exports[`AnalysisPage > renders the feedback component 1`] = `
               <span
                 class="MuiTypography-root MuiStepLabel-label MuiTypography-body2 MuiTypography-displayBlock"
               >
-                Doctors
+                General Practisioners
               </span>
             </span>
           </span>

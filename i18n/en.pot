@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-02-27T13:27:38.303Z\n"
-"PO-Revision-Date: 2024-02-27T13:27:38.304Z\n"
+"POT-Creation-Date: 2024-02-28T11:29:09.214Z\n"
+"PO-Revision-Date: 2024-02-28T11:29:09.215Z\n"
 
 msgid "Add"
 msgstr ""
@@ -26,16 +26,46 @@ msgstr ""
 msgid "Data Quality Analysis"
 msgstr ""
 
-msgid "Algorithm"
+msgid "CatCombos"
 msgstr ""
 
-msgid "Threshold"
+msgid "Double Counts Threshold"
 msgstr ""
 
 msgid "Run"
 msgstr ""
 
 msgid "Run to get results"
+msgstr ""
+
+msgid "Activity Level"
+msgstr ""
+
+msgid "Sex"
+msgstr ""
+
+msgid "Age group"
+msgstr ""
+
+msgid "Place of Birth"
+msgstr ""
+
+msgid "Ownership"
+msgstr ""
+
+msgid "Vacancy rate"
+msgstr ""
+
+msgid "Applications"
+msgstr ""
+
+msgid "Enrolled"
+msgstr ""
+
+msgid "Algorithm"
+msgstr ""
+
+msgid "Threshold"
 msgstr ""
 
 msgid "Ready"
@@ -56,7 +86,7 @@ msgstr ""
 msgid "Disaggregates"
 msgstr ""
 
-msgid "Doctors"
+msgid "General Practisioners"
 msgstr ""
 
 msgid "Nursing"
@@ -84,12 +114,6 @@ msgid "Yes, Delete"
 msgstr ""
 
 msgid "Cancel"
-msgstr ""
-
-msgid "Ready"
-msgstr ""
-
-msgid "Running"
 msgstr ""
 
 msgid "Failure"
