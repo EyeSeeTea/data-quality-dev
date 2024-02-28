@@ -5,8 +5,38 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-02-27T13:27:38.303Z\n"
-"PO-Revision-Date: 2024-02-27T13:27:38.304Z\n"
+"POT-Creation-Date: 2024-02-28T00:21:27.758Z\n"
+"PO-Revision-Date: 2024-02-28T00:21:27.758Z\n"
+
+msgid "Cannot be blank: {{fieldName}}"
+msgstr ""
+
+msgid "Start analysis"
+msgstr ""
+
+msgid "Mark as Complete"
+msgstr ""
+
+msgid "Mark as In Progress"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Dataset"
+msgstr ""
+
+msgid "Start Date"
+msgstr ""
+
+msgid "End Date"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "New Data Quality"
+msgstr ""
 
 msgid "Add"
 msgstr ""
@@ -20,19 +50,25 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-msgid "Start analysis"
-msgstr ""
-
-msgid "Mark as In Progress"
-msgstr ""
-
-msgid "Mark as Complete"
-msgstr ""
-
-msgid "Delete"
-msgstr ""
-
 msgid "Name"
+msgstr ""
+
+msgid "Creating Data Quality..."
+msgstr ""
+
+msgid "Quality Analysis created"
+msgstr ""
+
+msgid "Removing..."
+msgstr ""
+
+msgid "Quality Analysis deleted"
+msgstr ""
+
+msgid "Updating Status..."
+msgstr ""
+
+msgid "Quality Analysis updated"
 msgstr ""
 
 msgid "Analysis Page"
@@ -89,19 +125,13 @@ msgstr ""
 msgid "Other"
 msgstr ""
 
-msgid "Are you sure you want to delete this?"
+msgid "Are you sure you want to {{action}} the selected rows?"
 msgstr ""
 
-msgid "Yes, Delete"
+msgid "Yes, {{actionButton}}"
 msgstr ""
 
 msgid "Cancel"
-msgstr ""
-
-msgid "Ready"
-msgstr ""
-
-msgid "Running"
 msgstr ""
 
 msgid "Failure"
@@ -116,47 +146,20 @@ msgstr ""
 msgid "Module 2"
 msgstr ""
 
-msgid "Dataset"
-msgstr ""
-
-msgid "Start Date"
-msgstr ""
-
-msgid "End Date"
-msgstr ""
-
-msgid "Status"
-msgstr ""
-
-msgid "New Data Quality"
-msgstr ""
-
 msgid "Selected element deleted successfully"
 msgstr ""
 
 msgid "Status changed"
 msgstr ""
 
-msgid "Start analysis"
+msgid "Hello {{name}}"
 msgstr ""
 
-msgid "Mark as In Progress"
-msgstr ""
-
-msgid "Mark as Complete"
-msgstr ""
-
-msgid "Delete"
+msgid "Detail page"
 msgstr ""
 
 msgid "Progress"
 msgstr ""
 
 msgid "Last Modification"
-msgstr ""
-
-msgid "Hello {{name}}"
-msgstr ""
-
-msgid "Detail page"
 msgstr ""

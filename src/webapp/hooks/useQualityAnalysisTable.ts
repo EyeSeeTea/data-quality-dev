@@ -89,14 +89,14 @@ export function useAnalysisMethods(props: UseAnalysisMethodsProps) {
 
     const createQualityAnalysis = React.useCallback(
         (module: Module, name: string) => {
-            loading.show();
+            loading.show(true, i18n.t("Creating Data Quality..."));
             compositionRoot.qualityAnalysis.create
                 .execute({ qualityAnalysis: { module: module, name: name } })
                 .run(
-                    () => {
+                    id => {
                         loading.hide();
                         snackbar.success(i18n.t("Quality Analysis created"));
-                        onSuccess();
+                        onSuccess(id);
                     },
                     err => {
                         snackbar.error(err.message);
@@ -149,5 +149,5 @@ export function useAnalysisMethods(props: UseAnalysisMethodsProps) {
     return { createQualityAnalysis, removeQualityAnalysis, updateStatusQualityAnalysis };
 }
 
-type UseAnalysisMethodsProps = { onSuccess: () => void; onRemove: () => void };
+type UseAnalysisMethodsProps = { onSuccess: (id: Id) => void; onRemove: () => void };
 type UseTableConfigProps = { onRemoveQualityAnalysis: (ids: string[], action: ActionType) => void };

@@ -1,3 +1,4 @@
+import { Id } from "$/domain/entities/Ref";
 import { getUid } from "$/utils/uid";
 import { FutureData } from "../../data/api-futures";
 import { QualityAnalysis } from "../entities/QualityAnalysis";
@@ -17,7 +18,7 @@ export class CreateQualityAnalysisUseCase {
         private analysisSectionRepository: AnalysisSectionRepository
     ) {}
 
-    execute(options: CreateQualityAnalysisOptions): FutureData<void> {
+    execute(options: CreateQualityAnalysisOptions): FutureData<Id> {
         return Future.joinObj({
             currentUser: this.userRepository.getCurrent(),
             defaultSettings: this.settingsRepository.get(),
@@ -48,7 +49,7 @@ export class CreateQualityAnalysisUseCase {
                     return Future.error(new Error(errorMessages));
                 },
                 success: entity => {
-                    return this.qualityAnalysisRepository.save([entity]);
+                    return this.qualityAnalysisRepository.save([entity]).map(() => entity.id);
                 },
             });
         });

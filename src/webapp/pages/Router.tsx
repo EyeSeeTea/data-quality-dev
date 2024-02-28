@@ -15,7 +15,7 @@ export function Router() {
                     render={({ match }) => <ExamplePage name={match.params.name ?? "Stranger"} />}
                 />
                 <Route
-                    path="/analysis"
+                    path="/analysis/:id"
                     render={() => <AnalysisPage name={i18n.t("Analysis Page")} />}
                 />
                 {/* Default route */}

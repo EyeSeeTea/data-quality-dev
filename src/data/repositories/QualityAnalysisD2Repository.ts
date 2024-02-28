@@ -540,7 +540,6 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
             return new QualityAnalysisSection({
                 id: programStage.id,
                 issues: qaIssues.filter(issue => issue.type === programStage.id),
-                // lastModification: sectionData?.lastModification || "",
                 status: sectionData?.status || "",
             });
         });

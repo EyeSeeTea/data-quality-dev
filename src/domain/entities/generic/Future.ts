@@ -69,6 +69,11 @@ export class Future<E, D> {
         return this._promise();
     }
 
+    static fromPromise<Error, D>(promise: Promise<D>): Future<Error, D> {
+        const cpromise = new rcpromise.CancellablePromise(promise, () => {});
+        return new Future<Error, D>(() => cpromise);
+    }
+
     static join2<E, T, S>(async1: Future<E, T>, async2: Future<E, S>): Future<E, [T, S]> {
         return new Future(() => {
             return rcpromise.CancellablePromise.all<T, S>([async1._promise(), async2._promise()]);

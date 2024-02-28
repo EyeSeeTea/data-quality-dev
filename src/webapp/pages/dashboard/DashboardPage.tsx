@@ -19,6 +19,7 @@ import styled from "styled-components";
 import { Module } from "$/domain/entities/Module";
 import { Id } from "$/domain/entities/Ref";
 import { ActionType } from "$/webapp/components/analysis-actions/AnalysisActions";
+import { useHistory } from "react-router-dom";
 
 type Props = { name: string };
 
@@ -27,10 +28,11 @@ export const DashboardPage: React.FC<Props> = React.memo(props => {
     const [reload, refreshReload] = React.useState(0);
     const [selectedIds, setSelectedIds] = React.useState<{ action: ActionType; ids: Id[] }>();
     const [filters, setFilters] = React.useState<AnalysisFilterState>(initialFilters);
+    const history = useHistory();
     const { createQualityAnalysis, removeQualityAnalysis, updateStatusQualityAnalysis } =
         useAnalysisMethods({
-            onSuccess: () => {
-                refreshReload(reload + 1);
+            onSuccess: id => {
+                history.push(`/analysis/${id}`);
             },
             onRemove: () => {
                 setSelectedIds(undefined);

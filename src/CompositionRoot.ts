@@ -1,11 +1,18 @@
+import { IssueRepository } from "$/domain/repositories/IssueRepository";
+import { OutlierRepository } from "$/domain/repositories/OutlierRepository";
 import { RemoveQualityUseCase } from "$/domain/usecases/RemoveQualityUseCase";
+import { RunOutlierUseCase } from "$/domain/usecases/RunOutlierUseCase";
 import { UpdateStatusAnalysisUseCase } from "$/domain/usecases/UpdateStatusAnalysisUseCase";
 import { AnalysisSectionD2Repository } from "./data/repositories/AnalysisSectionD2Repository";
 import { AnalysisSectionTestRepository } from "./data/repositories/AnalysisSectionTestRepository";
+import { IssueD2Repository } from "./data/repositories/IssueD2Repository";
+import { IssueTestRepository } from "./data/repositories/IssueTestRepository";
 import { MetadataD2Repository } from "./data/repositories/MetadataD2Repository";
 import { MetadataTestRepository } from "./data/repositories/MetadataTestRepository";
 import { ModuleD2Repository } from "./data/repositories/ModuleD2Repository";
 import { ModuleTestRepository } from "./data/repositories/ModuleTestRepository";
+import { OutlierD2Repository } from "./data/repositories/OutlierD2Repository";
+import { OutlierTestRepository } from "./data/repositories/OutlierTestRepository";
 import { QualityAnalysisD2Repository } from "./data/repositories/QualityAnalysisD2Repository";
 import { QualityAnalysisTestRepository } from "./data/repositories/QualityAnalysisTestRepository";
 import { SettingsD2Repository } from "./data/repositories/SettingsD2Repository";
@@ -35,6 +42,8 @@ type Repositories = {
     settingsRepository: SettingsRepository;
     moduleRepository: ModuleRepository;
     analysisSectionRepository: AnalysisSectionRepository;
+    outlierRepository: OutlierRepository;
+    issueRepository: IssueRepository;
 };
 
 function getCompositionRoot(repositories: Repositories) {
@@ -53,6 +62,14 @@ function getCompositionRoot(repositories: Repositories) {
             remove: new RemoveQualityUseCase(repositories.qualityAnalysisRepository),
             updateStatus: new UpdateStatusAnalysisUseCase(repositories.qualityAnalysisRepository),
         },
+        outlier: {
+            run: new RunOutlierUseCase(
+                repositories.outlierRepository,
+                repositories.qualityAnalysisRepository,
+                repositories.issueRepository,
+                repositories.analysisSectionRepository
+            ),
+        },
     };
 }
 
@@ -64,6 +81,8 @@ export function getWebappCompositionRoot(api: D2Api, metadata: MetadataItem) {
         settingsRepository: new SettingsD2Repository(api),
         moduleRepository: new ModuleD2Repository(metadata),
         analysisSectionRepository: new AnalysisSectionD2Repository(metadata),
+        outlierRepository: new OutlierD2Repository(api),
+        issueRepository: new IssueD2Repository(api, metadata),
     };
 
     return getCompositionRoot(repositories);
@@ -77,6 +96,8 @@ export function getTestCompositionRoot() {
         settingsRepository: new SettingsTestRepository(),
         moduleRepository: new ModuleTestRepository(),
         analysisSectionRepository: new AnalysisSectionTestRepository(),
+        outlierRepository: new OutlierTestRepository(),
+        issueRepository: new IssueTestRepository(),
     };
 
     return getCompositionRoot(repositories);
