@@ -1,7 +1,7 @@
 import { ConfigurationStep } from "./steps/ConfigurationStep";
 import { DensityStep } from "./steps/DensityStep";
 import { DisaggregatesStep } from "./steps/DisaggregatesStep";
-import { GeneralPracticionersStep } from "./steps/4-general-practicioners/GeneralPracticionersStep";
+import { GeneralPractitionersStep } from "./steps/4-general-practitioners/GeneralPractitionersStep";
 import { MidwiferyStep } from "./steps/MidwiferyStep";
 import { NursingMidwiferyStep } from "./steps/NursingMidwiferyStep";
 import { NursingStep } from "./steps/NursingStep";
@@ -32,9 +32,9 @@ export const steps = [
         component: DisaggregatesStep,
     },
     {
-        key: "general-practisioners",
-        label: i18n.t("General Practisioners"),
-        component: GeneralPracticionersStep,
+        key: "general-practitioners",
+        label: i18n.t("General Practitioners"),
+        component: GeneralPractitionersStep,
     },
     {
         key: "nursing",

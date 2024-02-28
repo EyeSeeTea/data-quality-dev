@@ -1,7 +1,7 @@
 import i18n from "$/utils/i18n";
 import { useState } from "react";
 
-export function useGeneralPracticionersStep() {
+export function useGeneralPractitionersStep() {
     const [values, setValues] = useState<string[]>([]);
 
     const handleChange = (values: string[]) => {

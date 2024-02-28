@@ -2,7 +2,7 @@ import React from "react";
 import i18n from "$/utils/i18n";
 import styled from "styled-components";
 import { MultipleDropdown } from "@eyeseetea/d2-ui-components";
-import { useGeneralPracticionersStep } from "./hooks/useGeneralPracticionersStep";
+import { useGeneralPractitionersStep } from "./hooks/useGeneralPractitionersStep";
 import { EmptyState } from "$/webapp/components/empty-state/EmptyState";
 import { Typography, Button } from "@material-ui/core";
 import { Dropdown } from "@eyeseetea/d2-ui-components";
@@ -11,10 +11,10 @@ interface PageProps {
     name: string;
 }
 
-export const GeneralPracticionersStep: React.FC<PageProps> = React.memo(props => {
-    const { name = "Personnel analysis: General Practicioners missing and double counts" } = props;
+export const GeneralPractitionersStep: React.FC<PageProps> = React.memo(props => {
+    const { name = "Personnel analysis: General Practitioners missing and double counts" } = props;
     const { doubleCountsItems, values, handleChange, runAnalysis, valueChange, catCombosItems } =
-        useGeneralPracticionersStep();
+        useGeneralPractitionersStep();
 
     return (
         <Container>
