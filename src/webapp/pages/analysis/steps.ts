@@ -1,14 +1,14 @@
-import i18n from "../../../utils/i18n";
 import { ConfigurationStep } from "./steps/ConfigurationStep";
 import { DensityStep } from "./steps/DensityStep";
 import { DisaggregatesStep } from "./steps/DisaggregatesStep";
-import { DoctorsStep } from "./steps/DoctorsStep";
+import { GeneralPracticionersStep } from "./steps/4-general-practicioners/GeneralPracticionersStep";
 import { MidwiferyStep } from "./steps/MidwiferyStep";
 import { NursingMidwiferyStep } from "./steps/NursingMidwiferyStep";
 import { NursingStep } from "./steps/NursingStep";
 import { OtherStep } from "./steps/OtherStep";
 import { OutliersStep } from "./steps/step1-outliers/OutliersStep";
 import { TrendsStep } from "./steps/TrendsStep";
+import i18n from "$/utils/i18n";
 
 export const steps = [
     {
@@ -32,9 +32,9 @@ export const steps = [
         component: DisaggregatesStep,
     },
     {
-        key: "doctors",
-        label: i18n.t("Doctors"),
-        component: DoctorsStep,
+        key: "general-practisioners",
+        label: i18n.t("General Practisioners"),
+        component: GeneralPracticionersStep,
     },
     {
         key: "nursing",
