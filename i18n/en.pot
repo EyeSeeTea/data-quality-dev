@@ -8,6 +8,9 @@ msgstr ""
 "POT-Creation-Date: 2024-02-27T13:27:38.303Z\n"
 "PO-Revision-Date: 2024-02-27T13:27:38.304Z\n"
 
+msgid "Cannot be blank: {{fieldName}}"
+msgstr ""
+
 msgid "Add"
 msgstr ""
 

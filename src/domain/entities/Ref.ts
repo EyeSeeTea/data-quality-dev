@@ -7,3 +7,10 @@ export interface Ref {
 export interface NamedRef extends Ref {
     name: string;
 }
+
+export interface NamedCodeRef extends NamedRef {
+    code: string;
+}
+
+export type IssuePeriod = string;
+export type IssueNumber = string;
