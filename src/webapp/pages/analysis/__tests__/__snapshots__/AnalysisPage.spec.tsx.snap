@@ -68,14 +68,14 @@ exports[`AnalysisPage > renders the feedback component 1`] = `
         </button>
       </div>
       <div
-        class="MuiStepConnector-root MuiStepConnector-horizontal Mui-disabled"
+        class="MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-completed Mui-disabled"
       >
         <span
           class="MuiStepConnector-line MuiStepConnector-lineHorizontal"
         />
       </div>
       <div
-        class="MuiStep-root MuiStep-horizontal Wizard-Step"
+        class="MuiStep-root MuiStep-horizontal Wizard-Step MuiStep-completed"
       >
         <button
           class="MuiButtonBase-root MuiStepButton-root makeStyles-stepButton-14 MuiStepButton-horizontal Mui-disabled"
@@ -92,30 +92,20 @@ exports[`AnalysisPage > renders the feedback component 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiStepIcon-root"
+                class="MuiSvgIcon-root MuiStepIcon-root MuiStepIcon-completed"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
-                <circle
-                  cx="12"
-                  cy="12"
-                  r="12"
+                <path
+                  d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24zm-2 17l-5-5 1.4-1.4 3.6 3.6 7.6-7.6L19 8l-9 9z"
                 />
-                <text
-                  class="MuiStepIcon-text"
-                  text-anchor="middle"
-                  x="12"
-                  y="16"
-                >
-                  2
-                </text>
               </svg>
             </span>
             <span
               class="MuiStepLabel-labelContainer"
             >
               <span
-                class="MuiTypography-root MuiStepLabel-label MuiTypography-body2 MuiTypography-displayBlock"
+                class="MuiTypography-root MuiStepLabel-label MuiStepLabel-completed MuiTypography-body2 MuiTypography-displayBlock"
               >
                 Outliers
               </span>
