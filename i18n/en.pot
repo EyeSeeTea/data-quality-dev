@@ -5,13 +5,13 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-02-28T00:21:27.758Z\n"
-"PO-Revision-Date: 2024-02-28T00:21:27.758Z\n"
+"POT-Creation-Date: 2024-02-29T00:44:44.672Z\n"
+"PO-Revision-Date: 2024-02-29T00:44:44.672Z\n"
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
 
-msgid "Start analysis"
+msgid "Open analysis"
 msgstr ""
 
 msgid "Mark as Complete"
@@ -44,6 +44,39 @@ msgstr ""
 msgid "List"
 msgstr ""
 
+msgid "Issue"
+msgstr ""
+
+msgid "Country"
+msgstr ""
+
+msgid "Period"
+msgstr ""
+
+msgid "Data Element"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Azure URL"
+msgstr ""
+
+msgid "Follow Up"
+msgstr ""
+
+msgid "Action"
+msgstr ""
+
+msgid "Action Description"
+msgstr ""
+
+msgid "Issue Number"
+msgstr ""
+
 msgid "Back"
 msgstr ""
 
@@ -71,10 +104,13 @@ msgstr ""
 msgid "Quality Analysis updated"
 msgstr ""
 
-msgid "Analysis Page"
+msgid "Analysis"
 msgstr ""
 
 msgid "Data Quality Analysis"
+msgstr ""
+
+msgid "Outliers detection analysis based on DHIS2 min-max standard functionality"
 msgstr ""
 
 msgid "Algorithm"
@@ -89,10 +125,10 @@ msgstr ""
 msgid "Run to get results"
 msgstr ""
 
-msgid "Ready"
+msgid "No Issues found"
 msgstr ""
 
-msgid "Running"
+msgid "Running analysis..."
 msgstr ""
 
 msgid "Configuration"
@@ -134,6 +170,12 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
+msgid "Ready"
+msgstr ""
+
+msgid "Running"
+msgstr ""
+
 msgid "Failure"
 msgstr ""
 
@@ -150,6 +192,9 @@ msgid "Selected element deleted successfully"
 msgstr ""
 
 msgid "Status changed"
+msgstr ""
+
+msgid "Start analysis"
 msgstr ""
 
 msgid "Hello {{name}}"

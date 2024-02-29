@@ -3365,7 +3365,7 @@
     react "^16.12.0"
     yargs "^14.0.0"
 
-"@eyeseetea/d2-logger@^1.0.0":
+"@eyeseetea/d2-logger@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@eyeseetea/d2-logger/-/d2-logger-1.0.0.tgz#392ce65c395fdad045db6fc2462ec1b133809984"
   integrity sha512-rfe6HwB2hlI2TRYW98pvWPFDiSnK4h1LguySRrUpaCjIy2WG/CPilMh2NqNNA4Y81NrWbgzNjtqS9jk8+x/ihw==
