@@ -302,6 +302,10 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
                     attribute: this.metadata.trackedEntityAttributes.name.id,
                     value: qualityAnalysis.name,
                 },
+                {
+                    attribute: this.metadata.trackedEntityAttributes.lastModification.id,
+                    value: qualityAnalysis.lastModification,
+                },
             ];
         } else {
             return existingTei.attributes.map(attribute => {
@@ -321,6 +325,11 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
                     return { ...attribute, value: qualityAnalysis.status as string };
                 } else if (attribute.attribute === this.metadata.trackedEntityAttributes.name.id) {
                     return { ...attribute, value: qualityAnalysis.name };
+                } else if (
+                    attribute.attribute ===
+                    this.metadata.trackedEntityAttributes.lastModification.id
+                ) {
+                    return { ...attribute, value: qualityAnalysis.lastModification };
                 } else {
                     return attribute;
                 }

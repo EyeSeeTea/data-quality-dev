@@ -42,7 +42,7 @@ export class CreateQualityAnalysisUseCase {
                 }),
                 startDate: defaultSettings.startDate,
                 status: "In Progress",
-                lastModification: "",
+                lastModification: " - ",
             }).match({
                 error: errors => {
                     const errorMessages = getErrors(errors);
