@@ -3,6 +3,7 @@ import { OutlierOptions, OutlierRepository } from "$/domain/repositories/Outlier
 import { FutureData, apiToFuture } from "../api-futures";
 import { Id, Period } from "$/domain/entities/Ref";
 import { Outlier } from "$/domain/entities/Outlier";
+import { Maybe } from "$/utils/ts-utils";
 
 export class OutlierD2Repository implements OutlierRepository {
     constructor(private api: D2Api) {}
@@ -21,9 +22,14 @@ export class OutlierD2Repository implements OutlierRepository {
                     threshold: options.threshold,
                 },
             })
-        ).map(response => {
-            return response.outlierValues.map(d2Outlier => this.buildOutliers(d2Outlier));
-        });
+        )
+            .map(response => {
+                return response.outlierValues.map(d2Outlier => this.buildOutliers(d2Outlier));
+            })
+            .mapError(err => {
+                const error = err as unknown as { response?: { data?: { message: string } } };
+                return new Error(error.response?.data?.message || err.message);
+            });
     }
 
     private buildOutliers(d2Outlier: D2Outlier): Outlier {
@@ -32,6 +38,7 @@ export class OutlierD2Repository implements OutlierRepository {
             countryId: d2Outlier.ou,
             dataElementId: d2Outlier.de,
             period: d2Outlier.pe,
+            zScore: d2Outlier.zScore,
         };
     }
 }
@@ -42,6 +49,7 @@ type D2Outlier = {
     ou: Id;
     coc: Id;
     aoc: Id;
+    zScore: Maybe<number>;
 };
 
 type D2OutlierResponse = {

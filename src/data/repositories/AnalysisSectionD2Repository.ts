@@ -11,6 +11,7 @@ export class AnalysisSectionD2Repository implements AnalysisSectionRepository {
         const sections = this.metadata.programs.qualityIssues.programStages.map(programStage => {
             return QualityAnalysisSection.create({
                 id: programStage.id,
+                name: programStage.name,
                 issues: [],
                 status: "",
             });

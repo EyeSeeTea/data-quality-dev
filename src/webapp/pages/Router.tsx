@@ -16,7 +16,7 @@ export function Router() {
                 />
                 <Route
                     path="/analysis/:id"
-                    render={() => <AnalysisPage name={i18n.t("Analysis Page")} />}
+                    render={() => <AnalysisPage name={i18n.t("Analysis")} />}
                 />
                 {/* Default route */}
                 <Route

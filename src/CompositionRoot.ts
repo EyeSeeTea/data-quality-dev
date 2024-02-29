@@ -1,5 +1,6 @@
 import { IssueRepository } from "$/domain/repositories/IssueRepository";
 import { OutlierRepository } from "$/domain/repositories/OutlierRepository";
+import { GetAnalysisByIdUseCase } from "$/domain/usecases/GetAnalysisByIdUseCase";
 import { RemoveQualityUseCase } from "$/domain/usecases/RemoveQualityUseCase";
 import { RunOutlierUseCase } from "$/domain/usecases/RunOutlierUseCase";
 import { UpdateStatusAnalysisUseCase } from "$/domain/usecases/UpdateStatusAnalysisUseCase";
@@ -29,8 +30,8 @@ import { UserRepository } from "./domain/repositories/UserRepository";
 import { CreateQualityAnalysisUseCase } from "./domain/usecases/CreateQualityAnalysisUseCase";
 import { GetCurrentUserUseCase } from "./domain/usecases/GetCurrentUserUseCase";
 import { GetModulesUseCase } from "./domain/usecases/GetModulesUseCase";
+import { GetOutlierIssuesUseCase } from "./domain/usecases/GetOutlierIssuesUseCase";
 import { GetQualityAnalysisUseCase } from "./domain/usecases/GetQualityAnalisysUseCase";
-import { SaveQualityAnalysisUseCase } from "./domain/usecases/SaveQualityAnalysisUseCase";
 import { D2Api } from "./types/d2-api";
 
 export type CompositionRoot = ReturnType<typeof getCompositionRoot>;
@@ -52,7 +53,7 @@ function getCompositionRoot(repositories: Repositories) {
         modules: { get: new GetModulesUseCase(repositories.moduleRepository) },
         qualityAnalysis: {
             get: new GetQualityAnalysisUseCase(repositories.qualityAnalysisRepository),
-            save: new SaveQualityAnalysisUseCase(repositories.qualityAnalysisRepository),
+            getById: new GetAnalysisByIdUseCase(repositories.qualityAnalysisRepository),
             create: new CreateQualityAnalysisUseCase(
                 repositories.qualityAnalysisRepository,
                 repositories.usersRepository,
@@ -63,11 +64,12 @@ function getCompositionRoot(repositories: Repositories) {
             updateStatus: new UpdateStatusAnalysisUseCase(repositories.qualityAnalysisRepository),
         },
         outlier: {
+            get: new GetOutlierIssuesUseCase(repositories.issueRepository),
             run: new RunOutlierUseCase(
                 repositories.outlierRepository,
                 repositories.qualityAnalysisRepository,
                 repositories.issueRepository,
-                repositories.analysisSectionRepository
+                repositories.settingsRepository
             ),
         },
     };

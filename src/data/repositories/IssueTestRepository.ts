@@ -7,7 +7,7 @@ export class IssueTestRepository implements IssueRepository {
     get(): FutureData<RowsPaginated<QualityAnalysisIssue>> {
         throw new Error("Method not implemented.");
     }
-    save(): FutureData<void> {
+    create(): FutureData<void> {
         throw new Error("Method not implemented.");
     }
 }

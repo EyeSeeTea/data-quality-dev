@@ -35,6 +35,7 @@ import { D2CategoryOption } from "../common/D2CategoryOption";
 import { D2DataElement } from "../common/D2DataElement";
 import { D2OrgUnit } from "../common/D2Country";
 import { getUid } from "../../utils/uid";
+import { DATA_QUALITY_NAMESPACE } from "$/domain/entities/Settings";
 
 export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
     d2DataElement: D2DataElement;
@@ -115,6 +116,32 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
         });
     }
 
+    getById(id: string): FutureData<QualityAnalysis> {
+        return this.get({
+            filters: {
+                endDate: undefined,
+                ids: [id],
+                module: undefined,
+                name: undefined,
+                startDate: undefined,
+                status: undefined,
+            },
+            pagination: {
+                page: 1,
+                pageSize: 1e6,
+            },
+            sorting: {
+                field: "name",
+                order: "desc",
+            },
+        }).flatMap(analysis => {
+            const firstAnalysis = analysis.rows[0];
+            if (!firstAnalysis)
+                return Future.error(new Error(`Cannot find qualityAnalysis: ${id}`));
+            return Future.success(firstAnalysis);
+        });
+    }
+
     save(qualityAnalysis: QualityAnalysis[]): FutureData<void> {
         const qualityIds = qualityAnalysis.map(record => record.id);
         const $requests = Future.sequential(
@@ -150,7 +177,7 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
     }
 
     private getSectionInformation(teiIds: Id[]) {
-        const dataStore = this.api.dataStore("data-quality");
+        const dataStore = this.api.dataStore(DATA_QUALITY_NAMESPACE);
         const $requests = _(teiIds)
             .map(id => {
                 return apiToFuture(dataStore.get<Maybe<D2AnalysisDataStore>>(id)).map(
@@ -175,19 +202,14 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
     }
 
     private buildSectionsRequests(qaIds: string[], qualityAnalysis: QualityAnalysis[]) {
-        const dataStore = this.api.dataStore("data-quality");
+        const dataStore = this.api.dataStore(DATA_QUALITY_NAMESPACE);
         const $requests = _(qaIds)
             .map(qualityId => {
                 const qAnalysis = qualityAnalysis.find(qa => qa.id === qualityId);
                 if (!qAnalysis) return undefined;
                 if (qAnalysis.sections.length === 0) return undefined;
                 const sections = qAnalysis.sections.map(section => {
-                    return {
-                        [section.id]: {
-                            status: section.status,
-                            lastModification: new Date().toISOString(),
-                        },
-                    };
+                    return { id: section.id, status: section.status };
                 });
                 return apiToFuture(
                     dataStore.save(qualityId, { sections: sections }).map(response => {
@@ -536,9 +558,12 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
         qaIssues: QualityAnalysisIssue[]
     ): QualityAnalysisSection[] {
         return this.metadata.programs.qualityIssues.programStages.map(programStage => {
-            const sectionData = sectionsInfo?.extraInfo?.[programStage.id];
+            const sectionData = sectionsInfo?.extraInfo?.find(
+                section => section.id === programStage.id
+            );
             return new QualityAnalysisSection({
                 id: programStage.id,
+                name: programStage.name,
                 issues: qaIssues.filter(issue => issue.type === programStage.id),
                 status: sectionData?.status || "",
             });
@@ -660,6 +685,6 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
 }
 
 type DataElementKey = keyof MetadataItem["dataElements"];
-type D2AnalysisDataStore = { sections: AnalysisExtraInfo };
-type AnalysisExtraInfo = Record<Id, { status: string }>;
-type AnalysisSectionStatus = { id: Id; extraInfo: Maybe<AnalysisExtraInfo> };
+type D2AnalysisDataStore = { sections: SectionInfo[] };
+type SectionInfo = { id: Id; status: string };
+type AnalysisSectionStatus = { id: Id; extraInfo: Maybe<SectionInfo[]> };

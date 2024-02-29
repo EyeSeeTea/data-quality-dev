@@ -4,12 +4,13 @@ import { Id } from "./Ref";
 
 export interface QualityAnalysisSectionAttrs {
     id: Id;
+    name: string;
     issues: QualityAnalysisIssue[];
     status: string;
 }
 
 export class QualityAnalysisSection extends Struct<QualityAnalysisSectionAttrs>() {
     static getInitialStatus(): string {
-        return "In Progress";
+        return "pending";
     }
 }

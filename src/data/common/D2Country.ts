@@ -24,8 +24,8 @@ export class D2OrgUnit {
                         return {
                             id: d2OrgUnit.id,
                             name:
-                                d2OrgUnit.displayFormName ||
                                 d2OrgUnit.displayShortName ||
+                                d2OrgUnit.displayFormName ||
                                 d2OrgUnit.displayName,
                         };
                     });

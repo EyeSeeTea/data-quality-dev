@@ -1,3 +1,4 @@
+import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { Future } from "../../domain/entities/generic/Future";
 import {
     QualityAnalysisPaginated,
@@ -6,6 +7,9 @@ import {
 import { FutureData } from "../api-futures";
 
 export class QualityAnalysisTestRepository implements QualityAnalysisRepository {
+    getById(): FutureData<QualityAnalysis> {
+        throw new Error("Method not implemented.");
+    }
     remove(): FutureData<void> {
         throw new Error("Method not implemented.");
     }

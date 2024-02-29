@@ -24,8 +24,8 @@ export class D2DataElement {
                         return {
                             id: d2DataElement.id,
                             name:
-                                d2DataElement.displayFormName ||
                                 d2DataElement.displayShortName ||
+                                d2DataElement.displayFormName ||
                                 d2DataElement.displayName,
                         };
                     });

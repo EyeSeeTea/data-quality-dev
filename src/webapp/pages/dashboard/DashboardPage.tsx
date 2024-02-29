@@ -15,11 +15,11 @@ import {
     useTableConfig,
 } from "$/webapp/hooks/useQualityAnalysisTable";
 import { useModules } from "$/webapp/hooks/useModule";
-import styled from "styled-components";
 import { Module } from "$/domain/entities/Module";
 import { Id } from "$/domain/entities/Ref";
 import { ActionType } from "$/webapp/components/analysis-actions/AnalysisActions";
 import { useHistory } from "react-router-dom";
+import { PageContainer } from "$/webapp/components/page-container/PageContainer";
 
 type Props = { name: string };
 
@@ -40,9 +40,16 @@ export const DashboardPage: React.FC<Props> = React.memo(props => {
             },
         });
     const { tableConfig } = useTableConfig({
-        onRemoveQualityAnalysis: React.useCallback((ids, action) => {
-            setSelectedIds({ action, ids });
-        }, []),
+        onRemoveQualityAnalysis: React.useCallback(
+            (ids, action) => {
+                if (action === "open" && ids[0]) {
+                    history.push(`/analysis/${ids[0]}`);
+                } else {
+                    setSelectedIds({ action, ids });
+                }
+            },
+            [history]
+        ),
     });
     const { getRows, loading } = useGetRows(filters, reload);
     const modules = useModules();
@@ -76,7 +83,7 @@ export const DashboardPage: React.FC<Props> = React.memo(props => {
     }, [filters, modules, onCreateAnalysis]);
 
     return (
-        <DashboardContainer>
+        <PageContainer>
             <PageHeader title={i18n.t(name)} />
             <ObjectsTable loading={loading} {...config} filterComponents={filterComponents} />
             <ConfirmationDialog
@@ -93,10 +100,6 @@ export const DashboardPage: React.FC<Props> = React.memo(props => {
                 fullWidth={true}
                 disableEnforceFocus
             />
-        </DashboardContainer>
+        </PageContainer>
     );
 });
-
-const DashboardContainer = styled.div`
-    padding: 1em;
-`;

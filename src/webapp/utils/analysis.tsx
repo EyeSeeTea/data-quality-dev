@@ -4,6 +4,19 @@ import { ProgressStatus } from "../components/progress-status/ProgressStatus";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { TableColumn } from "@eyeseetea/d2-ui-components";
 
+function mapAnalysisStatusToColor(sectionStatus: string) {
+    switch (sectionStatus) {
+        case "pending":
+            return "default";
+        case "success_with_issues":
+            return "danger";
+        case "success":
+            return "success";
+        default:
+            return "default";
+    }
+}
+
 export const analysisColumns: TableColumn<QualityAnalysis>[] = [
     { name: "name", text: i18n.t("Name"), sortable: true },
     { name: "module", text: i18n.t("Dataset"), sortable: true },
@@ -18,7 +31,11 @@ export const analysisColumns: TableColumn<QualityAnalysis>[] = [
             return (
                 <ProgressContainer>
                     {row.sections.map((value, index) => (
-                        <ProgressStatus key={index} position={index + 1} status={value.status} />
+                        <ProgressStatus
+                            key={index}
+                            position={index + 1}
+                            status={mapAnalysisStatusToColor(value.status)}
+                        />
                     ))}
                 </ProgressContainer>
             );

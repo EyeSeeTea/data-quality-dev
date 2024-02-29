@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export type Step = {
     position: number;
-    status: "default" | "complete" | string;
+    status: "default" | "success" | "danger";
 };
 
 export const ProgressContainer = styled.ul`

@@ -9,8 +9,6 @@ import i18n from "$/utils/i18n";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { Id } from "$/domain/entities/Ref";
 
-const noop = () => {};
-
 export function useAnalysisTableActions(props: UseAnalysisActionsProps) {
     const { onDelete } = props;
 
@@ -20,8 +18,8 @@ export function useAnalysisTableActions(props: UseAnalysisActionsProps) {
                 multiple: false,
                 name: "Analysis",
                 icon: <PlayCircleOutlineIcon />,
-                text: i18n.t("Start analysis"),
-                onClick: noop,
+                text: i18n.t("Open analysis"),
+                onClick: ids => onDelete(ids, "open"),
             },
             {
                 multiple: true,
@@ -58,7 +56,7 @@ export function useAnalysisTableActions(props: UseAnalysisActionsProps) {
     return { actions: actions };
 }
 
-export type ActionType = "delete" | "inprogress" | "completed";
+export type ActionType = "delete" | "inprogress" | "completed" | "open";
 
 type UseAnalysisActionsProps = {
     onDelete: (ids: Id[], action: ActionType) => void;

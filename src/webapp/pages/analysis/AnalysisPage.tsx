@@ -1,19 +1,26 @@
 import React from "react";
 import { Wizard } from "@eyeseetea/d2-ui-components";
 import { PageHeader } from "$/webapp/components/page-header/PageHeader";
-import i18n from "$/utils/i18n";
-import { steps } from "./steps";
+import { outlierKey, steps } from "./steps";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
+import { PageContainer } from "$/webapp/components/page-container/PageContainer";
 
 type PageProps = { name: string };
 
 export const AnalysisPage: React.FC<PageProps> = React.memo(props => {
     const { name } = props;
+    const history = useHistory();
+
+    const onBack = () => {
+        history.push("/");
+    };
+
     return (
-        <React.Fragment>
-            <PageHeader title={i18n.t(name)} />
-            <Stepper initialStepKey="outliers" steps={steps} />
-        </React.Fragment>
+        <PageContainer>
+            <PageHeader title={name} onBackClick={onBack} />
+            <Stepper initialStepKey={outlierKey} steps={steps} />
+        </PageContainer>
     );
 });
 
