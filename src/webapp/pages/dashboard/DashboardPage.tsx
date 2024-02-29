@@ -25,6 +25,7 @@ export const DashboardPage: React.FC<Props> = React.memo(props => {
                 searchBoxLabel={i18n.t("Name")}
                 onChangeSearch={handleSearchChange}
                 actions={actions}
+                paginationOptions={{ renderPosition: { bottom: true, top: false } }}
             />
             <ConfirmationDialog
                 isOpen={isDialogOpen}
