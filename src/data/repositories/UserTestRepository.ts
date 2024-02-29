@@ -5,6 +5,9 @@ import { UserRepository } from "../../domain/repositories/UserRepository";
 import { FutureData } from "../api-futures";
 
 export class UserTestRepository implements UserRepository {
+    getByUsernames(_: string[]): FutureData<User[]> {
+        throw new Error("Method not implemented.");
+    }
     public getCurrent(): FutureData<User> {
         return Future.success(createAdminUser());
     }
