@@ -91,11 +91,12 @@ export class RunOutlierUseCase {
         return this.issueRepository.get({
             filters: {
                 endDate: undefined,
-                ids: [analysis.id],
+                analysisIds: [analysis.id],
                 name: undefined,
                 sectionId: section?.id,
                 startDate: undefined,
                 status: undefined,
+                id: undefined,
             },
             pagination: { page: 1, pageSize: 10 },
             sorting: { field: "number", order: "asc" },
@@ -111,7 +112,11 @@ export class RunOutlierUseCase {
         const section = this.getCurrentSection(analysis);
         if (outliers.length === 0) return Future.success(undefined);
         const issuesToSave = outliers.map((outlier, index) => {
-            const issueNumber = `S01-I${totalIssues + 1 + index}`;
+            const correlative =
+                totalIssues + 1 + index < 10
+                    ? `0${totalIssues + 1 + index}`
+                    : totalIssues + 1 + index;
+            const issueNumber = `S01-I${correlative}`;
 
             return new QualityAnalysisIssue({
                 id: getUid(`issue-event_${outlierKey}_${new Date().getTime()}`),
@@ -131,6 +136,8 @@ export class RunOutlierUseCase {
                 action: undefined,
                 actionDescription: this.getActionDescription(outlier, options),
                 type: section.id,
+                comments: "",
+                contactEmails: "",
             });
         });
         return this.issueRepository.create(issuesToSave, analysis.id);

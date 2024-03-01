@@ -33,6 +33,8 @@ export interface MetadataItem {
         status: NamedCodeRef;
         action: NamedCodeRef;
         actionDescription: NamedCodeRef;
+        contactEmails: NamedCodeRef;
+        comments: NamedCodeRef;
     };
     programs: { qualityIssues: NamedRef & { programStages: ProgramStage[] } };
 }

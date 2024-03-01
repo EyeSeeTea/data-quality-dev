@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-02-29T00:44:44.672Z\n"
-"PO-Revision-Date: 2024-02-29T00:44:44.672Z\n"
+"POT-Creation-Date: 2024-03-01T16:02:05.491Z\n"
+"PO-Revision-Date: 2024-03-01T16:02:05.492Z\n"
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
@@ -42,6 +42,15 @@ msgid "Add"
 msgstr ""
 
 msgid "List"
+msgstr ""
+
+msgid "Update Issue..."
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Cancel"
 msgstr ""
 
 msgid "Issue"
@@ -165,9 +174,6 @@ msgid "Are you sure you want to {{action}} the selected rows?"
 msgstr ""
 
 msgid "Yes, {{actionButton}}"
-msgstr ""
-
-msgid "Cancel"
 msgstr ""
 
 msgid "Ready"

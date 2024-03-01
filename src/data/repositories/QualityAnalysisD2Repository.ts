@@ -382,32 +382,65 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
         event: D2TrackerEvent,
         issue: QualityAnalysisIssue
     ): DataValue[] {
-        return event.dataValues.map((dataValue): DataValue => {
-            if (dataValue.dataElement === this.metadata.dataElements.action.id) {
-                return { ...dataValue, value: this.getValueOrDefault(issue.action?.code) };
-            } else if (dataValue.dataElement === this.metadata.dataElements.actionDescription.id) {
-                return { ...dataValue, value: issue.actionDescription };
-            } else if (dataValue.dataElement === this.metadata.dataElements.azureUrl.id) {
-                return { ...dataValue, value: issue.azureUrl };
-            } else if (dataValue.dataElement === this.metadata.dataElements.categoryOption.id) {
-                return { ...dataValue, value: this.getValueOrDefault(issue.categoryOption?.id) };
-            } else if (dataValue.dataElement === this.metadata.dataElements.country.id) {
-                return { ...dataValue, value: this.getValueOrDefault(issue.country?.id) };
-            } else if (dataValue.dataElement === this.metadata.dataElements.dataElement.id) {
-                return { ...dataValue, value: this.getValueOrDefault(issue.dataElement?.id) };
-            } else if (dataValue.dataElement === this.metadata.dataElements.description.id) {
-                return { ...dataValue, value: issue.description };
-            } else if (dataValue.dataElement === this.metadata.dataElements.followUp.id) {
-                return { ...dataValue, value: issue.followUp ? "true" : "false" };
-            } else if (dataValue.dataElement === this.metadata.dataElements.issueNumber.id) {
-                return { ...dataValue, value: issue.number };
-            } else if (dataValue.dataElement === this.metadata.dataElements.period.id) {
-                return { ...dataValue, value: issue.period };
-            } else if (dataValue.dataElement === this.metadata.dataElements.status.id) {
-                return { ...dataValue, value: this.getValueOrDefault(issue.status?.code) };
-            } else {
-                return dataValue;
-            }
+        const currentDataValues = [
+            {
+                dataElement: this.metadata.dataElements.action.id,
+                value: this.getValueOrDefault(issue.action?.code),
+            },
+            {
+                dataElement: this.metadata.dataElements.actionDescription.id,
+                value: this.getValueOrDefault(issue.actionDescription),
+            },
+            {
+                dataElement: this.metadata.dataElements.azureUrl.id,
+                value: this.getValueOrDefault(issue.azureUrl),
+            },
+            {
+                dataElement: this.metadata.dataElements.contactEmails.id,
+                value: this.getValueOrDefault(issue.contactEmails),
+            },
+            {
+                dataElement: this.metadata.dataElements.comments.id,
+                value: this.getValueOrDefault(issue.comments),
+            },
+            {
+                dataElement: this.metadata.dataElements.categoryOption.id,
+                value: this.getValueOrDefault(issue.categoryOption?.id),
+            },
+            {
+                dataElement: this.metadata.dataElements.country.id,
+                value: this.getValueOrDefault(issue.country?.id),
+            },
+            {
+                dataElement: this.metadata.dataElements.dataElement.id,
+                value: this.getValueOrDefault(issue.dataElement?.id),
+            },
+            {
+                dataElement: this.metadata.dataElements.description.id,
+                value: this.getValueOrDefault(issue.description),
+            },
+            {
+                dataElement: this.metadata.dataElements.followUp.id,
+                value: issue.followUp ? "true" : "",
+            },
+            {
+                dataElement: this.metadata.dataElements.issueNumber.id,
+                value: this.getValueOrDefault(issue.number),
+            },
+            {
+                dataElement: this.metadata.dataElements.period.id,
+                value: this.getValueOrDefault(issue.period),
+            },
+            {
+                dataElement: this.metadata.dataElements.status.id,
+                value: this.getValueOrDefault(issue.status?.code),
+            },
+        ];
+        return currentDataValues.map((dataValue): DataValue => {
+            const d2DataValue = event.dataValues.find(
+                dv => dv.dataElement === dataValue.dataElement
+            );
+            return d2DataValue ? { ...d2DataValue, value: dataValue.value } : dataValue;
         });
     }
 
@@ -639,6 +672,8 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
             period: this.getDataValue(dataValuesById, "period"),
             status: issueStatus,
             type: issueType.id,
+            comments: this.getDataValue(dataValuesById, "comments"),
+            contactEmails: this.getDataValue(dataValuesById, "contactEmails"),
         });
     }
 

@@ -6,6 +6,7 @@ import { setupLogger } from "../../../utils/logger";
 import App from "./App";
 import { CompositionRoot, getWebappCompositionRoot } from "../../../CompositionRoot";
 import { MetadataD2Repository } from "../../../data/repositories/MetadataD2Repository";
+import { MetadataItem } from "$/domain/entities/MetadataItem";
 
 export function Dhis2App(_props: {}) {
     const [compositionRootRes, setCompositionRootRes] = React.useState<CompositionRootResult>({
@@ -31,12 +32,12 @@ export function Dhis2App(_props: {}) {
             );
         }
         case "loaded": {
-            const { baseUrl, compositionRoot } = compositionRootRes.data;
+            const { baseUrl, compositionRoot, metadata } = compositionRootRes.data;
             const config = { baseUrl, apiVersion: 30 };
 
             return (
                 <Provider config={config}>
-                    <App compositionRoot={compositionRoot} />
+                    <App compositionRoot={compositionRoot} metadata={metadata} />
                 </Provider>
             );
         }
@@ -46,11 +47,11 @@ export function Dhis2App(_props: {}) {
 type Data = {
     compositionRoot: CompositionRoot;
     baseUrl: string;
+    metadata: MetadataItem;
 };
 
 async function getData(): Promise<CompositionRootResult> {
     const baseUrl = await getBaseUrl();
-
     const auth = env["VITE_DHIS2_AUTH"];
     const [username = "", password = ""] = auth.split(":");
     const api = auth
@@ -63,8 +64,8 @@ async function getData(): Promise<CompositionRootResult> {
 
         const userSettings = await api.get<{ keyUiLocale: string }>("/userSettings").getData();
         configI18n(userSettings);
-        await setupLogger(env["VITE_DHIS2_BASE_URL"], metadata.programs.qualityIssues.id);
-        return { type: "loaded", data: { baseUrl, compositionRoot } };
+        await setupLogger("http://localhost:8080", metadata.programs.qualityIssues.id);
+        return { type: "loaded", data: { baseUrl, compositionRoot, metadata: metadata } };
     } catch (err) {
         return { type: "error", error: { baseUrl, error: err as Error } };
     }

@@ -69,9 +69,11 @@ export class Future<E, D> {
         return this._promise();
     }
 
-    static fromPromise<Error, D>(promise: Promise<D>): Future<Error, D> {
-        const cpromise = new rcpromise.CancellablePromise(promise, () => {});
-        return new Future<Error, D>(() => cpromise);
+    static fromPromise<Data>(promise: Promise<Data>): Future<Error, Data> {
+        return Future.fromComputation((resolve, reject) => {
+            promise.then(resolve).catch(err => reject(err ? err.message : "Unknown error"));
+            return () => {};
+        });
     }
 
     static join2<E, T, S>(async1: Future<E, T>, async2: Future<E, S>): Future<E, [T, S]> {

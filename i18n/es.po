@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2024-02-27T13:27:38.303Z\n"
+"POT-Creation-Date: 2024-03-01T16:02:05.491Z\n"
 "PO-Revision-Date: 2018-10-25T09:02:35.143Z\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -11,11 +11,80 @@ msgstr ""
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
 
+msgid "Open analysis"
+msgstr ""
+
+msgid "Mark as Complete"
+msgstr ""
+
+msgid "Mark as In Progress"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Dataset"
+msgstr ""
+
+msgid "Start Date"
+msgstr ""
+
+msgid "End Date"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "New Data Quality"
+msgstr ""
+
 msgid "Add"
 msgstr "Añadir"
 
 msgid "List"
 msgstr "Listar"
+
+msgid "Update Issue..."
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Issue"
+msgstr ""
+
+msgid "Country"
+msgstr ""
+
+msgid "Period"
+msgstr ""
+
+msgid "Data Element"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Azure URL"
+msgstr ""
+
+msgid "Follow Up"
+msgstr ""
+
+msgid "Action"
+msgstr ""
+
+msgid "Action Description"
+msgstr ""
+
+msgid "Issue Number"
+msgstr ""
 
 msgid "Back"
 msgstr "Volver"
@@ -26,10 +95,32 @@ msgstr "Ayuda"
 msgid "Name"
 msgstr ""
 
-msgid "Analysis Page"
+msgid "Creating Data Quality..."
+msgstr ""
+
+msgid "Quality Analysis created"
+msgstr ""
+
+msgid "Removing..."
+msgstr ""
+
+msgid "Quality Analysis deleted"
+msgstr ""
+
+msgid "Updating Status..."
+msgstr ""
+
+msgid "Quality Analysis updated"
+msgstr ""
+
+msgid "Analysis"
 msgstr ""
 
 msgid "Data Quality Analysis"
+msgstr ""
+
+msgid ""
+"Outliers detection analysis based on DHIS2 min-max standard functionality"
 msgstr ""
 
 msgid "Algorithm"
@@ -44,10 +135,10 @@ msgstr ""
 msgid "Run to get results"
 msgstr ""
 
-msgid "Ready"
+msgid "No Issues found"
 msgstr ""
 
-msgid "Running"
+msgid "Running analysis..."
 msgstr ""
 
 msgid "Configuration"
@@ -80,16 +171,10 @@ msgstr ""
 msgid "Other"
 msgstr ""
 
-msgid "Name"
+msgid "Are you sure you want to {{action}} the selected rows?"
 msgstr ""
 
-msgid "Are you sure you want to delete this?"
-msgstr ""
-
-msgid "Yes, Delete"
-msgstr ""
-
-msgid "Cancel"
+msgid "Yes, {{actionButton}}"
 msgstr ""
 
 msgid "Ready"
@@ -110,21 +195,6 @@ msgstr ""
 msgid "Module 2"
 msgstr ""
 
-msgid "Dataset"
-msgstr ""
-
-msgid "Start Date"
-msgstr ""
-
-msgid "End Date"
-msgstr ""
-
-msgid "Status"
-msgstr ""
-
-msgid "New Data Quality"
-msgstr ""
-
 msgid "Selected element deleted successfully"
 msgstr ""
 
@@ -134,23 +204,14 @@ msgstr ""
 msgid "Start analysis"
 msgstr ""
 
-msgid "Mark as In Progress"
-msgstr ""
+msgid "Hello {{name}}"
+msgstr "Hola {{name}}"
 
-msgid "Mark as Complete"
-msgstr ""
-
-msgid "Delete"
+msgid "Detail page"
 msgstr ""
 
 msgid "Progress"
 msgstr ""
 
 msgid "Last Modification"
-msgstr ""
-
-msgid "Hello {{name}}"
-msgstr "Hola {{name}}"
-
-msgid "Detail page"
 msgstr ""

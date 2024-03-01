@@ -43,13 +43,16 @@ export class IssueD2Repository implements IssueRepository {
                 programStage: filters.sectionId ? filters.sectionId : undefined,
                 fields: { dataValues: true, event: true, programStage: true },
                 totalPages: true,
-                trackedEntity: filters.ids ? filters.ids.join(";") : undefined,
+                trackedEntity: filters.analysisIds ? filters.analysisIds.join(";") : undefined,
                 page: pagination.page,
                 pageSize: pagination.pageSize,
                 // TODO: order and filter does not work together
                 // ERROR: Query failed because of a syntax error (SqlState: 42703)",
-                // order: this.buildOrder(options.sorting) || undefined,
+                order: options.filters.name
+                    ? undefined
+                    : this.buildOrder(options.sorting) || undefined,
                 filter: this.buildFilters(options.filters),
+                event: filters.id ? filters.id : undefined,
             })
         ).flatMap(d2Response => {
             const instances = d2Response.instances;
@@ -103,57 +106,78 @@ export class IssueD2Repository implements IssueRepository {
             if (!enrollment)
                 return Future.error(new Error(`Cannot found Enrollment in TEI: ${tei}`));
 
-            const $requests = issues.map(issue => {
-                return Future.fromPromise(
-                    logger.info({
-                        config: {
-                            trackedEntityId: analysisId,
-                            programStageId: programStageId,
-                            enrollmentId: enrollment.enrollment,
-                        },
-                        messages: [
-                            {
-                                id: this.metadata.dataElements.status.id,
-                                value: issue.status?.code || "",
-                            },
-                            { id: this.metadata.dataElements.issueNumber.id, value: issue.number },
-                            {
-                                id: this.metadata.dataElements.country.id,
-                                value: issue.country?.id || "",
-                            },
-                            {
-                                id: this.metadata.dataElements.description.id,
-                                value: issue.description,
-                            },
-                            {
-                                id: this.metadata.dataElements.action.id,
-                                value: issue.action?.code || "",
-                            },
-                            {
-                                id: this.metadata.dataElements.dataElement.id,
-                                value: issue.dataElement?.id || "",
-                            },
-                            {
-                                id: this.metadata.dataElements.azureUrl.id,
-                                value: issue.azureUrl,
-                            },
-                            {
-                                id: this.metadata.dataElements.actionDescription.id,
-                                value: issue.actionDescription,
-                            },
-                            { id: this.metadata.dataElements.period.id, value: issue.period },
-                            {
-                                id: this.metadata.dataElements.categoryOption.id,
-                                value: issue.categoryOption?.id || "",
-                            },
-                            {
-                                id: this.metadata.dataElements.followUp.id,
-                                value: issue.followUp ? "true" : "",
-                            },
-                        ],
-                    })
-                );
-            });
+            const $requests = _(issues)
+                .chunk(10)
+                .map(issuesToSave => {
+                    return Future.sequential(
+                        issuesToSave.map(issue => {
+                            return Future.fromPromise(
+                                logger.info({
+                                    config: {
+                                        trackedEntityId: analysisId,
+                                        programStageId: programStageId,
+                                        enrollmentId: enrollment.enrollment,
+                                    },
+                                    messages: [
+                                        {
+                                            id: this.metadata.dataElements.status.id,
+                                            value: issue.status?.code || "",
+                                        },
+                                        {
+                                            id: this.metadata.dataElements.issueNumber.id,
+                                            value: issue.number,
+                                        },
+                                        {
+                                            id: this.metadata.dataElements.country.id,
+                                            value: issue.country?.id || "",
+                                        },
+                                        {
+                                            id: this.metadata.dataElements.description.id,
+                                            value: issue.description,
+                                        },
+                                        {
+                                            id: this.metadata.dataElements.action.id,
+                                            value: issue.action?.code || "",
+                                        },
+                                        {
+                                            id: this.metadata.dataElements.dataElement.id,
+                                            value: issue.dataElement?.id || "",
+                                        },
+                                        {
+                                            id: this.metadata.dataElements.azureUrl.id,
+                                            value: issue.azureUrl,
+                                        },
+                                        {
+                                            id: this.metadata.dataElements.actionDescription.id,
+                                            value: issue.actionDescription,
+                                        },
+                                        {
+                                            id: this.metadata.dataElements.period.id,
+                                            value: issue.period,
+                                        },
+                                        {
+                                            id: this.metadata.dataElements.categoryOption.id,
+                                            value: issue.categoryOption?.id || "",
+                                        },
+                                        {
+                                            id: this.metadata.dataElements.followUp.id,
+                                            value: issue.followUp ? "true" : "",
+                                        },
+                                        {
+                                            id: this.metadata.dataElements.contactEmails.id,
+                                            value: issue.contactEmails,
+                                        },
+                                        {
+                                            id: this.metadata.dataElements.comments.id,
+                                            value: issue.comments,
+                                        },
+                                    ],
+                                })
+                            );
+                        })
+                    );
+                })
+                .value();
 
             return Future.sequential($requests).flatMap(() => {
                 return Future.success(undefined);
@@ -220,6 +244,8 @@ export class IssueD2Repository implements IssueRepository {
                     period: this.getDataValue(dataValuesById, "period"),
                     status: issueStatus,
                     type: issueType.id,
+                    comments: this.getDataValue(dataValuesById, "comments"),
+                    contactEmails: this.getDataValue(dataValuesById, "contactEmails"),
                 });
             })
             .compact()

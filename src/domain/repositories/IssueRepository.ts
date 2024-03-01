@@ -18,7 +18,8 @@ export type GetIssuesOptions = {
         name: Maybe<string>;
         startDate: Maybe<string>;
         status: Maybe<string>;
-        ids: Maybe<Id[]>;
+        analysisIds: Maybe<Id[]>;
         sectionId: Maybe<Id>;
+        id: Maybe<Id>;
     };
 };

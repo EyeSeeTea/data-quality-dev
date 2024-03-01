@@ -32,6 +32,7 @@ import { GetCurrentUserUseCase } from "./domain/usecases/GetCurrentUserUseCase";
 import { GetModulesUseCase } from "./domain/usecases/GetModulesUseCase";
 import { GetOutlierIssuesUseCase } from "./domain/usecases/GetOutlierIssuesUseCase";
 import { GetQualityAnalysisUseCase } from "./domain/usecases/GetQualityAnalisysUseCase";
+import { SaveIssueUseCase } from "./domain/usecases/SaveIssueUseCase";
 import { D2Api } from "./types/d2-api";
 
 export type CompositionRoot = ReturnType<typeof getCompositionRoot>;
@@ -47,7 +48,7 @@ type Repositories = {
     issueRepository: IssueRepository;
 };
 
-function getCompositionRoot(repositories: Repositories) {
+function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) {
     return {
         users: { getCurrent: new GetCurrentUserUseCase(repositories.usersRepository) },
         modules: { get: new GetModulesUseCase(repositories.moduleRepository) },
@@ -72,6 +73,7 @@ function getCompositionRoot(repositories: Repositories) {
                 repositories.settingsRepository
             ),
         },
+        issues: { save: new SaveIssueUseCase(repositories.qualityAnalysisRepository, metadata) },
     };
 }
 
@@ -87,7 +89,7 @@ export function getWebappCompositionRoot(api: D2Api, metadata: MetadataItem) {
         issueRepository: new IssueD2Repository(api, metadata),
     };
 
-    return getCompositionRoot(repositories);
+    return getCompositionRoot(repositories, metadata);
 }
 
 export function getTestCompositionRoot() {
@@ -102,5 +104,5 @@ export function getTestCompositionRoot() {
         issueRepository: new IssueTestRepository(),
     };
 
-    return getCompositionRoot(repositories);
+    return getCompositionRoot(repositories, {} as MetadataItem);
 }

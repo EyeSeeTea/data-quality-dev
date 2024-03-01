@@ -90,8 +90,9 @@ export const OutliersStep: React.FC<PageProps> = React.memo(() => {
                     <EmptyState message={i18n.t("No Issues found")} variant="success" />
                 )}
             </>
-
-            {config.rows.length > 0 && <ObjectsTable loading={loading} {...config} />}
+            {section?.status === "success_with_issues" && (
+                <ObjectsTable loading={loading} {...config} />
+            )}
         </Container>
     );
 });

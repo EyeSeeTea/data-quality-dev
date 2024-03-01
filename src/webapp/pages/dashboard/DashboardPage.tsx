@@ -89,12 +89,13 @@ export const DashboardPage: React.FC<Props> = React.memo(props => {
             <ConfirmationDialog
                 isOpen={selectedIds && selectedIds.ids.length > 0}
                 title={i18n.t("Are you sure you want to {{action}} the selected rows?", {
-                    action: selectedIds?.action === "delete" ? "remove" : "update",
+                    action: selectedIds && selectedIds.action === "delete" ? "remove" : "update",
                 })}
                 onSave={onRemoveAnalysis}
                 onCancel={() => setSelectedIds(undefined)}
                 saveText={i18n.t("Yes, {{actionButton}}", {
-                    actionButton: selectedIds?.action === "delete" ? "Delete" : "Update",
+                    actionButton:
+                        selectedIds && selectedIds.action === "delete" ? "Delete" : "Update",
                 })}
                 cancelText={i18n.t("Cancel")}
                 fullWidth={true}

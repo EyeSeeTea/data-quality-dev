@@ -32,6 +32,8 @@ const metadataCodes = {
         status: "NHWA_DQI_Status",
         action: "NHWA_DQI_Action",
         actionDescription: "NHWA_DQI_Action_Description",
+        contactEmails: "NHWA_DQI_Contact_Emails",
+        comments: "NHWA_DQI_Comments",
     },
     dataSets: { module1: "NHWA-M1-2023", module2: "NHWA-M2-2023" },
 };

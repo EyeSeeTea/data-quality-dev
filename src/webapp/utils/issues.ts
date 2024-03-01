@@ -5,6 +5,7 @@ export const initialFilters: GetIssuesOptions["filters"] = {
     name: undefined,
     startDate: undefined,
     status: undefined,
-    ids: undefined,
+    analysisIds: undefined,
     sectionId: "",
+    id: undefined,
 };

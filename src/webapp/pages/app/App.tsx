@@ -14,13 +14,15 @@ import { Router } from "../Router";
 import "./App.css";
 import muiThemeLegacy from "./themes/dhis2-legacy.theme";
 import { muiTheme } from "./themes/dhis2.theme";
+import { MetadataItem } from "$/domain/entities/MetadataItem";
 
 export interface AppProps {
     compositionRoot: CompositionRoot;
+    metadata: MetadataItem;
 }
 
 function App(props: AppProps) {
-    const { compositionRoot } = props;
+    const { compositionRoot, metadata } = props;
     const [showShareButton, setShowShareButton] = useState(false);
     const [loading, setLoading] = useState(true);
     const [appContext, setAppContext] = useState<AppContextState | null>(null);
@@ -31,12 +33,12 @@ function App(props: AppProps) {
             const currentUser = await compositionRoot.users.getCurrent.execute().toPromise();
             if (!currentUser) throw new Error("User not logged in");
 
-            setAppContext({ currentUser, compositionRoot });
+            setAppContext({ currentUser, compositionRoot, metadata });
             setShowShareButton(isShareButtonVisible);
             setLoading(false);
         }
         setup();
-    }, [compositionRoot]);
+    }, [compositionRoot, metadata]);
 
     if (loading) return null;
 
