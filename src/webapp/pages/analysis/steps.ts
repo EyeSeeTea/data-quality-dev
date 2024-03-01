@@ -1,14 +1,14 @@
-import i18n from "../../../utils/i18n";
 import { ConfigurationStep } from "./steps/ConfigurationStep";
 import { DensityStep } from "./steps/DensityStep";
 import { DisaggregatesStep } from "./steps/DisaggregatesStep";
 import { DoctorsStep } from "./steps/DoctorsStep";
 import { MidwiferyStep } from "./steps/MidwiferyStep";
-import { NursingMidwiferyStep } from "./steps/NursingMidwiferyStep";
+import { NursingMidwiferyStep } from "./steps/7-nursingMidwifery/NursingMidwiferyStep";
 import { NursingStep } from "./steps/NursingStep";
 import { OtherStep } from "./steps/OtherStep";
 import { OutliersStep } from "./steps/step1-outliers/OutliersStep";
 import { TrendsStep } from "./steps/TrendsStep";
+import i18n from "$/utils/i18n";
 
 export const steps = [
     {
