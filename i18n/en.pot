@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-03-01T22:11:28.409Z\n"
-"PO-Revision-Date: 2024-03-01T22:11:28.409Z\n"
+"POT-Creation-Date: 2024-03-03T20:32:11.704Z\n"
+"PO-Revision-Date: 2024-03-03T20:32:11.704Z\n"
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
@@ -42,6 +42,15 @@ msgid "Add"
 msgstr ""
 
 msgid "List"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Module"
+msgstr ""
+
+msgid "Save Config Analysis"
 msgstr ""
 
 msgid "Updating Issue..."
@@ -104,9 +113,6 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-msgid "Name"
-msgstr ""
-
 msgid "Creating Data Quality..."
 msgstr ""
 
@@ -125,10 +131,16 @@ msgstr ""
 msgid "Quality Analysis updated"
 msgstr ""
 
+msgid "Saving..."
+msgstr ""
+
 msgid "Analysis"
 msgstr ""
 
 msgid "Data Quality Analysis"
+msgstr ""
+
+msgid "Configuration"
 msgstr ""
 
 msgid "Outliers detection analysis based on DHIS2 min-max standard functionality"
@@ -150,9 +162,6 @@ msgid "No Issues found"
 msgstr ""
 
 msgid "Running analysis..."
-msgstr ""
-
-msgid "Configuration"
 msgstr ""
 
 msgid "Outliers"

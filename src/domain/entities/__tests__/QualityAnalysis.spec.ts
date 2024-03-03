@@ -12,6 +12,7 @@ function createQualityAnalysis(data: Partial<QualityAnalysisAttrs>) {
         startDate: "2021-01-01",
         sections: [],
         lastModification: "",
+        countriesAnalysis: [],
     });
 }
 

@@ -16,6 +16,7 @@ export class D2OrgUnit {
                         displayName: true,
                         displayFormName: true,
                         displayShortName: true,
+                        path: true,
                     },
                     filter: { id: { in: ids } },
                 })
@@ -27,6 +28,7 @@ export class D2OrgUnit {
                                 d2OrgUnit.displayShortName ||
                                 d2OrgUnit.displayFormName ||
                                 d2OrgUnit.displayName,
+                            path: d2OrgUnit.path,
                         };
                     });
                 })

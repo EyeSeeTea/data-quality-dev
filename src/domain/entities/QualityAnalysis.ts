@@ -16,6 +16,7 @@ export interface QualityAnalysisAttrs {
     status: QualityAnalysisStatus;
     sections: QualityAnalysisSection[];
     lastModification: string;
+    countriesAnalysis: Id[];
 }
 
 export class QualityAnalysis extends Struct<QualityAnalysisAttrs>() {

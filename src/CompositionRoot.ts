@@ -1,11 +1,15 @@
+import { CountryRepository } from "$/domain/repositories/CountryRepository";
 import { IssueRepository } from "$/domain/repositories/IssueRepository";
 import { OutlierRepository } from "$/domain/repositories/OutlierRepository";
 import { GetAnalysisByIdUseCase } from "$/domain/usecases/GetAnalysisByIdUseCase";
+import { GetCountriesByIdsUseCase } from "$/domain/usecases/GetCountriesByIdsUseCase";
 import { RemoveQualityUseCase } from "$/domain/usecases/RemoveQualityUseCase";
 import { RunOutlierUseCase } from "$/domain/usecases/RunOutlierUseCase";
 import { UpdateStatusAnalysisUseCase } from "$/domain/usecases/UpdateStatusAnalysisUseCase";
 import { AnalysisSectionD2Repository } from "./data/repositories/AnalysisSectionD2Repository";
 import { AnalysisSectionTestRepository } from "./data/repositories/AnalysisSectionTestRepository";
+import { CountryD2Repository } from "./data/repositories/CountryD2Repository";
+import { CountryTestRepository } from "./data/repositories/CountryTestRepository";
 import { IssueD2Repository } from "./data/repositories/IssueD2Repository";
 import { IssueTestRepository } from "./data/repositories/IssueTestRepository";
 import { MetadataD2Repository } from "./data/repositories/MetadataD2Repository";
@@ -32,7 +36,9 @@ import { GetCurrentUserUseCase } from "./domain/usecases/GetCurrentUserUseCase";
 import { GetModulesUseCase } from "./domain/usecases/GetModulesUseCase";
 import { GetOutlierIssuesUseCase } from "./domain/usecases/GetOutlierIssuesUseCase";
 import { GetQualityAnalysisUseCase } from "./domain/usecases/GetQualityAnalisysUseCase";
+import { GetSettingsUseCase } from "./domain/usecases/GetSettingsUseCase";
 import { SaveIssueUseCase } from "./domain/usecases/SaveIssueUseCase";
+import { SaveQualityAnalysisUseCase } from "./domain/usecases/SaveQualityAnalysisUseCase";
 import { D2Api } from "./types/d2-api";
 
 export type CompositionRoot = ReturnType<typeof getCompositionRoot>;
@@ -46,10 +52,12 @@ type Repositories = {
     analysisSectionRepository: AnalysisSectionRepository;
     outlierRepository: OutlierRepository;
     issueRepository: IssueRepository;
+    countryRepository: CountryRepository;
 };
 
 function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) {
     return {
+        countries: { getByIds: new GetCountriesByIdsUseCase(repositories.countryRepository) },
         users: { getCurrent: new GetCurrentUserUseCase(repositories.usersRepository) },
         modules: { get: new GetModulesUseCase(repositories.moduleRepository) },
         qualityAnalysis: {
@@ -62,6 +70,7 @@ function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) 
                 repositories.analysisSectionRepository
             ),
             remove: new RemoveQualityUseCase(repositories.qualityAnalysisRepository),
+            save: new SaveQualityAnalysisUseCase(repositories.qualityAnalysisRepository),
             updateStatus: new UpdateStatusAnalysisUseCase(repositories.qualityAnalysisRepository),
         },
         outlier: {
@@ -74,6 +83,7 @@ function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) 
             ),
         },
         issues: { save: new SaveIssueUseCase(repositories.qualityAnalysisRepository, metadata) },
+        settings: { get: new GetSettingsUseCase(repositories.settingsRepository) },
     };
 }
 
@@ -87,6 +97,7 @@ export function getWebappCompositionRoot(api: D2Api, metadata: MetadataItem) {
         analysisSectionRepository: new AnalysisSectionD2Repository(metadata),
         outlierRepository: new OutlierD2Repository(api),
         issueRepository: new IssueD2Repository(api, metadata),
+        countryRepository: new CountryD2Repository(api),
     };
 
     return getCompositionRoot(repositories, metadata);
@@ -102,6 +113,7 @@ export function getTestCompositionRoot() {
         analysisSectionRepository: new AnalysisSectionTestRepository(),
         outlierRepository: new OutlierTestRepository(),
         issueRepository: new IssueTestRepository(),
+        countryRepository: new CountryTestRepository(),
     };
 
     return getCompositionRoot(repositories, {} as MetadataItem);

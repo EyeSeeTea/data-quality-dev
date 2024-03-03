@@ -280,61 +280,100 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
         existingTei: Maybe<D2TrackerTrackedEntity>,
         qualityAnalysis: QualityAnalysis
     ) {
-        if (!existingTei?.attributes) {
-            return [
-                {
-                    attribute: this.metadata.trackedEntityAttributes.endDate.id,
-                    value: qualityAnalysis.endDate,
-                },
-                {
-                    attribute: this.metadata.trackedEntityAttributes.module.id,
-                    value: qualityAnalysis.module.id,
-                },
-                {
-                    attribute: this.metadata.trackedEntityAttributes.startDate.id,
-                    value: qualityAnalysis.startDate,
-                },
-                {
-                    attribute: this.metadata.trackedEntityAttributes.status.id,
-                    value: qualityAnalysis.status as string,
-                },
-                {
-                    attribute: this.metadata.trackedEntityAttributes.name.id,
-                    value: qualityAnalysis.name,
-                },
-                {
-                    attribute: this.metadata.trackedEntityAttributes.lastModification.id,
-                    value: qualityAnalysis.lastModification,
-                },
-            ];
-        } else {
-            return existingTei.attributes.map(attribute => {
-                if (attribute.attribute === this.metadata.trackedEntityAttributes.endDate.id) {
-                    return { ...attribute, value: qualityAnalysis.endDate };
-                } else if (
-                    attribute.attribute === this.metadata.trackedEntityAttributes.module.id
-                ) {
-                    return { ...attribute, value: qualityAnalysis.module.id };
-                } else if (
-                    attribute.attribute === this.metadata.trackedEntityAttributes.startDate.id
-                ) {
-                    return { ...attribute, value: qualityAnalysis.startDate };
-                } else if (
-                    attribute.attribute === this.metadata.trackedEntityAttributes.status.id
-                ) {
-                    return { ...attribute, value: qualityAnalysis.status as string };
-                } else if (attribute.attribute === this.metadata.trackedEntityAttributes.name.id) {
-                    return { ...attribute, value: qualityAnalysis.name };
-                } else if (
-                    attribute.attribute ===
-                    this.metadata.trackedEntityAttributes.lastModification.id
-                ) {
-                    return { ...attribute, value: qualityAnalysis.lastModification };
-                } else {
-                    return attribute;
-                }
-            });
-        }
+        const existingAttributes = existingTei?.attributes || [];
+        const currentAttributes = [
+            {
+                attribute: this.metadata.trackedEntityAttributes.countries.id,
+                value: qualityAnalysis.countriesAnalysis.join(","),
+            },
+            {
+                attribute: this.metadata.trackedEntityAttributes.endDate.id,
+                value: qualityAnalysis.endDate,
+            },
+            {
+                attribute: this.metadata.trackedEntityAttributes.module.id,
+                value: qualityAnalysis.module.id,
+            },
+            {
+                attribute: this.metadata.trackedEntityAttributes.startDate.id,
+                value: qualityAnalysis.startDate,
+            },
+            {
+                attribute: this.metadata.trackedEntityAttributes.status.id,
+                value: qualityAnalysis.status as string,
+            },
+            {
+                attribute: this.metadata.trackedEntityAttributes.name.id,
+                value: qualityAnalysis.name,
+            },
+            {
+                attribute: this.metadata.trackedEntityAttributes.lastModification.id,
+                value: qualityAnalysis.lastModification,
+            },
+        ];
+        return currentAttributes.map(attribute => {
+            const d2Attribute = existingAttributes.find(dv => dv.attribute === attribute.attribute);
+            return d2Attribute ? { ...d2Attribute, value: attribute.value } : attribute;
+        });
+        // if (!existingTei?.attributes) {
+        //     return [
+        //         {
+        //             attribute: this.metadata.trackedEntityAttributes.countries.id,
+        //             value: qualityAnalysis.countriesAnalysis.join(","),
+        //         },
+        //         {
+        //             attribute: this.metadata.trackedEntityAttributes.endDate.id,
+        //             value: qualityAnalysis.endDate,
+        //         },
+        //         {
+        //             attribute: this.metadata.trackedEntityAttributes.module.id,
+        //             value: qualityAnalysis.module.id,
+        //         },
+        //         {
+        //             attribute: this.metadata.trackedEntityAttributes.startDate.id,
+        //             value: qualityAnalysis.startDate,
+        //         },
+        //         {
+        //             attribute: this.metadata.trackedEntityAttributes.status.id,
+        //             value: qualityAnalysis.status as string,
+        //         },
+        //         {
+        //             attribute: this.metadata.trackedEntityAttributes.name.id,
+        //             value: qualityAnalysis.name,
+        //         },
+        //         {
+        //             attribute: this.metadata.trackedEntityAttributes.lastModification.id,
+        //             value: qualityAnalysis.lastModification,
+        //         },
+        //     ];
+        // } else {
+        //     return existingTei.attributes.map(attribute => {
+        //         if (attribute.attribute === this.metadata.trackedEntityAttributes.endDate.id) {
+        //             return { ...attribute, value: qualityAnalysis.endDate };
+        //         } else if (
+        //             attribute.attribute === this.metadata.trackedEntityAttributes.module.id
+        //         ) {
+        //             return { ...attribute, value: qualityAnalysis.module.id };
+        //         } else if (
+        //             attribute.attribute === this.metadata.trackedEntityAttributes.startDate.id
+        //         ) {
+        //             return { ...attribute, value: qualityAnalysis.startDate };
+        //         } else if (
+        //             attribute.attribute === this.metadata.trackedEntityAttributes.status.id
+        //         ) {
+        //             return { ...attribute, value: qualityAnalysis.status as string };
+        //         } else if (attribute.attribute === this.metadata.trackedEntityAttributes.name.id) {
+        //             return { ...attribute, value: qualityAnalysis.name };
+        //         } else if (
+        //             attribute.attribute ===
+        //             this.metadata.trackedEntityAttributes.lastModification.id
+        //         ) {
+        //             return { ...attribute, value: qualityAnalysis.lastModification };
+        //         } else {
+        //             return attribute;
+        //         }
+        //     });
+        // }
     }
 
     private buildEnrollmentsFromQualityAnalysis(
@@ -569,6 +608,11 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
         const sectionsInfo = sectionStatus.find(section => section.id === entity.trackedEntity);
         const sections = this.buildSections(sectionsInfo, qaIssues);
 
+        const countriesAnalysis = attributesById.get(
+            this.getIdOrThrow(this.metadata.trackedEntityAttributes.countries.id)
+        );
+        const countriesIdsAnalysis = countriesAnalysis?.split(",") || [];
+
         return QualityAnalysis.build({
             id: entity.trackedEntity,
             name: this.getValueOrDefault(
@@ -592,6 +636,7 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
                     this.getIdOrThrow(this.metadata.trackedEntityAttributes.lastModification.id)
                 )
             ),
+            countriesAnalysis: countriesIdsAnalysis,
         }).get();
     }
 

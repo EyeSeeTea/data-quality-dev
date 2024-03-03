@@ -32,7 +32,9 @@ export class RunOutlierUseCase {
                 analysis.startDate,
                 analysis.endDate,
                 analysis.module.id,
-                defaultSettings.countryIds
+                analysis.countriesAnalysis.length > 0
+                    ? analysis.countriesAnalysis
+                    : defaultSettings.countryIds
             ).flatMap(outliers => {
                 return this.getIssues(analysis)
                     .flatMap(issues => {
@@ -123,7 +125,7 @@ export class RunOutlierUseCase {
                 number: issueNumber,
                 azureUrl: "",
                 period: outlier.period,
-                country: { id: outlier.countryId, name: "" },
+                country: { id: outlier.countryId, name: "", path: "" },
                 dataElement: { id: outlier.dataElementId, name: "" },
                 categoryOption: { id: outlier.categoryOptionId, name: "" },
                 description: "",

@@ -20,6 +20,7 @@ export interface MetadataItem {
         startDate: NamedCodeRef;
         status: NamedCodeRef;
         lastModification: NamedCodeRef;
+        countries: NamedCodeRef;
     };
     dataElements: {
         issueNumber: NamedCodeRef;

@@ -42,7 +42,8 @@ export class CreateQualityAnalysisUseCase {
                 }),
                 startDate: defaultSettings.startDate,
                 status: "In Progress",
-                lastModification: " - ",
+                lastModification: "",
+                countriesAnalysis: defaultSettings.countryIds,
             }).match({
                 error: errors => {
                     const errorMessages = getErrors(errors);

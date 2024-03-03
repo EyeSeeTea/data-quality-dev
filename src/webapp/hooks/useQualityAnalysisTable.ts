@@ -146,7 +146,30 @@ export function useAnalysisMethods(props: UseAnalysisMethodsProps) {
         [compositionRoot.qualityAnalysis.updateStatus, loading, onRemove, snackbar]
     );
 
-    return { createQualityAnalysis, removeQualityAnalysis, updateStatusQualityAnalysis };
+    const saveQualityAnalysis = React.useCallback(
+        (qualityAnalysis: QualityAnalysis) => {
+            loading.show(true, i18n.t("Saving..."));
+            compositionRoot.qualityAnalysis.save.execute({ qualityAnalysis: qualityAnalysis }).run(
+                () => {
+                    loading.hide();
+                    snackbar.success(i18n.t("Quality Analysis updated"));
+                    onSuccess(qualityAnalysis.id);
+                },
+                err => {
+                    snackbar.error(err.message);
+                    loading.hide();
+                }
+            );
+        },
+        [compositionRoot.qualityAnalysis.save, loading, onSuccess, snackbar]
+    );
+
+    return {
+        createQualityAnalysis,
+        removeQualityAnalysis,
+        saveQualityAnalysis,
+        updateStatusQualityAnalysis,
+    };
 }
 
 type UseAnalysisMethodsProps = { onSuccess: (id: Id) => void; onRemove: () => void };
