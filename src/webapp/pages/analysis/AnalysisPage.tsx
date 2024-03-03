@@ -19,7 +19,7 @@ export const AnalysisPage: React.FC<PageProps> = React.memo(props => {
     return (
         <PageContainer>
             <PageHeader title={name} onBackClick={onBack} />
-            <Stepper steps={steps} />
+            <Stepper initialStepKey={outlierKey} steps={steps} />
         </PageContainer>
     );
 });
