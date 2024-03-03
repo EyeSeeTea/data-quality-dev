@@ -283,6 +283,10 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
         const existingAttributes = existingTei?.attributes || [];
         const currentAttributes = [
             {
+                attribute: this.metadata.trackedEntityAttributes.sequential.id,
+                value: qualityAnalysis.sequential.value,
+            },
+            {
                 attribute: this.metadata.trackedEntityAttributes.countries.id,
                 value: qualityAnalysis.countriesAnalysis.join(","),
             },
@@ -315,65 +319,6 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
             const d2Attribute = existingAttributes.find(dv => dv.attribute === attribute.attribute);
             return d2Attribute ? { ...d2Attribute, value: attribute.value } : attribute;
         });
-        // if (!existingTei?.attributes) {
-        //     return [
-        //         {
-        //             attribute: this.metadata.trackedEntityAttributes.countries.id,
-        //             value: qualityAnalysis.countriesAnalysis.join(","),
-        //         },
-        //         {
-        //             attribute: this.metadata.trackedEntityAttributes.endDate.id,
-        //             value: qualityAnalysis.endDate,
-        //         },
-        //         {
-        //             attribute: this.metadata.trackedEntityAttributes.module.id,
-        //             value: qualityAnalysis.module.id,
-        //         },
-        //         {
-        //             attribute: this.metadata.trackedEntityAttributes.startDate.id,
-        //             value: qualityAnalysis.startDate,
-        //         },
-        //         {
-        //             attribute: this.metadata.trackedEntityAttributes.status.id,
-        //             value: qualityAnalysis.status as string,
-        //         },
-        //         {
-        //             attribute: this.metadata.trackedEntityAttributes.name.id,
-        //             value: qualityAnalysis.name,
-        //         },
-        //         {
-        //             attribute: this.metadata.trackedEntityAttributes.lastModification.id,
-        //             value: qualityAnalysis.lastModification,
-        //         },
-        //     ];
-        // } else {
-        //     return existingTei.attributes.map(attribute => {
-        //         if (attribute.attribute === this.metadata.trackedEntityAttributes.endDate.id) {
-        //             return { ...attribute, value: qualityAnalysis.endDate };
-        //         } else if (
-        //             attribute.attribute === this.metadata.trackedEntityAttributes.module.id
-        //         ) {
-        //             return { ...attribute, value: qualityAnalysis.module.id };
-        //         } else if (
-        //             attribute.attribute === this.metadata.trackedEntityAttributes.startDate.id
-        //         ) {
-        //             return { ...attribute, value: qualityAnalysis.startDate };
-        //         } else if (
-        //             attribute.attribute === this.metadata.trackedEntityAttributes.status.id
-        //         ) {
-        //             return { ...attribute, value: qualityAnalysis.status as string };
-        //         } else if (attribute.attribute === this.metadata.trackedEntityAttributes.name.id) {
-        //             return { ...attribute, value: qualityAnalysis.name };
-        //         } else if (
-        //             attribute.attribute ===
-        //             this.metadata.trackedEntityAttributes.lastModification.id
-        //         ) {
-        //             return { ...attribute, value: qualityAnalysis.lastModification };
-        //         } else {
-        //             return attribute;
-        //         }
-        //     });
-        // }
     }
 
     private buildEnrollmentsFromQualityAnalysis(
@@ -637,6 +582,13 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
                 )
             ),
             countriesAnalysis: countriesIdsAnalysis,
+            sequential: {
+                value: this.getValueOrDefault(
+                    attributesById.get(
+                        this.getIdOrThrow(this.metadata.trackedEntityAttributes.sequential.id)
+                    )
+                ),
+            },
         }).get();
     }
 

@@ -6,6 +6,7 @@ import { Module } from "./Module";
 import { QualityAnalysisSection } from "./QualityAnalysisSection";
 import { QualityAnalysisStatus } from "./QualityAnalysisStatus";
 import { Id } from "./Ref";
+import { Sequential } from "./Sequential";
 
 export interface QualityAnalysisAttrs {
     id: Id;
@@ -17,6 +18,7 @@ export interface QualityAnalysisAttrs {
     sections: QualityAnalysisSection[];
     lastModification: string;
     countriesAnalysis: Id[];
+    sequential: Sequential;
 }
 
 export class QualityAnalysis extends Struct<QualityAnalysisAttrs>() {

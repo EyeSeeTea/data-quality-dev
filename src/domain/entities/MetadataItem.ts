@@ -21,6 +21,7 @@ export interface MetadataItem {
         status: NamedCodeRef;
         lastModification: NamedCodeRef;
         countries: NamedCodeRef;
+        sequential: NamedCodeRef;
     };
     dataElements: {
         issueNumber: NamedCodeRef;

@@ -1,6 +1,7 @@
 import { CountryRepository } from "$/domain/repositories/CountryRepository";
 import { IssueRepository } from "$/domain/repositories/IssueRepository";
 import { OutlierRepository } from "$/domain/repositories/OutlierRepository";
+import { SequentialRepository } from "$/domain/repositories/SequentialRepository";
 import { GetAnalysisByIdUseCase } from "$/domain/usecases/GetAnalysisByIdUseCase";
 import { GetCountriesByIdsUseCase } from "$/domain/usecases/GetCountriesByIdsUseCase";
 import { RemoveQualityUseCase } from "$/domain/usecases/RemoveQualityUseCase";
@@ -20,6 +21,8 @@ import { OutlierD2Repository } from "./data/repositories/OutlierD2Repository";
 import { OutlierTestRepository } from "./data/repositories/OutlierTestRepository";
 import { QualityAnalysisD2Repository } from "./data/repositories/QualityAnalysisD2Repository";
 import { QualityAnalysisTestRepository } from "./data/repositories/QualityAnalysisTestRepository";
+import { SequentialD2Repository } from "./data/repositories/SequentialD2Repository";
+import { SequentialTestRepository } from "./data/repositories/SequentialTestRepository";
 import { SettingsD2Repository } from "./data/repositories/SettingsD2Repository";
 import { SettingsTestRepository } from "./data/repositories/SettingsTestRepository";
 import { UserD2Repository } from "./data/repositories/UserD2Repository";
@@ -53,6 +56,7 @@ type Repositories = {
     outlierRepository: OutlierRepository;
     issueRepository: IssueRepository;
     countryRepository: CountryRepository;
+    sequentialRepository: SequentialRepository;
 };
 
 function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) {
@@ -67,7 +71,8 @@ function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) 
                 repositories.qualityAnalysisRepository,
                 repositories.usersRepository,
                 repositories.settingsRepository,
-                repositories.analysisSectionRepository
+                repositories.analysisSectionRepository,
+                repositories.sequentialRepository
             ),
             remove: new RemoveQualityUseCase(repositories.qualityAnalysisRepository),
             save: new SaveQualityAnalysisUseCase(repositories.qualityAnalysisRepository),
@@ -98,6 +103,7 @@ export function getWebappCompositionRoot(api: D2Api, metadata: MetadataItem) {
         outlierRepository: new OutlierD2Repository(api),
         issueRepository: new IssueD2Repository(api, metadata),
         countryRepository: new CountryD2Repository(api),
+        sequentialRepository: new SequentialD2Repository(api, metadata),
     };
 
     return getCompositionRoot(repositories, metadata);
@@ -114,6 +120,7 @@ export function getTestCompositionRoot() {
         outlierRepository: new OutlierTestRepository(),
         issueRepository: new IssueTestRepository(),
         countryRepository: new CountryTestRepository(),
+        sequentialRepository: new SequentialTestRepository(),
     };
 
     return getCompositionRoot(repositories, {} as MetadataItem);

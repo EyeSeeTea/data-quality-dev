@@ -7,6 +7,7 @@ import { getErrors } from "../entities/generic/Errors";
 import { Future } from "../entities/generic/Future";
 import { AnalysisSectionRepository } from "../repositories/AnalysisSectionRepository";
 import { QualityAnalysisRepository } from "../repositories/QualityAnalysisRepository";
+import { SequentialRepository } from "../repositories/SequentialRepository";
 import { SettingsRepository } from "../repositories/SettingsRepository";
 import { UserRepository } from "../repositories/UserRepository";
 
@@ -15,7 +16,8 @@ export class CreateQualityAnalysisUseCase {
         private qualityAnalysisRepository: QualityAnalysisRepository,
         private userRepository: UserRepository,
         private settingsRepository: SettingsRepository,
-        private analysisSectionRepository: AnalysisSectionRepository
+        private analysisSectionRepository: AnalysisSectionRepository,
+        private sequentialRepository: SequentialRepository
     ) {}
 
     execute(options: CreateQualityAnalysisOptions): FutureData<Id> {
@@ -23,7 +25,8 @@ export class CreateQualityAnalysisUseCase {
             currentUser: this.userRepository.getCurrent(),
             defaultSettings: this.settingsRepository.get(),
             sections: this.analysisSectionRepository.get(),
-        }).flatMap(({ currentUser, defaultSettings, sections }) => {
+            sequential: this.sequentialRepository.get(),
+        }).flatMap(({ currentUser, defaultSettings, sections, sequential }) => {
             const qualityAnalysisName = QualityAnalysis.buildDefaultName(
                 options.qualityAnalysis.name,
                 currentUser.username
@@ -44,6 +47,9 @@ export class CreateQualityAnalysisUseCase {
                 status: "In Progress",
                 lastModification: "",
                 countriesAnalysis: defaultSettings.countryIds,
+                sequential: {
+                    value: `DQ-${sequential.value}`,
+                },
             }).match({
                 error: errors => {
                     const errorMessages = getErrors(errors);

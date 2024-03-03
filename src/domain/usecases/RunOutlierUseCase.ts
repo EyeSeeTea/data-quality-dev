@@ -118,7 +118,7 @@ export class RunOutlierUseCase {
                 totalIssues + 1 + index < 10
                     ? `0${totalIssues + 1 + index}`
                     : totalIssues + 1 + index;
-            const issueNumber = `S01-I${correlative}`;
+            const issueNumber = `${analysis.sequential.value}-S01-I${correlative}`;
 
             return new QualityAnalysisIssue({
                 id: getUid(`issue-event_${outlierKey}_${new Date().getTime()}`),

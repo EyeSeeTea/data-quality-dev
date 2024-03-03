@@ -15,3 +15,4 @@ export interface NamedCodeRef extends NamedRef {
 export type IssuePeriod = string;
 export type IssueNumber = string;
 export type Period = string;
+export type DateISOString = string;

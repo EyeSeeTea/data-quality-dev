@@ -13,6 +13,7 @@ function createQualityAnalysis(data: Partial<QualityAnalysisAttrs>) {
         sections: [],
         lastModification: "",
         countriesAnalysis: [],
+        sequential: { value: "0000001" },
     });
 }
 

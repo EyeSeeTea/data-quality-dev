@@ -20,6 +20,7 @@ const metadataCodes = {
         status: "NHWA_DQI_TEA_Status",
         lastModification: "NHWA_DQI_TEA_Last_Modification",
         countries: "NHWA_DQI_TEA_Countries_Analysis",
+        sequential: "NHWA_DQI_TEA_Sequential",
     },
     dataElements: {
         issueNumber: "NHWA_DQI_Issue_Number",
