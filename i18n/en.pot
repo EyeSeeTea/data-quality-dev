@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-02-27T13:27:38.303Z\n"
-"PO-Revision-Date: 2024-02-27T13:27:38.304Z\n"
+"POT-Creation-Date: 2024-03-04T09:52:24.101Z\n"
+"PO-Revision-Date: 2024-03-04T09:52:24.102Z\n"
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
@@ -29,16 +29,43 @@ msgstr ""
 msgid "Data Quality Analysis"
 msgstr ""
 
-msgid "Algorithm"
-msgstr ""
-
-msgid "Threshold"
+msgid "Validation Rule Group"
 msgstr ""
 
 msgid "Run"
 msgstr ""
 
 msgid "Run to get results"
+msgstr ""
+
+msgid "Activity Level"
+msgstr ""
+
+msgid "Sex"
+msgstr ""
+
+msgid "Age group"
+msgstr ""
+
+msgid "Place of Birth"
+msgstr ""
+
+msgid "Ownership"
+msgstr ""
+
+msgid "Vacancy rate"
+msgstr ""
+
+msgid "Applications"
+msgstr ""
+
+msgid "Enrolled"
+msgstr ""
+
+msgid "Algorithm"
+msgstr ""
+
+msgid "Threshold"
 msgstr ""
 
 msgid "Ready"
@@ -87,12 +114,6 @@ msgid "Yes, Delete"
 msgstr ""
 
 msgid "Cancel"
-msgstr ""
-
-msgid "Ready"
-msgstr ""
-
-msgid "Running"
 msgstr ""
 
 msgid "Failure"

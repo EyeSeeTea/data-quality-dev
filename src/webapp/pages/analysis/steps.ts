@@ -6,7 +6,7 @@ import { DoctorsStep } from "./steps/DoctorsStep";
 import { MidwiferyStep } from "./steps/MidwiferyStep";
 import { NursingMidwiferyStep } from "./steps/NursingMidwiferyStep";
 import { NursingStep } from "./steps/NursingStep";
-import { OtherStep } from "./steps/OtherStep";
+import { ValidationStep } from "./steps/9-validation/ValidationStep";
 import { OutliersStep } from "./steps/step1-outliers/OutliersStep";
 import { TrendsStep } from "./steps/TrendsStep";
 
@@ -59,6 +59,6 @@ export const steps = [
     {
         key: "other",
         label: i18n.t("Other"),
-        component: OtherStep,
+        component: ValidationStep,
     },
 ];
