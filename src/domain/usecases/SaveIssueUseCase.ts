@@ -19,15 +19,14 @@ export class SaveIssueUseCase {
             const analysisUpdate = QualityAnalysis.build({
                 ...analysis,
                 sections: analysis.sections.map(section => {
+                    if (section.id !== options.issue.type) return section;
                     return QualityAnalysisSection.create({
                         ...section,
-                        issues: section.issues.map(issue => {
-                            if (issue.id !== options.issue.id) return issue;
-                            return this.buildIssueWithNewValue(options);
-                        }),
+                        issues: [this.buildIssueWithNewValue(options)],
                     });
                 }),
             }).get();
+
             return this.analysisRepository.save([analysisUpdate]);
         });
     }

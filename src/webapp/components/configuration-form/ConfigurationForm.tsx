@@ -106,6 +106,8 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
         setSelectedOrgUnits(value);
     };
 
+    const canBeUpdated = QualityAnalysis.hasExecutedSections(formData);
+
     return (
         <form onSubmit={onFormSubmit}>
             <FormControlsContainer>
@@ -143,18 +145,22 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
                     label={i18n.t("End Date")}
                 />
             </FormControlsContainer>
-            <OrgUnitContainer>
-                <OrgUnitsSelector
-                    api={api}
-                    onChange={onOrgUnitsChange}
-                    selected={selectedOrgUnits}
-                    levels={[1, 2]}
-                    rootIds={initialCountries}
-                    withElevation={false}
-                />
-            </OrgUnitContainer>
+
+            {initialCountries.length > 0 && (
+                <OrgUnitContainer>
+                    <OrgUnitsSelector
+                        api={api}
+                        onChange={onOrgUnitsChange}
+                        selected={selectedOrgUnits}
+                        levels={[1, 2, 3]}
+                        selectableLevels={[1, 2, 3]}
+                        rootIds={initialCountries}
+                        withElevation={false}
+                    />
+                </OrgUnitContainer>
+            )}
             <ActionsContainer>
-                <Button type="submit" variant="contained" color="primary">
+                <Button disabled={canBeUpdated} type="submit" variant="contained" color="primary">
                     {i18n.t("Save Config Analysis")}
                 </Button>
             </ActionsContainer>

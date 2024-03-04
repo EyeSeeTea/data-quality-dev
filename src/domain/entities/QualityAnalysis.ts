@@ -65,6 +65,10 @@ export class QualityAnalysis extends Struct<QualityAnalysisAttrs>() {
         }
     }
 
+    static hasExecutedSections(qualityAnalysis: QualityAnalysis): boolean {
+        return qualityAnalysis.sections.some(section => section.status !== "pending");
+    }
+
     static buildDefaultName(name: string, prefix: string): string {
         if (!prefix) throw Error("Prefix is required");
         if (name) return name;

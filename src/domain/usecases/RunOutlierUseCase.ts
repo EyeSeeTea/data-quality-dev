@@ -13,6 +13,7 @@ import { IssueRepository } from "../repositories/IssueRepository";
 import { OutlierRepository } from "../repositories/OutlierRepository";
 import { QualityAnalysisRepository } from "../repositories/QualityAnalysisRepository";
 import { SettingsRepository } from "../repositories/SettingsRepository";
+import _ from "$/domain/entities/generic/Collection";
 
 export class RunOutlierUseCase {
     constructor(
@@ -142,7 +143,17 @@ export class RunOutlierUseCase {
                 contactEmails: "",
             });
         });
-        return this.issueRepository.create(issuesToSave, analysis.id);
+        const concurrencyRequest = 10;
+        const $requests = Future.parallel(
+            _(issuesToSave)
+                .map(issue => this.issueRepository.create(issue, analysis.id))
+                .value(),
+            { concurrency: concurrencyRequest }
+        );
+
+        return $requests.flatMap(() => {
+            return Future.success(undefined);
+        });
     }
 
     private getCurrentSection(analysis: QualityAnalysis): QualityAnalysisSection {

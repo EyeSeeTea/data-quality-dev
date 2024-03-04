@@ -17,13 +17,8 @@ import _ from "../../domain/entities/generic/Collection";
 import { HashMap } from "../../domain/entities/generic/HashMap";
 import { Maybe } from "../../utils/ts-utils";
 import { QualityAnalysisIssue } from "../../domain/entities/QualityAnalysisIssue";
-import { IssueAction } from "../../domain/entities/IssueAction";
-import { IssueStatus } from "../../domain/entities/IssueStatus";
 import { Future } from "../../domain/entities/generic/Future";
-import { Country } from "../../domain/entities/Country";
 import { MetadataItem } from "../../domain/entities/MetadataItem";
-import { DataElement } from "../../domain/entities/DataElement";
-import { CategoryOption } from "../../domain/entities/CategoryOption";
 import {
     QualityAnalysisStatus,
     qualityAnalysisStatus,
@@ -68,29 +63,14 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
             })
         ).flatMap(d2Response => {
             const instances = d2Response.instances;
-            const orgUnitIds = this.getRelatedIdsFromDataValues(
-                instances,
-                this.getDataElementIdOrThrow("country")
-            );
-            const dataElementIds = this.getRelatedIdsFromDataValues(
-                instances,
-                this.getDataElementIdOrThrow("dataElement")
-            );
-            const categoryOptionIds = this.getRelatedIdsFromDataValues(
-                instances,
-                this.getDataElementIdOrThrow("categoryOption")
-            );
             const teiIds = _(d2Response.instances)
                 .map(instance => instance.trackedEntity)
                 .compact()
                 .value();
 
             return Future.joinObj({
-                countries: this.d2OrgUnit.getByIds(orgUnitIds),
-                dataElements: this.d2DataElement.getByIds(dataElementIds),
-                categoryOptions: this.d2CategoryOption.getByIds(categoryOptionIds),
                 sectionInformation: this.getSectionInformation(teiIds),
-            }).map(({ countries, dataElements, categoryOptions, sectionInformation }) => {
+            }).map(({ sectionInformation }) => {
                 return {
                     pagination: {
                         pageSize: d2Response.pageSize,
@@ -100,15 +80,7 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
                         total: d2Response.total || 0,
                     },
                     rows: _(instances)
-                        .map(tei =>
-                            this.buildQualityAnalysis(
-                                tei,
-                                countries,
-                                dataElements,
-                                categoryOptions,
-                                sectionInformation
-                            )
-                        )
+                        .map(tei => this.buildQualityAnalysis(tei, sectionInformation))
                         .compact()
                         .value(),
                 };
@@ -486,38 +458,8 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
         return undefined;
     }
 
-    private getRelatedIdsFromDataValues(
-        trackedEntities: D2TrackerTrackedEntity[],
-        dataElementId: Id
-    ): Id[] {
-        const valuesFromEvents = trackedEntities.flatMap(trackedEntity => {
-            return _(trackedEntity.enrollments || [])
-                .map(enrollmment => {
-                    return _(enrollmment.events)
-                        .map(d2Event => {
-                            return _(d2Event.dataValues)
-                                .map(dataValue => {
-                                    return dataValue.dataElement === dataElementId
-                                        ? dataValue.value
-                                        : undefined;
-                                })
-                                .compact()
-                                .value();
-                        })
-                        .flatten()
-                        .value();
-                })
-                .flatten()
-                .value();
-        });
-        return valuesFromEvents;
-    }
-
     private buildQualityAnalysis(
         entity: D2TrackerTrackedEntity,
-        countries: Country[],
-        dataElements: DataElement[],
-        categoryOptions: CategoryOption[],
         sectionStatus: AnalysisSectionStatus[]
     ): Maybe<QualityAnalysis> {
         if (!entity.trackedEntity) return undefined;
@@ -538,20 +480,8 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
         );
         const status = this.buildQualityStatus(statusValue);
 
-        const qaIssues = _(enrollment.events)
-            .map((d2Event): Maybe<QualityAnalysisIssue> => {
-                return this.buildQualityAnalysisIssue(
-                    d2Event,
-                    countries,
-                    dataElements,
-                    categoryOptions
-                );
-            })
-            .compact()
-            .value();
-
         const sectionsInfo = sectionStatus.find(section => section.id === entity.trackedEntity);
-        const sections = this.buildSections(sectionsInfo, qaIssues);
+        const sections = this.buildSections(sectionsInfo, []);
 
         const countriesAnalysis = attributesById.get(
             this.getIdOrThrow(this.metadata.trackedEntityAttributes.countries.id)
@@ -614,94 +544,9 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
         return statusValue ?? "In Progress";
     }
 
-    private buildQualityAnalysisIssue(
-        d2Event: D2TrackerEvent,
-        countries: Country[],
-        dataElements: DataElement[],
-        categoryOptions: CategoryOption[]
-    ): Maybe<QualityAnalysisIssue> {
-        const issueType = this.metadata.programs.qualityIssues.programStages.find(
-            programStage => programStage.id === d2Event.programStage
-        );
-
-        if (!issueType) {
-            console.warn(`Cannot find program stage: ${d2Event.programStage}`);
-            return undefined;
-        }
-
-        if (d2Event.dataValues.length === 0) return undefined;
-
-        const dataValuesById = this.buildDataElementsById(d2Event.dataValues);
-
-        const countryId = this.getDataValue(dataValuesById, "country");
-        const country = countries.find(country => country.id === countryId);
-
-        const issueAction = this.getValueFromOptionSet(
-            dataValuesById,
-            this.getDataElementIdOrThrow("action"),
-            "nhwaAction"
-        );
-        const issueStatus = this.getValueFromOptionSet(
-            dataValuesById,
-            this.getDataElementIdOrThrow("status"),
-            "nhwaStatus"
-        );
-
-        const categoryOptionId = this.getDataValue(dataValuesById, "categoryOption");
-        const categoryOption = categoryOptions.find(
-            categoryOption => categoryOption.id === categoryOptionId
-        );
-
-        const dataElementId = this.getDataValue(dataValuesById, "dataElement");
-        const dataElement = dataElements.find(dataElement => dataElement.id === dataElementId);
-
-        return new QualityAnalysisIssue({
-            action: issueAction,
-            actionDescription: this.getDataValue(dataValuesById, "actionDescription"),
-            azureUrl: this.getDataValue(dataValuesById, "azureUrl"),
-            categoryOption: categoryOption,
-            country: country,
-            dataElement: dataElement,
-            description: this.getDataValue(dataValuesById, "description"),
-            followUp: this.getDataValue(dataValuesById, "followUp") === "true",
-            id: d2Event.event,
-            number: this.getDataValue(dataValuesById, "issueNumber"),
-            period: this.getDataValue(dataValuesById, "period"),
-            status: issueStatus,
-            type: issueType.id,
-            comments: this.getDataValue(dataValuesById, "comments"),
-            contactEmails: this.getDataValue(dataValuesById, "contactEmails"),
-        });
-    }
-
-    private getDataValue(
-        dataValuesById: HashMap<Id, string>,
-        dataElementName: DataElementKey
-    ): string {
-        return this.getValueOrDefault(
-            dataValuesById.get(this.getDataElementIdOrThrow(dataElementName))
-        );
-    }
-
     private getIdOrThrow(id: Maybe<string>): string {
         if (!id) throw Error(`cannot found: ${id} in metadata`);
         return id;
-    }
-
-    private getDataElementIdOrThrow(key: DataElementKey): string {
-        const metadataItem = this.metadata.dataElements[key];
-        if (!metadataItem) throw Error(`cannot found: ${key} indataElements`);
-        return metadataItem.id;
-    }
-
-    private getValueFromOptionSet(
-        dataValuesById: HashMap<string, string>,
-        dataElementId: Id,
-        key: keyof MetadataItem["optionSets"]
-    ): Maybe<IssueStatus | IssueAction> {
-        const value = this.getValueOrDefault(dataValuesById.get(dataElementId));
-        const option = this.metadata.optionSets[key].options.find(option => option.code === value);
-        return option ? new IssueAction(option) : undefined;
     }
 
     private buildAttributesById(entity: D2TrackerTrackedEntity): HashMap<Id, string> {
@@ -712,20 +557,11 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
         return HashMap.fromPairs(attributesByPair);
     }
 
-    private buildDataElementsById(dataValues: DataValue[]): HashMap<Id, string> {
-        const attributesByPair = _(dataValues)
-            .map(a => [a.dataElement, a.value] as [Id, string])
-            .value();
-
-        return HashMap.fromPairs(attributesByPair);
-    }
-
     private getValueOrDefault(value: Maybe<string>, defaultValue?: string): string {
         return value || defaultValue || "";
     }
 }
 
-type DataElementKey = keyof MetadataItem["dataElements"];
 type D2AnalysisDataStore = { sections: SectionInfo[] };
 type SectionInfo = { id: Id; status: string };
 type AnalysisSectionStatus = { id: Id; extraInfo: Maybe<SectionInfo[]> };

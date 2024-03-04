@@ -41,7 +41,7 @@ import { GetOutlierIssuesUseCase } from "./domain/usecases/GetOutlierIssuesUseCa
 import { GetQualityAnalysisUseCase } from "./domain/usecases/GetQualityAnalisysUseCase";
 import { GetSettingsUseCase } from "./domain/usecases/GetSettingsUseCase";
 import { SaveIssueUseCase } from "./domain/usecases/SaveIssueUseCase";
-import { SaveQualityAnalysisUseCase } from "./domain/usecases/SaveQualityAnalysisUseCase";
+import { SaveConfigAnalysisUseCase } from "./domain/usecases/SaveConfigAnalysisUseCase";
 import { D2Api } from "./types/d2-api";
 
 export type CompositionRoot = ReturnType<typeof getCompositionRoot>;
@@ -75,7 +75,7 @@ function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) 
                 repositories.sequentialRepository
             ),
             remove: new RemoveQualityUseCase(repositories.qualityAnalysisRepository),
-            save: new SaveQualityAnalysisUseCase(repositories.qualityAnalysisRepository),
+            saveConfig: new SaveConfigAnalysisUseCase(repositories.qualityAnalysisRepository),
             updateStatus: new UpdateStatusAnalysisUseCase(repositories.qualityAnalysisRepository),
         },
         outlier: {
