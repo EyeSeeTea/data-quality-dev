@@ -14,13 +14,16 @@ import { OutlierRepository } from "../repositories/OutlierRepository";
 import { QualityAnalysisRepository } from "../repositories/QualityAnalysisRepository";
 import { SettingsRepository } from "../repositories/SettingsRepository";
 import _ from "$/domain/entities/generic/Collection";
+import { ModuleRepository } from "../repositories/ModuleRepository";
+import { DataElement } from "../entities/DataElement";
 
 export class RunOutlierUseCase {
     constructor(
         private outlierRepository: OutlierRepository,
         private analysisRepository: QualityAnalysisRepository,
         private issueRepository: IssueRepository,
-        private settingsRepository: SettingsRepository
+        private settingsRepository: SettingsRepository,
+        private moduleRepository: ModuleRepository
     ) {}
 
     execute(options: RunOutlierUseCaseOptions): FutureData<QualityAnalysis> {
@@ -28,27 +31,45 @@ export class RunOutlierUseCase {
             analysis: this.getQualityAnalysis(options.qualityAnalysisId),
             defaultSettings: this.settingsRepository.get(),
         }).flatMap(({ analysis, defaultSettings }) => {
-            return this.getOutliers(
-                options,
-                analysis.startDate,
-                analysis.endDate,
-                analysis.module.id,
-                analysis.countriesAnalysis.length > 0
-                    ? analysis.countriesAnalysis
-                    : defaultSettings.countryIds
-            ).flatMap(outliers => {
-                return this.getIssues(analysis)
-                    .flatMap(issues => {
-                        const totalIssues = issues.pagination.total;
-                        return this.saveIssues(outliers, analysis, totalIssues, options);
-                    })
-                    .flatMap(() => {
-                        const analysisToUpdate = this.updateAnalysis(analysis, outliers);
-                        return this.analysisRepository
-                            .save([analysisToUpdate])
-                            .map(() => analysisToUpdate);
-                    });
+            return this.getNumericDataElements(analysis.module.id).flatMap(dataElements => {
+                return this.getOutliers(
+                    options,
+                    analysis.startDate,
+                    analysis.endDate,
+                    analysis.countriesAnalysis.length > 0
+                        ? analysis.countriesAnalysis
+                        : defaultSettings.countryIds,
+                    dataElements.map(dataElement => dataElement.id)
+                ).flatMap(outliers => {
+                    return this.getIssues(analysis)
+                        .flatMap(issues => {
+                            const totalIssues = issues.pagination.total;
+                            return this.saveIssues(outliers, analysis, totalIssues, options);
+                        })
+                        .flatMap(() => {
+                            const analysisToUpdate = this.updateAnalysis(analysis, outliers);
+                            return this.analysisRepository
+                                .save([analysisToUpdate])
+                                .map(() => analysisToUpdate);
+                        });
+                });
             });
+        });
+    }
+
+    private getNumericDataElements(moduleId: Id): FutureData<DataElement[]> {
+        return this.moduleRepository.getByIds([moduleId]).flatMap(modules => {
+            const module = modules[0];
+            if (!module) return Future.error(new Error(`Cannot find module: ${moduleId}`));
+            // TODO: dataElement 'EtX7FWQ8HOf' is generating the error:
+            // Non-numeric data values encountered during outlier value detection"
+            // despite being a dataElement of type NUMBER
+            // remove hardcode ID after fixing this issue in metadata
+            return Future.success(
+                module.dataElements.filter(
+                    dataElement => dataElement.isNumber && dataElement.id !== "EtX7FWQ8HOf"
+                )
+            );
         });
     }
 
@@ -76,16 +97,25 @@ export class RunOutlierUseCase {
         options: RunOutlierUseCaseOptions,
         startDate: string,
         endDate: string,
-        moduleId: string,
-        countryIds: string[]
+        countryIds: Id[],
+        dataElements: Id[]
     ): FutureData<Outlier[]> {
-        return this.outlierRepository.export({
-            algorithm: options.algorithm,
-            countryIds: countryIds,
-            endDate: endDate,
-            startDate: startDate,
-            moduleId: moduleId,
-            threshold: options.threshold,
+        const $requests = _(dataElements)
+            .chunk(100)
+            .map(dataElementsIds => {
+                return this.outlierRepository.export({
+                    algorithm: options.algorithm,
+                    countryIds: countryIds,
+                    endDate: endDate,
+                    startDate: startDate,
+                    moduleId: undefined,
+                    threshold: options.threshold,
+                    dataElementIds: dataElementsIds,
+                });
+            })
+            .value();
+        return Future.sequential($requests).flatMap(result => {
+            return Future.success(_(result).flatten().value());
         });
     }
 

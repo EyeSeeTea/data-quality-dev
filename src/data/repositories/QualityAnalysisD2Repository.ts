@@ -31,6 +31,7 @@ import { D2DataElement } from "../common/D2DataElement";
 import { D2OrgUnit } from "../common/D2Country";
 import { getUid } from "../../utils/uid";
 import { DATA_QUALITY_NAMESPACE } from "$/domain/entities/Settings";
+import { getDefaultModules } from "../common/D2Module";
 
 export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
     d2DataElement: D2DataElement;
@@ -44,7 +45,7 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
         this.d2CategoryOption = new D2CategoryOption(this.api);
         this.d2OrgUnit = new D2OrgUnit(this.api);
         this.d2User = new D2User(this.api);
-        this.allowedModules = [this.metadata.dataSets.module1, this.metadata.dataSets.module2];
+        this.allowedModules = getDefaultModules(this.metadata);
     }
 
     get(options: QualityAnalysisOptions): FutureData<QualityAnalysisPaginated> {

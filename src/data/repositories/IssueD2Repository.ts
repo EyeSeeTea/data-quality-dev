@@ -20,6 +20,7 @@ import { HashMap } from "$/domain/entities/generic/HashMap";
 import { Maybe } from "$/utils/ts-utils";
 import { IssueAction } from "$/domain/entities/IssueAction";
 import { IssueStatus } from "$/domain/entities/IssueStatus";
+import { getDefaultModules } from "../common/D2Module";
 
 export class IssueD2Repository implements IssueRepository {
     d2DataElement: D2DataElement;
@@ -33,7 +34,7 @@ export class IssueD2Repository implements IssueRepository {
         this.d2CategoryOption = new D2CategoryOption(this.api);
         this.d2OrgUnit = new D2OrgUnit(this.api);
         this.d2User = new D2User(this.api);
-        this.allowedModules = [this.metadata.dataSets.module1, this.metadata.dataSets.module2];
+        this.allowedModules = getDefaultModules(this.metadata);
     }
 
     get(options: GetIssuesOptions): FutureData<RowsPaginated<QualityAnalysisIssue>> {

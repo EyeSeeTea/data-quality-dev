@@ -7,7 +7,7 @@ function createQualityAnalysis(data: Partial<QualityAnalysisAttrs>) {
         status: data.status || "In Progress",
         id: "1",
         endDate: "2021-01-01",
-        module: { id: "1", name: "Module 1" },
+        module: { id: "1", name: "Module 1", dataElements: [] },
         name: data.name || "",
         startDate: "2021-01-01",
         sections: [],

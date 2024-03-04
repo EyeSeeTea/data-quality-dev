@@ -84,7 +84,8 @@ function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) 
                 repositories.outlierRepository,
                 repositories.qualityAnalysisRepository,
                 repositories.issueRepository,
-                repositories.settingsRepository
+                repositories.settingsRepository,
+                repositories.moduleRepository
             ),
         },
         issues: { save: new SaveIssueUseCase(repositories.qualityAnalysisRepository, metadata) },
@@ -98,7 +99,7 @@ export function getWebappCompositionRoot(api: D2Api, metadata: MetadataItem) {
         qualityAnalysisRepository: new QualityAnalysisD2Repository(api, metadata),
         metadataRepository: new MetadataD2Repository(api),
         settingsRepository: new SettingsD2Repository(api),
-        moduleRepository: new ModuleD2Repository(metadata),
+        moduleRepository: new ModuleD2Repository(api, metadata),
         analysisSectionRepository: new AnalysisSectionD2Repository(metadata),
         outlierRepository: new OutlierD2Repository(api),
         issueRepository: new IssueD2Repository(api, metadata),

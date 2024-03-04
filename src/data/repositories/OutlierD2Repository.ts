@@ -15,6 +15,7 @@ export class OutlierD2Repository implements OutlierRepository {
                 url: "/outlierDetection",
                 params: {
                     ds: options.moduleId,
+                    de: options.dataElementIds,
                     ou: options.countryIds,
                     startDate: options.startDate,
                     endDate: options.endDate,

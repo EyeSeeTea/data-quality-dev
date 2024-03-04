@@ -90,7 +90,10 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
         const selectedModule = modules.find(module => module.id === value);
         if (selectedModule) {
             setFormData(prev => {
-                return QualityAnalysis.build({ ...prev, module: selectedModule }).get();
+                return QualityAnalysis.build({
+                    ...prev,
+                    module: { ...selectedModule, dataElements: [] },
+                }).get();
             });
         }
     };

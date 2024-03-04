@@ -1,5 +1,6 @@
 import { Outlier } from "$/domain/entities/Outlier";
 import { Id } from "$/domain/entities/Ref";
+import { Maybe } from "$/utils/ts-utils";
 import { FutureData } from "../../data/api-futures";
 
 export interface OutlierRepository {
@@ -7,7 +8,8 @@ export interface OutlierRepository {
 }
 
 export type OutlierOptions = {
-    moduleId: Id;
+    moduleId: Maybe<Id>;
+    dataElementIds: Maybe<Id[]>;
     countryIds: Id[];
     startDate: string;
     endDate: string;
