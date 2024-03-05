@@ -1,2 +1,2 @@
-export const qualityAnalysisStatus = ["pending", "finished", "finished_without_issues"] as const;
+export const qualityAnalysisStatus = ["In Progress", "Completed"] as const;
 export type QualityAnalysisStatus = (typeof qualityAnalysisStatus)[number];

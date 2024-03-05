@@ -1,3 +1,3 @@
 import { NamedRef } from "./Ref";
 
-export type DataElement = NamedRef;
+export type DataElement = NamedRef & { isNumber: boolean };
