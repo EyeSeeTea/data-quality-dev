@@ -13,7 +13,7 @@ interface PageProps {
 
 export const GeneralPractitionersStep: React.FC<PageProps> = React.memo(props => {
     const { name = "Personnel analysis: General Practitioners missing and double counts" } = props;
-    const { doubleCountsItems, values, handleChange, runAnalysis, valueChange, catCombosItems } =
+    const { doubleCountsList, values, handleChange, runAnalysis, valueChange, catCombosList } =
         useGeneralPractitionersStep();
 
     return (
@@ -22,14 +22,14 @@ export const GeneralPractitionersStep: React.FC<PageProps> = React.memo(props =>
                 <StyledTypography variant="h2">{i18n.t(name)}</StyledTypography>
                 <FiltersContainer>
                     <StyledMultipleDropdown
-                        items={catCombosItems}
+                        items={catCombosList}
                         label={i18n.t("CatCombos")}
                         values={values}
                         onChange={handleChange}
                     />
                     <StyledDropdown
                         key={"double-counts-filter"}
-                        items={doubleCountsItems}
+                        items={doubleCountsList}
                         onChange={valueChange}
                         value={"somevalue"}
                         label={i18n.t("Double Counts Threshold")}

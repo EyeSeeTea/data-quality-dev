@@ -8,7 +8,7 @@ export function useGeneralPractitionersStep() {
         setValues(values);
     };
 
-    const catCombosItems = [
+    const catCombosList = [
         {
             value: "ACTIVITY",
             text: i18n.t("Activity Level"),
@@ -103,7 +103,7 @@ export function useGeneralPractitionersStep() {
         alert(`run analysis`);
     };
 
-    const doubleCountsItems = [
+    const doubleCountsList = [
         {
             value: "1",
             text: "+/- 1%",
@@ -131,11 +131,11 @@ export function useGeneralPractitionersStep() {
     };
 
     return {
-        doubleCountsItems,
+        doubleCountsList,
         values,
         handleChange,
         runAnalysis,
         valueChange,
-        catCombosItems,
+        catCombosList,
     };
 }
