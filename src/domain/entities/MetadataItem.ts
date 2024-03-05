@@ -19,6 +19,9 @@ export interface MetadataItem {
         name: NamedCodeRef;
         startDate: NamedCodeRef;
         status: NamedCodeRef;
+        lastModification: NamedCodeRef;
+        countries: NamedCodeRef;
+        sequential: NamedCodeRef;
     };
     dataElements: {
         issueNumber: NamedCodeRef;
@@ -32,6 +35,8 @@ export interface MetadataItem {
         status: NamedCodeRef;
         action: NamedCodeRef;
         actionDescription: NamedCodeRef;
+        contactEmails: NamedCodeRef;
+        comments: NamedCodeRef;
     };
     programs: { qualityIssues: NamedRef & { programStages: ProgramStage[] } };
 }
