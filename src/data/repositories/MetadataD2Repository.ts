@@ -18,6 +18,9 @@ const metadataCodes = {
         name: "NHWA_DQI_TEA_Name",
         startDate: "NHWA_DQI_TEA_Start_Date",
         status: "NHWA_DQI_TEA_Status",
+        lastModification: "NHWA_DQI_TEA_Last_Modification",
+        countries: "NHWA_DQI_TEA_Countries_Analysis",
+        sequential: "NHWA_DQI_TEA_Sequential",
     },
     dataElements: {
         issueNumber: "NHWA_DQI_Issue_Number",
@@ -31,6 +34,8 @@ const metadataCodes = {
         status: "NHWA_DQI_Status",
         action: "NHWA_DQI_Action",
         actionDescription: "NHWA_DQI_Action_Description",
+        contactEmails: "NHWA_DQI_Contact_Emails",
+        comments: "NHWA_DQI_Comments",
     },
     dataSets: { module1: "NHWA-M1-2023", module2: "NHWA-M2-2023" },
 };
