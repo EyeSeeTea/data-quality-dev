@@ -2,7 +2,7 @@ import React from "react";
 import i18n from "$/utils/i18n";
 import styled from "styled-components";
 import { MultipleDropdown } from "@eyeseetea/d2-ui-components";
-import { useGeneralPractitionersStep } from "./hooks/useGeneralPractitionersStep";
+import { useGeneralPractitionersStep } from "./useGeneralPractitionersStep";
 import { EmptyState } from "$/webapp/components/empty-state/EmptyState";
 import { Typography, Button } from "@material-ui/core";
 import { Dropdown } from "@eyeseetea/d2-ui-components";

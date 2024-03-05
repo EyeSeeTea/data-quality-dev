@@ -6,7 +6,7 @@ import { MidwiferyStep } from "./steps/MidwiferyStep";
 import { NursingMidwiferyStep } from "./steps/NursingMidwiferyStep";
 import { NursingStep } from "./steps/NursingStep";
 import { OtherStep } from "./steps/OtherStep";
-import { OutliersStep } from "./steps/step1-outliers/OutliersStep";
+import { OutliersStep } from "./steps/1-outliers/OutliersStep";
 import { TrendsStep } from "./steps/TrendsStep";
 import i18n from "$/utils/i18n";
 
