@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2024-03-05T10:10:37.968Z\n"
+"POT-Creation-Date: 2024-03-05T10:59:16.913Z\n"
 "PO-Revision-Date: 2018-10-25T09:02:35.143Z\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -140,45 +140,6 @@ msgstr ""
 msgid "Data Quality Analysis"
 msgstr ""
 
-msgid "CatCombos"
-msgstr ""
-
-msgid "Double Counts Threshold"
-msgstr ""
-
-msgid "Run"
-msgstr ""
-
-msgid "Run to get results"
-msgstr ""
-
-msgid "Activity Level"
-msgstr ""
-
-msgid "Sex"
-msgstr ""
-
-msgid "Age group"
-msgstr ""
-
-msgid "Place of Birth"
-msgstr ""
-
-msgid "Ownership"
-msgstr ""
-
-msgid "Vacancy rate"
-msgstr ""
-
-msgid "Applications"
-msgstr ""
-
-msgid "Enrolled"
-msgstr ""
-
-msgid "Configuration"
-msgstr ""
-
 msgid ""
 "Outliers detection analysis based on DHIS2 min-max standard functionality"
 msgstr ""
@@ -189,10 +150,91 @@ msgstr ""
 msgid "Threshold"
 msgstr ""
 
+msgid "Run"
+msgstr ""
+
+msgid "Run to get results"
+msgstr ""
+
 msgid "No Issues found"
 msgstr ""
 
 msgid "Running analysis..."
+msgstr ""
+
+msgid "CatCombos"
+msgstr ""
+
+msgid "Double Counts Threshold"
+msgstr ""
+
+msgid "Activity Level"
+msgstr ""
+
+msgid "Sex"
+msgstr ""
+
+msgid "Age Group"
+msgstr ""
+
+msgid "Age Group + Sex"
+msgstr ""
+
+msgid "Place of Birth"
+msgstr ""
+
+msgid "Place of Training"
+msgstr ""
+
+msgid "Foreign Trained"
+msgstr ""
+
+msgid "Ownership"
+msgstr ""
+
+msgid "Working Facility Type"
+msgstr ""
+
+msgid "Newly Active domestic trained HWF"
+msgstr ""
+
+msgid "Newly Active foreign trained employed"
+msgstr ""
+
+msgid "Voluntary Exits"
+msgstr ""
+
+msgid "Involuntary exits"
+msgstr ""
+
+msgid "Vacancy rate"
+msgstr ""
+
+msgid "Contract Type"
+msgstr ""
+
+msgid "Applications"
+msgstr ""
+
+msgid "Enrolled"
+msgstr ""
+
+msgid "Graduates by Gender"
+msgstr ""
+
+msgid "Graduates by institution ownership"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Total Newly Active Health Workers"
+msgstr ""
+
+msgid "Total Number of exits"
+msgstr ""
+
+msgid "Configuration"
 msgstr ""
 
 msgid "Outliers"
