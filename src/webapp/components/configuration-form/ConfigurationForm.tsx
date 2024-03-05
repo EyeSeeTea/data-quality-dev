@@ -109,7 +109,8 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
         setSelectedOrgUnits(value);
     };
 
-    const canBeUpdated = QualityAnalysis.hasExecutedSections(formData);
+    const disableSave = QualityAnalysis.hasExecutedSections(formData);
+    const selectorClass = disableSave ? "config-form-selector disabled" : "config-form-selector";
 
     return (
         <form onSubmit={onFormSubmit}>
@@ -122,7 +123,7 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
                 />
 
                 <Dropdown
-                    className="config-form-selector"
+                    className={selectorClass}
                     hideEmpty
                     items={moduleItems}
                     onChange={onChangeModule}
@@ -131,7 +132,7 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
                 />
 
                 <Dropdown
-                    className="config-form-selector"
+                    className={selectorClass}
                     hideEmpty
                     items={periods}
                     onChange={value => onChangePeriod(value, "startDate")}
@@ -140,7 +141,7 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
                 />
 
                 <Dropdown
-                    className="config-form-selector"
+                    className={selectorClass}
                     hideEmpty
                     items={periods}
                     onChange={value => onChangePeriod(value, "endDate")}
@@ -150,7 +151,7 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
             </FormControlsContainer>
 
             {initialCountries.length > 0 && (
-                <OrgUnitContainer>
+                <OrgUnitContainer $disabled={disableSave}>
                     <OrgUnitsSelector
                         api={api}
                         onChange={onOrgUnitsChange}
@@ -163,7 +164,7 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
                 </OrgUnitContainer>
             )}
             <ActionsContainer>
-                <Button disabled={canBeUpdated} type="submit" variant="contained" color="primary">
+                <Button type="submit" variant="contained" color="primary">
                     {i18n.t("Save Config Analysis")}
                 </Button>
             </ActionsContainer>
@@ -184,8 +185,10 @@ const FormControlsContainer = styled.div`
     gap: 1em;
 `;
 
-const OrgUnitContainer = styled.div`
+const OrgUnitContainer = styled.div<{ $disabled?: boolean }>`
     padding: 0;
+    pointer-events: ${props => (props.$disabled ? "none" : "auto")};
+    opacity: ${props => (props.$disabled ? "0.7" : "1")};
 `;
 
 const ActionsContainer = styled.div`
