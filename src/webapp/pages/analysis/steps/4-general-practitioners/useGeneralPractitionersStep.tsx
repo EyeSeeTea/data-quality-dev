@@ -2,12 +2,6 @@ import i18n from "$/utils/i18n";
 import { useState } from "react";
 
 export function useGeneralPractitionersStep() {
-    const [values, setValues] = useState<string[]>([]);
-
-    const handleChange = (values: string[]) => {
-        setValues(values);
-    };
-
     const catCombosList = [
         {
             value: "ACTIVITY",
@@ -98,6 +92,12 @@ export function useGeneralPractitionersStep() {
             text: i18n.t("Total Number of exits"),
         },
     ];
+
+    const [values, setValues] = useState<string[]>(catCombosList.map(item => item.value));
+
+    const handleChange = (values: string[]) => {
+        setValues(values);
+    };
 
     const runAnalysis = (e: any) => {
         alert(`run analysis`);
