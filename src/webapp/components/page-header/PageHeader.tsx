@@ -10,7 +10,7 @@ export const PageHeader: React.FC<PageHeaderProps> = React.memo(props => {
     const { variant = "h5", title, onBackClick, helpText, children } = props;
     return (
         <div>
-            {!!onBackClick && (
+            {Boolean(onBackClick) && (
                 <BackButton
                     onClick={onBackClick}
                     color="secondary"

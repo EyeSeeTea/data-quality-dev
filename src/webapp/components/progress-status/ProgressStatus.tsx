@@ -32,10 +32,17 @@ const Container = styled.li<ContainerProps>`
     background-color: ${customTheme.color.lightGrey};
 
     ${({ $status }) =>
-        $status === "complete" &&
+        $status === "success" &&
         css`
             background-color: ${customTheme.color.lightGreen};
             border-color: ${customTheme.color.lightGreen};
+        `};
+
+    ${({ $status }) =>
+        $status === "danger" &&
+        css`
+            background-color: red;
+            border-color: red;
         `};
 `;
 

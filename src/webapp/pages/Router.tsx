@@ -15,12 +15,12 @@ export function Router() {
                     render={({ match }) => <ExamplePage name={match.params.name ?? "Stranger"} />}
                 />
                 <Route
-                    path="/analysis"
-                    render={() => <AnalysisPage name={i18n.t("Analysis Page")} />}
+                    path="/analysis/:id"
+                    render={() => <AnalysisPage name={i18n.t("Analysis")} />}
                 />
                 {/* Default route */}
                 <Route
-                    path="/dashboard"
+                    path="/"
                     render={() => <DashboardPage name={i18n.t("Data Quality Analysis")} />}
                 />
                 <Route render={() => <LandingPage />} />

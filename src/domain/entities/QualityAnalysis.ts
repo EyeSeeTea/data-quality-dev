@@ -6,6 +6,7 @@ import { Module } from "./Module";
 import { QualityAnalysisSection } from "./QualityAnalysisSection";
 import { QualityAnalysisStatus } from "./QualityAnalysisStatus";
 import { Id } from "./Ref";
+import { Sequential } from "./Sequential";
 
 export interface QualityAnalysisAttrs {
     id: Id;
@@ -15,13 +16,19 @@ export interface QualityAnalysisAttrs {
     startDate: string;
     status: QualityAnalysisStatus;
     sections: QualityAnalysisSection[];
+    lastModification: string;
+    countriesAnalysis: Id[];
+    sequential: Sequential;
 }
 
 export class QualityAnalysis extends Struct<QualityAnalysisAttrs>() {
     static build(
         attrs: QualityAnalysisAttrs
     ): Either<ValidationError<QualityAnalysis>[], QualityAnalysis> {
-        const qualityAnalysis = new QualityAnalysis({ ...attrs, name: attrs.name });
+        const qualityAnalysis = new QualityAnalysis({
+            ...attrs,
+            name: attrs.name,
+        });
 
         const errors: ValidationError<QualityAnalysis>[] = [
             {
@@ -56,6 +63,10 @@ export class QualityAnalysis extends Struct<QualityAnalysisAttrs>() {
         } else {
             return Either.error(errors);
         }
+    }
+
+    static hasExecutedSections(qualityAnalysis: QualityAnalysis): boolean {
+        return qualityAnalysis.sections.some(section => section.status !== "pending");
     }
 
     static buildDefaultName(name: string, prefix: string): string {
