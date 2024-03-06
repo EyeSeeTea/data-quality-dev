@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-03-04T09:52:24.101Z\n"
-"PO-Revision-Date: 2024-03-04T09:52:24.102Z\n"
+"POT-Creation-Date: 2024-03-06T12:47:04.650Z\n"
+"PO-Revision-Date: 2024-03-06T12:47:04.651Z\n"
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
@@ -143,18 +143,6 @@ msgstr ""
 msgid "Validation Rule Group"
 msgstr ""
 
-msgid "Configuration"
-msgstr ""
-
-msgid "Outliers detection analysis based on DHIS2 min-max standard functionality"
-msgstr ""
-
-msgid "Algorithm"
-msgstr ""
-
-msgid "Threshold"
-msgstr ""
-
 msgid "Run"
 msgstr ""
 
@@ -185,13 +173,16 @@ msgstr ""
 msgid "Enrolled"
 msgstr ""
 
+msgid "Configuration"
+msgstr ""
+
+msgid "Outliers detection analysis based on DHIS2 min-max standard functionality"
+msgstr ""
+
 msgid "Algorithm"
 msgstr ""
 
 msgid "Threshold"
-msgstr ""
-
-msgid "Ready"
 msgstr ""
 
 msgid "No Issues found"
@@ -231,6 +222,12 @@ msgid "Are you sure you want to {{action}} the selected rows?"
 msgstr ""
 
 msgid "Yes, {{actionButton}}"
+msgstr ""
+
+msgid "Ready"
+msgstr ""
+
+msgid "Running"
 msgstr ""
 
 msgid "Failure"
