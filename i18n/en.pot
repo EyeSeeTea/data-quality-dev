@@ -5,13 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-<<<<<<< HEAD
-"POT-Creation-Date: 2024-03-05T10:59:16.913Z\n"
-"PO-Revision-Date: 2024-03-05T10:59:16.914Z\n"
-=======
-"POT-Creation-Date: 2024-03-06T12:47:04.650Z\n"
-"PO-Revision-Date: 2024-03-06T12:47:04.651Z\n"
->>>>>>> development
+"POT-Creation-Date: 2024-03-06T17:17:41.264Z\n"
+"PO-Revision-Date: 2024-03-06T17:17:41.265Z\n"
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
@@ -145,45 +140,6 @@ msgstr ""
 msgid "Data Quality Analysis"
 msgstr ""
 
-<<<<<<< HEAD
-=======
-msgid "Validation Rule Group"
-msgstr ""
-
-msgid "Run"
-msgstr ""
-
-msgid "Run to get results"
-msgstr ""
-
-msgid "Activity Level"
-msgstr ""
-
-msgid "Sex"
-msgstr ""
-
-msgid "Age group"
-msgstr ""
-
-msgid "Place of Birth"
-msgstr ""
-
-msgid "Ownership"
-msgstr ""
-
-msgid "Vacancy rate"
-msgstr ""
-
-msgid "Applications"
-msgstr ""
-
-msgid "Enrolled"
-msgstr ""
-
-msgid "Configuration"
-msgstr ""
-
->>>>>>> development
 msgid "Outliers detection analysis based on DHIS2 min-max standard functionality"
 msgstr ""
 
@@ -191,6 +147,12 @@ msgid "Algorithm"
 msgstr ""
 
 msgid "Threshold"
+msgstr ""
+
+msgid "Run"
+msgstr ""
+
+msgid "Run to get results"
 msgstr ""
 
 msgid "No Issues found"
@@ -269,6 +231,12 @@ msgid "Total Newly Active Health Workers"
 msgstr ""
 
 msgid "Total Number of exits"
+msgstr ""
+
+msgid "Validation Rule Group"
+msgstr ""
+
+msgid "Age group"
 msgstr ""
 
 msgid "Configuration"
