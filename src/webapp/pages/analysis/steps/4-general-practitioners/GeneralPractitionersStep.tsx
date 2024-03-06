@@ -28,6 +28,7 @@ export const GeneralPractitionersStep: React.FC<PageProps> = React.memo(props =>
                         onChange={handleChange}
                     />
                     <StyledDropdown
+                        hideEmpty
                         key={"double-counts-filter"}
                         items={doubleCountsList}
                         onChange={valueChange}
