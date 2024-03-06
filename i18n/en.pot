@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-03-03T20:32:11.704Z\n"
-"PO-Revision-Date: 2024-03-03T20:32:11.704Z\n"
+"POT-Creation-Date: 2024-03-06T12:20:35.935Z\n"
+"PO-Revision-Date: 2024-03-06T12:20:35.936Z\n"
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
@@ -140,9 +140,6 @@ msgstr ""
 msgid "Data Quality Analysis"
 msgstr ""
 
-msgid "Configuration"
-msgstr ""
-
 msgid "Outliers detection analysis based on DHIS2 min-max standard functionality"
 msgstr ""
 
@@ -161,7 +158,7 @@ msgstr ""
 msgid "No Issues found"
 msgstr ""
 
-msgid "Running"
+msgid "Running analysis..."
 msgstr ""
 
 msgid "CatCombos"
@@ -192,9 +189,6 @@ msgid "Enrolled"
 msgstr ""
 
 msgid "Configuration"
-msgstr ""
-
-msgid "Running analysis..."
 msgstr ""
 
 msgid "Outliers"
@@ -228,6 +222,12 @@ msgid "Are you sure you want to {{action}} the selected rows?"
 msgstr ""
 
 msgid "Yes, {{actionButton}}"
+msgstr ""
+
+msgid "Ready"
+msgstr ""
+
+msgid "Running"
 msgstr ""
 
 msgid "Failure"
