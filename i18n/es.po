@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2024-03-03T20:32:11.704Z\n"
+"POT-Creation-Date: 2024-03-06T12:38:11.239Z\n"
 "PO-Revision-Date: 2018-10-25T09:02:35.143Z\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -140,6 +140,39 @@ msgstr ""
 msgid "Data Quality Analysis"
 msgstr ""
 
+msgid "CatCombos"
+msgstr ""
+
+msgid "Run"
+msgstr ""
+
+msgid "Run to get results"
+msgstr ""
+
+msgid "Activity Level"
+msgstr ""
+
+msgid "Sex"
+msgstr ""
+
+msgid "Age group"
+msgstr ""
+
+msgid "Place of Birth"
+msgstr ""
+
+msgid "Ownership"
+msgstr ""
+
+msgid "Vacancy rate"
+msgstr ""
+
+msgid "Applications"
+msgstr ""
+
+msgid "Enrolled"
+msgstr ""
+
 msgid "Configuration"
 msgstr ""
 
@@ -151,12 +184,6 @@ msgid "Algorithm"
 msgstr ""
 
 msgid "Threshold"
-msgstr ""
-
-msgid "Run"
-msgstr ""
-
-msgid "Run to get results"
 msgstr ""
 
 msgid "No Issues found"
