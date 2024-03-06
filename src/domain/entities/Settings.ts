@@ -3,12 +3,13 @@ import { ValidationError } from "./generic/Errors";
 import { Struct } from "./generic/Struct";
 import { validateRequired } from "./generic/validations";
 import { Module } from "./Module";
+import { Id } from "./Ref";
 
 export interface SettingsAttrs {
     endDate: string;
     module: Module;
     startDate: string;
-    orgUnitLevel: number;
+    countryIds: Id[];
 }
 
 export class Settings extends Struct<SettingsAttrs>() {
@@ -32,9 +33,9 @@ export class Settings extends Struct<SettingsAttrs>() {
                 value: settings.startDate,
             },
             {
-                property: "orgUnitLevel" as const,
-                errors: validateRequired(settings.orgUnitLevel),
-                value: settings.orgUnitLevel,
+                property: "countryIds" as const,
+                errors: validateRequired(settings.countryIds),
+                value: settings.countryIds,
             },
         ].filter(validation => validation.errors.length > 0);
 
@@ -45,3 +46,6 @@ export class Settings extends Struct<SettingsAttrs>() {
         }
     }
 }
+
+export const DATA_QUALITY_NAMESPACE = "data-quality";
+export const DATA_QUALITY_SETTINGS_KEY = "settings";

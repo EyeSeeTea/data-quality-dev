@@ -3365,6 +3365,17 @@
     react "^16.12.0"
     yargs "^14.0.0"
 
+"@eyeseetea/d2-logger@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@eyeseetea/d2-logger/-/d2-logger-1.0.0.tgz#392ce65c395fdad045db6fc2462ec1b133809984"
+  integrity sha512-rfe6HwB2hlI2TRYW98pvWPFDiSnK4h1LguySRrUpaCjIy2WG/CPilMh2NqNNA4Y81NrWbgzNjtqS9jk8+x/ihw==
+  dependencies:
+    "@babel/runtime" "^7.5.4"
+    "@eyeseetea/d2-api" "1.14.0"
+    cmd-ts "0.13.0"
+    real-cancellable-promise "^1.1.2"
+    typed-immutable-map "0.2.0"
+
 "@eyeseetea/d2-ui-components@2.7.0":
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/@eyeseetea/d2-ui-components/-/d2-ui-components-2.7.0.tgz#5a09f5212d4da6ce4fa510978d2535a0f6a4de57"
@@ -10684,6 +10695,11 @@ typed-array-length@^1.0.4:
     call-bind "^1.0.2"
     for-each "^0.3.3"
     is-typed-array "^1.1.9"
+
+typed-immutable-map@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/typed-immutable-map/-/typed-immutable-map-0.2.0.tgz#42c16f261fc0a75da0358298a2aae248a0c0b7d5"
+  integrity sha512-eraiB5BugF8ZjfpcQWcBArZUPYBUQ5ziy8w/BDvdb7uKBTb5aUyd+jWkiNn+ADvH/Wtl7w2ppVNDSoIGaMWWeg==
 
 typed-immutable-map@^0.1.1:
   version "0.1.1"

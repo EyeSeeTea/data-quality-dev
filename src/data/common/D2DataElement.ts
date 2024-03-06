@@ -16,17 +16,21 @@ export class D2DataElement {
                         displayFormName: true,
                         displayName: true,
                         displayShortName: true,
+                        valueType: true,
                     },
                     filter: { id: { in: ids } },
                 })
                 .map(d2Response => {
-                    return d2Response.data.objects.map(d2DataElement => {
+                    return d2Response.data.objects.map((d2DataElement): DataElement => {
                         return {
                             id: d2DataElement.id,
                             name:
-                                d2DataElement.displayFormName ||
                                 d2DataElement.displayShortName ||
+                                d2DataElement.displayFormName ||
                                 d2DataElement.displayName,
+                            isNumber:
+                                d2DataElement.valueType === "NUMBER" ||
+                                d2DataElement.valueType.includes("INTEGER"),
                         };
                     });
                 })

@@ -10,7 +10,7 @@ import { useCallback } from "react";
 import { Item, MenuButton } from "$/webapp/components/menu-button/MenuButton";
 
 export function useDashboard() {
-    const [statusIsCompleted, setStatusIsCompleted] = useState(false);
+    const [statusIsCompleted, _] = useState(false);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const { success } = useSnackbar();
 

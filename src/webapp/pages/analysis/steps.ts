@@ -10,6 +10,9 @@ import { OtherStep } from "./steps/OtherStep";
 import { OutliersStep } from "./steps/1-outliers/OutliersStep";
 import { TrendsStep } from "./steps/TrendsStep";
 
+export const outlierKey =
+    "1. Outliers detection analysis based on DHIS2 min-max standard functionality";
+
 export const steps = [
     {
         key: "configuration",
@@ -17,7 +20,7 @@ export const steps = [
         component: ConfigurationStep,
     },
     {
-        key: "outliers",
+        key: outlierKey,
         label: i18n.t("Outliers"),
         component: OutliersStep,
     },
