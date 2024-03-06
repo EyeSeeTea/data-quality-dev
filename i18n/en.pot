@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-03-03T20:32:11.704Z\n"
-"PO-Revision-Date: 2024-03-03T20:32:11.704Z\n"
+"POT-Creation-Date: 2024-03-06T12:47:04.650Z\n"
+"PO-Revision-Date: 2024-03-06T12:47:04.651Z\n"
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
@@ -140,6 +140,39 @@ msgstr ""
 msgid "Data Quality Analysis"
 msgstr ""
 
+msgid "Validation Rule Group"
+msgstr ""
+
+msgid "Run"
+msgstr ""
+
+msgid "Run to get results"
+msgstr ""
+
+msgid "Activity Level"
+msgstr ""
+
+msgid "Sex"
+msgstr ""
+
+msgid "Age group"
+msgstr ""
+
+msgid "Place of Birth"
+msgstr ""
+
+msgid "Ownership"
+msgstr ""
+
+msgid "Vacancy rate"
+msgstr ""
+
+msgid "Applications"
+msgstr ""
+
+msgid "Enrolled"
+msgstr ""
+
 msgid "Configuration"
 msgstr ""
 
@@ -150,12 +183,6 @@ msgid "Algorithm"
 msgstr ""
 
 msgid "Threshold"
-msgstr ""
-
-msgid "Run"
-msgstr ""
-
-msgid "Run to get results"
 msgstr ""
 
 msgid "No Issues found"
