@@ -9,7 +9,7 @@ export class D2CategoryOption {
 
     getByIds(ids: Id[]): FutureData<CategoryOption[]> {
         return apiToFuture(
-            this.api.models.categoryOptions
+            this.api.models.categoryOptionCombos
                 .get({
                     fields: {
                         id: true,
@@ -24,8 +24,8 @@ export class D2CategoryOption {
                         return {
                             id: d2CategoryOption.id,
                             name:
-                                d2CategoryOption.displayFormName ||
                                 d2CategoryOption.displayShortName ||
+                                d2CategoryOption.displayFormName ||
                                 d2CategoryOption.displayName,
                         };
                     });
