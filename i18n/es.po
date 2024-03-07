@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2024-03-06T12:47:04.650Z\n"
+"POT-Creation-Date: 2024-03-07T11:40:09.170Z\n"
 "PO-Revision-Date: 2018-10-25T09:02:35.143Z\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -140,10 +140,14 @@ msgstr ""
 msgid "Data Quality Analysis"
 msgstr ""
 
-msgid "CatCombos"
+msgid ""
+"Outliers detection analysis based on DHIS2 min-max standard functionality"
 msgstr ""
 
-msgid "Validation Rule Group"
+msgid "Algorithm"
+msgstr ""
+
+msgid "Threshold"
 msgstr ""
 
 msgid "Run"
@@ -152,7 +156,19 @@ msgstr ""
 msgid "Run to get results"
 msgstr ""
 
+msgid "No Issues found"
+msgstr ""
+
+msgid "Running analysis..."
+msgstr ""
+
+msgid "CatCombos"
+msgstr ""
+
 msgid "Activity Level"
+msgstr ""
+
+msgid "Sex"
 msgstr ""
 
 msgid "Age group"
@@ -164,28 +180,19 @@ msgstr ""
 msgid "Ownership"
 msgstr ""
 
+msgid "Vacancy rate"
+msgstr ""
+
+msgid "Applications"
+msgstr ""
+
 msgid "Enrolled"
-msgstr ""
-
-msgid "Outliers detection analysis based on DHIS2 min-max standard functionality"
-msgstr ""
-
-msgid "Algorithm"
-msgstr ""
-
-msgid "Threshold"
-msgstr ""
-
-msgid "No Issues found"
-msgstr ""
-
-msgid "Running analysis..."
 msgstr ""
 
 msgid "Double Counts Threshold"
 msgstr ""
 
-msgid "Sex"
+msgid "Age Group"
 msgstr ""
 
 msgid "Age Group + Sex"
@@ -212,13 +219,7 @@ msgstr ""
 msgid "Involuntary exits"
 msgstr ""
 
-msgid "Vacancy rate"
-msgstr ""
-
 msgid "Contract Type"
-msgstr ""
-
-msgid "Applications"
 msgstr ""
 
 msgid "Graduates by Gender"
@@ -234,6 +235,9 @@ msgid "Total Newly Active Health Workers"
 msgstr ""
 
 msgid "Total Number of exits"
+msgstr ""
+
+msgid "Validation Rule Group"
 msgstr ""
 
 msgid "Configuration"
