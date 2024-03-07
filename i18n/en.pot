@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-03-06T12:47:04.650Z\n"
-"PO-Revision-Date: 2024-03-06T12:47:04.651Z\n"
+"POT-Creation-Date: 2024-03-07T08:49:40.645Z\n"
+"PO-Revision-Date: 2024-03-07T08:49:40.646Z\n"
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
@@ -140,13 +140,28 @@ msgstr ""
 msgid "Data Quality Analysis"
 msgstr ""
 
-msgid "Validation Rule Group"
+msgid "Outliers detection analysis based on DHIS2 min-max standard functionality"
+msgstr ""
+
+msgid "Algorithm"
+msgstr ""
+
+msgid "Threshold"
 msgstr ""
 
 msgid "Run"
 msgstr ""
 
 msgid "Run to get results"
+msgstr ""
+
+msgid "No Issues found"
+msgstr ""
+
+msgid "Running analysis..."
+msgstr ""
+
+msgid "CatCombos"
 msgstr ""
 
 msgid "Activity Level"
@@ -173,22 +188,10 @@ msgstr ""
 msgid "Enrolled"
 msgstr ""
 
+msgid "Validation Rule Group"
+msgstr ""
+
 msgid "Configuration"
-msgstr ""
-
-msgid "Outliers detection analysis based on DHIS2 min-max standard functionality"
-msgstr ""
-
-msgid "Algorithm"
-msgstr ""
-
-msgid "Threshold"
-msgstr ""
-
-msgid "No Issues found"
-msgstr ""
-
-msgid "Running analysis..."
 msgstr ""
 
 msgid "Outliers"

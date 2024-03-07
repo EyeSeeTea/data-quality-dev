@@ -1,13 +1,13 @@
 import i18n from "../../../utils/i18n";
 import { ConfigurationStep } from "./steps/ConfigurationStep";
 import { DensityStep } from "./steps/DensityStep";
-import { DisaggregatesStep } from "./steps/DisaggregatesStep";
+import { DisaggregatesStep } from "./steps/3-disaggregates/DisaggregatesStep";
 import { DoctorsStep } from "./steps/DoctorsStep";
 import { MidwiferyStep } from "./steps/MidwiferyStep";
 import { NursingMidwiferyStep } from "./steps/NursingMidwiferyStep";
 import { NursingStep } from "./steps/NursingStep";
+import { OutliersStep } from "./steps/1-outliers/OutliersStep";
 import { ValidationStep } from "./steps/9-validation/ValidationStep";
-import { OutliersStep } from "./steps/step1-outliers/OutliersStep";
 import { TrendsStep } from "./steps/TrendsStep";
 
 export const outlierKey =
