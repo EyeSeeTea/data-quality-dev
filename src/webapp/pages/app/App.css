@@ -15,3 +15,9 @@ li {
 .config-form-selector > div {
     min-height: 40px !important;
 }
+
+.config-form-selector.disabled > div {
+    cursor: none;
+    opacity: 0.7;
+    pointer-events: none !important;
+}
