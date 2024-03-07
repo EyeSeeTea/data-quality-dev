@@ -158,9 +158,6 @@ msgstr ""
 msgid "Age group"
 msgstr ""
 
-msgid "Place of Birth"
-msgstr ""
-
 msgid "Ownership"
 msgstr ""
 
@@ -168,9 +165,6 @@ msgid "Vacancy rate"
 msgstr ""
 
 msgid "Applications"
-msgstr ""
-
-msgid "Enrolled"
 msgstr ""
 
 msgid "Configuration"
@@ -197,23 +191,10 @@ msgstr ""
 msgid "Running analysis..."
 msgstr ""
 
-msgid "CatCombos"
-msgstr ""
-
 msgid "Double Counts Threshold"
-msgstr ""
-
-msgid "Activity Level"
-msgstr ""
-
-msgid "Sex"
-msgstr ""
-
-msgid "Age Group"
-msgstr ""
+msgstr "
 
 msgid "Age Group + Sex"
-msgid "Age group"
 msgstr ""
 
 msgid "Place of Birth"
@@ -223,9 +204,6 @@ msgid "Place of Training"
 msgstr ""
 
 msgid "Foreign Trained"
-msgstr ""
-
-msgid "Ownership"
 msgstr ""
 
 msgid "Working Facility Type"
@@ -243,19 +221,7 @@ msgstr ""
 msgid "Involuntary exits"
 msgstr ""
 
-msgid "Vacancy rate"
-msgstr ""
-
 msgid "Contract Type"
-msgstr ""
-
-msgid "Ownership"
-msgstr ""
-
-msgid "Vacancy rate"
-msgstr ""
-
-msgid "Applications"
 msgstr ""
 
 msgid "Enrolled"
@@ -277,15 +243,6 @@ msgid "Total Number of exits"
 msgstr ""
 
 msgid "Validation Rule Group"
-msgstr ""
-
-msgid "Age group"
-msgstr ""
-
-msgid "Validation Rule Group"
-msgstr ""
-
-msgid "Configuration"
 msgstr ""
 
 msgid "Outliers"
