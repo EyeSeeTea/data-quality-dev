@@ -6,8 +6,8 @@ import { DoctorsStep } from "./steps/DoctorsStep";
 import { MidwiferyStep } from "./steps/MidwiferyStep";
 import { NursingMidwiferyStep } from "./steps/NursingMidwiferyStep";
 import { NursingStep } from "./steps/NursingStep";
-import { OtherStep } from "./steps/OtherStep";
 import { OutliersStep } from "./steps/1-outliers/OutliersStep";
+import { ValidationStep } from "./steps/9-validation/ValidationStep";
 import { TrendsStep } from "./steps/TrendsStep";
 
 export const outlierKey =
@@ -62,6 +62,6 @@ export const steps = [
     {
         key: "other",
         label: i18n.t("Other"),
-        component: OtherStep,
+        component: ValidationStep,
     },
 ];
