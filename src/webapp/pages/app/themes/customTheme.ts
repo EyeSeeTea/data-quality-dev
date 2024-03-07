@@ -8,6 +8,7 @@ const customTheme = {
         green: "#355B37",
         lightGreen: "#4CAF50",
         lighterGreen: "#D8EDD9",
+        red: "#D32F2F",
     },
 };
 
