@@ -140,14 +140,9 @@ msgstr ""
 msgid "Data Quality Analysis"
 msgstr ""
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
 msgid "CatCombos"
 msgstr ""
 
->>>>>>> development
 msgid "Validation Rule Group"
 msgstr ""
 
@@ -184,11 +179,6 @@ msgstr ""
 msgid "Configuration"
 msgstr ""
 
-<<<<<<< HEAD
->>>>>>> development
-msgid ""
-=======
->>>>>>> development
 "Outliers detection analysis based on DHIS2 min-max standard functionality"
 msgstr ""
 
