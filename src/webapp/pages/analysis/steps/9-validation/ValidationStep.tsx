@@ -4,7 +4,7 @@ import { EmptyState } from "$/webapp/components/empty-state/EmptyState";
 import { Typography, Button } from "@material-ui/core";
 import { Dropdown } from "@eyeseetea/d2-ui-components";
 import styled from "styled-components";
-import { useValidationStep } from "./hooks/useValidationStep";
+import { useValidationStep } from "./useValidationStep";
 
 interface PageProps {
     name: string;
