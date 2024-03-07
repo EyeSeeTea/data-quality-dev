@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-03-07T08:49:40.645Z\n"
-"PO-Revision-Date: 2024-03-07T08:49:40.646Z\n"
+"POT-Creation-Date: 2024-03-07T11:40:09.170Z\n"
+"PO-Revision-Date: 2024-03-07T11:40:09.171Z\n"
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
@@ -140,36 +140,6 @@ msgstr ""
 msgid "Data Quality Analysis"
 msgstr ""
 
-msgid "CatCombos"
-msgstr ""
-
-msgid "Run"
-msgstr ""
-
-msgid "Run to get results"
-msgstr ""
-
-msgid "Activity Level"
-msgstr ""
-
-msgid "Sex"
-msgstr ""
-
-msgid "Age group"
-msgstr ""
-
-msgid "Ownership"
-msgstr ""
-
-msgid "Vacancy rate"
-msgstr ""
-
-msgid "Applications"
-msgstr ""
-
-msgid "Configuration"
-msgstr ""
-
 msgid "Outliers detection analysis based on DHIS2 min-max standard functionality"
 msgstr ""
 
@@ -191,13 +161,40 @@ msgstr ""
 msgid "Running analysis..."
 msgstr ""
 
-msgid "Double Counts Threshold"
-msgstr "
+msgid "CatCombos"
+msgstr ""
 
-msgid "Age Group + Sex"
+msgid "Activity Level"
+msgstr ""
+
+msgid "Sex"
+msgstr ""
+
+msgid "Age group"
 msgstr ""
 
 msgid "Place of Birth"
+msgstr ""
+
+msgid "Ownership"
+msgstr ""
+
+msgid "Vacancy rate"
+msgstr ""
+
+msgid "Applications"
+msgstr ""
+
+msgid "Enrolled"
+msgstr ""
+
+msgid "Double Counts Threshold"
+msgstr ""
+
+msgid "Age Group"
+msgstr ""
+
+msgid "Age Group + Sex"
 msgstr ""
 
 msgid "Place of Training"
@@ -224,9 +221,6 @@ msgstr ""
 msgid "Contract Type"
 msgstr ""
 
-msgid "Enrolled"
-msgstr ""
-
 msgid "Graduates by Gender"
 msgstr ""
 
@@ -243,6 +237,9 @@ msgid "Total Number of exits"
 msgstr ""
 
 msgid "Validation Rule Group"
+msgstr ""
+
+msgid "Configuration"
 msgstr ""
 
 msgid "Outliers"
