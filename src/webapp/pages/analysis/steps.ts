@@ -1,12 +1,12 @@
 import { ConfigurationStep } from "./steps/ConfigurationStep";
 import { DensityStep } from "./steps/DensityStep";
-import { DisaggregatesStep } from "./steps/DisaggregatesStep";
 import { GeneralPractitionersStep } from "./steps/4-general-practitioners/GeneralPractitionersStep";
+import { DisaggregatesStep } from "./steps/3-disaggregates/DisaggregatesStep";
 import { MidwiferyStep } from "./steps/MidwiferyStep";
-import { NursingMidwiferyStep } from "./steps/NursingMidwiferyStep";
+import { NursingMidwiferyStep } from "./steps/7-nursingMidwifery/NursingMidwiferyStep";
 import { NursingStep } from "./steps/NursingStep";
-import { ValidationStep } from "./steps/9-validation/ValidationStep";
 import { OutliersStep } from "./steps/1-outliers/OutliersStep";
+import { ValidationStep } from "./steps/9-validation/ValidationStep";
 import { TrendsStep } from "./steps/TrendsStep";
 import i18n from "$/utils/i18n";
 

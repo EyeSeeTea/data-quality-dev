@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-03-06T17:17:41.264Z\n"
-"PO-Revision-Date: 2024-03-06T17:17:41.265Z\n"
+"POT-Creation-Date: 2024-03-07T08:49:40.645Z\n"
+"PO-Revision-Date: 2024-03-07T08:49:40.646Z\n"
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
@@ -140,6 +140,42 @@ msgstr ""
 msgid "Data Quality Analysis"
 msgstr ""
 
+msgid "CatCombos"
+msgstr ""
+
+msgid "Run"
+msgstr ""
+
+msgid "Run to get results"
+msgstr ""
+
+msgid "Activity Level"
+msgstr ""
+
+msgid "Sex"
+msgstr ""
+
+msgid "Age group"
+msgstr ""
+
+msgid "Place of Birth"
+msgstr ""
+
+msgid "Ownership"
+msgstr ""
+
+msgid "Vacancy rate"
+msgstr ""
+
+msgid "Applications"
+msgstr ""
+
+msgid "Enrolled"
+msgstr ""
+
+msgid "Configuration"
+msgstr ""
+
 msgid "Outliers detection analysis based on DHIS2 min-max standard functionality"
 msgstr ""
 
@@ -177,6 +213,7 @@ msgid "Age Group"
 msgstr ""
 
 msgid "Age Group + Sex"
+msgid "Age group"
 msgstr ""
 
 msgid "Place of Birth"
@@ -212,6 +249,12 @@ msgstr ""
 msgid "Contract Type"
 msgstr ""
 
+msgid "Ownership"
+msgstr ""
+
+msgid "Vacancy rate"
+msgstr ""
+
 msgid "Applications"
 msgstr ""
 
@@ -237,6 +280,9 @@ msgid "Validation Rule Group"
 msgstr ""
 
 msgid "Age group"
+msgstr ""
+
+msgid "Validation Rule Group"
 msgstr ""
 
 msgid "Configuration"
