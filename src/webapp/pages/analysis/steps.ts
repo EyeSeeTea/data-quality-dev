@@ -1,14 +1,14 @@
-import i18n from "../../../utils/i18n";
 import { ConfigurationStep } from "./steps/ConfigurationStep";
 import { DensityStep } from "./steps/DensityStep";
 import { DisaggregatesStep } from "./steps/3-disaggregates/DisaggregatesStep";
 import { DoctorsStep } from "./steps/DoctorsStep";
 import { MidwiferyStep } from "./steps/MidwiferyStep";
-import { NursingMidwiferyStep } from "./steps/NursingMidwiferyStep";
+import { NursingMidwiferyStep } from "./steps/7-nursingMidwifery/NursingMidwiferyStep";
 import { NursingStep } from "./steps/NursingStep";
 import { OutliersStep } from "./steps/1-outliers/OutliersStep";
 import { ValidationStep } from "./steps/9-validation/ValidationStep";
 import { TrendsStep } from "./steps/TrendsStep";
+import i18n from "$/utils/i18n";
 
 export const outlierKey =
     "1. Outliers detection analysis based on DHIS2 min-max standard functionality";

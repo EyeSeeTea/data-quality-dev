@@ -140,6 +140,42 @@ msgstr ""
 msgid "Data Quality Analysis"
 msgstr ""
 
+msgid "CatCombos"
+msgstr ""
+
+msgid "Run"
+msgstr ""
+
+msgid "Run to get results"
+msgstr ""
+
+msgid "Activity Level"
+msgstr ""
+
+msgid "Sex"
+msgstr ""
+
+msgid "Age group"
+msgstr ""
+
+msgid "Place of Birth"
+msgstr ""
+
+msgid "Ownership"
+msgstr ""
+
+msgid "Vacancy rate"
+msgstr ""
+
+msgid "Applications"
+msgstr ""
+
+msgid "Enrolled"
+msgstr ""
+
+msgid "Configuration"
+msgstr ""
+
 msgid "Outliers detection analysis based on DHIS2 min-max standard functionality"
 msgstr ""
 
@@ -147,12 +183,6 @@ msgid "Algorithm"
 msgstr ""
 
 msgid "Threshold"
-msgstr ""
-
-msgid "Run"
-msgstr ""
-
-msgid "Run to get results"
 msgstr ""
 
 msgid "No Issues found"
