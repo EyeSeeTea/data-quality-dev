@@ -1,30 +1,46 @@
 import React from "react";
 import i18n from "$/utils/i18n";
+import styled from "styled-components";
+import { MultipleDropdown } from "@eyeseetea/d2-ui-components";
+import { useGeneralPractitionersStep } from "./useGeneralPractitionersStep";
 import { EmptyState } from "$/webapp/components/empty-state/EmptyState";
 import { Typography, Button } from "@material-ui/core";
 import { Dropdown } from "@eyeseetea/d2-ui-components";
-import styled from "styled-components";
-import { useValidationStep } from "./useValidationStep";
 
 interface PageProps {
     name: string;
 }
 
-export const ValidationStep: React.FC<PageProps> = React.memo(props => {
-    const { name = "Custom step with some filtering in order to allow some specific checks" } =
-        props;
-    const { validationItems, value, handleChange, runAnalysis } = useValidationStep();
+export const GeneralPractitionersStep: React.FC<PageProps> = React.memo(props => {
+    const { name = "Personnel analysis: General Practitioners missing and double counts" } = props;
+    const {
+        doubleCountsList,
+        value,
+        values,
+        handleChange,
+        runAnalysis,
+        valueChange,
+        catCombosList,
+    } = useGeneralPractitionersStep();
+
     return (
         <Container>
             <AnalysisHeader>
                 <StyledTypography variant="h2">{i18n.t(name)}</StyledTypography>
                 <FiltersContainer>
-                    <StyledDropdown
-                        key={"validations-filter"}
-                        items={validationItems}
+                    <StyledMultipleDropdown
+                        items={catCombosList}
+                        label={i18n.t("CatCombos")}
+                        values={values}
                         onChange={handleChange}
+                    />
+                    <StyledDropdown
+                        hideEmpty
+                        key={"double-counts-filter"}
+                        items={doubleCountsList}
+                        onChange={valueChange}
                         value={value}
-                        label={i18n.t("Validation Rule Group")}
+                        label={i18n.t("Double Counts Threshold")}
                     />
                     <Button variant="contained" color="primary" size="small" onClick={runAnalysis}>
                         {i18n.t("Run")}
@@ -62,4 +78,7 @@ const FiltersContainer = styled.div`
 
 const StyledDropdown = styled(Dropdown)`
     min-width: 14rem;
+`;
+const StyledMultipleDropdown = styled(MultipleDropdown)`
+    max-width: 20rem;
 `;

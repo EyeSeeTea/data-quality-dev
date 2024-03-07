@@ -41,8 +41,8 @@ const Container = styled.li<ContainerProps>`
     ${({ $status }) =>
         $status === "danger" &&
         css`
-            background-color: red;
-            border-color: red;
+            background-color: ${customTheme.color.red};
+            border-color: ${customTheme.color.red};
         `};
 `;
 

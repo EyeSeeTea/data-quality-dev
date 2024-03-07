@@ -1,7 +1,7 @@
 import { ConfigurationStep } from "./steps/ConfigurationStep";
 import { DensityStep } from "./steps/DensityStep";
+import { GeneralPractitionersStep } from "./steps/4-general-practitioners/GeneralPractitionersStep";
 import { DisaggregatesStep } from "./steps/3-disaggregates/DisaggregatesStep";
-import { DoctorsStep } from "./steps/DoctorsStep";
 import { MidwiferyStep } from "./steps/MidwiferyStep";
 import { NursingMidwiferyStep } from "./steps/7-nursingMidwifery/NursingMidwiferyStep";
 import { NursingStep } from "./steps/NursingStep";
@@ -18,46 +18,55 @@ export const steps = [
         key: "configuration",
         label: i18n.t("Configuration"),
         component: ConfigurationStep,
+        completed: false,
     },
     {
         key: outlierKey,
         label: i18n.t("Outliers"),
         component: OutliersStep,
+        completed: true,
     },
     {
         key: "trends",
         label: i18n.t("Trends"),
         component: TrendsStep,
+        completed: false,
     },
     {
         key: "disaggregates",
         label: i18n.t("Disaggregates"),
         component: DisaggregatesStep,
+        completed: false,
     },
     {
-        key: "doctors",
-        label: i18n.t("Doctors"),
-        component: DoctorsStep,
+        key: "general-practitioners",
+        label: i18n.t("General Practitioners"),
+        component: GeneralPractitionersStep,
+        completed: false,
     },
     {
         key: "nursing",
         label: i18n.t("Nursing"),
         component: NursingStep,
+        completed: false,
     },
     {
         key: "midwifery",
         label: i18n.t("Midwifery"),
         component: MidwiferyStep,
+        completed: false,
     },
     {
         key: "nursing-midwifery",
         label: i18n.t("Nursing/Midwifery"),
         component: NursingMidwiferyStep,
+        completed: false,
     },
     {
         key: "density",
         label: i18n.t("Density"),
         component: DensityStep,
+        completed: false,
     },
     {
         key: "other",
