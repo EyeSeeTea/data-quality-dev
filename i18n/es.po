@@ -155,9 +155,6 @@ msgstr ""
 msgid "Activity Level"
 msgstr ""
 
-msgid "Sex"
-msgstr ""
-
 msgid "Age group"
 msgstr ""
 
@@ -167,16 +164,7 @@ msgstr ""
 msgid "Ownership"
 msgstr ""
 
-msgid "Vacancy rate"
-msgstr ""
-
-msgid "Applications"
-msgstr ""
-
 msgid "Enrolled"
-msgstr ""
-
-msgid "Configuration"
 msgstr ""
 
 "Outliers detection analysis based on DHIS2 min-max standard functionality"
@@ -194,37 +182,19 @@ msgstr ""
 msgid "Running analysis..."
 msgstr ""
 
-msgid "CatCombos"
-msgstr ""
-
 msgid "Double Counts Threshold"
-msgstr ""
-
-msgid "Activity Level"
 msgstr ""
 
 msgid "Sex"
 msgstr ""
 
-msgid "Age Group"
-msgstr ""
-
 msgid "Age Group + Sex"
-msgstr ""
-
-msgid "Age group"
-msgstr ""
-
-msgid "Place of Birth"
 msgstr ""
 
 msgid "Place of Training"
 msgstr ""
 
 msgid "Foreign Trained"
-msgstr ""
-
-msgid "Ownership"
 msgstr ""
 
 msgid "Working Facility Type"
@@ -248,16 +218,7 @@ msgstr ""
 msgid "Contract Type"
 msgstr ""
 
-msgid "Ownership"
-msgstr ""
-
-msgid "Vacancy rate"
-msgstr ""
-
 msgid "Applications"
-msgstr ""
-
-msgid "Enrolled"
 msgstr ""
 
 msgid "Graduates by Gender"
