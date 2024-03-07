@@ -167,7 +167,7 @@ msgstr ""
 msgid "Enrolled"
 msgstr ""
 
-"Outliers detection analysis based on DHIS2 min-max standard functionality"
+msgid "Outliers detection analysis based on DHIS2 min-max standard functionality"
 msgstr ""
 
 msgid "Algorithm"
