@@ -126,9 +126,11 @@ export function useGeneralPractitionersStep() {
         },
     ];
 
-    const valueChange = (e: any) => {
-        alert(`Valor cambiado: ${e.target.value}`);
+    const valueChange = (value: string | undefined) => {
+        setValue(value || "");
     };
+
+    const [value, setValue] = useState<string>("");
 
     return {
         doubleCountsList,
@@ -137,5 +139,6 @@ export function useGeneralPractitionersStep() {
         runAnalysis,
         valueChange,
         catCombosList,
+        value,
     };
 }

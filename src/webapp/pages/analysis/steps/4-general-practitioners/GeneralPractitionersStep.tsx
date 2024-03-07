@@ -13,8 +13,15 @@ interface PageProps {
 
 export const GeneralPractitionersStep: React.FC<PageProps> = React.memo(props => {
     const { name = "Personnel analysis: General Practitioners missing and double counts" } = props;
-    const { doubleCountsList, values, handleChange, runAnalysis, valueChange, catCombosList } =
-        useGeneralPractitionersStep();
+    const {
+        doubleCountsList,
+        value,
+        values,
+        handleChange,
+        runAnalysis,
+        valueChange,
+        catCombosList,
+    } = useGeneralPractitionersStep();
 
     return (
         <Container>
@@ -32,7 +39,7 @@ export const GeneralPractitionersStep: React.FC<PageProps> = React.memo(props =>
                         key={"double-counts-filter"}
                         items={doubleCountsList}
                         onChange={valueChange}
-                        value={"somevalue"}
+                        value={value}
                         label={i18n.t("Double Counts Threshold")}
                     />
                     <Button variant="contained" color="primary" size="small" onClick={runAnalysis}>
