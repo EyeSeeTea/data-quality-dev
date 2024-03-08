@@ -12,7 +12,7 @@ interface PageProps {
 
 export const DisaggregatesStep: React.FC<PageProps> = React.memo(props => {
     const { name = "Missing disaggregates in selected catcombos" } = props;
-    const { dropdownItems, values, handleChange, runAnalysis } = useDisaggregatesStep();
+    const { catCombosList, value, handleChange, runAnalysis } = useDisaggregatesStep();
 
     return (
         <Container>
@@ -20,9 +20,9 @@ export const DisaggregatesStep: React.FC<PageProps> = React.memo(props => {
                 <StyledTypography variant="h2">{i18n.t(name)}</StyledTypography>
                 <FiltersContainer>
                     <SelectMultiCheckboxes
-                        options={dropdownItems}
+                        options={catCombosList}
                         onChange={handleChange}
-                        value={values}
+                        value={value}
                         label={i18n.t("CatCombos")}
                     />
                     <Button variant="contained" color="primary" size="small" onClick={runAnalysis}>

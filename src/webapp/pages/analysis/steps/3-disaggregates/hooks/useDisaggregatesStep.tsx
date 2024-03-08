@@ -2,14 +2,7 @@ import { ChangeEvent, useState } from "react";
 import i18n from "$/utils/i18n";
 
 export function useDisaggregatesStep() {
-    const [values, setValues] = useState<string[]>([]);
-
-    const handleChange = (event: ChangeEvent<any>) => {
-        const selectedValues = event.target.value as string[];
-        setValues(selectedValues);
-    };
-
-    const dropdownItems = [
+    const catCombosList = [
         {
             value: "ACTIVITY",
             text: i18n.t("Activity Level"),
@@ -44,13 +37,22 @@ export function useDisaggregatesStep() {
         },
     ];
 
+    const defaultValues = catCombosList.map(option => option.text);
+
+    const [value, setValue] = useState<string[]>(defaultValues);
+
+    const handleChange = (event: ChangeEvent<any>) => {
+        const selectedValues = event.target.value as string[];
+        setValue(selectedValues);
+    };
+
     const runAnalysis = (e: any) => {
         alert(`run analysis`);
     };
 
     return {
-        dropdownItems,
-        values,
+        catCombosList,
+        value,
         handleChange,
         runAnalysis,
     };
