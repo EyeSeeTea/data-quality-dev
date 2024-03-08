@@ -3,8 +3,8 @@ import i18n from "$/utils/i18n";
 import { EmptyState } from "$/webapp/components/empty-state/EmptyState";
 import { Typography, Button } from "@material-ui/core";
 import styled from "styled-components";
-import { MultipleDropdown } from "@eyeseetea/d2-ui-components";
 import { useNursingMidwiferyStep } from "./useNursingMidwiferyStep";
+import { SelectMultiCheckboxes } from "$/webapp/components/selectmulti-checkboxes/SelectMultiCheckboxes";
 
 interface PageProps {
     name: string;
@@ -19,11 +19,11 @@ export const NursingMidwiferyStep: React.FC<PageProps> = React.memo(props => {
             <AnalysisHeader>
                 <StyledTypography variant="h2">{i18n.t(name)}</StyledTypography>
                 <FiltersContainer>
-                    <StyledMultipleDropdown
-                        items={catCombosList}
-                        label={i18n.t("CatCombos")}
-                        values={values}
+                    <SelectMultiCheckboxes
+                        options={catCombosList}
                         onChange={handleChange}
+                        value={values}
+                        label={i18n.t("CatCombos")}
                     />
                     <Button variant="contained" color="primary" size="small" onClick={runAnalysis}>
                         {i18n.t("Run")}
@@ -57,8 +57,4 @@ const FiltersContainer = styled.div`
     display: flex;
     align-items: center;
     gap: 1rem;
-`;
-
-const StyledMultipleDropdown = styled(MultipleDropdown)`
-    max-width: 20rem;
 `;

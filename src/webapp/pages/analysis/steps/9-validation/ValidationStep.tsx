@@ -20,6 +20,7 @@ export const ValidationStep: React.FC<PageProps> = React.memo(props => {
                 <StyledTypography variant="h2">{i18n.t(name)}</StyledTypography>
                 <FiltersContainer>
                     <StyledDropdown
+                        hideEmpty
                         key={"validations-filter"}
                         items={validationItems}
                         onChange={handleChange}

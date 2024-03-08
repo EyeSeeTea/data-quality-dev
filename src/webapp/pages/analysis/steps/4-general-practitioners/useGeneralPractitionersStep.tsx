@@ -1,5 +1,5 @@
 import i18n from "$/utils/i18n";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 export function useGeneralPractitionersStep() {
     const catCombosList = [
@@ -93,10 +93,13 @@ export function useGeneralPractitionersStep() {
         },
     ];
 
-    const [values, setValues] = useState<string[]>(catCombosList.map(item => item.value));
+    const defaultValues = catCombosList.map(option => option.text);
 
-    const handleChange = (values: string[]) => {
-        setValues(values);
+    const [values, setValues] = useState<string[]>(defaultValues);
+
+    const handleChange = (event: ChangeEvent<any>) => {
+        const selectedValues = event.target.value as string[];
+        setValues(selectedValues);
     };
 
     const runAnalysis = (e: any) => {

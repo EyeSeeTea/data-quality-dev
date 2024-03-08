@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import i18n from "$/utils/i18n";
 
 export function useNursingMidwiferyStep() {
@@ -81,10 +81,13 @@ export function useNursingMidwiferyStep() {
         },
     ];
 
-    const [values, setValues] = useState<string[]>(catCombosList.map(item => item.value));
+    const defaultValues = catCombosList.map(option => option.text);
 
-    const handleChange = (values: string[]) => {
-        setValues(values);
+    const [values, setValues] = useState<string[]>(defaultValues);
+
+    const handleChange = (event: ChangeEvent<any>) => {
+        const selectedValues = event.target.value as string[];
+        setValues(selectedValues);
     };
 
     const runAnalysis = (e: any) => {
