@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-03-03T20:32:11.704Z\n"
-"PO-Revision-Date: 2024-03-03T20:32:11.704Z\n"
+"POT-Creation-Date: 2024-03-07T11:40:09.170Z\n"
+"PO-Revision-Date: 2024-03-07T11:40:09.171Z\n"
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
@@ -140,9 +140,6 @@ msgstr ""
 msgid "Data Quality Analysis"
 msgstr ""
 
-msgid "Configuration"
-msgstr ""
-
 msgid "Outliers detection analysis based on DHIS2 min-max standard functionality"
 msgstr ""
 
@@ -164,6 +161,87 @@ msgstr ""
 msgid "Running analysis..."
 msgstr ""
 
+msgid "CatCombos"
+msgstr ""
+
+msgid "Activity Level"
+msgstr ""
+
+msgid "Sex"
+msgstr ""
+
+msgid "Age group"
+msgstr ""
+
+msgid "Place of Birth"
+msgstr ""
+
+msgid "Ownership"
+msgstr ""
+
+msgid "Vacancy rate"
+msgstr ""
+
+msgid "Applications"
+msgstr ""
+
+msgid "Enrolled"
+msgstr ""
+
+msgid "Double Counts Threshold"
+msgstr ""
+
+msgid "Age Group"
+msgstr ""
+
+msgid "Age Group + Sex"
+msgstr ""
+
+msgid "Place of Training"
+msgstr ""
+
+msgid "Foreign Trained"
+msgstr ""
+
+msgid "Working Facility Type"
+msgstr ""
+
+msgid "Newly Active domestic trained HWF"
+msgstr ""
+
+msgid "Newly Active foreign trained employed"
+msgstr ""
+
+msgid "Voluntary Exits"
+msgstr ""
+
+msgid "Involuntary exits"
+msgstr ""
+
+msgid "Contract Type"
+msgstr ""
+
+msgid "Graduates by Gender"
+msgstr ""
+
+msgid "Graduates by institution ownership"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Total Newly Active Health Workers"
+msgstr ""
+
+msgid "Total Number of exits"
+msgstr ""
+
+msgid "Validation Rule Group"
+msgstr ""
+
+msgid "Configuration"
+msgstr ""
+
 msgid "Outliers"
 msgstr ""
 
@@ -173,7 +251,7 @@ msgstr ""
 msgid "Disaggregates"
 msgstr ""
 
-msgid "Doctors"
+msgid "General Practitioners"
 msgstr ""
 
 msgid "Nursing"
