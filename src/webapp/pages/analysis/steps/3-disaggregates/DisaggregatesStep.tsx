@@ -1,7 +1,7 @@
 import React from "react";
 import i18n from "$/utils/i18n";
 import styled from "styled-components";
-import { useDisaggregatesStep } from "./hooks/useDisaggregatesStep";
+import { useDisaggregatesStep } from "./useDisaggregatesStep";
 import { EmptyState } from "$/webapp/components/empty-state/EmptyState";
 import { Typography, Button } from "@material-ui/core";
 import { SelectMultiCheckboxes } from "$/webapp/components/selectmulti-checkboxes/SelectMultiCheckboxes";

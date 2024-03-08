@@ -4,7 +4,7 @@ import { EmptyState } from "$/webapp/components/empty-state/EmptyState";
 import { Typography, Button } from "@material-ui/core";
 import styled from "styled-components";
 import { MultipleDropdown } from "@eyeseetea/d2-ui-components";
-import { useNursingMidwiferyStep } from "./hooks/useNursingMidwiferyStep";
+import { useNursingMidwiferyStep } from "./useNursingMidwiferyStep";
 
 interface PageProps {
     name: string;
@@ -12,7 +12,7 @@ interface PageProps {
 
 export const NursingMidwiferyStep: React.FC<PageProps> = React.memo(props => {
     const { name = "Missing nursing personnel when midwifery personnel is present" } = props;
-    const { dropdownItems, values, handleChange, runAnalysis } = useNursingMidwiferyStep();
+    const { catCombosList, values, handleChange, runAnalysis } = useNursingMidwiferyStep();
 
     return (
         <Container>
@@ -20,7 +20,7 @@ export const NursingMidwiferyStep: React.FC<PageProps> = React.memo(props => {
                 <StyledTypography variant="h2">{i18n.t(name)}</StyledTypography>
                 <FiltersContainer>
                     <StyledMultipleDropdown
-                        items={dropdownItems}
+                        items={catCombosList}
                         label={i18n.t("CatCombos")}
                         values={values}
                         onChange={handleChange}
