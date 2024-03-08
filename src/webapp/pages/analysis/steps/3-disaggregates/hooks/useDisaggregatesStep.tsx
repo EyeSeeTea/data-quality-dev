@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import i18n from "$/utils/i18n";
 
 export function useDisaggregatesStep() {
     const [values, setValues] = useState<string[]>([]);
 
-    const handleChange = (values: string[]) => {
-        setValues(values);
+    const handleChange = (event: ChangeEvent<any>) => {
+        const selectedValues = event.target.value as string[];
+        setValues(selectedValues);
     };
 
     const dropdownItems = [
