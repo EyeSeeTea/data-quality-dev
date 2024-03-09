@@ -321,17 +321,19 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
             status: firstEnrollment?.status || "ACTIVE",
             updatedAt: this.getValueOrDefault(firstEnrollment?.updatedAt, currentDate),
             updatedAtClient: this.getValueOrDefault(firstEnrollment?.updatedAtClient, currentDate),
-            events:
-                firstEnrollment?.events.map(event => {
+            events: _(firstEnrollment?.events || [])
+                .map(event => {
                     const section = qualityAnalysis.sections.find(
                         section => section.id === event.programStage
                     );
                     if (!section) return event;
                     const issue = section.issues.find(issue => issue.id === event.event);
-                    if (!issue) return event;
+                    if (!issue) return undefined;
 
                     return { ...event, dataValues: this.getDataValuesFromIssues(event, issue) };
-                }) || [],
+                })
+                .compact()
+                .value(),
         };
     }
 

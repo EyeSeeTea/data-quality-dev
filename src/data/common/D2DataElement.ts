@@ -17,6 +17,7 @@ export class D2DataElement {
                         displayName: true,
                         displayShortName: true,
                         valueType: true,
+                        categoryCombo: { id: true, displayName: true, categoryOptionCombos: true },
                     },
                     filter: { id: { in: ids } },
                 })
@@ -25,12 +26,21 @@ export class D2DataElement {
                         return {
                             id: d2DataElement.id,
                             name:
-                                d2DataElement.displayShortName ||
                                 d2DataElement.displayFormName ||
+                                d2DataElement.displayShortName ||
                                 d2DataElement.displayName,
                             isNumber:
                                 d2DataElement.valueType === "NUMBER" ||
                                 d2DataElement.valueType.includes("INTEGER"),
+                            disaggregation: d2DataElement.categoryCombo
+                                ? {
+                                      id: d2DataElement.categoryCombo.id,
+                                      name: d2DataElement.categoryCombo.displayName,
+                                      options: d2DataElement.categoryCombo.categoryOptionCombos.map(
+                                          coc => coc.id
+                                      ),
+                                  }
+                                : undefined,
                         };
                     });
                 })

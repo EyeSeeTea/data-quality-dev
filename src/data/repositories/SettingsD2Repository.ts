@@ -22,7 +22,7 @@ export class SettingsD2Repository implements SettingsRepository {
             return this.getDataSet(d2Response.defaultConfig.dataSet).map(dataSet => {
                 return Settings.build({
                     endDate: d2Response.defaultConfig.endDate,
-                    module: { ...dataSet, dataElements: [] },
+                    module: { ...dataSet, dataElements: [], disaggregations: [] },
                     countryIds: d2Response.defaultConfig.orgUnits,
                     startDate: d2Response.defaultConfig.startDate,
                 }).get();
