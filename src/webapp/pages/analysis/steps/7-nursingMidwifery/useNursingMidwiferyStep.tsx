@@ -1,7 +1,7 @@
-import i18n from "$/utils/i18n";
 import { useState } from "react";
+import i18n from "$/utils/i18n";
 
-export function useGeneralPractitionersStep() {
+export function useNursingMidwiferyStep() {
     const catCombosList = [
         {
             value: "ACTIVITY",
@@ -79,18 +79,6 @@ export function useGeneralPractitionersStep() {
             value: "GRADUATESINSTITUTION",
             text: i18n.t("Graduates by institution ownership"),
         },
-        {
-            value: "TOTAL",
-            text: i18n.t("Total"),
-        },
-        {
-            value: "TOTALNEWLYACTIVE",
-            text: i18n.t("Total Newly Active Health Workers"),
-        },
-        {
-            value: "TOTALEXITS",
-            text: i18n.t("Total Number of exits"),
-        },
     ];
 
     const defaultValues = catCombosList.map(option => option.text);
@@ -105,42 +93,10 @@ export function useGeneralPractitionersStep() {
         alert(`run analysis`);
     };
 
-    const doubleCountsList = [
-        {
-            value: "1",
-            text: "+/- 1%",
-        },
-        {
-            value: "2",
-            text: "+/- 2%",
-        },
-        {
-            value: "3",
-            text: "+/- 3%",
-        },
-        {
-            value: "4",
-            text: "+/- 4%",
-        },
-        {
-            value: "5",
-            text: "+/- 5%",
-        },
-    ];
-
-    const valueChange = (value: string | undefined) => {
-        setValue(value || "");
-    };
-
-    const [value, setValue] = useState<string>("");
-
     return {
-        doubleCountsList,
+        catCombosList,
         values,
         handleChange,
         runAnalysis,
-        valueChange,
-        catCombosList,
-        value,
     };
 }

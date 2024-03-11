@@ -1,11 +1,11 @@
 import React from "react";
 import i18n from "$/utils/i18n";
 import styled from "styled-components";
-import { MultipleDropdown } from "@eyeseetea/d2-ui-components";
 import { useGeneralPractitionersStep } from "./useGeneralPractitionersStep";
 import { EmptyState } from "$/webapp/components/empty-state/EmptyState";
 import { Typography, Button } from "@material-ui/core";
 import { Dropdown } from "@eyeseetea/d2-ui-components";
+import { SelectMultiCheckboxes } from "$/webapp/components/selectmulti-checkboxes/SelectMultiCheckboxes";
 
 interface PageProps {
     name: string;
@@ -28,11 +28,11 @@ export const GeneralPractitionersStep: React.FC<PageProps> = React.memo(props =>
             <AnalysisHeader>
                 <StyledTypography variant="h2">{i18n.t(name)}</StyledTypography>
                 <FiltersContainer>
-                    <StyledMultipleDropdown
-                        items={catCombosList}
-                        label={i18n.t("CatCombos")}
-                        values={values}
+                    <SelectMultiCheckboxes
+                        options={catCombosList}
                         onChange={handleChange}
+                        value={values}
+                        label={i18n.t("CatCombos")}
                     />
                     <StyledDropdown
                         hideEmpty
@@ -78,7 +78,4 @@ const FiltersContainer = styled.div`
 
 const StyledDropdown = styled(Dropdown)`
     min-width: 14rem;
-`;
-const StyledMultipleDropdown = styled(MultipleDropdown)`
-    max-width: 20rem;
 `;
