@@ -25,7 +25,6 @@ type Props = {
 export const SelectMultiCheckboxes: React.FC<Props> = React.memo(
     ({ onChange, options, value, label }) => {
         const onChangeSelector = (event: React.ChangeEvent<{ value: unknown }>) => {
-            console.log(event.target.value);
             onChange(event.target.value as string[]);
         };
         return (

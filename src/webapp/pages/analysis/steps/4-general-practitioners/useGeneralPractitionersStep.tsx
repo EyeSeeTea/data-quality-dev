@@ -62,7 +62,7 @@ export function useGeneralPractitionersStep(props: UseGeneralPractitionersStepPr
                     };
                 });
                 setDisaggregations(initialDisaggregations);
-                // setSelectedDissagregations(initialDisaggregations.map(item => item.value));
+                setSelectedDissagregations(initialDisaggregations.map(item => item.value));
             },
             err => {
                 snackbar.error(err.message);
