@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2024-03-07T11:40:09.170Z\n"
+"POT-Creation-Date: 2024-03-08T08:43:07.923Z\n"
 "PO-Revision-Date: 2018-10-25T09:02:35.143Z\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -171,37 +171,22 @@ msgstr ""
 msgid "Sex"
 msgstr ""
 
-msgid "Age group"
-msgstr ""
-
-msgid "Place of Birth"
-msgstr ""
-
-msgid "Ownership"
-msgstr ""
-
-msgid "Vacancy rate"
-msgstr ""
-
-msgid "Applications"
-msgstr ""
-
-msgid "Enrolled"
-msgstr ""
-
-msgid "Double Counts Threshold"
-msgstr ""
-
 msgid "Age Group"
 msgstr ""
 
 msgid "Age Group + Sex"
 msgstr ""
 
+msgid "Place of Birth"
+msgstr ""
+
 msgid "Place of Training"
 msgstr ""
 
 msgid "Foreign Trained"
+msgstr ""
+
+msgid "Ownership"
 msgstr ""
 
 msgid "Working Facility Type"
@@ -219,13 +204,25 @@ msgstr ""
 msgid "Involuntary exits"
 msgstr ""
 
+msgid "Vacancy rate"
+msgstr ""
+
 msgid "Contract Type"
+msgstr ""
+
+msgid "Applications"
+msgstr ""
+
+msgid "Enrolled"
 msgstr ""
 
 msgid "Graduates by Gender"
 msgstr ""
 
 msgid "Graduates by institution ownership"
+msgstr ""
+
+msgid "Double Counts Threshold"
 msgstr ""
 
 msgid "Total"
@@ -238,6 +235,9 @@ msgid "Total Number of exits"
 msgstr ""
 
 msgid "Validation Rule Group"
+msgstr ""
+
+msgid "Age group"
 msgstr ""
 
 msgid "Configuration"
