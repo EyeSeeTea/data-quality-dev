@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import i18n from "$/utils/i18n";
 
 export function useNursingMidwiferyStep() {
@@ -85,9 +85,8 @@ export function useNursingMidwiferyStep() {
 
     const [values, setValues] = useState<string[]>(defaultValues);
 
-    const handleChange = (event: ChangeEvent<any>) => {
-        const selectedValues = event.target.value as string[];
-        setValues(selectedValues);
+    const handleChange = (values: string[]) => {
+        setValues(values);
     };
 
     const runAnalysis = (e: any) => {

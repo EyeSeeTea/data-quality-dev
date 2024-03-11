@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import i18n from "$/utils/i18n";
 
 export function useDisaggregatesStep() {
@@ -85,9 +85,8 @@ export function useDisaggregatesStep() {
 
     const [value, setValue] = useState<string[]>(defaultValues);
 
-    const handleChange = (event: ChangeEvent<any>) => {
-        const selectedValues = event.target.value as string[];
-        setValue(selectedValues);
+    const handleChange = (values: string[]) => {
+        setValue(values);
     };
 
     const runAnalysis = (e: any) => {
