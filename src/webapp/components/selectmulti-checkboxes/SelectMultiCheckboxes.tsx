@@ -1,4 +1,3 @@
-import React, { ChangeEvent } from "react";
 import Select from "@material-ui/core/Select";
 import Checkbox from "@material-ui/core/Checkbox";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -6,6 +5,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import styled from "styled-components";
+import { memo } from "react";
 
 type Option = {
     text: string;
@@ -16,11 +16,14 @@ type Props = {
     label: string;
     options: Option[];
     value: string[];
-    onChange: (event: ChangeEvent<any>) => void;
+    onChange: (values: string[]) => void;
 };
 
-export const SelectMultiCheckboxes: React.FC<Props> = React.memo(
+export const SelectMultiCheckboxes: React.FC<Props> = memo(
     ({ onChange, options, value, label }) => {
+        const onChangeSelector = (event: React.ChangeEvent<{ value: unknown }>) => {
+            onChange(event.target.value as string[]);
+        };
         return (
             <StyledFormControl>
                 <InputLabel id="mutiple-checkbox-label">{label}</InputLabel>
@@ -29,7 +32,7 @@ export const SelectMultiCheckboxes: React.FC<Props> = React.memo(
                     id="mutiple-checkbox"
                     multiple
                     value={value}
-                    onChange={onChange}
+                    onChange={onChangeSelector}
                     renderValue={selected => (selected as string[]).join(", ")}
                 >
                     {options.map(option => (
