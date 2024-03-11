@@ -190,7 +190,7 @@ export class RunPractitionersValidationUseCase {
                 dataElement.dataElementParent.name
             }, with a deviation of ${dataElement.deviation.toFixed(2)}% over the threshold ${
                 options.threshold
-            } configured`;
+            }% configured`;
 
             return this.buildIssueFromDataValue(
                 description,
@@ -316,7 +316,7 @@ export class RunPractitionersValidationUseCase {
 
     private calculateDeviation(first: number, second: number, third: number): number {
         const result = (first + second) / third;
-        const deviation = Math.abs(result - 1) * 100;
+        const deviation = (Math.abs(result - 1) * 100) / 100;
         return deviation;
     }
 
