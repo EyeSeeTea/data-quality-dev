@@ -343,6 +343,10 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
     ): DataValue[] {
         const currentDataValues = [
             {
+                dataElement: this.metadata.dataElements.correlative.id,
+                value: this.getValueOrDefault(issue.correlative),
+            },
+            {
                 dataElement: this.metadata.dataElements.action.id,
                 value: this.getValueOrDefault(issue.action?.code),
             },

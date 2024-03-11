@@ -223,6 +223,7 @@ export class RunPractitionersValidationUseCase {
                 description,
                 issueNumber,
                 period,
+                correlative: String(currentNumber),
             },
             section.id
         );
