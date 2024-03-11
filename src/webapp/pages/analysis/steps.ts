@@ -9,9 +9,12 @@ import { OutliersStep } from "./steps/1-outliers/OutliersStep";
 import { ValidationStep } from "./steps/9-validation/ValidationStep";
 import { TrendsStep } from "./steps/TrendsStep";
 import i18n from "$/utils/i18n";
+import { SummaryStep } from "./steps/10-summary/SummaryStep";
 
 export const outlierKey =
     "1. Outliers detection analysis based on DHIS2 min-max standard functionality";
+
+export const SummaryKey = "10. Summary";
 
 export const steps = [
     {
@@ -72,5 +75,10 @@ export const steps = [
         key: "other",
         label: i18n.t("Other"),
         component: ValidationStep,
+    },
+    {
+        key: SummaryKey,
+        label: i18n.t("Summary"),
+        component: SummaryStep,
     },
 ];
