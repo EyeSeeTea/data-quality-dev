@@ -1,10 +1,10 @@
 import React from "react";
 import i18n from "$/utils/i18n";
 import styled from "styled-components";
-import { MultipleDropdown } from "@eyeseetea/d2-ui-components";
-import { useDisaggregatesStep } from "./hooks/useDisaggregatesStep";
+import { useDisaggregatesStep } from "./useDisaggregatesStep";
 import { EmptyState } from "$/webapp/components/empty-state/EmptyState";
 import { Typography, Button } from "@material-ui/core";
+import { SelectMultiCheckboxes } from "$/webapp/components/selectmulti-checkboxes/SelectMultiCheckboxes";
 
 interface PageProps {
     name: string;
@@ -12,18 +12,18 @@ interface PageProps {
 
 export const DisaggregatesStep: React.FC<PageProps> = React.memo(props => {
     const { name = "Missing disaggregates in selected catcombos" } = props;
-    const { dropdownItems, values, handleChange, runAnalysis } = useDisaggregatesStep();
+    const { catCombosList, value, handleChange, runAnalysis } = useDisaggregatesStep();
 
     return (
         <Container>
             <AnalysisHeader>
                 <StyledTypography variant="h2">{i18n.t(name)}</StyledTypography>
                 <FiltersContainer>
-                    <StyledMultipleDropdown
-                        items={dropdownItems}
-                        label={i18n.t("CatCombos")}
-                        values={values}
+                    <SelectMultiCheckboxes
+                        options={catCombosList}
                         onChange={handleChange}
+                        value={value}
+                        label={i18n.t("CatCombos")}
                     />
                     <Button variant="contained" color="primary" size="small" onClick={runAnalysis}>
                         {i18n.t("Run")}
@@ -57,8 +57,4 @@ const FiltersContainer = styled.div`
     display: flex;
     align-items: center;
     gap: 1rem;
-`;
-
-const StyledMultipleDropdown = styled(MultipleDropdown)`
-    max-width: 20rem;
 `;

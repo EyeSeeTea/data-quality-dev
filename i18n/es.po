@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2024-03-07T11:40:09.170Z\n"
+"POT-Creation-Date: 2024-03-11T13:00:38.175Z\n"
 "PO-Revision-Date: 2018-10-25T09:02:35.143Z\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -9,6 +9,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 msgid "Cannot be blank: {{fieldName}}"
+msgstr ""
+
+msgid "No disaggregations selected"
+msgstr ""
+
+msgid "This analysis is not available for this module"
 msgstr ""
 
 msgid "Open analysis"
@@ -171,37 +177,22 @@ msgstr ""
 msgid "Sex"
 msgstr ""
 
-msgid "Age group"
-msgstr ""
-
-msgid "Place of Birth"
-msgstr ""
-
-msgid "Ownership"
-msgstr ""
-
-msgid "Vacancy rate"
-msgstr ""
-
-msgid "Applications"
-msgstr ""
-
-msgid "Enrolled"
-msgstr ""
-
-msgid "Double Counts Threshold"
-msgstr ""
-
 msgid "Age Group"
 msgstr ""
 
 msgid "Age Group + Sex"
 msgstr ""
 
+msgid "Place of Birth"
+msgstr ""
+
 msgid "Place of Training"
 msgstr ""
 
 msgid "Foreign Trained"
+msgstr ""
+
+msgid "Ownership"
 msgstr ""
 
 msgid "Working Facility Type"
@@ -219,7 +210,16 @@ msgstr ""
 msgid "Involuntary exits"
 msgstr ""
 
+msgid "Vacancy rate"
+msgstr ""
+
 msgid "Contract Type"
+msgstr ""
+
+msgid "Applications"
+msgstr ""
+
+msgid "Enrolled"
 msgstr ""
 
 msgid "Graduates by Gender"
@@ -228,16 +228,20 @@ msgstr ""
 msgid "Graduates by institution ownership"
 msgstr ""
 
-msgid "Total"
+msgid ""
+"Medical doctors analysis: General Practicioners missing and double counts"
 msgstr ""
 
-msgid "Total Newly Active Health Workers"
+msgid "Disaggregations"
 msgstr ""
 
-msgid "Total Number of exits"
+msgid "Double Counts Threshold"
 msgstr ""
 
 msgid "Validation Rule Group"
+msgstr ""
+
+msgid "Age group"
 msgstr ""
 
 msgid "Configuration"

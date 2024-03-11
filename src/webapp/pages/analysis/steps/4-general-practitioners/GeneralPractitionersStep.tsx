@@ -8,6 +8,7 @@ import { practitionersKey } from "$/webapp/pages/analysis/steps";
 
 import styled from "styled-components";
 import { useGeneralPractitionersStep } from "./useGeneralPractitionersStep";
+import { SelectMultiCheckboxes } from "$/webapp/components/selectmulti-checkboxes/SelectMultiCheckboxes";
 
 interface PageProps {
     name: string;
@@ -43,13 +44,14 @@ export const GeneralPractitionersStep: React.FC<PageProps> = React.memo(() => {
                 reload={reload}
                 section={section}
                 title={i18n.t(
-                    "Medical doctors analysis: General Practicioners missing and double counts"
+                    "Medical doctors analysis: General Practicioners missing and double counts",
+                    { nsSeparator: true }
                 )}
             >
-                <StyledMultipleDropdown
-                    items={disaggregations}
+                <SelectMultiCheckboxes
+                    options={disaggregations}
                     label={i18n.t("Disaggregations")}
-                    values={selectedDisaggregations}
+                    value={selectedDisaggregations}
                     onChange={handleChange}
                 />
                 <StyledDropdown
@@ -67,7 +69,4 @@ export const GeneralPractitionersStep: React.FC<PageProps> = React.memo(() => {
 
 const StyledDropdown = styled(Dropdown)`
     min-width: 14rem;
-`;
-const StyledMultipleDropdown = styled(MultipleDropdown)`
-    max-width: 20rem;
 `;
