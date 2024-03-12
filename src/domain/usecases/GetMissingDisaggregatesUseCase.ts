@@ -137,6 +137,7 @@ export class GetMissingDisaggregatesUseCase {
                             dataElementId: missingDisaggregate.dataElement.id,
                             description: `A missing disaggregate was detected for the Category ${disaggregationName}. Missing value was ${missingCombination.name}.`,
                             issueNumber: issueNumber,
+                            correlative: String(currentNumber),
                         },
                         section.id
                     );
@@ -180,6 +181,7 @@ export class GetMissingDisaggregatesUseCase {
                             dataElementId: missingDataElement.id,
                             description: `A missing disaggregate was detected for the Category ${disaggregationName}. Missing value was ${missingDataElement.name}.`,
                             issueNumber: issueNumber,
+                            correlative: String(currentNumber),
                         },
                         section.id
                     );
