@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { Dropdown, MultipleDropdown } from "@eyeseetea/d2-ui-components";
+import { Dropdown } from "@eyeseetea/d2-ui-components";
 
 import i18n from "$/utils/i18n";
 import { StepAnalysis } from "$/webapp/pages/analysis/steps/StepAnalysis";

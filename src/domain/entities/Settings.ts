@@ -10,7 +10,21 @@ export interface SettingsAttrs {
     module: Module;
     startDate: string;
     countryIds: Id[];
+    sections: SectionSetting[];
 }
+
+export type SectionSetting = {
+    id: Id;
+    disaggregations: SectionDisaggregation[];
+};
+
+export type SectionDisaggregation = {
+    id: Id;
+    disaggregationId: Id;
+    name: string;
+    type: "combos";
+    combinations: string[];
+};
 
 export class Settings extends Struct<SettingsAttrs>() {
     static build(attrs: SettingsAttrs): Either<ValidationError<Settings>[], Settings> {

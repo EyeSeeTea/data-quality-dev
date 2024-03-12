@@ -10,10 +10,7 @@ import styled from "styled-components";
 
 import _ from "$/domain/entities/generic/Collection";
 
-type Option = {
-    text: string;
-    value: string;
-};
+export type Option = { text: string; value: string };
 
 type Props = {
     label: string;
