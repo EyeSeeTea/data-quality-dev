@@ -42,6 +42,7 @@ import { GetQualityAnalysisUseCase } from "./domain/usecases/GetQualityAnalisysU
 import { GetSettingsUseCase } from "./domain/usecases/GetSettingsUseCase";
 import { SaveIssueUseCase } from "./domain/usecases/SaveIssueUseCase";
 import { SaveConfigAnalysisUseCase } from "./domain/usecases/SaveConfigAnalysisUseCase";
+import { GetAllIssuesUseCase } from "./domain/usecases/GetAllIssuesUseCase";
 import { D2Api } from "./types/d2-api";
 
 export type CompositionRoot = ReturnType<typeof getCompositionRoot>;
@@ -90,6 +91,9 @@ function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) 
         },
         issues: { save: new SaveIssueUseCase(repositories.qualityAnalysisRepository, metadata) },
         settings: { get: new GetSettingsUseCase(repositories.settingsRepository) },
+        summary: {
+            get: new GetAllIssuesUseCase(repositories.issueRepository),
+        },
     };
 }
 
