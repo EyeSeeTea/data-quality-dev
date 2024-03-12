@@ -47,7 +47,9 @@ import { RunPractitionersValidationUseCase } from "./domain/usecases/RunPractiti
 import { DataValueRepository } from "$/domain/repositories/DataValueRepository";
 import { DataValueD2Repository } from "./data/repositories/DataValueD2Repository";
 import { DataValueTestRepository } from "./data/repositories/DataValueTestRepository";
-import { GetDisaggregationsUseCase } from "$/domain/repositories/GetDisaggregationsUseCase";
+import { GetDisaggregationsUseCase } from "$/domain/usecases/GetDisaggregationsUseCase";
+import { GetMissingDisaggregatesUseCase } from "./domain/usecases/GetMissingDisaggregatesUseCase";
+import { GetCategoryDesaggregationsUseCase } from "$/domain/usecases/GetCategoryDesaggregationsUseCase";
 
 export type CompositionRoot = ReturnType<typeof getCompositionRoot>;
 
@@ -102,6 +104,20 @@ function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) 
                 repositories.moduleRepository,
                 repositories.dataValueRepository,
                 repositories.issueRepository
+            ),
+        },
+        disaggregates: {
+            getCategoriesCombos: new GetCategoryDesaggregationsUseCase(
+                repositories.settingsRepository
+            ),
+        },
+        missingDisaggregates: {
+            get: new GetMissingDisaggregatesUseCase(
+                repositories.qualityAnalysisRepository,
+                repositories.moduleRepository,
+                repositories.dataValueRepository,
+                repositories.issueRepository,
+                repositories.settingsRepository
             ),
         },
         issues: { save: new SaveIssueUseCase(repositories.qualityAnalysisRepository, metadata) },

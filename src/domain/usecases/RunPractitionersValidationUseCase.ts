@@ -267,7 +267,7 @@ export class RunPractitionersValidationUseCase {
                                 dataValue.dataElementId === dataElement.dataElementParent.id &&
                                 dataValue.countryId === countryId &&
                                 dataValue.period === period &&
-                                dataValue.categoryOptionComboId === option
+                                dataValue.categoryOptionComboId === option.id
                             );
                         });
 
@@ -278,7 +278,7 @@ export class RunPractitionersValidationUseCase {
                                         dv.dataElementId === deChild.id &&
                                         dv.countryId === countryId &&
                                         dv.period === period &&
-                                        dv.categoryOptionComboId === option
+                                        dv.categoryOptionComboId === option.id
                                 );
                                 return { dataValue, dataElement: deChild };
                             })

@@ -1,13 +1,14 @@
-import _ from "../../domain/entities/generic/Collection";
-import { D2Api } from "../../types/d2-api";
+import _ from "$/domain/entities/generic/Collection";
+import { D2Api } from "$/types/d2-api";
 import {
     DATA_QUALITY_NAMESPACE,
     DATA_QUALITY_SETTINGS_KEY,
+    SectionSetting,
     Settings,
-} from "../../domain/entities/Settings";
-import { SettingsRepository } from "../../domain/repositories/SettingsRepository";
-import { FutureData, apiToFuture } from "../api-futures";
-import { Id, NamedCodeRef } from "../../domain/entities/Ref";
+} from "$/domain/entities/Settings";
+import { SettingsRepository } from "$/domain/repositories/SettingsRepository";
+import { FutureData, apiToFuture } from "$/data/api-futures";
+import { Id, NamedCodeRef } from "$/domain/entities/Ref";
 
 export class SettingsD2Repository implements SettingsRepository {
     constructor(private api: D2Api) {}
@@ -25,6 +26,7 @@ export class SettingsD2Repository implements SettingsRepository {
                     module: { ...dataSet, dataElements: [], disaggregations: [] },
                     countryIds: d2Response.defaultConfig.orgUnits,
                     startDate: d2Response.defaultConfig.startDate,
+                    sections: d2Response.sections,
                 }).get();
             });
         });
@@ -46,4 +48,5 @@ export class SettingsD2Repository implements SettingsRepository {
 
 type D2DataStore = {
     defaultConfig: Pick<Settings, "endDate" | "startDate"> & { dataSet: string; orgUnits: Id[] };
+    sections: SectionSetting[];
 };

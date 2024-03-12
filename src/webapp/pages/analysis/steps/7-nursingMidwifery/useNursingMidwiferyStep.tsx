@@ -89,7 +89,7 @@ export function useNursingMidwiferyStep() {
         setValues(values);
     };
 
-    const runAnalysis = (e: any) => {
+    const runAnalysis = () => {
         alert(`run analysis`);
     };
 

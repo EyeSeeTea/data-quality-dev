@@ -17,7 +17,11 @@ export class D2DataElement {
                         displayName: true,
                         displayShortName: true,
                         valueType: true,
-                        categoryCombo: { id: true, displayName: true, categoryOptionCombos: true },
+                        categoryCombo: {
+                            id: true,
+                            displayName: true,
+                            categoryOptionCombos: { id: true, name: true },
+                        },
                     },
                     filter: { id: { in: ids } },
                 })
@@ -37,7 +41,7 @@ export class D2DataElement {
                                       id: d2DataElement.categoryCombo.id,
                                       name: d2DataElement.categoryCombo.displayName,
                                       options: d2DataElement.categoryCombo.categoryOptionCombos.map(
-                                          coc => coc.id
+                                          coc => coc
                                       ),
                                   }
                                 : undefined,
