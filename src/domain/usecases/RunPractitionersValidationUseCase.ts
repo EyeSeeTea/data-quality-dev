@@ -151,7 +151,7 @@ export class RunPractitionersValidationUseCase {
 
                 const deviation = this.calculateDeviation(firstValue, secondValue, thirdValue);
 
-                if (deviation < options.threshold) return undefined;
+                if (deviation > options.threshold) return undefined;
                 return { ...dataElement, deviation };
             })
             .compact()
@@ -317,7 +317,7 @@ export class RunPractitionersValidationUseCase {
 
     private calculateDeviation(first: number, second: number, third: number): number {
         const result = (first + second) / third;
-        const deviation = (Math.abs(result - 1) * 100) / 100;
+        const deviation = Math.abs(result - 1) * 100;
         return deviation;
     }
 
