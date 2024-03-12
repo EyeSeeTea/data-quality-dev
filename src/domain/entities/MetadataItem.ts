@@ -37,6 +37,7 @@ export interface MetadataItem {
         actionDescription: NamedCodeRef;
         contactEmails: NamedCodeRef;
         comments: NamedCodeRef;
+        correlative: NamedCodeRef;
     };
     programs: { qualityIssues: NamedRef & { programStages: ProgramStage[] } };
 }

@@ -103,12 +103,9 @@ export class RunOutlierUseCase {
         const section = this.getCurrentSection(analysis);
         if (outliers.length === 0) return Future.success(undefined);
         const issuesToSave = outliers.map((outlier, index) => {
-            const correlative =
-                totalIssues + 1 + index < 10
-                    ? `0${totalIssues + 1 + index}`
-                    : totalIssues + 1 + index;
+            const currentNumber = totalIssues + 1 + index;
+            const correlative = currentNumber < 10 ? `0${currentNumber}` : currentNumber;
             const issueNumber = `${analysis.sequential.value}-S01-I${correlative}`;
-
             return new QualityAnalysisIssue({
                 id: getUid(`issue-event_${outlierKey}_${new Date().getTime()}`),
                 number: issueNumber,
@@ -129,9 +126,9 @@ export class RunOutlierUseCase {
                 type: section.id,
                 comments: "",
                 contactEmails: "",
+                correlative: String(currentNumber),
             });
         });
-
         return this.issueUseCase.save(issuesToSave, analysis.id);
     }
 

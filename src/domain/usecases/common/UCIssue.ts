@@ -35,6 +35,7 @@ export class UCIssue {
             issueNumber,
             period,
             description,
+            correlative,
         } = values;
         return new QualityAnalysisIssue({
             id: getUid(`issue-event_${sectionId}_${new Date().getTime()}`),
@@ -56,6 +57,7 @@ export class UCIssue {
             type: sectionId,
             comments: "",
             contactEmails: "",
+            correlative: correlative,
         });
     }
 
@@ -94,4 +96,5 @@ type DefaultIssue = {
     description: string;
     issueNumber: string;
     period: Period;
+    correlative: string;
 };
