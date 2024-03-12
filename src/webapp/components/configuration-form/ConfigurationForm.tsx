@@ -11,6 +11,7 @@ import { Id } from "$/domain/entities/Ref";
 import _ from "$/domain/entities/generic/Collection";
 import { Country } from "$/domain/entities/Country";
 import styled from "styled-components";
+import { getDefaultModules } from "$/data/common/D2Module";
 
 function getIdFromCountriesPaths(paths: string[]): string[] {
     return _(paths)
@@ -62,7 +63,7 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
         }
     }, [countries]);
 
-    const modules = [metadata.dataSets.module1, metadata.dataSets.module2];
+    const modules = getDefaultModules(metadata);
 
     const moduleItems = modules.map(module => ({
         value: module.id,
@@ -92,7 +93,7 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
             setFormData(prev => {
                 return QualityAnalysis.build({
                     ...prev,
-                    module: { ...selectedModule, dataElements: [] },
+                    module: { ...selectedModule, dataElements: [], disaggregations: [] },
                 }).get();
             });
         }

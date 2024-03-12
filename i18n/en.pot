@@ -5,10 +5,16 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-03-08T08:43:07.923Z\n"
-"PO-Revision-Date: 2024-03-08T08:43:07.924Z\n"
+"POT-Creation-Date: 2024-03-11T13:00:38.175Z\n"
+"PO-Revision-Date: 2024-03-11T13:00:38.175Z\n"
 
 msgid "Cannot be blank: {{fieldName}}"
+msgstr ""
+
+msgid "No disaggregations selected"
+msgstr ""
+
+msgid "This analysis is not available for this module"
 msgstr ""
 
 msgid "Open analysis"
@@ -221,16 +227,13 @@ msgstr ""
 msgid "Graduates by institution ownership"
 msgstr ""
 
+msgid "Medical doctors analysis: General Practicioners missing and double counts"
+msgstr ""
+
+msgid "Disaggregations"
+msgstr ""
+
 msgid "Double Counts Threshold"
-msgstr ""
-
-msgid "Total"
-msgstr ""
-
-msgid "Total Newly Active Health Workers"
-msgstr ""
-
-msgid "Total Number of exits"
 msgstr ""
 
 msgid "Validation Rule Group"

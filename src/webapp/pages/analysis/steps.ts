@@ -13,12 +13,15 @@ import i18n from "$/utils/i18n";
 export const outlierKey =
     "1. Outliers detection analysis based on DHIS2 min-max standard functionality";
 
+export const practitionersKey =
+    "4. Medical doctors analysis: General Practicioners missing and double counts";
+
 export const steps = [
     {
         key: "configuration",
         label: i18n.t("Configuration"),
         component: ConfigurationStep,
-        completed: false,
+        completed: true,
     },
     {
         key: outlierKey,
@@ -39,7 +42,7 @@ export const steps = [
         completed: false,
     },
     {
-        key: "general-practitioners",
+        key: practitionersKey,
         label: i18n.t("General Practitioners"),
         component: GeneralPractitionersStep,
         completed: false,

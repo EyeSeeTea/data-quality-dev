@@ -6,10 +6,12 @@ export function getDefaultModules(metadata: MetadataItem): Module[] {
         {
             ...metadata.dataSets.module1,
             dataElements: [],
+            disaggregations: [],
         },
         {
             ...metadata.dataSets.module2,
             dataElements: [],
+            disaggregations: [],
         },
     ];
 }

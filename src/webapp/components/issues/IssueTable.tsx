@@ -111,6 +111,7 @@ export function useGetRows(
 ) {
     const { compositionRoot } = useAppContext();
     const [loading, setLoading] = React.useState(false);
+    // getRows should be a prop
     const getRows = React.useCallback<GetRows<QualityAnalysisIssue>>(
         (search, pagination, sorting) => {
             return new Promise((resolve, reject) => {

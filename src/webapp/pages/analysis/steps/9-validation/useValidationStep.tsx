@@ -43,7 +43,7 @@ export function useValidationStep() {
         setValue(value || "");
     };
 
-    const runAnalysis = (e: any) => {
+    const runAnalysis = () => {
         alert(`run analysis`);
     };
 

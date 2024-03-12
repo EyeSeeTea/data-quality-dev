@@ -115,6 +115,10 @@ export class IssueD2Repository implements IssueRepository {
                     },
                     messages: [
                         {
+                            id: this.metadata.dataElements.correlative.id,
+                            value: issue.correlative,
+                        },
+                        {
                             id: this.metadata.dataElements.status.id,
                             value: issue.status?.code || "",
                         },
@@ -233,6 +237,7 @@ export class IssueD2Repository implements IssueRepository {
                     type: issueType.id,
                     comments: this.getDataValue(dataValuesById, "comments"),
                     contactEmails: this.getDataValue(dataValuesById, "contactEmails"),
+                    correlative: this.getDataValue(dataValuesById, "correlative"),
                 });
             })
             .compact()
@@ -296,7 +301,7 @@ export class IssueD2Repository implements IssueRepository {
     private buildOrder(sorting: GetIssuesOptions["sorting"]): Maybe<string> {
         switch (sorting.field) {
             case "number":
-                return `${this.getDataElementIdOrThrow("issueNumber")}:${sorting.order}`;
+                return `${this.getDataElementIdOrThrow("correlative")}:${sorting.order}`;
             case "status":
                 return `${this.getDataElementIdOrThrow("status")}:${sorting.order}`;
             case "period":
