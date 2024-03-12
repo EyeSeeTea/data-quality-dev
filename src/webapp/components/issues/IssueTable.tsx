@@ -95,7 +95,11 @@ export function useTableConfig() {
                 },
             ],
             initialSorting: { field: "number", order: "desc" },
-            paginationOptions: { pageSizeOptions: [10, 20, 50], pageSizeInitialValue: 20 },
+            paginationOptions: {
+                pageSizeOptions: [10, 20, 50],
+                pageSizeInitialValue: 20,
+                renderPosition: { bottom: true, top: false },
+            },
             searchBoxLabel: i18n.t("Issue Number"),
         };
     }, []);
