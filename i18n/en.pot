@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-03-08T08:43:07.923Z\n"
-"PO-Revision-Date: 2024-03-08T08:43:07.924Z\n"
+"POT-Creation-Date: 2024-03-12T13:54:48.146Z\n"
+"PO-Revision-Date: 2024-03-12T13:54:48.147Z\n"
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
@@ -53,21 +53,6 @@ msgstr ""
 msgid "Save Config Analysis"
 msgstr ""
 
-msgid "Updating Issue..."
-msgstr ""
-
-msgid "Issue Updated"
-msgstr ""
-
-msgid "Save"
-msgstr ""
-
-msgid "Cancel"
-msgstr ""
-
-msgid "Double click to edit"
-msgstr ""
-
 msgid "Issue"
 msgstr ""
 
@@ -105,6 +90,21 @@ msgid "Comments"
 msgstr ""
 
 msgid "Issue Number"
+msgstr ""
+
+msgid "Updating Issue..."
+msgstr ""
+
+msgid "Issue Updated"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Double click to edit"
 msgstr ""
 
 msgid "Back"
@@ -267,6 +267,9 @@ msgid "Density"
 msgstr ""
 
 msgid "Other"
+msgstr ""
+
+msgid "Summary"
 msgstr ""
 
 msgid "Are you sure you want to {{action}} the selected rows?"
