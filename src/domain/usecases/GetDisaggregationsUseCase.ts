@@ -1,7 +1,7 @@
 import { FutureData } from "$/data/api-futures";
 import { Id } from "$/domain/entities/Ref";
 import { NamedRef } from "@eyeseetea/d2-logger/domain/entities/Base";
-import { ModuleRepository } from "./ModuleRepository";
+import { ModuleRepository } from "$/domain/repositories/ModuleRepository";
 import { Future } from "$/domain/entities/generic/Future";
 import _ from "$/domain/entities/generic/Collection";
 import { DataElement } from "$/domain/entities/DataElement";
@@ -27,12 +27,11 @@ export class GetDisaggregationsUseCase {
                     },
                 ];
             });
-            return Future.success(
-                _(allDisaggregations)
-                    .uniqBy(d => d.id)
-                    .sortBy(d => d.name)
-                    .value()
-            );
+            const uniqueDisaggregations = _(allDisaggregations)
+                .uniqBy(d => d.id)
+                .sortBy(d => d.name)
+                .value();
+            return Future.success(uniqueDisaggregations);
         });
     }
 

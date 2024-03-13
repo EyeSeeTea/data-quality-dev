@@ -13,6 +13,8 @@ import i18n from "$/utils/i18n";
 export const outlierKey =
     "1. Outliers detection analysis based on DHIS2 min-max standard functionality";
 
+export const disaggregateKey = "3. Missing disaggregates in selected catcombos ";
+
 export const practitionersKey =
     "4. Medical doctors analysis: General Practicioners missing and double counts";
 
