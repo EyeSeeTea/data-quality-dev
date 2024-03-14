@@ -142,6 +142,9 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
             )
         ).flatMap(d2JobResponse => {
             return apiToFuture(
+                // this rule is being applied outside the context of testing-library
+                // more info here: https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/await-async-utils.md
+                // eslint-disable-next-line testing-library/await-async-utils
                 this.api.system.waitFor("TRACKER_IMPORT_JOB", d2JobResponse.response.id)
             ).flatMap(d2Response => {
                 if (d2Response?.status === "ERROR") {
