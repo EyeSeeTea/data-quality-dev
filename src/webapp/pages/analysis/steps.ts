@@ -18,6 +18,8 @@ export const disaggregateKey = "3. Missing disaggregates in selected catcombos "
 export const practitionersKey =
     "4. Medical doctors analysis: General Practicioners missing and double counts";
 
+export const missingNursing = "7. Missing nursing personnel when midwifery personnel is present";
+
 export const steps = [
     {
         key: "configuration",
@@ -56,15 +58,15 @@ export const steps = [
         completed: false,
     },
     {
-        key: "midwifery",
-        label: i18n.t("Midwifery"),
-        component: MidwiferyStep,
+        key: missingNursing,
+        label: i18n.t("Nursing/Midwifery"),
+        component: NursingMidwiferyStep,
         completed: false,
     },
     {
-        key: "nursing-midwifery",
-        label: i18n.t("Nursing/Midwifery"),
-        component: NursingMidwiferyStep,
+        key: "midwifery",
+        label: i18n.t("Midwifery"),
+        component: MidwiferyStep,
         completed: false,
     },
     {

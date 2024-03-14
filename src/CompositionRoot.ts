@@ -50,6 +50,8 @@ import { DataValueTestRepository } from "./data/repositories/DataValueTestReposi
 import { GetDisaggregationsUseCase } from "$/domain/usecases/GetDisaggregationsUseCase";
 import { GetMissingDisaggregatesUseCase } from "./domain/usecases/GetMissingDisaggregatesUseCase";
 import { GetCategoryDesaggregationsUseCase } from "$/domain/usecases/GetCategoryDesaggregationsUseCase";
+import { ValidateMidwiferyAndPersonnelUseCase } from "./domain/usecases/ValidateMidwiferyAndPersonnelUseCase";
+import { GetMidwiferyPersonnelDisaggregationsUseCase } from "$/domain/usecases/GetMidwiferyPersonnelDisaggregationsUseCase";
 
 export type CompositionRoot = ReturnType<typeof getCompositionRoot>;
 
@@ -122,6 +124,18 @@ function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) 
         },
         issues: { save: new SaveIssueUseCase(repositories.qualityAnalysisRepository, metadata) },
         settings: { get: new GetSettingsUseCase(repositories.settingsRepository) },
+        nursingMidwifery: {
+            getDisaggregations: new GetMidwiferyPersonnelDisaggregationsUseCase(
+                repositories.settingsRepository
+            ),
+            validate: new ValidateMidwiferyAndPersonnelUseCase(
+                repositories.qualityAnalysisRepository,
+                repositories.issueRepository,
+                repositories.dataValueRepository,
+                repositories.moduleRepository,
+                repositories.settingsRepository
+            ),
+        },
     };
 }
 
