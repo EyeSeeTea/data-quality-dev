@@ -1,3 +1,4 @@
+import { Maybe } from "$/utils/ts-utils";
 import { Either } from "./generic/Either";
 import { ValidationError } from "./generic/Errors";
 import { Struct } from "./generic/Struct";
@@ -22,8 +23,9 @@ export type SectionDisaggregation = {
     id: Id;
     disaggregationId: Id;
     name: string;
-    type: "combos";
+    type: "combos" | "key_occupations" | "edu_occupations";
     combinations: string[];
+    nursingMidwifery: Maybe<string[][]>;
 };
 
 export class Settings extends Struct<SettingsAttrs>() {

@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-03-12T01:57:33.110Z\n"
-"PO-Revision-Date: 2024-03-12T01:57:33.110Z\n"
+"POT-Creation-Date: 2024-03-14T01:55:56.426Z\n"
+"PO-Revision-Date: 2024-03-14T01:55:56.426Z\n"
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
@@ -182,67 +182,37 @@ msgstr ""
 msgid "Double Counts Threshold"
 msgstr ""
 
+msgid "Missing nursing personnel when midwifery personnel is present"
+msgstr ""
+
+msgid "Loading"
+msgstr ""
+
+msgid "Validation Rule Group"
+msgstr ""
+
 msgid "Activity Level"
 msgstr ""
 
 msgid "Sex"
 msgstr ""
 
-msgid "Age Group"
-msgstr ""
-
-msgid "Age Group + Sex"
+msgid "Age group"
 msgstr ""
 
 msgid "Place of Birth"
 msgstr ""
 
-msgid "Place of Training"
-msgstr ""
-
-msgid "Foreign Trained"
-msgstr ""
-
 msgid "Ownership"
 msgstr ""
 
-msgid "Working Facility Type"
-msgstr ""
-
-msgid "Newly Active domestic trained HWF"
-msgstr ""
-
-msgid "Newly Active foreign trained employed"
-msgstr ""
-
-msgid "Voluntary Exits"
-msgstr ""
-
-msgid "Involuntary exits"
-msgstr ""
-
 msgid "Vacancy rate"
-msgstr ""
-
-msgid "Contract Type"
 msgstr ""
 
 msgid "Applications"
 msgstr ""
 
 msgid "Enrolled"
-msgstr ""
-
-msgid "Graduates by Gender"
-msgstr ""
-
-msgid "Graduates by institution ownership"
-msgstr ""
-
-msgid "Validation Rule Group"
-msgstr ""
-
-msgid "Age group"
 msgstr ""
 
 msgid "Configuration"
@@ -263,10 +233,10 @@ msgstr ""
 msgid "Nursing"
 msgstr ""
 
-msgid "Midwifery"
+msgid "Nursing/Midwifery"
 msgstr ""
 
-msgid "Nursing/Midwifery"
+msgid "Midwifery"
 msgstr ""
 
 msgid "Density"

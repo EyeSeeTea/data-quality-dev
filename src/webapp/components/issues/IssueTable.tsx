@@ -17,7 +17,16 @@ export function useTableConfig() {
                 { name: "country", text: i18n.t("Country"), sortable: false },
                 { name: "period", text: i18n.t("Period"), sortable: false },
                 { name: "dataElement", text: i18n.t("Data Element"), sortable: false },
-                { name: "categoryOption", text: i18n.t("Category"), sortable: false },
+                {
+                    name: "categoryOption",
+                    text: i18n.t("Category"),
+                    sortable: false,
+                    getValue: value => {
+                        return value.categoryOption?.name === "default"
+                            ? "Total"
+                            : value.categoryOption?.name;
+                    },
+                },
                 {
                     name: "description",
                     text: i18n.t("Description"),
