@@ -134,18 +134,25 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
         });
     }
 
-    remove(id: Id[]): FutureData<void> {
+    remove(id: Id): FutureData<void> {
         return apiToFuture(
-            this.api.tracker.post(
+            this.api.tracker.postAsync(
                 { importStrategy: "DELETE" },
-                { trackedEntities: id.map(id => ({ trackedEntity: id })) }
+                { trackedEntities: [{ trackedEntity: id }] }
             )
-        ).flatMap(d2Response => {
-            if (d2Response.status === "ERROR") {
-                return Future.error(new Error(d2Response.message));
-            } else {
-                return Future.success(undefined);
-            }
+        ).flatMap(d2JobResponse => {
+            return apiToFuture(
+                this.api.system.waitFor("TRACKER_IMPORT_JOB", d2JobResponse.response.id)
+            ).flatMap(d2Response => {
+                if (d2Response?.status === "ERROR") {
+                    return Future.error(new Error(d2Response.message));
+                } else {
+                    const dataStore = this.api.dataStore(DATA_QUALITY_NAMESPACE);
+                    return apiToFuture(dataStore.delete(id)).flatMap(() => {
+                        return Future.success(undefined);
+                    });
+                }
+            });
         });
     }
 
