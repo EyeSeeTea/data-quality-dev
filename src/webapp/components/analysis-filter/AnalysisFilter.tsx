@@ -9,7 +9,7 @@ import { Maybe } from "$/utils/ts-utils";
 import { MenuButton } from "../menu-button/MenuButton";
 import { Id } from "$/domain/entities/Ref";
 
-const currentYear = new Date().getFullYear() + 1;
+const currentYear = new Date().getFullYear();
 
 export const periods = Collection.range(currentYear - 5, currentYear)
     .map(period => {
