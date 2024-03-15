@@ -114,7 +114,7 @@ export class RunOutlierUseCase {
                 country: { id: outlier.countryId, name: "", path: "" },
                 dataElement: { id: outlier.dataElementId, name: "" },
                 categoryOption: { id: outlier.categoryOptionId, name: "" },
-                description: "",
+                description: this.getActionDescription(outlier, options),
                 followUp: false,
                 status: IssueStatus.create({
                     id: "",
@@ -122,7 +122,7 @@ export class RunOutlierUseCase {
                     name: "",
                 }),
                 action: undefined,
-                actionDescription: this.getActionDescription(outlier, options),
+                actionDescription: "",
                 type: section.id,
                 comments: "",
                 contactEmails: "",
