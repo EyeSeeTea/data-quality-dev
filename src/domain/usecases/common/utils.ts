@@ -46,13 +46,15 @@ export function getIssues(
     return issueRepository
         .get({
             filters: {
-                endDate: undefined,
+                actions: undefined,
+                countries: [],
+                periods: [],
                 analysisIds: [analysis.id],
                 name: undefined,
                 sectionId: section?.id,
-                startDate: undefined,
                 status: undefined,
                 id: undefined,
+                followUp: undefined,
             },
             pagination: { page: 1, pageSize: 10 },
             sorting: { field: "number", order: "asc" },

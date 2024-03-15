@@ -72,13 +72,15 @@ export class UCIssue {
         return this.issueRepository
             .get({
                 filters: {
-                    endDate: undefined,
+                    actions: undefined,
+                    countries: [],
                     analysisIds: [analysis.id],
                     name: undefined,
                     sectionId: section?.id,
-                    startDate: undefined,
+                    periods: [],
                     status: undefined,
                     id: undefined,
+                    followUp: undefined,
                 },
                 pagination: { page: 1, pageSize: 10 },
                 sorting: { field: "number", order: "asc" },

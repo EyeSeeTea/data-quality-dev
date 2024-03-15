@@ -384,7 +384,7 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
             },
             {
                 dataElement: this.metadata.dataElements.followUp.id,
-                value: issue.followUp ? "true" : "",
+                value: issue.followUp ? "true" : "false",
             },
             {
                 dataElement: this.metadata.dataElements.issueNumber.id,

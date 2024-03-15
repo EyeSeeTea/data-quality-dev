@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-03-14T01:55:56.426Z\n"
-"PO-Revision-Date: 2024-03-14T01:55:56.426Z\n"
+"POT-Creation-Date: 2024-03-15T14:55:48.062Z\n"
+"PO-Revision-Date: 2024-03-15T14:55:48.062Z\n"
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
@@ -74,10 +74,31 @@ msgstr ""
 msgid "Double click to edit"
 msgstr ""
 
-msgid "Issue"
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "{{countryNames}} and {{moreCountriesCount}} more"
+msgstr ""
+
+msgid "Close"
 msgstr ""
 
 msgid "Country"
+msgstr ""
+
+msgid "Periods"
+msgstr ""
+
+msgid "Action"
+msgstr ""
+
+msgid "Follow Up"
+msgstr ""
+
+msgid "Issue"
 msgstr ""
 
 msgid "Period"
@@ -93,12 +114,6 @@ msgid "Description"
 msgstr ""
 
 msgid "Azure URL"
-msgstr ""
-
-msgid "Follow Up"
-msgstr ""
-
-msgid "Action"
 msgstr ""
 
 msgid "Contact Emails"

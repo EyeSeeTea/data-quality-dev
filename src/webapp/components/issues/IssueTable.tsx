@@ -31,9 +31,6 @@ export function useTableConfig() {
                     name: "description",
                     text: i18n.t("Description"),
                     sortable: false,
-                    getValue: value => {
-                        return <EditIssueValue key={value.id} field="description" issue={value} />;
-                    },
                 },
                 {
                     name: "status",
@@ -135,13 +132,15 @@ export function useGetRows(
                         pagination: { page: pagination.page, pageSize: pagination.pageSize },
                         sorting: { field: sorting.field, order: sorting.order },
                         filters: {
+                            actions: filters.actions,
+                            countries: filters.countries,
                             name: search,
-                            endDate: filters.endDate,
-                            startDate: filters.startDate,
+                            periods: filters.periods,
                             status: filters.status,
                             analysisIds: [analysisId],
                             sectionId: sectionId,
                             id: undefined,
+                            followUp: filters.followUp,
                         },
                     })
                     .run(
@@ -158,9 +157,11 @@ export function useGetRows(
         },
         [
             compositionRoot.outlier.get,
-            filters.endDate,
-            filters.startDate,
+            filters.actions,
+            filters.followUp,
+            filters.periods,
             filters.status,
+            filters.countries,
             sectionId,
             analysisId,
             reloadKey,

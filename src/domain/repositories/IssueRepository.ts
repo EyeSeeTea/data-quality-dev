@@ -1,5 +1,5 @@
 import { RowsPaginated } from "$/domain/entities/Pagination";
-import { Id } from "$/domain/entities/Ref";
+import { Id, Period } from "$/domain/entities/Ref";
 import { Maybe } from "$/utils/ts-utils";
 import { FutureData } from "../../data/api-futures";
 import { QualityAnalysisIssue } from "../entities/QualityAnalysisIssue";
@@ -14,12 +14,14 @@ export type GetIssuesOptions = {
     pagination: Pick<Pagination, "page" | "pageSize">;
     sorting: { field: string; order: "asc" | "desc" };
     filters: {
-        endDate: Maybe<string>;
+        actions: Maybe<string[]>;
+        countries: string[];
         name: Maybe<string>;
-        startDate: Maybe<string>;
-        status: Maybe<string>;
+        periods: Period[];
+        status: Maybe<string[]>;
         analysisIds: Maybe<Id[]>;
         sectionId: Maybe<Id>;
         id: Maybe<Id>;
+        followUp: Maybe<string>;
     };
 };

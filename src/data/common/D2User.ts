@@ -28,6 +28,7 @@ export class D2User {
             id: d2User.id,
             name: d2User.displayName,
             userGroups: d2User.userGroups,
+            countries: d2User.teiSearchOrganisationUnits,
             ...d2User.userCredentials,
         });
     }
@@ -38,6 +39,7 @@ const userFields = {
     displayName: true,
     userGroups: { id: true, name: true },
     userCredentials: { username: true, userRoles: { id: true, name: true, authorities: true } },
+    teiSearchOrganisationUnits: { id: true, name: true, path: true },
 } as const;
 
 type D2UserEntity = MetadataPick<{ users: { fields: typeof userFields } }>["users"][number];
