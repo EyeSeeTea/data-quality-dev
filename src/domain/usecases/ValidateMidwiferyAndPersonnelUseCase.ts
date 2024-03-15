@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 import { FutureData } from "$/data/api-futures";
 import { DataElement } from "$/domain/entities/DataElement";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
@@ -6,16 +8,16 @@ import { Future } from "$/domain/entities/generic/Future";
 import { DataValueRepository } from "$/domain/repositories/DataValueRepository";
 import { ModuleRepository } from "$/domain/repositories/ModuleRepository";
 import { QualityAnalysisRepository } from "$/domain/repositories/QualityAnalysisRepository";
-import _ from "lodash";
-import { UCAnalysis } from "./common/UCAnalysis";
-import { UCDataValue } from "./common/UCDataValue";
 import { DataValue } from "$/domain/entities/DataValue";
 import { MidwiferyNursing } from "$/domain/entities/MidwiferyPersonnel";
-import { SettingsRepository } from "../repositories/SettingsRepository";
+import { SettingsRepository } from "$/domain/repositories/SettingsRepository";
 import { SectionDisaggregation } from "$/domain/entities/Settings";
 import { UCIssue } from "./common/UCIssue";
 import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
-import { IssueRepository } from "../repositories/IssueRepository";
+import { IssueRepository } from "$/domain/repositories/IssueRepository";
+
+import { UCAnalysis } from "./common/UCAnalysis";
+import { UCDataValue } from "./common/UCDataValue";
 import { getCurrentSection } from "./common/utils";
 
 export class ValidateMidwiferyAndPersonnelUseCase {

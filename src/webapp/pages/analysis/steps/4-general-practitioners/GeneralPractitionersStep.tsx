@@ -1,24 +1,18 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 import { Dropdown } from "@eyeseetea/d2-ui-components";
 
 import i18n from "$/utils/i18n";
 import { StepAnalysis } from "$/webapp/pages/analysis/steps/StepAnalysis";
-import { practitionersKey } from "$/webapp/pages/analysis/steps";
 
 import styled from "styled-components";
 import { useGeneralPractitionersStep } from "./useGeneralPractitionersStep";
 import { SelectMultiCheckboxes } from "$/webapp/components/selectmulti-checkboxes/SelectMultiCheckboxes";
+import { PageStepProps } from "../../AnalysisPage";
 
-interface PageProps {
-    name: string;
-}
-
-export const GeneralPractitionersStep: React.FC<PageProps> = React.memo(() => {
-    const { id } = useParams<{ id: string }>();
+export const GeneralPractitionersStep: React.FC<PageStepProps> = React.memo(props => {
+    const { analysis, section, title, updateAnalysis } = props;
 
     const {
-        analysis,
         disaggregations,
         doubleCountsList,
         reload,
@@ -27,14 +21,15 @@ export const GeneralPractitionersStep: React.FC<PageProps> = React.memo(() => {
         threshold,
         handleChange,
         valueChange,
-    } = useGeneralPractitionersStep({ analysisId: id });
-    const section = analysis?.sections.find(section => section.name === practitionersKey);
+    } = useGeneralPractitionersStep({
+        analysis: analysis,
+        section: section,
+        updateAnalysis: updateAnalysis,
+    });
 
     const onClick = () => {
         runAnalysis();
     };
-
-    if (!analysis?.id || !section) return null;
 
     return (
         <div>
@@ -43,10 +38,7 @@ export const GeneralPractitionersStep: React.FC<PageProps> = React.memo(() => {
                 onRun={onClick}
                 reload={reload}
                 section={section}
-                title={i18n.t(
-                    "Medical doctors analysis: General Practicioners missing and double counts",
-                    { nsSeparator: true }
-                )}
+                title={title}
             >
                 <SelectMultiCheckboxes
                     options={disaggregations}

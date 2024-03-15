@@ -28,7 +28,6 @@ function buildStepsFromSections(
                 label: section.name,
                 component: () => (
                     <StepComponent
-                        name={section.name}
                         analysis={analysis}
                         section={section}
                         title={section.description || section.name}
