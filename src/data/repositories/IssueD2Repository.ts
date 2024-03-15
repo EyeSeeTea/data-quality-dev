@@ -331,8 +331,8 @@ export class IssueD2Repository implements IssueRepository {
         );
 
         const statusFilter = this.buildFilterMultipleValue(
-            filter.actions,
-            this.metadata.dataElements.action.id
+            filter.status,
+            this.metadata.dataElements.status.id
         );
 
         const actionsFilter = this.buildFilterMultipleValue(
