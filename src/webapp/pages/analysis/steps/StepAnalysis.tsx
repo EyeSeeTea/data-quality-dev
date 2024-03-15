@@ -17,7 +17,7 @@ export const StepAnalysis: React.FC<StepContainerProps> = React.memo(props => {
     const [filters, setFilters] = React.useState(initialFilters);
 
     const { tableConfig } = useTableConfig();
-    const { getRows, loading } = useGetRows(filters, reload, id, section.id || "");
+    const { getRows, loading } = useGetRows(filters, reload, id, section.id);
     const config = useObjectsTable(tableConfig, getRows);
 
     const isPending = section.status === "pending";

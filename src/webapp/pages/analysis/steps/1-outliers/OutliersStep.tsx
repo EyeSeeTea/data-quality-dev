@@ -1,34 +1,34 @@
 import React from "react";
 import { Dropdown } from "@eyeseetea/d2-ui-components";
-import { useParams } from "react-router-dom";
 
 import i18n from "$/utils/i18n";
-import { useAnalysisById } from "$/webapp/hooks/useAnalysis";
 import { algorithmList, thresholdList, useAnalysisOutlier } from "./useOutliers";
 import { Maybe } from "$/utils/ts-utils";
-import { outlierKey } from "../../steps";
 import { StepAnalysis } from "../StepAnalysis";
+import { PageStepProps } from "../../AnalysisPage";
 
 const defaultOutlierParams = { algorithm: "Z_SCORE", threshold: "3" };
 
-export const OutliersStep: React.FC<PageProps> = React.memo(() => {
-    const params = useParams<{ id: string }>();
+export const OutliersStep: React.FC<PageStepProps> = React.memo(props => {
+    const { title, analysis, section, updateAnalysis } = props;
+
     const [reload, refreshReload] = React.useState(0);
     const [qualityFilters, setQualityFilters] = React.useState(defaultOutlierParams);
-
-    const { analysis, setAnalysis } = useAnalysisById({ id: params.id });
-
-    const section = analysis?.sections.find(section => section.name === outlierKey);
 
     const { runAnalysisOutlier } = useAnalysisOutlier({
         onSucess: qualityAnalysis => {
             refreshReload(reload + 1);
-            setAnalysis(qualityAnalysis);
+            updateAnalysis(qualityAnalysis);
         },
     });
 
     const runAnalysis = () => {
-        runAnalysisOutlier(qualityFilters.algorithm, params.id, qualityFilters.threshold);
+        runAnalysisOutlier(
+            qualityFilters.algorithm,
+            analysis.id,
+            section.id,
+            qualityFilters.threshold
+        );
     };
 
     const onFilterChange = React.useCallback<
@@ -37,7 +37,7 @@ export const OutliersStep: React.FC<PageProps> = React.memo(() => {
         setQualityFilters(prev => ({ ...prev, [filterAttribute]: value }));
     }, []);
 
-    if (!analysis || !section) return null;
+    if (!analysis) return null;
 
     return (
         <StepAnalysis
@@ -45,9 +45,7 @@ export const OutliersStep: React.FC<PageProps> = React.memo(() => {
             onRun={runAnalysis}
             reload={reload}
             section={section}
-            title={i18n.t(
-                "Outliers detection analysis based on DHIS2 min-max standard functionality"
-            )}
+            title={title}
         >
             <Dropdown
                 hideEmpty
@@ -66,5 +64,3 @@ export const OutliersStep: React.FC<PageProps> = React.memo(() => {
         </StepAnalysis>
     );
 });
-
-type PageProps = { title: string };
