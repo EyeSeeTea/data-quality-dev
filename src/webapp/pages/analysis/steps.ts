@@ -3,11 +3,6 @@ import { DisaggregatesStep } from "./steps/3-disaggregates/DisaggregatesStep";
 import { NursingMidwiferyStep } from "./steps/7-nursingMidwifery/NursingMidwiferyStep";
 import { OutliersStep } from "./steps/1-outliers/OutliersStep";
 
-export const practitionersKey =
-    "4. Medical doctors analysis: General Practicioners missing and double counts";
-
-export const missingNursing = "7. Missing nursing personnel when midwifery personnel is present";
-
 const sectionsComponents = [
     {
         name: "Outliers",
