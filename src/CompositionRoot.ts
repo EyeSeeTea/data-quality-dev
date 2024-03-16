@@ -122,7 +122,13 @@ function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) 
                 repositories.settingsRepository
             ),
         },
-        issues: { save: new SaveIssueUseCase(repositories.qualityAnalysisRepository, metadata) },
+        issues: {
+            save: new SaveIssueUseCase(
+                repositories.qualityAnalysisRepository,
+                repositories.usersRepository,
+                metadata
+            ),
+        },
         settings: { get: new GetSettingsUseCase(repositories.settingsRepository) },
         nursingMidwifery: {
             getDisaggregations: new GetMidwiferyPersonnelDisaggregationsUseCase(

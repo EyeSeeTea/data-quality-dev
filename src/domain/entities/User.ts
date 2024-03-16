@@ -1,13 +1,17 @@
+import { Maybe } from "$/utils/ts-utils";
 import { Country } from "./Country";
 import { Struct } from "./generic/Struct";
-import { NamedRef } from "./Ref";
+import { DateISOString, NamedRef } from "./Ref";
+import { UserGroup } from "./UserGroup";
 
 export interface UserAttrs {
     id: string;
+    email: string;
     name: string;
     username: string;
+    lastLogin: Maybe<DateISOString>;
     userRoles: UserRole[];
-    userGroups: NamedRef[];
+    userGroups: UserGroup[];
     countries: Country[];
 }
 

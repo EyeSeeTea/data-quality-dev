@@ -108,7 +108,7 @@ export class RunOutlierUseCase {
                 number: issueNumber,
                 azureUrl: "",
                 period: outlier.period,
-                country: { id: outlier.countryId, name: "", path: "" },
+                country: { id: outlier.countryId, name: "", path: "", writeAccess: false },
                 dataElement: { id: outlier.dataElementId, name: "" },
                 categoryOption: { id: outlier.categoryOptionId, name: "" },
                 description: this.getDescriptionIssue(outlier, options),

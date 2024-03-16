@@ -9,6 +9,7 @@ import { Id } from "$/domain/entities/Ref";
 import { EditIssueValue } from "./EditIssueValue";
 
 export function useTableConfig() {
+    const [refresh, setRefresh] = React.useState(0);
     const tableConfig = React.useMemo<TableConfig<QualityAnalysisIssue>>(() => {
         return {
             actions: [],
@@ -21,11 +22,6 @@ export function useTableConfig() {
                     name: "categoryOption",
                     text: i18n.t("Category"),
                     sortable: false,
-                    getValue: value => {
-                        return value.categoryOption?.name === "default"
-                            ? "Total"
-                            : value.categoryOption?.name;
-                    },
                 },
                 {
                     name: "description",
@@ -44,6 +40,7 @@ export function useTableConfig() {
                     name: "azureUrl",
                     text: i18n.t("Azure URL"),
                     sortable: false,
+                    hidden: true,
                     getValue: value => {
                         return <EditIssueValue key={value.id} field="azureUrl" issue={value} />;
                     },
@@ -53,7 +50,12 @@ export function useTableConfig() {
                     text: i18n.t("Follow Up"),
                     sortable: false,
                     getValue: value => (
-                        <EditIssueValue key={value.id} field="followUp" issue={value} />
+                        <EditIssueValue
+                            key={value.id}
+                            field="followUp"
+                            issue={value}
+                            setRefresh={setRefresh}
+                        />
                     ),
                 },
                 {
@@ -68,7 +70,6 @@ export function useTableConfig() {
                     name: "contactEmails",
                     text: i18n.t("Contact Emails"),
                     sortable: false,
-                    hidden: true,
                     getValue: value => {
                         return (
                             <EditIssueValue key={value.id} field="contactEmails" issue={value} />
@@ -106,14 +107,15 @@ export function useTableConfig() {
         };
     }, []);
 
-    return { tableConfig };
+    return { tableConfig, refresh };
 }
 
 export function useGetRows(
     filters: GetIssuesOptions["filters"],
     reloadKey: number,
     analysisId: Id,
-    sectionId: Id
+    sectionId: Id,
+    refreshIssue: number
 ) {
     const { compositionRoot } = useAppContext();
     const [loading, setLoading] = React.useState(false);
@@ -121,7 +123,7 @@ export function useGetRows(
     const getRows = React.useCallback<GetRows<QualityAnalysisIssue>>(
         (search, pagination, sorting) => {
             return new Promise((resolve, reject) => {
-                if (reloadKey < 0)
+                if (reloadKey < 0 || refreshIssue < 0)
                     return resolve({
                         pager: { page: 1, pageCount: 1, pageSize: 10, total: 0 },
                         objects: [],
@@ -165,6 +167,7 @@ export function useGetRows(
             sectionId,
             analysisId,
             reloadKey,
+            refreshIssue,
         ]
     );
 

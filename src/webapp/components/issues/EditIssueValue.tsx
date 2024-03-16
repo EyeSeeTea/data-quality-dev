@@ -5,7 +5,7 @@ import { IssuePropertyName, QualityAnalysisIssue } from "$/domain/entities/Quali
 import { CheckboxInline } from "./CheckboxInline";
 import { SelectorInline } from "./SelectorInline";
 import { useAppContext } from "$/webapp/contexts/app-context";
-import { useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
+import { SnackbarState, useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
 import { Id } from "$/domain/entities/Ref";
 import i18n from "$/utils/i18n";
 import { useParams } from "react-router-dom";
@@ -14,10 +14,26 @@ type UpdateIssuePropertyProps = {
     analysisId: Id;
     issue: QualityAnalysisIssue;
     field: IssuePropertyName;
+    setRefresh?: React.Dispatch<React.SetStateAction<number>>;
 };
 
+function getContactEmailNotification(
+    field: IssuePropertyName,
+    value: boolean,
+    emailChanged: boolean,
+    snackbar: SnackbarState
+) {
+    if (field === "followUp" && value === true && !emailChanged) {
+        snackbar.warning(
+            i18n.t(
+                "No user with Capture rights and Organisation Unit associated to the issue was found"
+            )
+        );
+    }
+}
+
 export function useUpdateIssueProperty(props: UpdateIssuePropertyProps) {
-    const { analysisId, field, issue } = props;
+    const { analysisId, field, issue, setRefresh } = props;
     const { compositionRoot } = useAppContext();
     const loading = useLoading();
     const snackbar = useSnackbar();
@@ -33,9 +49,16 @@ export function useUpdateIssueProperty(props: UpdateIssuePropertyProps) {
                     valueToUpdate: value,
                 })
                 .run(
-                    () => {
+                    result => {
                         loading.hide();
                         snackbar.success(i18n.t("Issue Updated"));
+                        if (setRefresh) setRefresh(refresh => refresh + 1);
+                        getContactEmailNotification(
+                            field,
+                            value as boolean,
+                            Boolean(result.contactEmailsChanged),
+                            snackbar
+                        );
                     },
                     err => {
                         snackbar.error(err.message);
@@ -43,7 +66,7 @@ export function useUpdateIssueProperty(props: UpdateIssuePropertyProps) {
                     }
                 );
         },
-        [compositionRoot.issues.save, loading, snackbar, issue, analysisId, field]
+        [compositionRoot.issues.save, loading, snackbar, issue, analysisId, field, setRefresh]
     );
 
     return { updateIssue };
@@ -52,11 +75,12 @@ export function useUpdateIssueProperty(props: UpdateIssuePropertyProps) {
 export const EditIssueValue: React.FC<EditIssueValueProps> = React.memo(props => {
     const { id } = useParams<{ id: string }>();
     const { metadata } = useAppContext();
-    const { issue, field } = props;
+    const { issue, field, setRefresh } = props;
     const { updateIssue } = useUpdateIssueProperty({
         analysisId: id,
         field: field,
         issue: issue,
+        setRefresh,
     });
 
     const onSave = (value: string | boolean) => {
@@ -67,7 +91,13 @@ export const EditIssueValue: React.FC<EditIssueValueProps> = React.memo(props =>
         case "comments":
             return <InputInline value={issue.comments} onSave={onSave} />;
         case "contactEmails":
-            return <InputInline value={issue.contactEmails} onSave={onSave} />;
+            return (
+                <InputInline
+                    key={issue.contactEmails}
+                    value={issue.contactEmails}
+                    onSave={onSave}
+                />
+            );
         case "description":
             return <InputInline value={issue.description} onSave={onSave} />;
         case "actionDescription":
@@ -101,4 +131,8 @@ export const EditIssueValue: React.FC<EditIssueValueProps> = React.memo(props =>
     }
 });
 
-type EditIssueValueProps = { issue: QualityAnalysisIssue; field: IssuePropertyName };
+type EditIssueValueProps = {
+    issue: QualityAnalysisIssue;
+    field: IssuePropertyName;
+    setRefresh?: React.Dispatch<React.SetStateAction<number>>;
+};

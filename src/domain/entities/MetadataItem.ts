@@ -1,4 +1,4 @@
-import { Id, NamedCodeRef, NamedRef } from "./Ref";
+import { Id, NamedCodeRef, NamedRef, Ref } from "./Ref";
 
 export interface OptionSet extends NamedCodeRef {
     options: Array<{ id: Id; name: string; code: string }>;
@@ -40,4 +40,8 @@ export interface MetadataItem {
         correlative: NamedCodeRef;
     };
     programs: { qualityIssues: NamedRef & { programStages: ProgramStage[] } };
+    userGroups: {
+        dataCaptureModule1: NamedCodeRef & { users: Ref[] };
+        dataCaptureModule2And4: NamedCodeRef & { users: Ref[] };
+    };
 }
