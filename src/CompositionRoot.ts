@@ -52,6 +52,7 @@ import { GetMissingDisaggregatesUseCase } from "./domain/usecases/GetMissingDisa
 import { GetCategoryDesaggregationsUseCase } from "$/domain/usecases/GetCategoryDesaggregationsUseCase";
 import { ValidateMidwiferyAndPersonnelUseCase } from "./domain/usecases/ValidateMidwiferyAndPersonnelUseCase";
 import { GetMidwiferyPersonnelDisaggregationsUseCase } from "$/domain/usecases/GetMidwiferyPersonnelDisaggregationsUseCase";
+import { CopyContactEmailsUseCase } from "$/domain/usecases/CopyContactEmailsUseCase";
 
 export type CompositionRoot = ReturnType<typeof getCompositionRoot>;
 
@@ -127,6 +128,10 @@ function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) 
                 repositories.qualityAnalysisRepository,
                 repositories.usersRepository,
                 metadata
+            ),
+            copyEmails: new CopyContactEmailsUseCase(
+                repositories.qualityAnalysisRepository,
+                repositories.issueRepository
             ),
         },
         settings: { get: new GetSettingsUseCase(repositories.settingsRepository) },
