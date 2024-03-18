@@ -1,11 +1,13 @@
 import { GetIssuesOptions } from "$/domain/repositories/IssueRepository";
 
 export const initialFilters: GetIssuesOptions["filters"] = {
-    endDate: undefined,
+    actions: [],
+    countries: [],
+    periods: [],
     name: undefined,
-    startDate: undefined,
-    status: undefined,
+    status: [],
     analysisIds: undefined,
     sectionId: "",
     id: undefined,
+    followUp: undefined,
 };

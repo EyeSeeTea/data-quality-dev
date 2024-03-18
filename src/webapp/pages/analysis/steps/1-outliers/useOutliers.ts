@@ -4,6 +4,7 @@ import { useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
 import i18n from "$/utils/i18n";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
+import { Id } from "$/domain/entities/Ref";
 
 export const thresholdList = [
     { value: "1", text: "1.0" },
@@ -30,10 +31,15 @@ export function useAnalysisOutlier(props: UseRunAnalysisProps) {
     const loading = useLoading();
 
     const runAnalysisOutlier = React.useCallback(
-        (algorithm: string, id: string, threshold: string) => {
+        (algorithm: string, analysisId: Id, sectionId: Id, threshold: string) => {
             loading.show(true, i18n.t("Running analysis..."));
             compositionRoot.outlier.run
-                .execute({ algorithm: algorithm, qualityAnalysisId: id, threshold: threshold })
+                .execute({
+                    sectionId: sectionId,
+                    algorithm: algorithm,
+                    qualityAnalysisId: analysisId,
+                    threshold: threshold,
+                })
                 .run(
                     qualityAnalysis => {
                         loading.hide();

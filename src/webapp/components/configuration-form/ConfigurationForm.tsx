@@ -11,8 +11,9 @@ import { Id } from "$/domain/entities/Ref";
 import _ from "$/domain/entities/generic/Collection";
 import { Country } from "$/domain/entities/Country";
 import styled from "styled-components";
+import { getDefaultModules } from "$/data/common/D2Module";
 
-function getIdFromCountriesPaths(paths: string[]): string[] {
+export function getIdFromCountriesPaths(paths: string[]): string[] {
     return _(paths)
         .map(path => {
             return _(path.split("/")).last() || undefined;
@@ -48,7 +49,7 @@ export function useCountries(props: UseCountriesProps) {
 
 export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(props => {
     const { initialCountries, initialData, onSave } = props;
-    const { api, metadata } = useAppContext();
+    const { api, currentUser, metadata } = useAppContext();
     const { countries } = useCountries({ ids: initialData.countriesAnalysis });
     const [formData, setFormData] = React.useState<QualityAnalysis>(() => {
         return initialData;
@@ -62,7 +63,7 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
         }
     }, [countries]);
 
-    const modules = [metadata.dataSets.module1, metadata.dataSets.module2];
+    const modules = getDefaultModules(metadata);
 
     const moduleItems = modules.map(module => ({
         value: module.id,
@@ -92,7 +93,7 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
             setFormData(prev => {
                 return QualityAnalysis.build({
                     ...prev,
-                    module: { ...selectedModule, dataElements: [] },
+                    module: { ...selectedModule, dataElements: [], disaggregations: [] },
                 }).get();
             });
         }
@@ -158,7 +159,7 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
                         selected={selectedOrgUnits}
                         levels={[1, 2, 3]}
                         selectableLevels={[1, 2, 3]}
-                        rootIds={initialCountries}
+                        rootIds={currentUser.countries.map(country => country.id)}
                         withElevation={false}
                     />
                 </OrgUnitContainer>

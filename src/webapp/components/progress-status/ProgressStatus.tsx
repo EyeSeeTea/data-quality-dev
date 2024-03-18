@@ -41,12 +41,12 @@ const Container = styled.li<ContainerProps>`
     ${({ $status }) =>
         $status === "danger" &&
         css`
-            background-color: ${customTheme.color.red};
-            border-color: ${customTheme.color.red};
+            background-color: ${customTheme.color.lightRed};
+            border-color: ${customTheme.color.lightRed};
         `};
 `;
 
 const StyledTypography = styled(Typography)`
     font-size: 0.75rem;
-    color: ${customTheme.color.white};
+    color: ${customTheme.color.dark};
 `;

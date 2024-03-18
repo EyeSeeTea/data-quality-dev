@@ -1,3 +1,4 @@
+import { Country } from "./Country";
 import { Struct } from "./generic/Struct";
 import { NamedRef } from "./Ref";
 
@@ -7,6 +8,7 @@ export interface UserAttrs {
     username: string;
     userRoles: UserRole[];
     userGroups: NamedRef[];
+    countries: Country[];
 }
 
 export interface UserRole extends NamedRef {
