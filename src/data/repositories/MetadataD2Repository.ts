@@ -39,6 +39,10 @@ const metadataCodes = {
         correlative: "NHWA_DQI_Issue_Correlative_Number",
     },
     dataSets: { module1: "NHWA-M1-2023", module2: "NHWA-M2-2023" },
+    userGroups: {
+        dataCaptureModule1: "NHWA _DATA Capture Module 1",
+        dataCaptureModule2And4: "NHWA _DATA Capture Module 2-4",
+    },
 };
 
 const metadataFields = {
@@ -74,6 +78,10 @@ const metadataFields = {
             programStages: { id: true, name: true, description: true },
         },
         filter: { code: { in: rec(metadataCodes.programs).values() } },
+    },
+    userGroups: {
+        fields: { id: true, name: true, code: true, users: true },
+        filter: { name: { in: rec(metadataCodes.userGroups).values() } },
     },
 };
 
