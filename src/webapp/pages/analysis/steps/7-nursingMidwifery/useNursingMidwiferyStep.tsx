@@ -1,102 +1,88 @@
-import { useState } from "react";
+import React from "react";
+import { useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
+
 import i18n from "$/utils/i18n";
+import { Id } from "$/domain/entities/Ref";
+import { useAppContext } from "$/webapp/contexts/app-context";
+import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
+import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
+import { UpdateAnalysisState } from "../../AnalysisPage";
 
-export function useNursingMidwiferyStep() {
-    const catCombosList = [
-        {
-            value: "ACTIVITY",
-            text: i18n.t("Activity Level"),
-        },
-        {
-            value: "SEX",
-            text: i18n.t("Sex"),
-        },
-        {
-            value: "AGE",
-            text: i18n.t("Age Group"),
-        },
-        {
-            value: "AGESEX",
-            text: i18n.t("Age Group + Sex"),
-        },
-        {
-            value: "BIRTHPLACE",
-            text: i18n.t("Place of Birth"),
-        },
-        {
-            value: "TRAININGPLACE",
-            text: i18n.t("Place of Training"),
-        },
-        {
-            value: "FOREIGNTRAINED",
-            text: i18n.t("Foreign Trained"),
-        },
-        {
-            value: "OWNERSHIP",
-            text: i18n.t("Ownership"),
-        },
-        {
-            value: "WORKINGFACILITYTYPE",
-            text: i18n.t("Working Facility Type"),
-        },
-        {
-            value: "NADOMESTICTHWF",
-            text: i18n.t("Newly Active domestic trained HWF"),
-        },
-        {
-            value: "NAFOREIGNTE",
-            text: i18n.t("Newly Active foreign trained employed"),
-        },
-        {
-            value: "VOLUNTARY",
-            text: i18n.t("Voluntary Exits"),
-        },
-        {
-            value: "INVOLUNTARY",
-            text: i18n.t("Involuntary exits"),
-        },
-        {
-            value: "VACANCY",
-            text: i18n.t("Vacancy rate"),
-        },
-        {
-            value: "CONTRACT",
-            text: i18n.t("Contract Type"),
-        },
-        {
-            value: "APPLICATIONS",
-            text: i18n.t("Applications"),
-        },
-        {
-            value: "ENROLLED",
-            text: i18n.t("Enrolled"),
-        },
-        {
-            value: "GRADUATESGENDER",
-            text: i18n.t("Graduates by Gender"),
-        },
-        {
-            value: "GRADUATESINSTITUTION",
-            text: i18n.t("Graduates by institution ownership"),
-        },
-    ];
+export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
+    const { analysis, section, updateAnalysis } = props;
+    const { compositionRoot } = useAppContext();
+    const snackbar = useSnackbar();
+    const loading = useLoading();
 
-    const defaultValues = catCombosList.map(option => option.text);
+    const [reload, refreshReload] = React.useState(0);
+    const [disaggregations, setDisaggregations] = React.useState<{ value: Id; text: string }[]>([]);
+    const [selectedDisaggregations, setSelectedDissagregations] = React.useState<string[]>([]);
 
-    const [values, setValues] = useState<string[]>(defaultValues);
+    React.useEffect(() => {
+        loading.show(true, i18n.t("Loading"));
+        compositionRoot.nursingMidwifery.getDisaggregations.execute(section.id).run(
+            result => {
+                const selectedDisaggregations = result.map(item => ({
+                    value: item.id,
+                    text: item.name,
+                }));
+                setDisaggregations(selectedDisaggregations);
+                setSelectedDissagregations(selectedDisaggregations.map(item => item.value));
+                loading.hide();
+            },
+            error => {
+                loading.hide();
+                snackbar.error(error.message);
+            }
+        );
+    }, [section.id, compositionRoot.nursingMidwifery.getDisaggregations, loading, snackbar]);
 
     const handleChange = (values: string[]) => {
-        setValues(values);
+        setSelectedDissagregations(values);
     };
 
-    const runAnalysis = (e: any) => {
-        alert(`run analysis`);
-    };
+    const runAnalysis = React.useCallback(() => {
+        loading.show(true, i18n.t("Running analysis..."));
+        compositionRoot.nursingMidwifery.validate
+            .execute({
+                analysisId: analysis.id,
+                disaggregationsIds: selectedDisaggregations,
+                sectionId: section.id,
+            })
+            .run(
+                analysis => {
+                    refreshReload(reload + 1);
+                    updateAnalysis(analysis);
+                    loading.hide();
+                },
+                err => {
+                    snackbar.error(err.message);
+                    loading.hide();
+                }
+            );
+    }, [
+        analysis,
+        compositionRoot.nursingMidwifery.validate,
+        loading,
+        reload,
+        updateAnalysis,
+        snackbar,
+        selectedDisaggregations,
+        section.id,
+    ]);
 
     return {
-        catCombosList,
-        values,
+        analysis,
+        reload,
+        disaggregations,
+        selectedDisaggregations,
         handleChange,
         runAnalysis,
     };
 }
+
+type UseNursingMidwiferyStepProps = {
+    analysis: QualityAnalysis;
+    section: QualityAnalysisSection;
+    updateAnalysis: UpdateAnalysisState;
+};

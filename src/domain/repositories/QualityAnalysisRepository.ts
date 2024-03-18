@@ -7,7 +7,7 @@ export interface QualityAnalysisRepository {
     get(options: QualityAnalysisOptions): FutureData<QualityAnalysisPaginated>;
     getById(id: Id): FutureData<QualityAnalysis>;
     save(qualityAnalysis: QualityAnalysis[]): FutureData<void>;
-    remove(id: Id[]): FutureData<void>;
+    remove(id: Id): FutureData<void>;
 }
 
 export type Pagination = {

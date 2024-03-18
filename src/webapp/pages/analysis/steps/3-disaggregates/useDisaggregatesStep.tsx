@@ -1,102 +1,81 @@
-import { useState } from "react";
+import React from "react";
+import { useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
+
 import i18n from "$/utils/i18n";
+import { useAppContext } from "$/webapp/contexts/app-context";
+import { Id } from "$/domain/entities/Ref";
+import { Option } from "$/webapp/components/selectmulti-checkboxes/SelectMultiCheckboxes";
+import _ from "$/domain/entities/generic/Collection";
+import { UpdateAnalysisState } from "../../AnalysisPage";
+import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 
-export function useDisaggregatesStep() {
-    const catCombosList = [
-        {
-            value: "ACTIVITY",
-            text: i18n.t("Activity Level"),
-        },
-        {
-            value: "SEX",
-            text: i18n.t("Sex"),
-        },
-        {
-            value: "AGE",
-            text: i18n.t("Age Group"),
-        },
-        {
-            value: "AGESEX",
-            text: i18n.t("Age Group + Sex"),
-        },
-        {
-            value: "BIRTHPLACE",
-            text: i18n.t("Place of Birth"),
-        },
-        {
-            value: "TRAININGPLACE",
-            text: i18n.t("Place of Training"),
-        },
-        {
-            value: "FOREIGNTRAINED",
-            text: i18n.t("Foreign Trained"),
-        },
-        {
-            value: "OWNERSHIP",
-            text: i18n.t("Ownership"),
-        },
-        {
-            value: "WORKINGFACILITYTYPE",
-            text: i18n.t("Working Facility Type"),
-        },
-        {
-            value: "NADOMESTICTHWF",
-            text: i18n.t("Newly Active domestic trained HWF"),
-        },
-        {
-            value: "NAFOREIGNTE",
-            text: i18n.t("Newly Active foreign trained employed"),
-        },
-        {
-            value: "VOLUNTARY",
-            text: i18n.t("Voluntary Exits"),
-        },
-        {
-            value: "INVOLUNTARY",
-            text: i18n.t("Involuntary exits"),
-        },
-        {
-            value: "VACANCY",
-            text: i18n.t("Vacancy rate"),
-        },
-        {
-            value: "CONTRACT",
-            text: i18n.t("Contract Type"),
-        },
-        {
-            value: "APPLICATIONS",
-            text: i18n.t("Applications"),
-        },
-        {
-            value: "ENROLLED",
-            text: i18n.t("Enrolled"),
-        },
-        {
-            value: "GRADUATESGENDER",
-            text: i18n.t("Graduates by Gender"),
-        },
-        {
-            value: "GRADUATESINSTITUTION",
-            text: i18n.t("Graduates by institution ownership"),
-        },
-    ];
+export function useDisaggregatesStep(props: UseDisaggregatesStepProps) {
+    const { analysis, sectionId, updateAnalysis } = props;
+    const { compositionRoot } = useAppContext();
+    const snackbar = useSnackbar();
+    const loading = useLoading();
 
-    const defaultValues = catCombosList.map(option => option.text);
+    const [reload, refreshReload] = React.useState(0);
 
-    const [value, setValue] = useState<string[]>(defaultValues);
+    const [disaggregations, setDisaggregations] = React.useState<Option[]>([]);
+    const [selectedDisagregations, setSelectedDisagregations] = React.useState<string[]>([]);
+
+    React.useEffect(() => {
+        compositionRoot.disaggregates.getCategoriesCombos.execute(sectionId).run(
+            settingSection => {
+                const initialDisaggregations = _(settingSection.disaggregations)
+                    .map(disaggregation => {
+                        return { value: disaggregation.id, text: disaggregation.name };
+                    })
+                    .sortBy(item => item.text)
+                    .value();
+                setDisaggregations(initialDisaggregations);
+                setSelectedDisagregations(initialDisaggregations.map(item => item.value));
+            },
+            err => {
+                snackbar.error(err.message);
+            }
+        );
+    }, [analysis, compositionRoot.disaggregates.getCategoriesCombos, snackbar, sectionId]);
 
     const handleChange = (values: string[]) => {
-        setValue(values);
+        setSelectedDisagregations(values);
     };
 
-    const runAnalysis = (e: any) => {
-        alert(`run analysis`);
+    const runAnalysis = () => {
+        if (!analysis) return false;
+        loading.show(true, i18n.t("Running analysis..."));
+        compositionRoot.missingDisaggregates.get
+            .execute({
+                analysisId: analysis.id,
+                disaggregationsIds: selectedDisagregations,
+                sectionId: sectionId,
+            })
+            .run(
+                result => {
+                    refreshReload(reload + 1);
+                    updateAnalysis(result);
+                    loading.hide();
+                },
+                err => {
+                    snackbar.error(err.message);
+                    loading.hide();
+                }
+            );
     };
 
     return {
-        catCombosList,
-        value,
+        analysis,
+        disaggregations,
         handleChange,
         runAnalysis,
+        selectedDisagregations,
+        reload,
     };
 }
+
+type UseDisaggregatesStepProps = {
+    analysis: QualityAnalysis;
+    sectionId: Id;
+    updateAnalysis: UpdateAnalysisState;
+};

@@ -17,14 +17,20 @@ export function useTableConfig() {
                 { name: "country", text: i18n.t("Country"), sortable: false },
                 { name: "period", text: i18n.t("Period"), sortable: false },
                 { name: "dataElement", text: i18n.t("Data Element"), sortable: false },
-                { name: "categoryOption", text: i18n.t("Category"), sortable: false },
+                {
+                    name: "categoryOption",
+                    text: i18n.t("Category"),
+                    sortable: false,
+                    getValue: value => {
+                        return value.categoryOption?.name === "default"
+                            ? "Total"
+                            : value.categoryOption?.name;
+                    },
+                },
                 {
                     name: "description",
                     text: i18n.t("Description"),
                     sortable: false,
-                    getValue: value => {
-                        return <EditIssueValue key={value.id} field="description" issue={value} />;
-                    },
                 },
                 {
                     name: "status",
@@ -115,6 +121,7 @@ export function useGetRows(
 ) {
     const { compositionRoot } = useAppContext();
     const [loading, setLoading] = React.useState(false);
+
     const getRows = React.useCallback<GetRows<QualityAnalysisIssue>>(
         (search, pagination, sorting) => {
             return new Promise((resolve, reject) => {
@@ -129,13 +136,15 @@ export function useGetRows(
                         pagination: { page: pagination.page, pageSize: pagination.pageSize },
                         sorting: { field: sorting.field, order: sorting.order },
                         filters: {
+                            actions: filters.actions,
+                            countries: filters.countries,
                             name: search,
-                            endDate: filters.endDate,
-                            startDate: filters.startDate,
+                            periods: filters.periods,
                             status: filters.status,
                             analysisIds: [analysisId],
                             sectionId: sectionId,
                             id: undefined,
+                            followUp: filters.followUp,
                         },
                     })
                     .run(
@@ -152,9 +161,11 @@ export function useGetRows(
         },
         [
             compositionRoot.outlier.get,
-            filters.endDate,
-            filters.startDate,
+            filters.actions,
+            filters.followUp,
+            filters.periods,
             filters.status,
+            filters.countries,
             sectionId,
             analysisId,
             reloadKey,

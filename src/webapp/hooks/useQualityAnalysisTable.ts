@@ -24,7 +24,7 @@ export function useTableConfig(props: UseTableConfigProps) {
             actions: actions,
             columns: analysisColumns,
             initialSorting: { field: "name", order: "desc" },
-            paginationOptions: { pageSizeOptions: [10, 20, 50], pageSizeInitialValue: 20 },
+            paginationOptions: { pageSizeOptions: [10, 25, 50], pageSizeInitialValue: 25 },
             searchBoxLabel: i18n.t("Name"),
         };
     }, [actions]);

@@ -1,80 +1,63 @@
 import React from "react";
+import { Dropdown } from "@eyeseetea/d2-ui-components";
+
 import i18n from "$/utils/i18n";
+import { StepAnalysis } from "$/webapp/pages/analysis/steps/StepAnalysis";
+
 import styled from "styled-components";
 import { useGeneralPractitionersStep } from "./useGeneralPractitionersStep";
-import { EmptyState } from "$/webapp/components/empty-state/EmptyState";
-import { Typography, Button } from "@material-ui/core";
-import { Dropdown } from "@eyeseetea/d2-ui-components";
 import { SelectMultiCheckboxes } from "$/webapp/components/selectmulti-checkboxes/SelectMultiCheckboxes";
+import { PageStepProps } from "../../AnalysisPage";
 
-interface PageProps {
-    name: string;
-}
+export const GeneralPractitionersStep: React.FC<PageStepProps> = React.memo(props => {
+    const { analysis, section, title, updateAnalysis } = props;
 
-export const GeneralPractitionersStep: React.FC<PageProps> = React.memo(props => {
-    const { name = "Personnel analysis: General Practitioners missing and double counts" } = props;
     const {
+        disaggregations,
         doubleCountsList,
-        value,
-        values,
-        handleChange,
+        reload,
         runAnalysis,
+        selectedDisaggregations,
+        threshold,
+        handleChange,
         valueChange,
-        catCombosList,
-    } = useGeneralPractitionersStep();
+    } = useGeneralPractitionersStep({
+        analysis: analysis,
+        section: section,
+        updateAnalysis: updateAnalysis,
+    });
+
+    const onClick = () => {
+        runAnalysis();
+    };
 
     return (
-        <Container>
-            <AnalysisHeader>
-                <StyledTypography variant="h2">{i18n.t(name)}</StyledTypography>
-                <FiltersContainer>
-                    <SelectMultiCheckboxes
-                        options={catCombosList}
-                        onChange={handleChange}
-                        value={values}
-                        label={i18n.t("CatCombos")}
-                    />
-                    <StyledDropdown
-                        hideEmpty
-                        key={"double-counts-filter"}
-                        items={doubleCountsList}
-                        onChange={valueChange}
-                        value={value}
-                        label={i18n.t("Double Counts Threshold")}
-                    />
-                    <Button variant="contained" color="primary" size="small" onClick={runAnalysis}>
-                        {i18n.t("Run")}
-                    </Button>
-                </FiltersContainer>
-            </AnalysisHeader>
-            <EmptyState message={i18n.t("Run to get results")} variant={"neutral"} />
-        </Container>
+        <div>
+            <StepAnalysis
+                id={analysis.id}
+                onRun={onClick}
+                reload={reload}
+                section={section}
+                title={title}
+            >
+                <SelectMultiCheckboxes
+                    options={disaggregations}
+                    label={i18n.t("Disaggregations")}
+                    value={selectedDisaggregations}
+                    onChange={handleChange}
+                />
+                <StyledDropdown
+                    hideEmpty
+                    key={"double-counts-filter"}
+                    items={doubleCountsList}
+                    onChange={valueChange}
+                    value={threshold}
+                    label={i18n.t("Double Counts Threshold")}
+                />
+            </StepAnalysis>
+        </div>
     );
 });
-
-const Container = styled.section``;
-
-const AnalysisHeader = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 5rem;
-    gap: 1rem;
-    margin-block-end: 1.75rem;
-    flex-wrap: wrap;
-`;
-
-const StyledTypography = styled(Typography)`
-    font-size: 1.2rem;
-    font-weight: 500;
-    max-width: 22rem;
-`;
-
-const FiltersContainer = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-`;
 
 const StyledDropdown = styled(Dropdown)`
     min-width: 14rem;

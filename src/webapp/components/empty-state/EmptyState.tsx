@@ -24,9 +24,9 @@ const Container = styled.section<ContainerProps>`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: ${customTheme.color.lighterGrey};
-    color: ${customTheme.color.grey};
-    border-color: ${customTheme.color.grey};
+    background-color: ${customTheme.color.lightGrey};
+    color: ${customTheme.color.dark};
+    border-color: ${customTheme.color.dark};
     border: 1px solid;
     border-radius: 4px;
     height: 28rem;
@@ -35,7 +35,7 @@ const Container = styled.section<ContainerProps>`
     ${({ $variant }) =>
         $variant === "success" &&
         css`
-            background-color: ${customTheme.color.lighterGreen};
+            background-color: ${customTheme.color.lightGreen};
             color: ${customTheme.color.green};
             border-color: ${customTheme.color.green};
         `};

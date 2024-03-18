@@ -1,60 +1,30 @@
 import React from "react";
 import i18n from "$/utils/i18n";
-import { EmptyState } from "$/webapp/components/empty-state/EmptyState";
-import { Typography, Button } from "@material-ui/core";
-import styled from "styled-components";
+
 import { useNursingMidwiferyStep } from "./useNursingMidwiferyStep";
 import { SelectMultiCheckboxes } from "$/webapp/components/selectmulti-checkboxes/SelectMultiCheckboxes";
+import { StepAnalysis } from "../StepAnalysis";
+import { PageStepProps } from "../../AnalysisPage";
 
-interface PageProps {
-    name: string;
-}
-
-export const NursingMidwiferyStep: React.FC<PageProps> = React.memo(props => {
-    const { name = "Missing nursing personnel when midwifery personnel is present" } = props;
-    const { catCombosList, values, handleChange, runAnalysis } = useNursingMidwiferyStep();
+export const NursingMidwiferyStep: React.FC<PageStepProps> = React.memo(props => {
+    const { analysis, section, title, updateAnalysis } = props;
+    const { disaggregations, selectedDisaggregations, handleChange, reload, runAnalysis } =
+        useNursingMidwiferyStep({ analysis, section, updateAnalysis });
 
     return (
-        <Container>
-            <AnalysisHeader>
-                <StyledTypography variant="h2">{i18n.t(name)}</StyledTypography>
-                <FiltersContainer>
-                    <SelectMultiCheckboxes
-                        options={catCombosList}
-                        onChange={handleChange}
-                        value={values}
-                        label={i18n.t("CatCombos")}
-                    />
-                    <Button variant="contained" color="primary" size="small" onClick={runAnalysis}>
-                        {i18n.t("Run")}
-                    </Button>
-                </FiltersContainer>
-            </AnalysisHeader>
-            <EmptyState message={i18n.t("Run to get results")} variant={"neutral"} />
-        </Container>
+        <StepAnalysis
+            id={analysis.id}
+            section={section}
+            reload={reload}
+            title={title}
+            onRun={runAnalysis}
+        >
+            <SelectMultiCheckboxes
+                options={disaggregations}
+                onChange={handleChange}
+                value={selectedDisaggregations}
+                label={i18n.t("CatCombos")}
+            />
+        </StepAnalysis>
     );
 });
-
-const Container = styled.section``;
-
-const AnalysisHeader = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 5rem;
-    gap: 1rem;
-    margin-block-end: 1.75rem;
-    flex-wrap: wrap;
-`;
-
-const StyledTypography = styled(Typography)`
-    font-size: 1.2rem;
-    font-weight: 500;
-    max-width: 22rem;
-`;
-
-const FiltersContainer = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-`;
