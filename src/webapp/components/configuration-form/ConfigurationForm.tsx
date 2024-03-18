@@ -13,7 +13,7 @@ import { Country } from "$/domain/entities/Country";
 import styled from "styled-components";
 import { getDefaultModules } from "$/data/common/D2Module";
 
-function getIdFromCountriesPaths(paths: string[]): string[] {
+export function getIdFromCountriesPaths(paths: string[]): string[] {
     return _(paths)
         .map(path => {
             return _(path.split("/")).last() || undefined;
@@ -49,7 +49,7 @@ export function useCountries(props: UseCountriesProps) {
 
 export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(props => {
     const { initialCountries, initialData, onSave } = props;
-    const { api, metadata } = useAppContext();
+    const { api, currentUser, metadata } = useAppContext();
     const { countries } = useCountries({ ids: initialData.countriesAnalysis });
     const [formData, setFormData] = React.useState<QualityAnalysis>(() => {
         return initialData;
@@ -159,7 +159,7 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
                         selected={selectedOrgUnits}
                         levels={[1, 2, 3]}
                         selectableLevels={[1, 2, 3]}
-                        rootIds={initialCountries}
+                        rootIds={currentUser.countries.map(country => country.id)}
                         withElevation={false}
                     />
                 </OrgUnitContainer>

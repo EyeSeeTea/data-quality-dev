@@ -3,17 +3,15 @@ import { IssueStatus } from "$/domain/entities/IssueStatus";
 import { Outlier } from "$/domain/entities/Outlier";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
-import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 import { Id } from "$/domain/entities/Ref";
 import { Future } from "$/domain/entities/generic/Future";
 import { getUid } from "$/utils/uid";
-import { outlierKey } from "$/webapp/pages/analysis/steps";
-import { IssueRepository } from "../repositories/IssueRepository";
-import { OutlierRepository } from "../repositories/OutlierRepository";
-import { QualityAnalysisRepository } from "../repositories/QualityAnalysisRepository";
+import { IssueRepository } from "$/domain/repositories/IssueRepository";
+import { OutlierRepository } from "$/domain/repositories/OutlierRepository";
+import { QualityAnalysisRepository } from "$/domain/repositories/QualityAnalysisRepository";
 import _ from "$/domain/entities/generic/Collection";
-import { ModuleRepository } from "../repositories/ModuleRepository";
-import { DataElement } from "../entities/DataElement";
+import { ModuleRepository } from "$/domain/repositories/ModuleRepository";
+import { DataElement } from "$/domain/entities/DataElement";
 import { UCIssue } from "./common/UCIssue";
 import { UCAnalysis } from "./common/UCAnalysis";
 
@@ -41,14 +39,14 @@ export class RunOutlierUseCase {
                     dataElements.map(dataElement => dataElement.id)
                 ).flatMap(outliers => {
                     return this.issueUseCase
-                        .getTotalIssuesBySection(analysis, outlierKey)
+                        .getTotalIssuesBySection(analysis, options.sectionId)
                         .flatMap(totalIssues => {
                             return this.saveIssues(outliers, analysis, totalIssues, options);
                         })
                         .flatMap(() => {
                             const analysisToUpdate = this.analysisUseCase.updateAnalysis(
                                 analysis,
-                                outlierKey,
+                                options.sectionId,
                                 outliers.length
                             );
                             return this.analysisRepository
@@ -100,21 +98,20 @@ export class RunOutlierUseCase {
         totalIssues: number,
         options: RunOutlierUseCaseOptions
     ): FutureData<void> {
-        const section = this.getCurrentSection(analysis);
         if (outliers.length === 0) return Future.success(undefined);
         const issuesToSave = outliers.map((outlier, index) => {
             const currentNumber = totalIssues + 1 + index;
             const correlative = currentNumber < 10 ? `0${currentNumber}` : currentNumber;
             const issueNumber = `${analysis.sequential.value}-S01-I${correlative}`;
             return new QualityAnalysisIssue({
-                id: getUid(`issue-event_${outlierKey}_${new Date().getTime()}`),
+                id: getUid(`issue-event_${options.sectionId}_${new Date().getTime()}`),
                 number: issueNumber,
                 azureUrl: "",
                 period: outlier.period,
                 country: { id: outlier.countryId, name: "", path: "" },
                 dataElement: { id: outlier.dataElementId, name: "" },
                 categoryOption: { id: outlier.categoryOptionId, name: "" },
-                description: "",
+                description: this.getDescriptionIssue(outlier, options),
                 followUp: false,
                 status: IssueStatus.create({
                     id: "",
@@ -122,8 +119,8 @@ export class RunOutlierUseCase {
                     name: "",
                 }),
                 action: undefined,
-                actionDescription: this.getActionDescription(outlier, options),
-                type: section.id,
+                actionDescription: "",
+                type: options.sectionId,
                 comments: "",
                 contactEmails: "",
                 correlative: String(currentNumber),
@@ -132,13 +129,7 @@ export class RunOutlierUseCase {
         return this.issueUseCase.save(issuesToSave, analysis.id);
     }
 
-    private getCurrentSection(analysis: QualityAnalysis): QualityAnalysisSection {
-        const section = analysis.sections.find(section => section.name === outlierKey);
-        if (!section) throw Error(`Cannot found section: ${outlierKey}`);
-        return section;
-    }
-
-    private getActionDescription(outlier: Outlier, options: RunOutlierUseCaseOptions): string {
+    private getDescriptionIssue(outlier: Outlier, options: RunOutlierUseCaseOptions): string {
         return outlier.zScore
             ? `An outlier was detected using ${
                   options.algorithm
@@ -153,4 +144,5 @@ type RunOutlierUseCaseOptions = {
     qualityAnalysisId: Id;
     algorithm: string;
     threshold: string;
+    sectionId: Id;
 };

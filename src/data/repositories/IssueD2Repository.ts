@@ -39,6 +39,7 @@ export class IssueD2Repository implements IssueRepository {
 
     get(options: GetIssuesOptions): FutureData<RowsPaginated<QualityAnalysisIssue>> {
         const { filters, pagination } = options;
+        const filtersParams = this.buildFilters(options.filters);
         return apiToFuture(
             this.api.tracker.events.get({
                 programStage: filters.sectionId ? filters.sectionId : undefined,
@@ -49,10 +50,9 @@ export class IssueD2Repository implements IssueRepository {
                 pageSize: pagination.pageSize,
                 // TODO: order and filter does not work together
                 // ERROR: Query failed because of a syntax error (SqlState: 42703)",
-                order: options.filters.name
-                    ? undefined
-                    : this.buildOrder(options.sorting) || undefined,
-                filter: this.buildFilters(options.filters),
+                // disabling order if any filter is present
+                order: filtersParams ? undefined : this.buildOrder(options.sorting) || undefined,
+                filter: filtersParams,
                 event: filters.id ? filters.id : undefined,
             })
         ).flatMap(d2Response => {
@@ -160,7 +160,7 @@ export class IssueD2Repository implements IssueRepository {
                         },
                         {
                             id: this.metadata.dataElements.followUp.id,
-                            value: issue.followUp ? "true" : "",
+                            value: issue.followUp ? "true" : "false",
                         },
                         {
                             id: this.metadata.dataElements.contactEmails.id,
@@ -325,9 +325,55 @@ export class IssueD2Repository implements IssueRepository {
             ? `${this.metadata.dataElements.issueNumber.id}:LIKE:${filter.name}`
             : undefined;
 
-        const allFilters = _([numberFilter]).compact().value();
+        const periodsFilter = this.buildFilterMultipleValue(
+            filter.periods,
+            this.metadata.dataElements.period.id
+        );
+
+        const statusFilter = this.buildFilterMultipleValue(
+            filter.status,
+            this.metadata.dataElements.status.id
+        );
+
+        const actionsFilter = this.buildFilterMultipleValue(
+            filter.actions,
+            this.metadata.dataElements.action.id
+        );
+
+        const countriesFilter = this.buildFilterMultipleValue(
+            filter.countries,
+            this.metadata.dataElements.country.id
+        );
+
+        const followUpFilter = this.buildFollowUpFilter(filter.followUp);
+
+        const allFilters = _([
+            numberFilter,
+            periodsFilter,
+            statusFilter,
+            actionsFilter,
+            countriesFilter,
+            followUpFilter,
+        ])
+            .compact()
+            .value();
 
         return allFilters.length > 0 ? allFilters.join(",") : undefined;
+    }
+
+    private buildFilterMultipleValue(value: Maybe<string[]>, dataElementId: Id): Maybe<string> {
+        const valueSeparatedByComma = value ? value.join(";") : undefined;
+        return valueSeparatedByComma ? `${dataElementId}:IN:${valueSeparatedByComma}` : undefined;
+    }
+
+    private buildFollowUpFilter(followUpValue: Maybe<string>): Maybe<string> {
+        if (followUpValue === "1") {
+            return `${this.metadata.dataElements.followUp.id}:eq:true`;
+        } else if (followUpValue === "0") {
+            return `${this.metadata.dataElements.followUp.id}:eq:false`;
+        } else {
+            return undefined;
+        }
     }
 }
 

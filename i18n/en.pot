@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-03-14T01:55:56.426Z\n"
-"PO-Revision-Date: 2024-03-14T01:55:56.426Z\n"
+"POT-Creation-Date: 2024-03-15T21:06:40.611Z\n"
+"PO-Revision-Date: 2024-03-15T21:06:40.611Z\n"
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
@@ -74,6 +74,30 @@ msgstr ""
 msgid "Double click to edit"
 msgstr ""
 
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "{{countryNames}} and {{moreCountriesCount}} more"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Countries"
+msgstr ""
+
+msgid "Periods"
+msgstr ""
+
+msgid "Action"
+msgstr ""
+
+msgid "Follow Up"
+msgstr ""
+
 msgid "Issue"
 msgstr ""
 
@@ -93,12 +117,6 @@ msgid "Description"
 msgstr ""
 
 msgid "Azure URL"
-msgstr ""
-
-msgid "Follow Up"
-msgstr ""
-
-msgid "Action"
 msgstr ""
 
 msgid "Contact Emails"
@@ -146,7 +164,7 @@ msgstr ""
 msgid "Data Quality Analysis"
 msgstr ""
 
-msgid "Outliers detection analysis based on DHIS2 min-max standard functionality"
+msgid "Configuration"
 msgstr ""
 
 msgid "Algorithm"
@@ -155,25 +173,10 @@ msgstr ""
 msgid "Threshold"
 msgstr ""
 
-msgid "Run"
-msgstr ""
-
-msgid "Run to get results"
-msgstr ""
-
-msgid "No Issues found"
-msgstr ""
-
 msgid "Running analysis..."
 msgstr ""
 
-msgid "Missing disaggregates in selected catcombos"
-msgstr ""
-
 msgid "CatCombos"
-msgstr ""
-
-msgid "Medical doctors analysis: General Practicioners missing and double counts"
 msgstr ""
 
 msgid "Disaggregations"
@@ -182,13 +185,16 @@ msgstr ""
 msgid "Double Counts Threshold"
 msgstr ""
 
-msgid "Missing nursing personnel when midwifery personnel is present"
-msgstr ""
-
 msgid "Loading"
 msgstr ""
 
 msgid "Validation Rule Group"
+msgstr ""
+
+msgid "Run"
+msgstr ""
+
+msgid "Run to get results"
 msgstr ""
 
 msgid "Activity Level"
@@ -215,34 +221,7 @@ msgstr ""
 msgid "Enrolled"
 msgstr ""
 
-msgid "Configuration"
-msgstr ""
-
-msgid "Outliers"
-msgstr ""
-
-msgid "Trends"
-msgstr ""
-
-msgid "Disaggregates"
-msgstr ""
-
-msgid "General Practitioners"
-msgstr ""
-
-msgid "Nursing"
-msgstr ""
-
-msgid "Nursing/Midwifery"
-msgstr ""
-
-msgid "Midwifery"
-msgstr ""
-
-msgid "Density"
-msgstr ""
-
-msgid "Other"
+msgid "No Issues found"
 msgstr ""
 
 msgid "Are you sure you want to {{action}} the selected rows?"

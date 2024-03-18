@@ -11,16 +11,12 @@ export class UCAnalysis {
         return this.analysisRepository.getById(id);
     }
 
-    updateAnalysis(
-        analysis: QualityAnalysis,
-        sectionName: string,
-        totalIssues: number
-    ): QualityAnalysis {
+    updateAnalysis(analysis: QualityAnalysis, sectionId: Id, totalIssues: number): QualityAnalysis {
         return QualityAnalysis.build({
             ...analysis,
             lastModification: new Date().toISOString(),
             sections: analysis.sections.map(section => {
-                if (section.name !== sectionName) return section;
+                if (section.id !== sectionId) return section;
                 return QualityAnalysisSection.create({
                     ...section,
                     status: totalIssues === 0 ? "success" : "success_with_issues",

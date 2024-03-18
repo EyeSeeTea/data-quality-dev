@@ -30,10 +30,10 @@ export function getQualityAnalysis(
 
 export function getCurrentSection(
     analysis: QualityAnalysis,
-    sectionName: string
+    sectionId: Id
 ): QualityAnalysisSection {
-    const section = analysis.sections.find(section => section.name === sectionName);
-    if (!section) throw Error(`Cannot found section: ${sectionName}`);
+    const section = analysis.sections.find(section => section.id === sectionId);
+    if (!section) throw Error(`Cannot found section: ${sectionId}`);
     return section;
 }
 
@@ -46,13 +46,15 @@ export function getIssues(
     return issueRepository
         .get({
             filters: {
-                endDate: undefined,
+                actions: undefined,
+                countries: [],
+                periods: [],
                 analysisIds: [analysis.id],
                 name: undefined,
                 sectionId: section?.id,
-                startDate: undefined,
                 status: undefined,
                 id: undefined,
+                followUp: undefined,
             },
             pagination: { page: 1, pageSize: 10 },
             sorting: { field: "number", order: "asc" },

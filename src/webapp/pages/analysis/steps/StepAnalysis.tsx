@@ -7,20 +7,24 @@ import i18n from "$/utils/i18n";
 import { Id } from "$/domain/entities/Ref";
 import { EmptyState } from "$/webapp/components/empty-state/EmptyState";
 import { useGetRows, useTableConfig } from "$/webapp/components/issues/IssueTable";
-import { GetIssuesOptions } from "$/domain/repositories/IssueRepository";
-import { initialFilters } from "$/webapp/utils/issues";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
+import { IssueFilters } from "$/webapp/components/issues/IssueFilters";
+import { initialFilters } from "$/webapp/utils/issues";
 
 export const StepAnalysis: React.FC<StepContainerProps> = React.memo(props => {
     const { children, id, onRun, reload, section, title } = props;
 
-    const [filters, _] = React.useState<GetIssuesOptions["filters"]>(initialFilters);
+    const [filters, setFilters] = React.useState(initialFilters);
 
     const { tableConfig } = useTableConfig();
-    const { getRows, loading } = useGetRows(filters, reload, id, section.id || "");
+    const { getRows, loading } = useGetRows(filters, reload, id, section.id);
     const config = useObjectsTable(tableConfig, getRows);
 
     const isPending = section.status === "pending";
+
+    const filterComponents = React.useMemo(() => {
+        return <IssueFilters initialFilters={filters} onChange={setFilters} />;
+    }, [filters]);
 
     return (
         <Container>
@@ -49,7 +53,7 @@ export const StepAnalysis: React.FC<StepContainerProps> = React.memo(props => {
                 )}
             </>
             {section.status === "success_with_issues" && (
-                <ObjectsTable loading={loading} {...config} />
+                <ObjectsTable loading={loading} {...config} filterComponents={filterComponents} />
             )}
         </Container>
     );

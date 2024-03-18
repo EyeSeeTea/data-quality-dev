@@ -16,6 +16,12 @@ li {
     min-height: 40px !important;
 }
 
+.config-form-selector > label {
+    color: #494949;
+    font-size: 1em;
+    top: 0 !important;
+}
+
 .config-form-selector.disabled > div {
     cursor: none;
     opacity: 0.7;

@@ -2,29 +2,25 @@ import React from "react";
 import { useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
 
 import i18n from "$/utils/i18n";
-import { useAnalysisById } from "$/webapp/hooks/useAnalysis";
 import { Id } from "$/domain/entities/Ref";
 import { useAppContext } from "$/webapp/contexts/app-context";
-import { missingNursing } from "../../steps";
+import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
+import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
+import { UpdateAnalysisState } from "../../AnalysisPage";
 
 export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
-    const { analysisId } = props;
+    const { analysis, section, updateAnalysis } = props;
     const { compositionRoot } = useAppContext();
     const snackbar = useSnackbar();
     const loading = useLoading();
 
     const [reload, refreshReload] = React.useState(0);
-    const { analysis, setAnalysis } = useAnalysisById({ id: analysisId });
     const [disaggregations, setDisaggregations] = React.useState<{ value: Id; text: string }[]>([]);
     const [selectedDisaggregations, setSelectedDissagregations] = React.useState<string[]>([]);
 
     React.useEffect(() => {
-        if (!analysis) return;
-        const section = analysis?.sections.find(section => section.name === missingNursing);
-        if (!section) return;
-
         loading.show(true, i18n.t("Loading"));
-        compositionRoot.nursingMidwifery.getDisaggregations.execute(section.name).run(
+        compositionRoot.nursingMidwifery.getDisaggregations.execute(section.id).run(
             result => {
                 const selectedDisaggregations = result.map(item => ({
                     value: item.id,
@@ -39,27 +35,24 @@ export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
                 snackbar.error(error.message);
             }
         );
-    }, [analysis, compositionRoot.nursingMidwifery.getDisaggregations, loading, snackbar]);
+    }, [section.id, compositionRoot.nursingMidwifery.getDisaggregations, loading, snackbar]);
 
     const handleChange = (values: string[]) => {
         setSelectedDissagregations(values);
     };
 
     const runAnalysis = React.useCallback(() => {
-        if (!analysis) return false;
-        const section = analysis?.sections.find(section => section.name === missingNursing);
-        if (!section) return false;
         loading.show(true, i18n.t("Running analysis..."));
         compositionRoot.nursingMidwifery.validate
             .execute({
                 analysisId: analysis.id,
                 disaggregationsIds: selectedDisaggregations,
-                sectionId: section.name,
+                sectionId: section.id,
             })
             .run(
                 analysis => {
                     refreshReload(reload + 1);
-                    setAnalysis(analysis);
+                    updateAnalysis(analysis);
                     loading.hide();
                 },
                 err => {
@@ -72,9 +65,10 @@ export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
         compositionRoot.nursingMidwifery.validate,
         loading,
         reload,
-        setAnalysis,
+        updateAnalysis,
         snackbar,
         selectedDisaggregations,
+        section.id,
     ]);
 
     return {
@@ -87,4 +81,8 @@ export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
     };
 }
 
-type UseNursingMidwiferyStepProps = { analysisId: Id };
+type UseNursingMidwiferyStepProps = {
+    analysis: QualityAnalysis;
+    section: QualityAnalysisSection;
+    updateAnalysis: UpdateAnalysisState;
+};

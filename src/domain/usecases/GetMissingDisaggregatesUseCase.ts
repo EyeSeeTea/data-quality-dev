@@ -20,7 +20,6 @@ import { getCurrentSection } from "./common/utils";
 import { SettingsRepository } from "../repositories/SettingsRepository";
 import { SectionDisaggregation, SectionSetting, Settings } from "$/domain/entities/Settings";
 import { MissingComboValue } from "$/domain/entities/MissingComboValue";
-import { disaggregateKey } from "$/webapp/pages/analysis/steps";
 
 const separator = " - ";
 export class GetMissingDisaggregatesUseCase {
@@ -63,7 +62,7 @@ export class GetMissingDisaggregatesUseCase {
             );
 
             return this.issueUseCase
-                .getTotalIssuesBySection(analysis, disaggregateKey)
+                .getTotalIssuesBySection(analysis, options.sectionId)
                 .flatMap(totalIssues => {
                     const missingDisaggregateValues = missingValues.flatMap(missingValue =>
                         missingValue.type === "dataElements" ? missingValue.values : []
@@ -76,13 +75,15 @@ export class GetMissingDisaggregatesUseCase {
                     const issues = this.createIssuesFromMissingAggregate(
                         missingDisaggregateValues as MissingDisaggregates[],
                         analysis,
-                        totalIssues
+                        totalIssues,
+                        options
                     );
 
                     const issues2 = this.createIssuesFromMissingCombos(
                         missingComboValues as MissingComboValue[],
                         analysis,
-                        totalIssues + issues.length
+                        totalIssues + issues.length,
+                        options
                     );
 
                     const allIssues = [...issues, ...issues2];
@@ -90,7 +91,7 @@ export class GetMissingDisaggregatesUseCase {
                     return this.issueUseCase.save(allIssues, analysis.id).flatMap(() => {
                         const analysisUpdate = this.analysisUseCase.updateAnalysis(
                             analysis,
-                            disaggregateKey,
+                            options.sectionId,
                             allIssues.length
                         );
                         return this.analysisRepository.save([analysisUpdate]).flatMap(() => {
@@ -104,9 +105,10 @@ export class GetMissingDisaggregatesUseCase {
     private createIssuesFromMissingAggregate(
         missingValues: MissingDisaggregates[],
         analysis: QualityAnalysis,
-        totalIssues: number
+        totalIssues: number,
+        options: GetMissingDisaggregatesOptions
     ): QualityAnalysisIssue[] {
-        const section = getCurrentSection(analysis, disaggregateKey);
+        const section = getCurrentSection(analysis, options.sectionId);
 
         const onlyMissing = missingValues.filter(missingValue => missingValue.hasMissingValues);
         let acumulativeIssueNumber = totalIssues;
@@ -152,9 +154,10 @@ export class GetMissingDisaggregatesUseCase {
     private createIssuesFromMissingCombos(
         missingValues: MissingComboValue[],
         analysis: QualityAnalysis,
-        totalIssues: number
+        totalIssues: number,
+        options: GetMissingDisaggregatesOptions
     ): QualityAnalysisIssue[] {
-        const section = getCurrentSection(analysis, disaggregateKey);
+        const section = getCurrentSection(analysis, options.sectionId);
 
         const onlyMissing = missingValues.filter(missingValue => missingValue.hasMissingValues);
 
@@ -203,7 +206,7 @@ export class GetMissingDisaggregatesUseCase {
     ): MissingValues[] {
         const keys = _(dataValues).keys().value();
 
-        const sectionSetting = this.getSectionSetting(settings);
+        const sectionSetting = this.getSectionSetting(settings, options);
         const selectedDisaggregations = sectionSetting.disaggregations.filter(disaggregation => {
             return options.disaggregationsIds.includes(disaggregation.id);
         });
@@ -355,7 +358,7 @@ export class GetMissingDisaggregatesUseCase {
         settings: Settings
     ): FutureData<{ dataValues: Record<string, DataValue[]>; dataElements: DataElement[] }> {
         const { module } = analysis;
-        const sectionSetting = this.getSectionSetting(settings);
+        const sectionSetting = this.getSectionSetting(settings, options);
         const selectedDisaggregations = sectionSetting.disaggregations.filter(disaggregation => {
             return options.disaggregationsIds.includes(disaggregation.id);
         });
@@ -415,21 +418,6 @@ export class GetMissingDisaggregatesUseCase {
         });
     }
 
-    private validateDisaggregation(
-        selectedDisaggregations: SectionDisaggregation[],
-        dataElement: DataElement
-    ): Maybe<SectionDisaggregation> {
-        if (!dataElement.disaggregation) return undefined;
-
-        return selectedDisaggregations.find(d => {
-            if (d.type === "combos") {
-                return d.disaggregationId === dataElement.disaggregation?.id;
-            } else {
-                return d.id === dataElement.disaggregation?.id;
-            }
-        });
-    }
-
     private getDataValues(analysis: QualityAnalysis) {
         return this.dataValueUseCase.get(
             analysis.countriesAnalysis,
@@ -438,9 +426,12 @@ export class GetMissingDisaggregatesUseCase {
         );
     }
 
-    private getSectionSetting(settings: Settings): SectionSetting {
-        const sectionSetting = settings.sections.find(section => section.id === disaggregateKey);
-        if (!sectionSetting) throw Error(`Cannot found section in settings: ${disaggregateKey}`);
+    private getSectionSetting(
+        settings: Settings,
+        options: GetMissingDisaggregatesOptions
+    ): SectionSetting {
+        const sectionSetting = settings.sections.find(section => section.id === options.sectionId);
+        if (!sectionSetting) throw Error(`Cannot found section in settings: ${options.sectionId}`);
         return sectionSetting;
     }
 }
@@ -448,6 +439,7 @@ export class GetMissingDisaggregatesUseCase {
 type GetMissingDisaggregatesOptions = {
     analysisId: Id;
     disaggregationsIds: Id[];
+    sectionId: Id;
 };
 
 type MissingValues = {

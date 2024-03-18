@@ -7,7 +7,6 @@ import { IssueStatus } from "$/domain/entities/IssueStatus";
 import _ from "$/domain/entities/generic/Collection";
 import { FutureData } from "$/data/api-futures";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
-import { getCurrentSection } from "./utils";
 
 export class UCIssue {
     constructor(private issueRepository: IssueRepository) {}
@@ -67,18 +66,19 @@ export class UCIssue {
         return issueNumber;
     }
 
-    getTotalIssuesBySection(analysis: QualityAnalysis, sectionName: string): FutureData<number> {
-        const section = getCurrentSection(analysis, sectionName);
+    getTotalIssuesBySection(analysis: QualityAnalysis, sectionId: string): FutureData<number> {
         return this.issueRepository
             .get({
                 filters: {
-                    endDate: undefined,
+                    actions: undefined,
+                    countries: [],
                     analysisIds: [analysis.id],
                     name: undefined,
-                    sectionId: section?.id,
-                    startDate: undefined,
+                    sectionId: sectionId,
+                    periods: [],
                     status: undefined,
                     id: undefined,
+                    followUp: undefined,
                 },
                 pagination: { page: 1, pageSize: 10 },
                 sorting: { field: "number", order: "asc" },

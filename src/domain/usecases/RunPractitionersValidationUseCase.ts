@@ -12,7 +12,6 @@ import { DataValue } from "$/domain/entities/DataValue";
 import { DataValueRepository } from "$/domain/repositories/DataValueRepository";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
-import { practitionersKey } from "$/webapp/pages/analysis/steps";
 import { IssueRepository } from "$/domain/repositories/IssueRepository";
 import { UCIssue } from "./common/UCIssue";
 import { UCAnalysis } from "./common/UCAnalysis";
@@ -54,7 +53,7 @@ export class RunPractitionersValidationUseCase {
                 const practitionerDataElements = this.groupDataElements(dataElements);
 
                 return this.issueUseCase
-                    .getTotalIssuesBySection(analysis, practitionersKey)
+                    .getTotalIssuesBySection(analysis, options.sectionId)
                     .flatMap(totalIssues => {
                         return this.getDataValues(analysis).flatMap(dataValues => {
                             const practitionerDataValues = this.getPractitionerDataValues(
@@ -97,7 +96,7 @@ export class RunPractitionersValidationUseCase {
 
                             const analysisToUpdate = this.analysysUseCase.updateAnalysis(
                                 analysis,
-                                practitionersKey,
+                                options.sectionId,
                                 issues.length
                             );
 
@@ -172,7 +171,8 @@ export class RunPractitionersValidationUseCase {
                 `Values for ${dataElement.dataElementParent.name} subcategories are missing`,
                 dataValue,
                 totalIssues + (index + 1),
-                analysis
+                analysis,
+                options
             );
         });
 
@@ -196,7 +196,8 @@ export class RunPractitionersValidationUseCase {
                 description,
                 dataValue,
                 totalIssues + missingIssues.length + (index + 1),
-                analysis
+                analysis,
+                options
             );
         });
 
@@ -209,9 +210,10 @@ export class RunPractitionersValidationUseCase {
         description: string,
         dataValue: DataValue,
         currentNumber: number,
-        analysis: QualityAnalysis
+        analysis: QualityAnalysis,
+        options: PractitionersValidationOptions
     ) {
-        const section = getCurrentSection(analysis, practitionersKey);
+        const section = getCurrentSection(analysis, options.sectionId);
         const { dataElementId, period, countryId, categoryOptionComboId } = dataValue;
         const prefix = `${analysis.sequential.value}-S04`;
         const issueNumber = this.issueUseCase.generateIssueNumber(currentNumber, prefix);
@@ -400,8 +402,9 @@ export class RunPractitionersValidationUseCase {
 
 type PractitionersValidationOptions = {
     analysisId: Id;
-    threshold: number;
     dissagregationsIds: Id[];
+    sectionId: Id;
+    threshold: number;
 };
 
 type DataElementsLevel = {

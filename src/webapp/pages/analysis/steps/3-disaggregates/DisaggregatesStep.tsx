@@ -4,18 +4,16 @@ import styled from "styled-components";
 import { useDisaggregatesStep } from "./useDisaggregatesStep";
 import { SelectMultiCheckboxes } from "$/webapp/components/selectmulti-checkboxes/SelectMultiCheckboxes";
 import { StepAnalysis } from "../StepAnalysis";
-import { useParams } from "react-router-dom";
-import { disaggregateKey } from "../../steps";
+import { PageStepProps } from "../../AnalysisPage";
 
-export const DisaggregatesStep: React.FC<PageProps> = React.memo(() => {
-    const { id } = useParams<{ id: string }>();
-
-    const { analysis, disaggregations, handleChange, reload, runAnalysis, selectedDisagregations } =
+export const DisaggregatesStep: React.FC<PageStepProps> = React.memo(props => {
+    const { analysis, section, title, updateAnalysis } = props;
+    const { disaggregations, handleChange, reload, runAnalysis, selectedDisagregations } =
         useDisaggregatesStep({
-            analysisId: id,
+            analysis: analysis,
+            updateAnalysis,
+            sectionId: section.id,
         });
-    const section = analysis?.sections.find(section => section.name === disaggregateKey);
-    if (!analysis?.id || !section) return null;
 
     const onClick = () => {
         runAnalysis();
@@ -27,7 +25,7 @@ export const DisaggregatesStep: React.FC<PageProps> = React.memo(() => {
             onRun={onClick}
             reload={reload}
             section={section}
-            title={i18n.t("Missing disaggregates in selected catcombos")}
+            title={title}
         >
             <FiltersContainer>
                 <SelectMultiCheckboxes
@@ -46,5 +44,3 @@ const FiltersContainer = styled.div`
     align-items: center;
     gap: 1rem;
 `;
-
-type PageProps = { name: string };
