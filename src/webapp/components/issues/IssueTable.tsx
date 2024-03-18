@@ -1,5 +1,5 @@
 import React from "react";
-import { GetRows, TableConfig } from "@eyeseetea/d2-ui-components";
+import { GetRows, TableConfig, useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
 
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
@@ -8,11 +8,64 @@ import i18n from "$/utils/i18n";
 import { Id } from "$/domain/entities/Ref";
 import { EditIssueValue } from "./EditIssueValue";
 
-export function useTableConfig() {
+export function useCopyContactEmails(props: UseCopyContactEmailsProps) {
+    const { onSuccess } = props;
+    const { compositionRoot } = useAppContext();
+    const loading = useLoading();
+    const snackbar = useSnackbar();
+
+    const copyContactEmails = React.useCallback(
+        (issueId: Id, analysisId: Id, sectionId: Id, filters: GetIssuesOptions["filters"]) => {
+            loading.show(true, i18n.t("Copying contact emails..."));
+            compositionRoot.issues.copyEmails
+                .execute({
+                    analysisId: analysisId,
+                    sectionId: sectionId,
+                    issueId: issueId,
+                    filters,
+                })
+                .run(
+                    () => {
+                        snackbar.success(i18n.t("Contact emails copied"));
+                        loading.hide();
+                        if (onSuccess) onSuccess();
+                    },
+                    error => {
+                        snackbar.error(error.message);
+                        loading.hide();
+                    }
+                );
+        },
+        [compositionRoot.issues.copyEmails, loading, snackbar, onSuccess]
+    );
+
+    return copyContactEmails;
+}
+
+export function useTableConfig(props: UseTableConfigProps) {
+    const { analysisId, filters, sectionId } = props;
     const [refresh, setRefresh] = React.useState(0);
+
+    const onSuccess = React.useCallback(() => {
+        setRefresh(value => value + 1);
+    }, [setRefresh]);
+
+    const copyContactEmails = useCopyContactEmails({ onSuccess: onSuccess });
+
     const tableConfig = React.useMemo<TableConfig<QualityAnalysisIssue>>(() => {
         return {
-            actions: [],
+            actions: [
+                {
+                    name: "Extend Contact Emails",
+                    text: i18n.t("Extend Contact Emails"),
+                    primary: false,
+                    onClick(selectedIds) {
+                        const issueId = selectedIds[0];
+                        if (!issueId) return false;
+                        copyContactEmails(issueId, analysisId, sectionId, filters);
+                    },
+                },
+            ],
             columns: [
                 { name: "number", text: i18n.t("Issue"), sortable: true },
                 { name: "country", text: i18n.t("Country"), sortable: false },
@@ -105,7 +158,7 @@ export function useTableConfig() {
             paginationOptions: { pageSizeOptions: [10, 20, 50], pageSizeInitialValue: 20 },
             searchBoxLabel: i18n.t("Issue Number"),
         };
-    }, []);
+    }, [filters, analysisId, sectionId, copyContactEmails]);
 
     return { tableConfig, refresh };
 }
@@ -173,3 +226,11 @@ export function useGetRows(
 
     return { getRows, loading };
 }
+
+type UseTableConfigProps = {
+    analysisId: Id;
+    filters: GetIssuesOptions["filters"];
+    sectionId: Id;
+};
+
+type UseCopyContactEmailsProps = { onSuccess?: () => void };

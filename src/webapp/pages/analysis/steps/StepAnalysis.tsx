@@ -16,7 +16,11 @@ export const StepAnalysis: React.FC<StepContainerProps> = React.memo(props => {
 
     const [filters, setFilters] = React.useState(initialFilters);
 
-    const { tableConfig, refresh } = useTableConfig();
+    const { tableConfig, refresh } = useTableConfig({
+        filters,
+        analysisId: id,
+        sectionId: section.id,
+    });
     const { getRows, loading } = useGetRows(filters, reload, id, section.id, refresh);
     const config = useObjectsTable(tableConfig, getRows);
 

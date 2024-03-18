@@ -88,6 +88,46 @@ export class IssueD2Repository implements IssueRepository {
         });
     }
 
+    getById(id: Id): FutureData<QualityAnalysisIssue> {
+        return apiToFuture(
+            this.api.tracker.events.get({
+                fields: { dataValues: true, event: true, programStage: true },
+                event: id ? id : undefined,
+            })
+        ).flatMap(d2Response => {
+            const d2Event = d2Response.instances[0];
+            if (!d2Event) return Future.error(new Error(`Cannot found event: ${id}`));
+
+            const orgUnitIds = this.getRelatedIdsFromDataValues(
+                [d2Event],
+                this.getDataElementIdOrThrow("country")
+            );
+            const dataElementIds = this.getRelatedIdsFromDataValues(
+                [d2Event],
+                this.getDataElementIdOrThrow("dataElement")
+            );
+            const categoryOptionIds = this.getRelatedIdsFromDataValues(
+                [d2Event],
+                this.getDataElementIdOrThrow("categoryOption")
+            );
+            return Future.joinObj({
+                countries: this.d2OrgUnit.getByIds(orgUnitIds),
+                dataElements: this.d2DataElement.getByIds(dataElementIds),
+                categoryOptions: this.d2CategoryOption.getByIds(categoryOptionIds),
+            }).flatMap(({ countries, dataElements, categoryOptions }) => {
+                const issues = this.buildIssues(
+                    [d2Event],
+                    countries,
+                    dataElements,
+                    categoryOptions
+                );
+                const firstIssue = _(issues).first();
+                if (!firstIssue) return Future.error(new Error(`Cannot found event: ${id}`));
+                return Future.success(firstIssue);
+            });
+        });
+    }
+
     create(issue: QualityAnalysisIssue, analysisId: Id): FutureData<void> {
         const programStageId = issue.type;
         if (!programStageId)
