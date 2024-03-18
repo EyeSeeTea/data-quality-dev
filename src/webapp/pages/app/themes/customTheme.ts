@@ -1,14 +1,12 @@
 const customTheme = {
     color: {
-        white: "#ffffff",
-        black: "#111111",
-        grey: "#8e8e8e",
-        lightGrey: "#BDBDBD",
-        lighterGrey: "#F2F2F2",
-        green: "#355B37",
-        lightGreen: "#4CAF50",
-        lighterGreen: "#D8EDD9",
-        red: "#D32F2F",
+        light: "#ffffff",
+        dark: "#333333",
+        grey: "#717171",
+        lightGrey: "#D7D7D7",
+        green: "#163318",
+        lightGreen: "#B5DFB7",
+        lightRed: "#FFB8B8",
     },
 };
 
