@@ -4,6 +4,9 @@ import { IssueRepository } from "$/domain/repositories/IssueRepository";
 import { FutureData } from "../api-futures";
 
 export class IssueTestRepository implements IssueRepository {
+    getById(): FutureData<QualityAnalysisIssue> {
+        throw new Error("Method not implemented.");
+    }
     get(): FutureData<RowsPaginated<QualityAnalysisIssue>> {
         throw new Error("Method not implemented.");
     }

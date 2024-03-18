@@ -21,17 +21,33 @@ export class CopyContactEmailsUseCase {
     }
 
     execute(options: CopyContactEmailsOptions): FutureData<void> {
-        return this.analysisUseCase.getById(options.analysisId).flatMap(analysis => {
-            return this.getAllIssues(options, { initialPage: 1, issues: [] }).flatMap(issues => {
-                const selectedIssue = issues.find(issue => issue.id === options.issueId);
-                if (!selectedIssue)
-                    return Future.error(new Error(`Issue not found: ${options.issueId}`));
-
-                const newIssues = this.copyContactEmailsToOtherIssues(issues, selectedIssue);
-                const analysisWithIssues = this.addIssuesToAnalysis(analysis, newIssues);
-                return this.analysisRepository.save([analysisWithIssues]);
-            });
+        return this.getIssueById(options.issueId).flatMap(issue => {
+            if (!issue.contactEmails) return Future.error(new Error("No contact emails to copy"));
+            return this.extendContactEmailsToOthersIssues(options, issue);
         });
+    }
+
+    private extendContactEmailsToOthersIssues(
+        options: CopyContactEmailsOptions,
+        issue: QualityAnalysisIssue
+    ): FutureData<void> {
+        return this.analysisUseCase.getById(options.analysisId).flatMap(analysis => {
+            return this.getAllIssues(options, issue, { initialPage: 1, issues: [] }).flatMap(
+                issues => {
+                    const selectedIssue = issues.find(issue => issue.id === options.issueId);
+                    if (!selectedIssue)
+                        return Future.error(new Error(`Issue not found: ${options.issueId}`));
+
+                    const newIssues = this.copyContactEmailsToOtherIssues(issues, selectedIssue);
+                    const analysisWithIssues = this.addIssuesToAnalysis(analysis, newIssues);
+                    return this.analysisRepository.save([analysisWithIssues]);
+                }
+            );
+        });
+    }
+
+    private getIssueById(id: Id): FutureData<QualityAnalysisIssue> {
+        return this.issueRepository.getById(id);
     }
 
     private addIssuesToAnalysis(
@@ -65,15 +81,16 @@ export class CopyContactEmailsUseCase {
 
     private getAllIssues(
         options: CopyContactEmailsOptions,
+        issue: QualityAnalysisIssue,
         state: { initialPage: number; issues: QualityAnalysisIssue[] }
     ): FutureData<QualityAnalysisIssue[]> {
         const { initialPage, issues } = state;
-        return this.getIssues(options, initialPage).flatMap(response => {
+        return this.getIssues(options, issue, initialPage).flatMap(response => {
             const newIssues = [...issues, ...response.rows];
             if (response.pagination.page >= response.pagination.pageCount) {
                 return Future.success(newIssues);
             } else {
-                return this.getAllIssues(options, {
+                return this.getAllIssues(options, issue, {
                     initialPage: initialPage + 1,
                     issues: newIssues,
                 });
@@ -83,11 +100,13 @@ export class CopyContactEmailsUseCase {
 
     private getIssues(
         options: CopyContactEmailsOptions,
+        issue: QualityAnalysisIssue,
         page: number
     ): FutureData<RowsPaginated<QualityAnalysisIssue>> {
         return this.issueRepository.get({
             filters: {
                 ...options.filters,
+                countries: issue.country ? [issue.country.id] : [],
                 analysisIds: [options.analysisId],
                 sectionId: options.sectionId,
             },
