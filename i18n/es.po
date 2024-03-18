@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2024-03-15T21:06:40.611Z\n"
+"POT-Creation-Date: 2024-03-18T08:53:36.450Z\n"
 "PO-Revision-Date: 2018-10-25T09:02:35.143Z\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -59,6 +59,45 @@ msgstr ""
 msgid "Save Config Analysis"
 msgstr ""
 
+msgid "Issue"
+msgstr ""
+
+msgid "Country"
+msgstr ""
+
+msgid "Period"
+msgstr ""
+
+msgid "Data Element"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Azure URL"
+msgstr ""
+
+msgid "Follow Up"
+msgstr ""
+
+msgid "Action"
+msgstr ""
+
+msgid "Contact Emails"
+msgstr ""
+
+msgid "Action Description"
+msgstr ""
+
+msgid "Comments"
+msgstr ""
+
+msgid "Issue Number"
+msgstr ""
+
 msgid "Updating Issue..."
 msgstr ""
 
@@ -90,60 +129,6 @@ msgid "Countries"
 msgstr ""
 
 msgid "Periods"
-msgstr ""
-
-msgid "Action"
-msgstr ""
-
-msgid "Follow Up"
-msgstr ""
-
-msgid "Issue"
-msgstr ""
-
-msgid "Country"
-msgstr ""
-
-msgid "Period"
-msgstr ""
-
-msgid "Data Element"
-msgstr ""
-
-msgid "Category"
-msgstr ""
-
-msgid "Description"
-msgstr ""
-
-msgid "Azure URL"
-msgstr ""
-
-msgid "Contact Emails"
-msgstr ""
-
-msgid "Action Description"
-msgstr ""
-
-msgid "Comments"
-msgstr ""
-
-msgid "Issue Number"
-msgstr ""
-
-msgid "Updating Issue..."
-msgstr ""
-
-msgid "Issue Updated"
-msgstr ""
-
-msgid "Save"
-msgstr ""
-
-msgid "Cancel"
-msgstr ""
-
-msgid "Double click to edit"
 msgstr ""
 
 msgid "Back"
@@ -237,9 +222,6 @@ msgid "Enrolled"
 msgstr ""
 
 msgid "No Issues found"
-msgstr ""
-
-msgid "Summary"
 msgstr ""
 
 msgid "Are you sure you want to {{action}} the selected rows?"
