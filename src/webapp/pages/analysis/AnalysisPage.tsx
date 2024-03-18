@@ -12,6 +12,7 @@ import i18n from "$/utils/i18n";
 import _ from "$/domain/entities/generic/Collection";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 import { Maybe } from "$/utils/ts-utils";
+import { SummaryStep } from "./steps/10-summary/SummaryStep";
 
 function buildStepsFromSections(
     analysis: QualityAnalysis,
@@ -32,6 +33,7 @@ function buildStepsFromSections(
                         section={section}
                         title={section.description || section.name}
                         updateAnalysis={updateAnalysis}
+                        name={section.name}
                     />
                 ),
                 completed: !QualityAnalysisSection.isPending(section),
@@ -48,6 +50,7 @@ function buildStepsFromSections(
             completed: true,
         },
         ...sectionSteps,
+        { key: "summary", label: i18n.t("Summary"), component: SummaryStep },
     ];
 }
 

@@ -130,12 +130,14 @@ export function useGetRows(
                         sorting: { field: sorting.field, order: sorting.order },
                         filters: {
                             name: search,
-                            endDate: filters.endDate,
-                            startDate: filters.startDate,
+                            countries: filters.countries,
+                            periods: filters.periods,
                             status: filters.status,
                             analysisIds: [analysisId],
                             sectionId: sectionId,
                             id: undefined,
+                            actions: filters.actions,
+                            followUp: filters.followUp,
                         },
                     })
                     .run(
@@ -151,13 +153,15 @@ export function useGetRows(
             });
         },
         [
-            compositionRoot.summary.get,
-            filters.endDate,
-            filters.startDate,
-            filters.status,
-            sectionId,
-            analysisId,
             reloadKey,
+            compositionRoot.summary.get,
+            filters.countries,
+            filters.periods,
+            filters.status,
+            filters.actions,
+            filters.followUp,
+            analysisId,
+            sectionId,
         ]
     );
 

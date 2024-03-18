@@ -8,8 +8,6 @@ import { initialFilters } from "$/webapp/utils/issues";
 import { GetIssuesOptions } from "$/domain/repositories/IssueRepository";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { SummaryKey } from "$/webapp/pages/analysis/steps";
-
 interface PageProps {
     name: string;
 }
@@ -20,7 +18,7 @@ export const SummaryStep: React.FC<PageProps> = React.memo(props => {
     const { tableConfig } = useTableConfig();
     const [reload, refreshReload] = useState(0);
     const { analysis, setAnalysis } = useAnalysisById({ id: params.id });
-    const section = analysis?.sections.find(section => section.name === SummaryKey);
+    const section = analysis?.sections.find(section => section.name === "Summary");
     const [filters, _] = React.useState<GetIssuesOptions["filters"]>(initialFilters);
 
     const { getRows, loading } = useGetRows(filters, reload, params.id, section?.id || "");
