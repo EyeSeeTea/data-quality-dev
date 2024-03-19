@@ -43,6 +43,7 @@ import { GetSettingsUseCase } from "./domain/usecases/GetSettingsUseCase";
 import { SaveIssueUseCase } from "./domain/usecases/SaveIssueUseCase";
 import { SaveConfigAnalysisUseCase } from "./domain/usecases/SaveConfigAnalysisUseCase";
 import { ValidationRuleRepository } from "./domain/repositories/ValidationRuleGroupRepository";
+import { GetAllIssuesUseCase } from "./domain/usecases/GetAllIssuesUseCase";
 import { D2Api } from "./types/d2-api";
 import { RunPractitionersValidationUseCase } from "./domain/usecases/RunPractitionersValidationUseCase";
 import { DataValueRepository } from "$/domain/repositories/DataValueRepository";
@@ -56,6 +57,7 @@ import { GetMidwiferyPersonnelDisaggregationsUseCase } from "$/domain/usecases/G
 import { ValidationRuleD2Repository } from "./data/repositories/ValidationRuleGroupD2Repository";
 import { ValidationRuleTestRepository } from "./data/repositories/ValidationRuleGroupTestRepository";
 import { GetValidationRuleGroupUseCase } from "./domain/usecases/GetValidationRuleGroupUseCase";
+import { CopyContactEmailsUseCase } from "$/domain/usecases/CopyContactEmailsUseCase";
 
 export type CompositionRoot = ReturnType<typeof getCompositionRoot>;
 
@@ -130,8 +132,21 @@ function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) 
                 repositories.settingsRepository
             ),
         },
-        issues: { save: new SaveIssueUseCase(repositories.qualityAnalysisRepository, metadata) },
+        issues: {
+            save: new SaveIssueUseCase(
+                repositories.qualityAnalysisRepository,
+                repositories.usersRepository,
+                metadata
+            ),
+            copyEmails: new CopyContactEmailsUseCase(
+                repositories.qualityAnalysisRepository,
+                repositories.issueRepository
+            ),
+        },
         settings: { get: new GetSettingsUseCase(repositories.settingsRepository) },
+        summary: {
+            get: new GetAllIssuesUseCase(repositories.issueRepository),
+        },
         nursingMidwifery: {
             getDisaggregations: new GetMidwiferyPersonnelDisaggregationsUseCase(
                 repositories.settingsRepository

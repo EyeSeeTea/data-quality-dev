@@ -7,6 +7,7 @@ import { Pagination } from "$/domain/entities/Pagination";
 
 export interface IssueRepository {
     get(options: GetIssuesOptions): FutureData<RowsPaginated<QualityAnalysisIssue>>;
+    getById(id: Id): FutureData<QualityAnalysisIssue>;
     create(issues: QualityAnalysisIssue, qualityAnalysisId: Id): FutureData<void>;
 }
 

@@ -33,6 +33,7 @@ export class D2OrgUnit {
                                     d2OrgUnit.displayFormName ||
                                     d2OrgUnit.displayName,
                                 path: d2OrgUnit.path,
+                                writeAccess: false,
                             };
                         });
                     });

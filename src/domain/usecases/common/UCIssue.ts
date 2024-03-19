@@ -41,7 +41,7 @@ export class UCIssue {
             number: issueNumber,
             azureUrl: "",
             period: period,
-            country: { id: countryId, name: "", path: "" },
+            country: { id: countryId, name: "", path: "", writeAccess: false },
             dataElement: { id: dataElementId, name: "" },
             categoryOption: { id: categoryOptionComboId, name: "" },
             description: description,
