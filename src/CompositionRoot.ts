@@ -42,6 +42,7 @@ import { GetQualityAnalysisUseCase } from "./domain/usecases/GetQualityAnalisysU
 import { GetSettingsUseCase } from "./domain/usecases/GetSettingsUseCase";
 import { SaveIssueUseCase } from "./domain/usecases/SaveIssueUseCase";
 import { SaveConfigAnalysisUseCase } from "./domain/usecases/SaveConfigAnalysisUseCase";
+import { GetAllIssuesUseCase } from "./domain/usecases/GetAllIssuesUseCase";
 import { D2Api } from "./types/d2-api";
 import { RunPractitionersValidationUseCase } from "./domain/usecases/RunPractitionersValidationUseCase";
 import { DataValueRepository } from "$/domain/repositories/DataValueRepository";
@@ -135,6 +136,9 @@ function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) 
             ),
         },
         settings: { get: new GetSettingsUseCase(repositories.settingsRepository) },
+        summary: {
+            get: new GetAllIssuesUseCase(repositories.issueRepository),
+        },
         nursingMidwifery: {
             getDisaggregations: new GetMidwiferyPersonnelDisaggregationsUseCase(
                 repositories.settingsRepository

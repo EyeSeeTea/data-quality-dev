@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-03-18T13:19:03.147Z\n"
-"PO-Revision-Date: 2024-03-18T13:19:03.147Z\n"
+"POT-Creation-Date: 2024-03-19T02:32:57.472Z\n"
+"PO-Revision-Date: 2024-03-19T02:32:57.472Z\n"
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
@@ -59,6 +59,45 @@ msgstr ""
 msgid "Save Config Analysis"
 msgstr ""
 
+msgid "Issue"
+msgstr ""
+
+msgid "Country"
+msgstr ""
+
+msgid "Period"
+msgstr ""
+
+msgid "Data Element"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Azure URL"
+msgstr ""
+
+msgid "Follow Up"
+msgstr ""
+
+msgid "Action"
+msgstr ""
+
+msgid "Contact Emails"
+msgstr ""
+
+msgid "Action Description"
+msgstr ""
+
+msgid "Comments"
+msgstr ""
+
+msgid "Issue Number"
+msgstr ""
+
 msgid ""
 "No user with Capture rights and Organisation Unit associated to the issue "
 "was found"
@@ -97,12 +136,6 @@ msgstr ""
 msgid "Periods"
 msgstr ""
 
-msgid "Action"
-msgstr ""
-
-msgid "Follow Up"
-msgstr ""
-
 msgid "Copying contact emails..."
 msgstr ""
 
@@ -110,39 +143,6 @@ msgid "Contact emails copied"
 msgstr ""
 
 msgid "Extend Contact Emails"
-msgstr ""
-
-msgid "Issue"
-msgstr ""
-
-msgid "Country"
-msgstr ""
-
-msgid "Period"
-msgstr ""
-
-msgid "Data Element"
-msgstr ""
-
-msgid "Category"
-msgstr ""
-
-msgid "Description"
-msgstr ""
-
-msgid "Azure URL"
-msgstr ""
-
-msgid "Contact Emails"
-msgstr ""
-
-msgid "Action Description"
-msgstr ""
-
-msgid "Comments"
-msgstr ""
-
-msgid "Issue Number"
 msgstr ""
 
 msgid "Back"
@@ -179,6 +179,9 @@ msgid "Data Quality Analysis"
 msgstr ""
 
 msgid "Configuration"
+msgstr ""
+
+msgid "Summary"
 msgstr ""
 
 msgid "Algorithm"

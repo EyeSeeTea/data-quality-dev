@@ -1,12 +1,5 @@
 import React from "react";
-import {
-    GetRows,
-    ObjectsTable,
-    TableConfig,
-    useLoading,
-    useObjectsTable,
-    useSnackbar,
-} from "@eyeseetea/d2-ui-components";
+import { GetRows, TableConfig } from "@eyeseetea/d2-ui-components";
 
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
@@ -14,87 +7,24 @@ import { GetIssuesOptions } from "$/domain/repositories/IssueRepository";
 import i18n from "$/utils/i18n";
 import { Id } from "$/domain/entities/Ref";
 import { EditIssueValue } from "./EditIssueValue";
-import { IssueFilters } from "./IssueFilters";
-import { initialFilters } from "$/webapp/utils/issues";
-import { Maybe } from "$/utils/ts-utils";
 
-export function useCopyContactEmails(props: UseCopyContactEmailsProps) {
-    const { onSuccess } = props;
-    const { compositionRoot } = useAppContext();
-    const loading = useLoading();
-    const snackbar = useSnackbar();
-
-    const copyContactEmails = React.useCallback(
-        (
-            issueId: Id,
-            analysisId: Id,
-            sectionId: Maybe<Id>,
-            filters: GetIssuesOptions["filters"]
-        ) => {
-            loading.show(true, i18n.t("Copying contact emails..."));
-            compositionRoot.issues.copyEmails
-                .execute({
-                    analysisId: analysisId,
-                    sectionId: sectionId,
-                    issueId: issueId,
-                    filters,
-                })
-                .run(
-                    () => {
-                        snackbar.success(i18n.t("Contact emails copied"));
-                        loading.hide();
-                        if (onSuccess) onSuccess();
-                    },
-                    error => {
-                        snackbar.error(error.message);
-                        loading.hide();
-                    }
-                );
-        },
-        [compositionRoot.issues.copyEmails, loading, snackbar, onSuccess]
-    );
-
-    return copyContactEmails;
-}
-
-export function useTableConfig(props: UseTableConfigProps) {
-    const { analysisId, filters, sectionId } = props;
-    const [refresh, setRefresh] = React.useState(0);
-
-    const onSuccess = React.useCallback(() => {
-        setRefresh(value => value + 1);
-    }, [setRefresh]);
-
-    const copyContactEmails = useCopyContactEmails({ onSuccess: onSuccess });
-
+export function useTableConfig() {
     const tableConfig = React.useMemo<TableConfig<QualityAnalysisIssue>>(() => {
         return {
-            actions: [
-                {
-                    name: "Extend Contact Emails",
-                    text: i18n.t("Extend Contact Emails"),
-                    primary: false,
-                    onClick(selectedIds) {
-                        const issueId = selectedIds[0];
-                        if (!issueId) return false;
-                        copyContactEmails(issueId, analysisId, sectionId, filters);
-                    },
-                },
-            ],
+            actions: [],
             columns: [
                 { name: "number", text: i18n.t("Issue"), sortable: true },
                 { name: "country", text: i18n.t("Country"), sortable: false },
                 { name: "period", text: i18n.t("Period"), sortable: false },
                 { name: "dataElement", text: i18n.t("Data Element"), sortable: false },
-                {
-                    name: "categoryOption",
-                    text: i18n.t("Category"),
-                    sortable: false,
-                },
+                { name: "categoryOption", text: i18n.t("Category"), sortable: false },
                 {
                     name: "description",
                     text: i18n.t("Description"),
                     sortable: false,
+                    getValue: value => {
+                        return <EditIssueValue key={value.id} field="description" issue={value} />;
+                    },
                 },
                 {
                     name: "status",
@@ -108,7 +38,6 @@ export function useTableConfig(props: UseTableConfigProps) {
                     name: "azureUrl",
                     text: i18n.t("Azure URL"),
                     sortable: false,
-                    hidden: true,
                     getValue: value => {
                         return <EditIssueValue key={value.id} field="azureUrl" issue={value} />;
                     },
@@ -118,12 +47,7 @@ export function useTableConfig(props: UseTableConfigProps) {
                     text: i18n.t("Follow Up"),
                     sortable: false,
                     getValue: value => (
-                        <EditIssueValue
-                            key={value.id}
-                            field="followUp"
-                            issue={value}
-                            setRefresh={setRefresh}
-                        />
+                        <EditIssueValue key={value.id} field="followUp" issue={value} />
                     ),
                 },
                 {
@@ -138,6 +62,7 @@ export function useTableConfig(props: UseTableConfigProps) {
                     name: "contactEmails",
                     text: i18n.t("Contact Emails"),
                     sortable: false,
+                    hidden: true,
                     getValue: value => {
                         return (
                             <EditIssueValue key={value.id} field="contactEmails" issue={value} />
@@ -177,44 +102,41 @@ export function useTableConfig(props: UseTableConfigProps) {
             },
             searchBoxLabel: i18n.t("Issue Number"),
         };
-    }, [filters, analysisId, sectionId, copyContactEmails]);
+    }, []);
 
-    return { tableConfig, refresh };
+    return { tableConfig };
 }
 
 export function useGetRows(
     filters: GetIssuesOptions["filters"],
     reloadKey: number,
     analysisId: Id,
-    sectionId: Maybe<Id>,
-    refreshIssue: number
+    sectionId: Id
 ) {
     const { compositionRoot } = useAppContext();
     const [loading, setLoading] = React.useState(false);
-
     const getRows = React.useCallback<GetRows<QualityAnalysisIssue>>(
         (search, pagination, sorting) => {
             return new Promise((resolve, reject) => {
-                if (reloadKey < 0 || refreshIssue < 0)
+                if (reloadKey < 0)
                     return resolve({
                         pager: { page: 1, pageCount: 1, pageSize: 10, total: 0 },
                         objects: [],
                     });
-
                 setLoading(true);
                 return compositionRoot.summary.get
                     .execute({
                         pagination: { page: pagination.page, pageSize: pagination.pageSize },
                         sorting: { field: sorting.field, order: sorting.order },
                         filters: {
-                            actions: filters.actions,
-                            countries: filters.countries,
                             name: search,
+                            countries: filters.countries,
                             periods: filters.periods,
                             status: filters.status,
                             analysisIds: [analysisId],
                             sectionId: sectionId,
                             id: undefined,
+                            actions: filters.actions,
                             followUp: filters.followUp,
                         },
                     })
@@ -231,47 +153,17 @@ export function useGetRows(
             });
         },
         [
+            reloadKey,
             compositionRoot.summary.get,
-            filters.actions,
-            filters.followUp,
+            filters.countries,
             filters.periods,
             filters.status,
-            filters.countries,
-            sectionId,
+            filters.actions,
+            filters.followUp,
             analysisId,
-            reloadKey,
-            refreshIssue,
+            sectionId,
         ]
     );
 
     return { getRows, loading };
 }
-
-export const IssueTable: React.FC<IssueTableProps> = React.memo(props => {
-    const { analysisId, reload, sectionId } = props;
-    const [filters, setFilters] = React.useState(initialFilters);
-
-    const { tableConfig, refresh } = useTableConfig({
-        filters,
-        analysisId: analysisId,
-        sectionId: sectionId,
-    });
-    const { getRows, loading } = useGetRows(filters, reload, analysisId, sectionId, refresh);
-    const config = useObjectsTable(tableConfig, getRows);
-
-    const filterComponents = React.useMemo(() => {
-        return <IssueFilters initialFilters={filters} onChange={setFilters} />;
-    }, [filters]);
-
-    return <ObjectsTable loading={loading} {...config} filterComponents={filterComponents} />;
-});
-
-type IssueTableProps = { analysisId: Id; reload: number; sectionId: Maybe<Id> };
-
-type UseTableConfigProps = {
-    analysisId: Id;
-    filters: GetIssuesOptions["filters"];
-    sectionId: Maybe<Id>;
-};
-
-type UseCopyContactEmailsProps = { onSuccess?: () => void };
