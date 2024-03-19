@@ -181,6 +181,9 @@ msgstr ""
 msgid "Configuration"
 msgstr ""
 
+msgid "Summary"
+msgstr ""
+
 msgid "Algorithm"
 msgstr ""
 

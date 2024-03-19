@@ -12,6 +12,7 @@ import i18n from "$/utils/i18n";
 import _ from "$/domain/entities/generic/Collection";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 import { Maybe } from "$/utils/ts-utils";
+import { IssueTable } from "$/webapp/components/issues/IssueTable";
 
 function buildStepsFromSections(
     analysis: QualityAnalysis,
@@ -45,9 +46,17 @@ function buildStepsFromSections(
             key: "configuration",
             label: i18n.t("Configuration"),
             component: ConfigurationStep,
-            completed: true,
+            completed: false,
         },
         ...sectionSteps,
+        {
+            key: "all",
+            label: i18n.t("All Issues"),
+            component: () => (
+                <IssueTable analysisId={analysis.id} sectionId={undefined} reload={0} />
+            ),
+            completed: false,
+        },
     ];
 }
 
@@ -72,7 +81,11 @@ export const AnalysisPage: React.FC<PageProps> = React.memo(props => {
     return (
         <PageContainer>
             <PageHeader title={name} onBackClick={onBack} />
-            <Stepper initialStepKey="outliers" steps={analysisSteps} />
+            <Stepper
+                lastClickableStepIndex={analysisSteps.length}
+                initialStepKey="outliers"
+                steps={analysisSteps}
+            />
         </PageContainer>
     );
 });

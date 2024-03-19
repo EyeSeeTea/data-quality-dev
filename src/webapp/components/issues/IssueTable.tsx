@@ -1,5 +1,12 @@
 import React from "react";
-import { GetRows, TableConfig, useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
+import {
+    GetRows,
+    ObjectsTable,
+    TableConfig,
+    useLoading,
+    useObjectsTable,
+    useSnackbar,
+} from "@eyeseetea/d2-ui-components";
 
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
@@ -7,6 +14,9 @@ import { GetIssuesOptions } from "$/domain/repositories/IssueRepository";
 import i18n from "$/utils/i18n";
 import { Id } from "$/domain/entities/Ref";
 import { EditIssueValue } from "./EditIssueValue";
+import { IssueFilters } from "./IssueFilters";
+import { initialFilters } from "$/webapp/utils/issues";
+import { Maybe } from "$/utils/ts-utils";
 
 export function useCopyContactEmails(props: UseCopyContactEmailsProps) {
     const { onSuccess } = props;
@@ -15,7 +25,12 @@ export function useCopyContactEmails(props: UseCopyContactEmailsProps) {
     const snackbar = useSnackbar();
 
     const copyContactEmails = React.useCallback(
-        (issueId: Id, analysisId: Id, sectionId: Id, filters: GetIssuesOptions["filters"]) => {
+        (
+            issueId: Id,
+            analysisId: Id,
+            sectionId: Maybe<Id>,
+            filters: GetIssuesOptions["filters"]
+        ) => {
             loading.show(true, i18n.t("Copying contact emails..."));
             compositionRoot.issues.copyEmails
                 .execute({
@@ -155,7 +170,11 @@ export function useTableConfig(props: UseTableConfigProps) {
                 },
             ],
             initialSorting: { field: "number", order: "desc" },
-            paginationOptions: { pageSizeOptions: [10, 20, 50], pageSizeInitialValue: 20 },
+            paginationOptions: {
+                pageSizeOptions: [10, 20, 50],
+                pageSizeInitialValue: 20,
+                renderPosition: { bottom: true, top: false },
+            },
             searchBoxLabel: i18n.t("Issue Number"),
         };
     }, [filters, analysisId, sectionId, copyContactEmails]);
@@ -167,7 +186,7 @@ export function useGetRows(
     filters: GetIssuesOptions["filters"],
     reloadKey: number,
     analysisId: Id,
-    sectionId: Id,
+    sectionId: Maybe<Id>,
     refreshIssue: number
 ) {
     const { compositionRoot } = useAppContext();
@@ -181,8 +200,9 @@ export function useGetRows(
                         pager: { page: 1, pageCount: 1, pageSize: 10, total: 0 },
                         objects: [],
                     });
+
                 setLoading(true);
-                return compositionRoot.outlier.get
+                return compositionRoot.summary.get
                     .execute({
                         pagination: { page: pagination.page, pageSize: pagination.pageSize },
                         sorting: { field: sorting.field, order: sorting.order },
@@ -227,10 +247,31 @@ export function useGetRows(
     return { getRows, loading };
 }
 
+export const IssueTable: React.FC<IssueTableProps> = React.memo(props => {
+    const { analysisId, reload, sectionId } = props;
+    const [filters, setFilters] = React.useState(initialFilters);
+
+    const { tableConfig, refresh } = useTableConfig({
+        filters,
+        analysisId: analysisId,
+        sectionId: sectionId,
+    });
+    const { getRows, loading } = useGetRows(filters, reload, analysisId, sectionId, refresh);
+    const config = useObjectsTable(tableConfig, getRows);
+
+    const filterComponents = React.useMemo(() => {
+        return <IssueFilters initialFilters={filters} onChange={setFilters} />;
+    }, [filters]);
+
+    return <ObjectsTable loading={loading} {...config} filterComponents={filterComponents} />;
+});
+
+type IssueTableProps = { analysisId: Id; reload: number; sectionId: Maybe<Id> };
+
 type UseTableConfigProps = {
     analysisId: Id;
     filters: GetIssuesOptions["filters"];
-    sectionId: Id;
+    sectionId: Maybe<Id>;
 };
 
 type UseCopyContactEmailsProps = { onSuccess?: () => void };

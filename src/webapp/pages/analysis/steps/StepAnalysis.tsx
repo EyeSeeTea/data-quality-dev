@@ -1,34 +1,17 @@
 import React from "react";
 import { Button, Typography } from "@material-ui/core";
-import { ObjectsTable, useObjectsTable } from "@eyeseetea/d2-ui-components";
 import styled from "styled-components";
 
 import i18n from "$/utils/i18n";
 import { Id } from "$/domain/entities/Ref";
 import { EmptyState } from "$/webapp/components/empty-state/EmptyState";
-import { useGetRows, useTableConfig } from "$/webapp/components/issues/IssueTable";
+import { IssueTable } from "$/webapp/components/issues/IssueTable";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
-import { IssueFilters } from "$/webapp/components/issues/IssueFilters";
-import { initialFilters } from "$/webapp/utils/issues";
 
 export const StepAnalysis: React.FC<StepContainerProps> = React.memo(props => {
     const { children, id, onRun, reload, section, title } = props;
 
-    const [filters, setFilters] = React.useState(initialFilters);
-
-    const { tableConfig, refresh } = useTableConfig({
-        filters,
-        analysisId: id,
-        sectionId: section.id,
-    });
-    const { getRows, loading } = useGetRows(filters, reload, id, section.id, refresh);
-    const config = useObjectsTable(tableConfig, getRows);
-
-    const isPending = section.status === "pending";
-
-    const filterComponents = React.useMemo(() => {
-        return <IssueFilters initialFilters={filters} onChange={setFilters} />;
-    }, [filters]);
+    const isPending = QualityAnalysisSection.isPending(section);
 
     return (
         <Container>
@@ -57,7 +40,7 @@ export const StepAnalysis: React.FC<StepContainerProps> = React.memo(props => {
                 )}
             </>
             {section.status === "success_with_issues" && (
-                <ObjectsTable loading={loading} {...config} filterComponents={filterComponents} />
+                <IssueTable analysisId={id} reload={reload} sectionId={section.id} />
             )}
         </Container>
     );
