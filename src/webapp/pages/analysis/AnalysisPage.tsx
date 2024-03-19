@@ -12,6 +12,7 @@ import i18n from "$/utils/i18n";
 import _ from "$/domain/entities/generic/Collection";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 import { Maybe } from "$/utils/ts-utils";
+import { ValidationStep } from "./steps/9-validation/ValidationStep";
 
 function buildStepsFromSections(
     analysis: QualityAnalysis,
@@ -48,6 +49,11 @@ function buildStepsFromSections(
             completed: true,
         },
         ...sectionSteps,
+        {
+            key: "validation",
+            label: i18n.t("Validation"),
+            component: ValidationStep,
+        },
     ];
 }
 
