@@ -13,13 +13,16 @@ export type ContainerProps = {
     $status: Props["status"];
 };
 
-export const ProgressStatus: React.FC<Props> = React.memo(({ status, position }) => {
-    return (
-        <Container $status={status}>
-            <StyledTypography>{position}</StyledTypography>
-        </Container>
-    );
-});
+export const ProgressStatus: React.FC<Props> = React.memo(
+    React.forwardRef<HTMLLIElement, Props>((props, ref) => {
+        const { status, position, ...rest } = props;
+        return (
+            <Container {...rest} ref={ref} $status={status}>
+                <StyledTypography>{position}</StyledTypography>
+            </Container>
+        );
+    })
+);
 
 const Container = styled.li<ContainerProps>`
     border-radius: 50%;
