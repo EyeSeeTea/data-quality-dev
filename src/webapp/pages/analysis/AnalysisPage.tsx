@@ -51,7 +51,7 @@ function buildStepsFromSections(
         ...sectionSteps,
         {
             key: "all",
-            label: i18n.t("All Issues"),
+            label: i18n.t("Summary"),
             component: () => (
                 <IssueTable analysisId={analysis.id} sectionId={undefined} reload={0} />
             ),
