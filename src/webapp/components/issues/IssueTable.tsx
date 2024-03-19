@@ -231,7 +231,7 @@ export function useGetRows(
             });
         },
         [
-            compositionRoot.outlier.get,
+            compositionRoot.summary.get,
             filters.actions,
             filters.followUp,
             filters.periods,
