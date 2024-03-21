@@ -1,4 +1,4 @@
-import React, { useState, ReactNode, MouseEvent, useCallback, useMemo } from "react";
+import { useState, ReactNode, MouseEvent, useCallback, useMemo } from "react";
 import _ from "lodash";
 import classnames from "classnames";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
@@ -10,6 +10,7 @@ import { ActionButton } from "./ActionButton";
 import { filterObjects } from "./utils/filtering";
 import { TableObject, ObjectsTableDetailField, ReferenceObject } from "./types";
 import { SearchBox } from "@eyeseetea/d2-ui-components";
+import styled from "styled-components";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -22,8 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
             flex: "1 1 auto",
         },
         searchBox: {
-            maxWidth: "550px",
-            width: "33%",
+            width: "100%",
         },
     })
 );
@@ -97,18 +97,20 @@ export function ObjectsTable<T extends ReferenceObject = TableObject>(props: Obj
 
     const filterComponents = useMemo(
         () => (
-            <React.Fragment>
+            <FiltersContainer>
                 {showSearchBox && (
-                    <SearchBox
-                        key={"objects-table-search-box"}
-                        className={classes.searchBox}
-                        value={searchValue}
-                        hintText={searchBoxLabel || "Search items"}
-                        onChange={handleSearchChange}
-                    />
+                    <SearchBoxContainer>
+                        <SearchBox
+                            key={"objects-table-search-box"}
+                            className={classes.searchBox}
+                            value={searchValue}
+                            hintText={searchBoxLabel || "Search items"}
+                            onChange={handleSearchChange}
+                        />
+                    </SearchBoxContainer>
                 )}
                 {parentFilterComponents}
-            </React.Fragment>
+            </FiltersContainer>
         ),
         [
             classes.searchBox,
@@ -122,7 +124,7 @@ export function ObjectsTable<T extends ReferenceObject = TableObject>(props: Obj
 
     const sideComponents = useMemo(
         () => (
-            <React.Fragment>
+            <>
                 {!!detailsPaneObject && (
                     <DetailsBox
                         key={"objects-table-details-box"}
@@ -132,7 +134,7 @@ export function ObjectsTable<T extends ReferenceObject = TableObject>(props: Obj
                     />
                 )}
                 {parentSideComponents}
-            </React.Fragment>
+            </>
         ),
         [detailsPaneObject, details, handleDetailsBoxClose, parentSideComponents]
     );
@@ -159,3 +161,19 @@ export function ObjectsTable<T extends ReferenceObject = TableObject>(props: Obj
         </div>
     );
 }
+
+const FiltersContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 1rem;
+    align-items: center;
+    justify-content: flex-start;
+`;
+
+const SearchBoxContainer = styled.div`
+    padding-block-start: 8px;
+    margin-inline-start: 15px;
+    width: 100%;
+    max-width: 200px;
+`;

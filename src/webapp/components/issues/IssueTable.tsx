@@ -16,7 +16,6 @@ import { EditIssueValue } from "./EditIssueValue";
 import { IssueFilters } from "./IssueFilters";
 import { initialFilters } from "$/webapp/utils/issues";
 import { Maybe } from "$/utils/ts-utils";
-import styled from "styled-components";
 
 export function useCopyContactEmails(props: UseCopyContactEmailsProps) {
     const { onSuccess } = props;
