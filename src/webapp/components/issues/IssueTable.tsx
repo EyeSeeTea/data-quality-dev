@@ -1,13 +1,12 @@
 import React from "react";
 import {
     GetRows,
-    ObjectsTable,
     TableConfig,
     useLoading,
     useObjectsTable,
     useSnackbar,
 } from "@eyeseetea/d2-ui-components";
-
+import { ObjectsTable } from "../data-table/ObjectsTable";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
 import { GetIssuesOptions } from "$/domain/repositories/IssueRepository";
@@ -17,6 +16,7 @@ import { EditIssueValue } from "./EditIssueValue";
 import { IssueFilters } from "./IssueFilters";
 import { initialFilters } from "$/webapp/utils/issues";
 import { Maybe } from "$/utils/ts-utils";
+import styled from "styled-components";
 
 export function useCopyContactEmails(props: UseCopyContactEmailsProps) {
     const { onSuccess } = props;
@@ -263,7 +263,11 @@ export const IssueTable: React.FC<IssueTableProps> = React.memo(props => {
         return <IssueFilters initialFilters={filters} onChange={setFilters} />;
     }, [filters]);
 
-    return <ObjectsTable loading={loading} {...config} filterComponents={filterComponents} />;
+    return (
+        <TableWrapper>
+            <ObjectsTable loading={loading} {...config} filterComponents={filterComponents} />
+        </TableWrapper>
+    );
 });
 
 type IssueTableProps = { analysisId: Id; reload: number; sectionId: Maybe<Id> };
@@ -275,3 +279,8 @@ type UseTableConfigProps = {
 };
 
 type UseCopyContactEmailsProps = { onSuccess?: () => void };
+
+const TableWrapper = styled.div`
+    height: 28rem;
+    overflow: scroll;
+`;
