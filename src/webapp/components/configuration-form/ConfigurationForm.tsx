@@ -114,41 +114,42 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
     const selectorClass = disableSave ? "config-form-selector disabled" : "config-form-selector";
 
     return (
-        <form onSubmit={onFormSubmit}>
+        <Form onSubmit={onFormSubmit}>
             <FormControlsContainer>
-                <TextField
+                <StyledTextField
                     inputRef={inputRef}
                     name="name"
                     label={i18n.t("Name")}
                     defaultValue={formData?.name}
                 />
+                <DropdownWrapper>
+                    <Dropdown
+                        className={selectorClass}
+                        hideEmpty
+                        items={moduleItems}
+                        onChange={onChangeModule}
+                        value={formData?.module.id}
+                        label={i18n.t("Module")}
+                    />
 
-                <Dropdown
-                    className={selectorClass}
-                    hideEmpty
-                    items={moduleItems}
-                    onChange={onChangeModule}
-                    value={formData?.module.id}
-                    label={i18n.t("Module")}
-                />
+                    <Dropdown
+                        className={selectorClass}
+                        hideEmpty
+                        items={periods}
+                        onChange={value => onChangePeriod(value, "startDate")}
+                        value={formData?.startDate}
+                        label={i18n.t("Start Date")}
+                    />
 
-                <Dropdown
-                    className={selectorClass}
-                    hideEmpty
-                    items={periods}
-                    onChange={value => onChangePeriod(value, "startDate")}
-                    value={formData?.startDate}
-                    label={i18n.t("Start Date")}
-                />
-
-                <Dropdown
-                    className={selectorClass}
-                    hideEmpty
-                    items={periods}
-                    onChange={value => onChangePeriod(value, "endDate")}
-                    value={formData?.endDate}
-                    label={i18n.t("End Date")}
-                />
+                    <Dropdown
+                        className={selectorClass}
+                        hideEmpty
+                        items={periods}
+                        onChange={value => onChangePeriod(value, "endDate")}
+                        value={formData?.endDate}
+                        label={i18n.t("End Date")}
+                    />
+                </DropdownWrapper>
             </FormControlsContainer>
 
             {initialCountries.length > 0 && (
@@ -169,7 +170,7 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
                     {i18n.t("Save Config Analysis")}
                 </Button>
             </ActionsContainer>
-        </form>
+        </Form>
     );
 });
 
@@ -181,13 +182,28 @@ type ConfigurationFormProps = {
 
 type UseCountriesProps = { ids: Id[] };
 
+const Form = styled.form``;
+
 const FormControlsContainer = styled.div`
     display: flex;
-    gap: 1em;
+    gap: 0.8rem;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    margin-block-end: 1.25rem;
+`;
+
+const DropdownWrapper = styled.div`
+    display: flex;
+    gap: 1rem;
+`;
+
+const StyledTextField = styled(TextField)`
+    width: 40%;
+    margin-inline-end: 1rem;
 `;
 
 const OrgUnitContainer = styled.div<{ $disabled?: boolean }>`
-    padding: 0;
     pointer-events: ${props => (props.$disabled ? "none" : "auto")};
     opacity: ${props => (props.$disabled ? "0.7" : "1")};
 `;
