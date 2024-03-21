@@ -186,11 +186,12 @@ const Form = styled.form``;
 
 const FormControlsContainer = styled.div`
     display: flex;
-    gap: 0.8rem;
+    gap: 1.5rem;
     width: 100%;
     align-items: center;
     justify-content: space-between;
     margin-block-end: 1.25rem;
+    flex-wrap: wrap;
 `;
 
 const DropdownWrapper = styled.div`
