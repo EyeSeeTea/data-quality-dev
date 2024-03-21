@@ -263,11 +263,7 @@ export const IssueTable: React.FC<IssueTableProps> = React.memo(props => {
         return <IssueFilters initialFilters={filters} onChange={setFilters} />;
     }, [filters]);
 
-    return (
-        <TableWrapper>
-            <ObjectsTable loading={loading} {...config} filterComponents={filterComponents} />
-        </TableWrapper>
-    );
+    return <ObjectsTable loading={loading} {...config} filterComponents={filterComponents} />;
 });
 
 type IssueTableProps = { analysisId: Id; reload: number; sectionId: Maybe<Id> };
@@ -279,8 +275,3 @@ type UseTableConfigProps = {
 };
 
 type UseCopyContactEmailsProps = { onSuccess?: () => void };
-
-const TableWrapper = styled.div`
-    height: 28rem;
-    overflow: scroll;
-`;

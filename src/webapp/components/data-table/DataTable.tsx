@@ -50,13 +50,15 @@ const useStyles = makeStyles((theme: Theme) =>
             display: "inline-table",
             marginLeft: "5px",
             marginRight: "5px",
-            backgroundColor: "red",
         },
         tableWrapper: {
             display: "flex",
             flex: "1 1 0%",
             paddingBottom: theme.spacing(2),
             marginTop: "5px",
+            height: 400,
+            overflow: "scroll",
+            scrollBehavior: "smooth",
         },
         table: {
             width: "100%",
@@ -263,7 +265,7 @@ export function DataTable<T extends ReferenceObject = TableObject>(props: DataTa
     return (
         <div className={classes.root}>
             <Toolbar className={classes.toolbar}>
-                <React.Fragment>
+                <>
                     {filterComponents}
                     <div className={classes.spacer}></div>
                     {loading && <CircularProgress size={30} className={classes.loading} />}
@@ -272,11 +274,11 @@ export function DataTable<T extends ReferenceObject = TableObject>(props: DataTa
                             <DataTablePagination {...dataTablePaginationOptions} />
                         </div>
                     )}
-                </React.Fragment>
+                </>
             </Toolbar>
             <div className={classes.tableWrapper}>
                 <Paper className={classes.paper} square>
-                    <Table className={classes.table} size={"medium"}>
+                    <Table stickyHeader className={classes.table} size={"medium"}>
                         <DataTableHeader
                             columns={columns}
                             globalActions={globalActions}

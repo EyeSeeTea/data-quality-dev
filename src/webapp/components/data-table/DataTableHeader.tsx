@@ -2,7 +2,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
+import TableHead, { TableHeadTypeMap } from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -22,6 +22,8 @@ import {
     TableSorting,
 } from "./types";
 import i18n from "$/utils/i18n";
+import { OverridableComponent } from "@material-ui/core/OverridableComponent";
+import styled from "styled-components";
 
 const useStyles = makeStyles({
     visuallyHidden: {
@@ -116,7 +118,7 @@ export function DataTableHeader<T extends ReferenceObject>(props: DataTableHeade
     };
 
     return (
-        <React.Fragment>
+        <>
             {openColumnSettings && (
                 <ColumnSelectorDialog
                     columns={columns}
@@ -126,7 +128,7 @@ export function DataTableHeader<T extends ReferenceObject>(props: DataTableHeade
                     allowReorderingColumns={allowReorderingColumns}
                 />
             )}
-            <TableHead>
+            <StyledTableHead>
                 <TableRow className={classes.bottomBorder}>
                     {enableMultipleAction && (
                         <TableCell className={classes.checkboxCell} padding="checkbox">
@@ -175,7 +177,7 @@ export function DataTableHeader<T extends ReferenceObject>(props: DataTableHeade
                         </TableCell>
                     </TableRow>
                 )}
-            </TableHead>
+            </StyledTableHead>
             {contextMenuTarget && (
                 <ContextualMenu
                     isOpen={!!contextMenuTarget}
@@ -187,6 +189,12 @@ export function DataTableHeader<T extends ReferenceObject>(props: DataTableHeade
                     onClose={closeTableActions}
                 />
             )}
-        </React.Fragment>
+        </>
     );
 }
+
+const StyledTableHead = styled(TableHead)`
+    .MuiTableHead-root {
+        position: fixed;
+    }
+`;
