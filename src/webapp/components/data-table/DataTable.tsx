@@ -145,12 +145,11 @@ export function DataTable<T extends ReferenceObject = TableObject>(props: DataTa
     const [stateSelection, updateSelection] = useState(initialState.selection || []);
     const [statePagination, updatePagination] = useState(initialState.pagination);
     const [visibleColumns, updateVisibleColumns] = useState<Array<keyof T>>([]);
-    const [stateSorting, updateSorting] = useState(
-        initialState.sorting || {
-            field: columns?.[0]?.name || "",
-            order: "asc" as const,
-        }
-    );
+    const initialStateSorting: TableSorting<T> = {
+        field: columns?.[0]?.name || "id",
+        order: "asc" as const,
+    };
+    const [stateSorting, updateSorting] = useState<TableSorting<T>>(initialStateSorting);
 
     useEffect(() => updatePagination(pagination => ({ ...pagination, page: 1 })), [resetKey]);
 
