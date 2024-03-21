@@ -35,6 +35,7 @@ export const analysisColumns: TableColumn<QualityAnalysis>[] = [
                             key={index}
                             position={index + 1}
                             status={mapAnalysisStatusToColor(value.status)}
+                            name={value.name}
                         />
                     ))}
                 </ProgressContainer>
