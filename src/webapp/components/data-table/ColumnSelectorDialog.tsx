@@ -1,4 +1,3 @@
-// @ts-ignore
 import { Transfer } from "@dhis2/ui";
 import { DialogContent } from "@material-ui/core";
 import { TableColumnSelector } from "./TableColumnSelector";
@@ -34,15 +33,15 @@ export function ColumnSelectorDialog<T extends ReferenceObject>(
                 {allowReorderingColumns ? (
                     <Transfer
                         options={sortableColumns}
-                        selected={visibleColumns}
+                        selected={visibleColumns.map(String)}
                         enableOrderChange={true}
                         filterable={true}
                         filterablePicked={true}
                         selectedWidth="100%"
                         optionsWidth="100%"
                         height="400px"
-                        onChange={({ selected }: { selected: Array<keyof T> }) =>
-                            onChange(selected)
+                        onChange={({ selected }: { selected: string[] }) =>
+                            onChange(selected as (keyof T)[])
                         }
                     />
                 ) : (
