@@ -89,7 +89,7 @@ export function useAnalysisMethods(props: UseAnalysisMethodsProps) {
 
     const createQualityAnalysis = React.useCallback(
         (module: Module, name: string) => {
-            loading.show(true, i18n.t("Creating Data Quality..."));
+            loading.show(true, i18n.t("Creating Data Quality Report..."));
             compositionRoot.qualityAnalysis.create
                 .execute({ qualityAnalysis: { module: module, name: name } })
                 .run(

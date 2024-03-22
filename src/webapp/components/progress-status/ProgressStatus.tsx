@@ -2,7 +2,11 @@ import Typography from "@material-ui/core/Typography";
 import styled, { css } from "styled-components";
 import React from "react";
 import customTheme from "$/webapp/pages/app/themes/customTheme";
-import { Step } from "$/webapp/pages/dashboard/mock";
+
+type Step = {
+    position: number;
+    status: "default" | "success" | "danger";
+};
 
 type Props = {
     status: Step["status"];
