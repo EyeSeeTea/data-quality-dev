@@ -1,3 +1,4 @@
+// @ts-ignore
 import { Transfer } from "@dhis2/ui";
 import { DialogContent } from "@material-ui/core";
 import { TableColumnSelector } from "./TableColumnSelector";
