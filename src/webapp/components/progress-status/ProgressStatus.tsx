@@ -2,14 +2,11 @@ import Typography from "@material-ui/core/Typography";
 import styled, { css } from "styled-components";
 import React from "react";
 import customTheme from "$/webapp/pages/app/themes/customTheme";
-
-type Step = {
-    position: number;
-    status: "default" | "success" | "danger";
-};
+import Tooltip from "@material-ui/core/Tooltip";
 
 type Props = {
-    status: Step["status"];
+    status: string;
+    name: string;
     position: number;
 };
 
@@ -17,10 +14,12 @@ export type ContainerProps = {
     $status: Props["status"];
 };
 
-export const ProgressStatus: React.FC<Props> = React.memo(({ status, position }) => {
+export const ProgressStatus: React.FC<Props> = React.memo(({ status, name, position }) => {
     return (
         <Container $status={status}>
-            <StyledTypography>{position}</StyledTypography>
+            <Tooltip title={name}>
+                <StyledTypography>{position}</StyledTypography>
+            </Tooltip>
         </Container>
     );
 });
@@ -34,6 +33,7 @@ const Container = styled.li<ContainerProps>`
     height: 1.75rem;
     width: 1.75rem;
     background-color: ${customTheme.color.lightGrey};
+    cursor: default;
 
     ${({ $status }) =>
         $status === "success" &&
