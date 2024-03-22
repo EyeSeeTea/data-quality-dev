@@ -41,7 +41,7 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-msgid "New Data Quality"
+msgid "New Data Quality Report"
 msgstr ""
 
 msgid "Add"
@@ -181,7 +181,7 @@ msgstr "Volver"
 msgid "Help"
 msgstr "Ayuda"
 
-msgid "Creating Data Quality..."
+msgid "Creating Data Quality Report..."
 msgstr ""
 
 msgid "Quality Analysis created"
@@ -275,33 +275,6 @@ msgid "Are you sure you want to {{action}} the selected rows?"
 msgstr ""
 
 msgid "Yes, {{actionButton}}"
-msgstr ""
-
-msgid "Ready"
-msgstr ""
-
-msgid "Running"
-msgstr ""
-
-msgid "Failure"
-msgstr ""
-
-msgid "Done"
-msgstr ""
-
-msgid "Module 1"
-msgstr ""
-
-msgid "Module 2"
-msgstr ""
-
-msgid "Selected element deleted successfully"
-msgstr ""
-
-msgid "Status changed"
-msgstr ""
-
-msgid "Start analysis"
 msgstr ""
 
 msgid "Hello {{name}}"

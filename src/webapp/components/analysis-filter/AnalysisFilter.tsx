@@ -79,7 +79,7 @@ export const AnalysisFilters: React.FC<AnalysisFiltersProps> = props => {
             />
 
             <MenuButton
-                label={i18n.t("New Data Quality")}
+                label={i18n.t("New Data Quality Report")}
                 items={modules.map(module => ({ id: module.id, label: module.name }))}
                 onItemSelected={onModuleSelected}
             />

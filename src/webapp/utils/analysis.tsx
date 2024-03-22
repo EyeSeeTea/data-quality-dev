@@ -1,8 +1,8 @@
 import i18n from "$/utils/i18n";
-import { ProgressContainer } from "../pages/dashboard/mock";
 import { ProgressStatus } from "../components/progress-status/ProgressStatus";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { TableColumn } from "@eyeseetea/d2-ui-components";
+import styled from "styled-components";
 
 function mapAnalysisStatusToColor(sectionStatus: string) {
     switch (sectionStatus) {
@@ -35,6 +35,7 @@ export const analysisColumns: TableColumn<QualityAnalysis>[] = [
                             key={index}
                             position={index + 1}
                             status={mapAnalysisStatusToColor(value.status)}
+                            name={value.name}
                         />
                     ))}
                 </ProgressContainer>
@@ -43,3 +44,10 @@ export const analysisColumns: TableColumn<QualityAnalysis>[] = [
     },
     { name: "lastModification", text: i18n.t("Last Modification"), sortable: true },
 ];
+
+const ProgressContainer = styled.ul`
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-inline-start: unset;
+`;
