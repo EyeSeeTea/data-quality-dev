@@ -4,6 +4,7 @@ const customTheme = {
         dark: "#333333",
         grey: "#717171",
         lightGrey: "#D7D7D7",
+        lighterGrey: "#ebebeb",
         green: "#163318",
         lightGreen: "#B5DFB7",
         lightRed: "#FFB8B8",
