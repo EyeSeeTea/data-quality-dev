@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-03-19T02:32:57.472Z\n"
-"PO-Revision-Date: 2024-03-19T02:32:57.472Z\n"
+"POT-Creation-Date: 2024-03-20T15:46:45.416Z\n"
+"PO-Revision-Date: 2024-03-20T15:46:45.417Z\n"
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
@@ -41,7 +41,7 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-msgid "New Data Quality"
+msgid "New Data Quality Report"
 msgstr ""
 
 msgid "Add"
@@ -151,7 +151,7 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-msgid "Creating Data Quality..."
+msgid "Creating Data Quality Report..."
 msgstr ""
 
 msgid "Quality Analysis created"
@@ -245,33 +245,6 @@ msgid "Are you sure you want to {{action}} the selected rows?"
 msgstr ""
 
 msgid "Yes, {{actionButton}}"
-msgstr ""
-
-msgid "Ready"
-msgstr ""
-
-msgid "Running"
-msgstr ""
-
-msgid "Failure"
-msgstr ""
-
-msgid "Done"
-msgstr ""
-
-msgid "Module 1"
-msgstr ""
-
-msgid "Module 2"
-msgstr ""
-
-msgid "Selected element deleted successfully"
-msgstr ""
-
-msgid "Status changed"
-msgstr ""
-
-msgid "Start analysis"
 msgstr ""
 
 msgid "Hello {{name}}"

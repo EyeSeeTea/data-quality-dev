@@ -1,5 +1,6 @@
 import React from "react";
 import i18n from "$/utils/i18n";
+import { Typography } from "@material-ui/core";
 import { ConfigurationForm } from "$/webapp/components/configuration-form/ConfigurationForm";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { useAnalysisById } from "$/webapp/hooks/useAnalysis";
@@ -8,6 +9,7 @@ import { useAnalysisMethods } from "$/webapp/hooks/useQualityAnalysisTable";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { Settings } from "$/domain/entities/Settings";
 import { useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
+import styled from "styled-components";
 
 const noop = () => {};
 
@@ -52,13 +54,30 @@ export const ConfigurationStep: React.FC<{}> = React.memo(() => {
     if (!analysis) return null;
 
     return (
-        <div>
-            <h2>{i18n.t("Configuration")}</h2>
+        <Container>
+            <TitleContainer>
+                <StyledTypography variant="h2">{i18n.t("Configuration")}</StyledTypography>
+            </TitleContainer>
             <ConfigurationForm
                 initialCountries={settings?.countryIds || []}
                 initialData={analysis}
                 onSave={analysis => onSave(analysis)}
             />
-        </div>
+        </Container>
     );
 });
+
+const Container = styled.section``;
+
+const TitleContainer = styled.div`
+    min-height: 5rem;
+    display: flex;
+    align-items: center;
+    margin-block-end: 1.75rem;
+`;
+
+const StyledTypography = styled(Typography)`
+    font-size: 1.2rem;
+    font-weight: 500;
+    vertical-align: center;
+`;
