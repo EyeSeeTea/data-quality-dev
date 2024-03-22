@@ -1,13 +1,12 @@
 import React from "react";
 import {
     GetRows,
-    ObjectsTable,
     TableConfig,
     useLoading,
     useObjectsTable,
     useSnackbar,
 } from "@eyeseetea/d2-ui-components";
-
+import { ObjectsTable } from "../data-table/ObjectsTable";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
 import { GetIssuesOptions } from "$/domain/repositories/IssueRepository";
