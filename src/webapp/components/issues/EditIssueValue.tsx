@@ -105,7 +105,13 @@ export const EditIssueValue: React.FC<EditIssueValueProps> = React.memo(props =>
         case "azureUrl":
             return <InputInline value={issue.azureUrl} onSave={onSave} />;
         case "followUp":
-            return <CheckboxInline value={issue.followUp} onChange={onSave} />;
+            return (
+                <CheckboxInline
+                    key={`${issue.id}_${issue.followUp}`}
+                    value={issue.followUp}
+                    onChange={onSave}
+                />
+            );
         case "status":
             return (
                 <SelectorInline

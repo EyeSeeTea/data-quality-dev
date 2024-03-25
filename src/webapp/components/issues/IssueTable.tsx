@@ -72,7 +72,7 @@ export function useTableConfig(props: UseTableConfigProps) {
             actions: [
                 {
                     name: "Extend Contact Emails",
-                    text: i18n.t("Extend Contact Emails"),
+                    text: i18n.t("Extend Follow-Up + Contact Emails"),
                     primary: false,
                     onClick(selectedIds) {
                         const issueId = selectedIds[0];
