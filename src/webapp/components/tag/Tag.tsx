@@ -24,6 +24,7 @@ export const Container = styled.span<ContainerProps>`
     min-height: 24px;
     font-size: 0.8125rem;
     width: 100%;
+    white-space: nowrap;
 
     ${({ $status }) => {
         switch ($status) {
