@@ -47,7 +47,7 @@ class Share extends React.PureComponent<ShareProps, ShareState> {
                     onMouseEnter={this.setHover}
                     onMouseLeave={this.unsetHover}
                 >
-                    <button style={shareStyles} onClick={this.toggleExpanded}>
+                    <button style={shareStyles} aria-label="toggle" onClick={this.toggleExpanded}>
                         <i className="fa fa-share icon-xlarge" />
                     </button>
                 </div>
@@ -64,7 +64,11 @@ class Share extends React.PureComponent<ShareProps, ShareState> {
                         </p>
 
                         <p>
-                            <button style={styles.eyeseeteaShareButtons} onClick={this.openTwitter}>
+                            <button
+                                style={styles.eyeseeteaShareButtons}
+                                aria-label="twitter"
+                                onClick={this.openTwitter}
+                            >
                                 <i className="fa fa-twitter" style={styles.twitterIcon} />
                             </button>
                         </p>
