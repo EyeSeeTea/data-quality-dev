@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-03-20T15:46:45.416Z\n"
-"PO-Revision-Date: 2024-03-20T15:46:45.417Z\n"
+"POT-Creation-Date: 2024-03-26T13:50:46.970Z\n"
+"PO-Revision-Date: 2024-03-26T13:50:46.971Z\n"
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
@@ -212,30 +212,6 @@ msgid "Run"
 msgstr ""
 
 msgid "Run to get results"
-msgstr ""
-
-msgid "Activity Level"
-msgstr ""
-
-msgid "Sex"
-msgstr ""
-
-msgid "Age group"
-msgstr ""
-
-msgid "Place of Birth"
-msgstr ""
-
-msgid "Ownership"
-msgstr ""
-
-msgid "Vacancy rate"
-msgstr ""
-
-msgid "Applications"
-msgstr ""
-
-msgid "Enrolled"
 msgstr ""
 
 msgid "No Issues found"
