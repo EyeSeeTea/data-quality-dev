@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2024-03-20T15:46:45.416Z\n"
+"POT-Creation-Date: 2024-03-25T17:48:24.832Z\n"
 "PO-Revision-Date: 2018-10-25T09:02:35.143Z\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -136,13 +136,13 @@ msgstr ""
 msgid "Periods"
 msgstr ""
 
-msgid "Copying contact emails..."
+msgid "Copying Contact Emails and marking for Follow-Up"
 msgstr ""
 
 msgid "Contact emails copied"
 msgstr ""
 
-msgid "Extend Contact Emails"
+msgid "Extend Follow-Up + Contact Emails"
 msgstr ""
 
 msgid "Back"

@@ -31,7 +31,7 @@ export function useCopyContactEmails(props: UseCopyContactEmailsProps) {
             sectionId: Maybe<Id>,
             filters: GetIssuesOptions["filters"]
         ) => {
-            loading.show(true, i18n.t("Copying contact emails..."));
+            loading.show(true, i18n.t("Copying Contact Emails and marking for Follow-Up"));
             compositionRoot.issues.copyEmails
                 .execute({
                     analysisId: analysisId,
@@ -72,7 +72,7 @@ export function useTableConfig(props: UseTableConfigProps) {
             actions: [
                 {
                     name: "Extend Contact Emails",
-                    text: i18n.t("Extend Contact Emails"),
+                    text: i18n.t("Extend Follow-Up + Contact Emails"),
                     primary: false,
                     onClick(selectedIds) {
                         const issueId = selectedIds[0];

@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-03-20T15:46:45.416Z\n"
-"PO-Revision-Date: 2024-03-20T15:46:45.417Z\n"
+"POT-Creation-Date: 2024-03-25T17:48:24.832Z\n"
+"PO-Revision-Date: 2024-03-25T17:48:24.832Z\n"
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
@@ -136,13 +136,13 @@ msgstr ""
 msgid "Periods"
 msgstr ""
 
-msgid "Copying contact emails..."
+msgid "Copying Contact Emails and marking for Follow-Up"
 msgstr ""
 
 msgid "Contact emails copied"
 msgstr ""
 
-msgid "Extend Contact Emails"
+msgid "Extend Follow-Up + Contact Emails"
 msgstr ""
 
 msgid "Back"
