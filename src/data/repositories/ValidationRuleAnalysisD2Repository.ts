@@ -2,22 +2,26 @@ import { ValidationRuleAnalysis } from "$/domain/entities/ValidationRuleAnalysis
 import { D2Api } from "$/types/d2-api";
 import { Id } from "$/domain/entities/Ref";
 import { FutureData, apiToFuture } from "../api-futures";
+import {
+    ValidationRuleAnalysisRepository,
+    ValidationRuleOptions,
+} from "$/domain/repositories/ValidationRuleAnalysisRepository";
 
-export class ValidationRuleAnalysisD2Repository {
+export class ValidationRuleAnalysisD2Repository implements ValidationRuleAnalysisRepository {
     constructor(private api: D2Api) {}
 
-    get(): FutureData<ValidationRuleAnalysis[]> {
+    get(options: ValidationRuleOptions): FutureData<ValidationRuleAnalysis[]> {
         return apiToFuture(
             this.api.request<D2ValidationRule[]>({
                 method: "post",
-                url: "/api/dataAnalysis/validationRules",
+                url: "/dataAnalysis/validationRules",
                 data: {
-                    endDate: "2022-12-31",
                     notification: false,
-                    ou: "H8RixfF8ugH",
                     persist: false,
-                    startDate: "2022-01-01",
-                    vrg: "TvHK59Z3Taq",
+                    ou: options.countryId,
+                    startDate: options.startDate,
+                    endDate: options.endDate,
+                    vrg: options.vrg,
                 },
             })
         ).map(response => {

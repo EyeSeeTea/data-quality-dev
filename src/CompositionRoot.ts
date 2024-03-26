@@ -58,6 +58,10 @@ import { ValidationRuleD2Repository } from "./data/repositories/ValidationRuleGr
 import { ValidationRuleTestRepository } from "./data/repositories/ValidationRuleGroupTestRepository";
 import { GetValidationRuleGroupUseCase } from "./domain/usecases/GetValidationRuleGroupUseCase";
 import { CopyContactEmailsUseCase } from "$/domain/usecases/CopyContactEmailsUseCase";
+import { RunValidationsUseCase } from "./domain/usecases/RunValidationsUseCase";
+import { ValidationRuleAnalysisD2Repository } from "./data/repositories/ValidationRuleAnalysisD2Repository";
+import { ValidationRuleAnalysisRepository } from "./domain/repositories/ValidationRuleAnalysisRepository";
+import { ValidationRuleAnalysisTestRepository } from "./data/repositories/ValidationRuleAnalysisTestRepository";
 
 export type CompositionRoot = ReturnType<typeof getCompositionRoot>;
 
@@ -74,6 +78,7 @@ type Repositories = {
     sequentialRepository: SequentialRepository;
     dataValueRepository: DataValueRepository;
     validationRuleRepository: ValidationRuleRepository;
+    validationRuleAnalysisRepository: ValidationRuleAnalysisRepository;
 };
 
 function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) {
@@ -161,6 +166,13 @@ function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) 
         },
         validationRules: {
             get: new GetValidationRuleGroupUseCase(repositories.validationRuleRepository),
+            run: new RunValidationsUseCase(
+                repositories.qualityAnalysisRepository,
+                repositories.issueRepository,
+                repositories.settingsRepository,
+                repositories.validationRuleAnalysisRepository,
+                repositories.validationRuleRepository
+            ),
         },
     };
 }
@@ -179,6 +191,7 @@ export function getWebappCompositionRoot(api: D2Api, metadata: MetadataItem) {
         sequentialRepository: new SequentialD2Repository(api, metadata),
         dataValueRepository: new DataValueD2Repository(api),
         validationRuleRepository: new ValidationRuleD2Repository(api),
+        validationRuleAnalysisRepository: new ValidationRuleAnalysisD2Repository(api),
     };
 
     return getCompositionRoot(repositories, metadata);
@@ -198,6 +211,7 @@ export function getTestCompositionRoot() {
         sequentialRepository: new SequentialTestRepository(),
         dataValueRepository: new DataValueTestRepository(),
         validationRuleRepository: new ValidationRuleTestRepository(),
+        validationRuleAnalysisRepository: new ValidationRuleAnalysisTestRepository(),
     };
 
     return getCompositionRoot(repositories, {} as MetadataItem);
