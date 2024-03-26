@@ -90,6 +90,7 @@ export const DashboardPage: React.FC<Props> = React.memo(props => {
                 {...config}
                 filterComponents={filterComponents}
                 paginationOptions={{ renderPosition: { bottom: true, top: false } }}
+                hideSelectionMessages
             />
             <ConfirmationDialog
                 isOpen={selectedIds && selectedIds.ids.length > 0}
