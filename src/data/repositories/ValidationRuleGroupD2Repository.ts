@@ -18,15 +18,7 @@ export class ValidationRuleD2Repository implements ValidationRuleGroupRepository
                         description: true,
                     },
                 })
-                .map(d2Response => {
-                    return d2Response.data.objects.map(ValidationRuleGroupD2Repository => {
-                        return {
-                            id: ValidationRuleGroupD2Repository.id,
-                            name: ValidationRuleGroupD2Repository.name,
-                            description: ValidationRuleGroupD2Repository.description,
-                        };
-                    });
-                })
+                .map(d2Response => d2Response.data.objects)
         );
     }
 
@@ -43,11 +35,7 @@ export class ValidationRuleD2Repository implements ValidationRuleGroupRepository
         ).flatMap(d2Response => {
             const firstResult = d2Response.objects[0];
             if (!firstResult) return Future.error(new Error("Cannot found validation rule"));
-            return Future.success({
-                id: firstResult.id,
-                name: firstResult.name,
-                description: firstResult.description,
-            });
+            return Future.success(firstResult);
         });
     }
 }
