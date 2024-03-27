@@ -1,11 +1,11 @@
 import { FutureData } from "$/data/api-futures";
 import { ValidationRuleGroup } from "../entities/ValidationRuleGroup";
-import { ValidationRuleRepository } from "../repositories/ValidationRuleGroupRepository";
+import { ValidationRuleGroupRepository } from "../repositories/ValidationRuleGroupRepository";
 
 export class GetValidationRuleGroupUseCase {
-    constructor(private validationRuleRepository: ValidationRuleRepository) {}
+    constructor(private validationRuleGroupRepository: ValidationRuleGroupRepository) {}
 
     execute(): FutureData<ValidationRuleGroup[]> {
-        return this.validationRuleRepository.get();
+        return this.validationRuleGroupRepository.get();
     }
 }

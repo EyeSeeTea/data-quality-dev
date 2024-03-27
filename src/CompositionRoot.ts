@@ -42,7 +42,7 @@ import { GetQualityAnalysisUseCase } from "./domain/usecases/GetQualityAnalisysU
 import { GetSettingsUseCase } from "./domain/usecases/GetSettingsUseCase";
 import { SaveIssueUseCase } from "./domain/usecases/SaveIssueUseCase";
 import { SaveConfigAnalysisUseCase } from "./domain/usecases/SaveConfigAnalysisUseCase";
-import { ValidationRuleRepository } from "./domain/repositories/ValidationRuleGroupRepository";
+import { ValidationRuleGroupRepository } from "./domain/repositories/ValidationRuleGroupRepository";
 import { GetAllIssuesUseCase } from "./domain/usecases/GetAllIssuesUseCase";
 import { D2Api } from "./types/d2-api";
 import { RunPractitionersValidationUseCase } from "./domain/usecases/RunPractitionersValidationUseCase";
@@ -77,7 +77,7 @@ type Repositories = {
     countryRepository: CountryRepository;
     sequentialRepository: SequentialRepository;
     dataValueRepository: DataValueRepository;
-    validationRuleRepository: ValidationRuleRepository;
+    validationRuleGroupRepository: ValidationRuleGroupRepository;
     validationRuleAnalysisRepository: ValidationRuleAnalysisRepository;
 };
 
@@ -103,7 +103,7 @@ function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) 
             saveConfig: new SaveConfigAnalysisUseCase(repositories.qualityAnalysisRepository),
             updateStatus: new UpdateStatusAnalysisUseCase(repositories.qualityAnalysisRepository),
             validationRuleGroup: {
-                get: new GetValidationRuleGroupUseCase(repositories.validationRuleRepository),
+                get: new GetValidationRuleGroupUseCase(repositories.validationRuleGroupRepository),
             },
         },
         outlier: {
@@ -165,12 +165,12 @@ function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) 
             ),
         },
         validationRules: {
-            get: new GetValidationRuleGroupUseCase(repositories.validationRuleRepository),
+            get: new GetValidationRuleGroupUseCase(repositories.validationRuleGroupRepository),
             run: new RunValidationsUseCase(
                 repositories.qualityAnalysisRepository,
                 repositories.issueRepository,
                 repositories.validationRuleAnalysisRepository,
-                repositories.validationRuleRepository
+                repositories.validationRuleGroupRepository
             ),
         },
     };
@@ -189,7 +189,7 @@ export function getWebappCompositionRoot(api: D2Api, metadata: MetadataItem) {
         countryRepository: new CountryD2Repository(api),
         sequentialRepository: new SequentialD2Repository(api, metadata),
         dataValueRepository: new DataValueD2Repository(api),
-        validationRuleRepository: new ValidationRuleD2Repository(api),
+        validationRuleGroupRepository: new ValidationRuleD2Repository(api),
         validationRuleAnalysisRepository: new ValidationRuleAnalysisD2Repository(api),
     };
 
@@ -209,7 +209,7 @@ export function getTestCompositionRoot() {
         countryRepository: new CountryTestRepository(),
         sequentialRepository: new SequentialTestRepository(),
         dataValueRepository: new DataValueTestRepository(),
-        validationRuleRepository: new ValidationRuleTestRepository(),
+        validationRuleGroupRepository: new ValidationRuleTestRepository(),
         validationRuleAnalysisRepository: new ValidationRuleAnalysisTestRepository(),
     };
 

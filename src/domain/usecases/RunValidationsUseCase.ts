@@ -12,7 +12,7 @@ import { ValidationRuleAnalysisRepository } from "../repositories/ValidationRule
 import { ValidationRuleAnalysis } from "../entities/ValidationRuleAnalysis";
 import { QualityAnalysisIssue } from "../entities/QualityAnalysisIssue";
 import { IssueStatus } from "../entities/IssueStatus";
-import { ValidationRuleRepository } from "../repositories/ValidationRuleGroupRepository";
+import { ValidationRuleGroupRepository } from "../repositories/ValidationRuleGroupRepository";
 import { ValidationRuleGroup } from "../entities/ValidationRuleGroup";
 
 export class RunValidationsUseCase {
@@ -22,7 +22,7 @@ export class RunValidationsUseCase {
         private analysisRepository: QualityAnalysisRepository,
         private issueRepository: IssueRepository,
         private validationRuleAnalysisRepository: ValidationRuleAnalysisRepository,
-        private validationRuleGroupRepository: ValidationRuleRepository
+        private validationRuleGroupRepository: ValidationRuleGroupRepository
     ) {
         this.analysisUseCase = new UCAnalysis(this.analysisRepository);
         this.issueUseCase = new UCIssue(this.issueRepository);
