@@ -6,14 +6,22 @@ import { TableColumn } from "@eyeseetea/d2-ui-components";
 import styled from "styled-components";
 import { Tag } from "../components/tag/Tag";
 
-function mapAnalysisStatusToColor(sectionStatus: string) {
+export function mapAnalysisStatusToColor(sectionStatus: string) {
     switch (sectionStatus) {
-        case "pending":
-            return "default";
         case "success_with_issues":
             return "danger";
-        case "success":
+        case "Success":
             return "success";
+        case "In treatment":
+            return "success";
+        case "Completed":
+            return "done";
+        case "Resolved":
+            return "done";
+        case "Dismissed":
+            return "inactive";
+        case "Waiting for focal point ":
+            return "warning";
         default:
             return "default";
     }
@@ -28,7 +36,9 @@ export const analysisColumns: TableColumn<QualityAnalysis>[] = [
         name: "status",
         text: i18n.t("Status"),
         sortable: true,
-        getValue: row => <Tag status={i18n.t(row.status)} />,
+        getValue: row => (
+            <Tag name={i18n.t(row.status)} status={mapAnalysisStatusToColor(row.status)} />
+        ),
     },
     {
         name: "sections",

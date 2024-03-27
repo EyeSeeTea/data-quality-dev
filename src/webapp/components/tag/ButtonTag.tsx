@@ -3,17 +3,18 @@ import customTheme from "$/webapp/pages/app/themes/customTheme";
 import { memo } from "react";
 
 type Props = {
+    status: string;
     text: string;
     onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 export type ButtonProps = {
-    $text: Props["text"];
+    $status: Props["status"];
 };
 
-export const ButtonTag: React.FC<Props> = memo(({ text, onClick }) => {
+export const ButtonTag: React.FC<Props> = memo(({ text, onClick, status }) => {
     return (
-        <Button $text={text} onClick={onClick} aria-controls="simple-menu" aria-haspopup="true">
+        <Button $status={status} onClick={onClick} aria-controls="simple-menu" aria-haspopup="true">
             {text}
         </Button>
     );
@@ -32,39 +33,34 @@ export const Button = styled.button<ButtonProps>`
     width: 100%;
     white-space: nowrap;
     text-transform: capitalize;
+    color: ${customTheme.color.dark};
+    background-color: ${customTheme.color.lighterGrey};
 
-    ${({ $text: $status }) => {
-        switch ($status) {
-            case "Not treated":
-                return css`
-                    color: ${customTheme.color.dark};
-                    background-color: ${customTheme.color.lighterGrey};
-                `;
-            case "Dismissed":
-                return css`
-                    color: ${customTheme.color.light};
-                    background-color: ${customTheme.color.grey};
-                `;
-            case "Resolved":
-                return css`
-                    color: ${customTheme.color.light};
-                    background-color: ${customTheme.color.intenseGreen};
-                `;
-            case "Waiting for focal point":
-                return css`
-                    color: ${customTheme.color.lightWarning};
-                    background-color: ${customTheme.color.warning};
-                `;
-            case "In treatment":
-                return css`
-                    color: ${customTheme.color.green};
-                    background-color: ${customTheme.color.lighterGreen};
-                `;
-            default:
-                return css`
-                    color: ${customTheme.color.dark};
-                    background-color: ${customTheme.color.lighterGrey};
-                `;
-        }
-    }}
+    ${({ $status }) =>
+        $status === "inactive" &&
+        css`
+            color: ${customTheme.color.light};
+            background-color: ${customTheme.color.grey};
+        `};
+
+    ${({ $status }) =>
+        $status === "done" &&
+        css`
+            color: ${customTheme.color.light};
+            background-color: ${customTheme.color.intenseGreen};
+        `};
+
+    ${({ $status }) =>
+        $status === "warning" &&
+        css`
+            color: ${customTheme.color.warning};
+            background-color: ${customTheme.color.lightWarning};
+        `};
+
+    ${({ $status }) =>
+        $status === "success" &&
+        css`
+            color: ${customTheme.color.green};
+            background-color: ${customTheme.color.lighterGreen};
+        `};
 `;
