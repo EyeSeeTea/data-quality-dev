@@ -32,7 +32,7 @@ export const GeneralPractitionersStep: React.FC<PageStepProps> = React.memo(prop
     };
 
     return (
-        <div>
+        <>
             <StepAnalysis
                 id={analysis.id}
                 onRun={onClick}
@@ -55,7 +55,7 @@ export const GeneralPractitionersStep: React.FC<PageStepProps> = React.memo(prop
                     label={i18n.t("Double Counts Threshold")}
                 />
             </StepAnalysis>
-        </div>
+        </>
     );
 });
 
