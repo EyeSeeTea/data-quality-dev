@@ -1,12 +1,60 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2024-03-20T15:46:45.416Z\n"
+"POT-Creation-Date: 2024-03-26T21:46:55.700Z\n"
 "PO-Revision-Date: 2018-10-25T09:02:35.143Z\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgid "ID"
+msgstr ""
+
+msgid "Number"
+msgstr ""
+
+msgid "Azure URL"
+msgstr ""
+
+msgid "Period"
+msgstr ""
+
+msgid "Country"
+msgstr ""
+
+msgid "Data Element"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Follow Up"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Action"
+msgstr ""
+
+msgid "Action Description"
+msgstr ""
+
+msgid "Comments"
+msgstr ""
+
+msgid "Contact Emails"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
@@ -38,9 +86,6 @@ msgstr ""
 msgid "End Date"
 msgstr ""
 
-msgid "Status"
-msgstr ""
-
 msgid "New Data Quality Report"
 msgstr ""
 
@@ -57,45 +102,6 @@ msgid "Module"
 msgstr ""
 
 msgid "Save Config Analysis"
-msgstr ""
-
-msgid "Issue"
-msgstr ""
-
-msgid "Country"
-msgstr ""
-
-msgid "Period"
-msgstr ""
-
-msgid "Data Element"
-msgstr ""
-
-msgid "Category"
-msgstr ""
-
-msgid "Description"
-msgstr ""
-
-msgid "Azure URL"
-msgstr ""
-
-msgid "Follow Up"
-msgstr ""
-
-msgid "Action"
-msgstr ""
-
-msgid "Contact Emails"
-msgstr ""
-
-msgid "Action Description"
-msgstr ""
-
-msgid "Comments"
-msgstr ""
-
-msgid "Issue Number"
 msgstr ""
 
 msgid ""
@@ -118,12 +124,6 @@ msgstr ""
 msgid "Double click to edit"
 msgstr ""
 
-msgid "Yes"
-msgstr ""
-
-msgid "No"
-msgstr ""
-
 msgid "{{countryNames}} and {{moreCountriesCount}} more"
 msgstr ""
 
@@ -136,13 +136,28 @@ msgstr ""
 msgid "Periods"
 msgstr ""
 
-msgid "Copying contact emails..."
+msgid "Copying Contact Emails and marking for Follow-Up"
 msgstr ""
 
 msgid "Contact emails copied"
 msgstr ""
 
-msgid "Extend Contact Emails"
+msgid "Exporting Issues..."
+msgstr ""
+
+msgid "Issues exported"
+msgstr ""
+
+msgid "Export"
+msgstr ""
+
+msgid "Extend Follow-Up + Contact Emails"
+msgstr ""
+
+msgid "Issue"
+msgstr ""
+
+msgid "Issue Number"
 msgstr ""
 
 msgid "Back"

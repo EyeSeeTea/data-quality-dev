@@ -54,6 +54,10 @@ import { GetCategoryDesaggregationsUseCase } from "$/domain/usecases/GetCategory
 import { ValidateMidwiferyAndPersonnelUseCase } from "./domain/usecases/ValidateMidwiferyAndPersonnelUseCase";
 import { GetMidwiferyPersonnelDisaggregationsUseCase } from "$/domain/usecases/GetMidwiferyPersonnelDisaggregationsUseCase";
 import { CopyContactEmailsUseCase } from "$/domain/usecases/CopyContactEmailsUseCase";
+import { ExportIssuesUseCase } from "$/domain/usecases/ExportIssuesUseCase";
+import { IssueExportRepository } from "$/domain/repositories/IssueExportRepository";
+import { IssueSpreadSheetRepository } from "./data/repositories/IssueSpreadSheetRepository";
+import { IssueSpreadSheetTestRepository } from "./data/repositories/IssueSpreadSheetTestRepository";
 
 export type CompositionRoot = ReturnType<typeof getCompositionRoot>;
 
@@ -69,6 +73,7 @@ type Repositories = {
     countryRepository: CountryRepository;
     sequentialRepository: SequentialRepository;
     dataValueRepository: DataValueRepository;
+    issueExportRepository: IssueExportRepository;
 };
 
 function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) {
@@ -134,6 +139,10 @@ function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) 
                 repositories.qualityAnalysisRepository,
                 repositories.issueRepository
             ),
+            export: new ExportIssuesUseCase(
+                repositories.issueRepository,
+                repositories.issueExportRepository
+            ),
         },
         settings: { get: new GetSettingsUseCase(repositories.settingsRepository) },
         summary: {
@@ -167,6 +176,7 @@ export function getWebappCompositionRoot(api: D2Api, metadata: MetadataItem) {
         countryRepository: new CountryD2Repository(api),
         sequentialRepository: new SequentialD2Repository(api, metadata),
         dataValueRepository: new DataValueD2Repository(api),
+        issueExportRepository: new IssueSpreadSheetRepository(metadata),
     };
 
     return getCompositionRoot(repositories, metadata);
@@ -185,6 +195,7 @@ export function getTestCompositionRoot() {
         countryRepository: new CountryTestRepository(),
         sequentialRepository: new SequentialTestRepository(),
         dataValueRepository: new DataValueTestRepository(),
+        issueExportRepository: new IssueSpreadSheetTestRepository(),
     };
 
     return getCompositionRoot(repositories, {} as MetadataItem);

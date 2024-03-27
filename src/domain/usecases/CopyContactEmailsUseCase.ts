@@ -75,6 +75,7 @@ export class CopyContactEmailsUseCase {
             return QualityAnalysisIssue.create({
                 ...issue,
                 contactEmails: selectedIssue.contactEmails,
+                followUp: true,
             });
         });
     }
