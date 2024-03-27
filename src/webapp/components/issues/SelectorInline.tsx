@@ -1,7 +1,8 @@
 import React from "react";
 import { Button, Menu } from "@material-ui/core";
 import { MenuItem } from "material-ui";
-import i18n from "$/utils/i18n";
+import { ButtonTag } from "../tag/ButtonTag";
+import { mapAnalysisStatusToColor } from "$/webapp/utils/analysis";
 
 export const SelectorInline: React.FC<SelectorInlineProps> = React.memo(props => {
     const { value, items, onChange } = props;
@@ -23,16 +24,7 @@ export const SelectorInline: React.FC<SelectorInlineProps> = React.memo(props =>
 
     return (
         <>
-            <Button
-                aria-controls="simple-menu"
-                aria-haspopup="true"
-                variant="text"
-                onClick={onOpenMenu}
-                title={i18n.t("Double click to edit")}
-                style={{ height: text.length === 0 ? "70px" : undefined }}
-            >
-                {text}
-            </Button>
+            <ButtonTag status={mapAnalysisStatusToColor(text)} text={text} onClick={onOpenMenu} />
             <Menu
                 id="simple-menu"
                 anchorEl={anchorEl}
