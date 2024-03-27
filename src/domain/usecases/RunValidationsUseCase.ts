@@ -8,7 +8,6 @@ import _ from "$/domain/entities/generic/Collection";
 import { getUid } from "$/utils/uid";
 import { UCIssue } from "./common/UCIssue";
 import { UCAnalysis } from "./common/UCAnalysis";
-import { SettingsRepository } from "../repositories/SettingsRepository";
 import { ValidationRuleAnalysisRepository } from "../repositories/ValidationRuleAnalysisRepository";
 import { ValidationRuleAnalysis } from "../entities/ValidationRuleAnalysis";
 import { QualityAnalysisIssue } from "../entities/QualityAnalysisIssue";
@@ -22,7 +21,6 @@ export class RunValidationsUseCase {
     constructor(
         private analysisRepository: QualityAnalysisRepository,
         private issueRepository: IssueRepository,
-        private settingsRepository: SettingsRepository,
         private validationRuleAnalysisRepository: ValidationRuleAnalysisRepository,
         private validationRuleGroupRepository: ValidationRuleRepository
     ) {
@@ -32,7 +30,6 @@ export class RunValidationsUseCase {
     execute(options: RunValidationsUseCaseOptions): FutureData<QualityAnalysis> {
         return Future.joinObj({
             analysis: this.analysisUseCase.getById(options.qualityAnalysisId),
-            settings: this.settingsRepository.get(),
             validationRuleGroup: this.validationRuleGroupRepository.getById(
                 options.validationRuleGroupId
             ),

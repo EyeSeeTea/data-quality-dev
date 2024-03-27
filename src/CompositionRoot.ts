@@ -169,7 +169,6 @@ function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) 
             run: new RunValidationsUseCase(
                 repositories.qualityAnalysisRepository,
                 repositories.issueRepository,
-                repositories.settingsRepository,
                 repositories.validationRuleAnalysisRepository,
                 repositories.validationRuleRepository
             ),
