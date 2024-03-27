@@ -35,7 +35,6 @@ export const Button = styled.button<ButtonProps>`
     font-size: 0.8125rem;
     width: 100%;
     white-space: nowrap;
-    text-transform: lowercase;
     text-transform: capitalize;
 
     ${({ $text: $status }) => {

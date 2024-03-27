@@ -25,7 +25,6 @@ export const Container = styled.span<ContainerProps>`
     font-size: 0.8125rem;
     width: 100%;
     white-space: nowrap;
-    text-transform: lowercase;
     text-transform: capitalize;
 
     ${({ $status }) => {
