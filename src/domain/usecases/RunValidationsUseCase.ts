@@ -63,11 +63,21 @@ export class RunValidationsUseCase {
         analysis: QualityAnalysis,
         options: RunValidationsUseCaseOptions
     ) {
-        return this.validationRuleAnalysisRepository.get({
-            countryId: analysis.countriesAnalysis[0] ?? "", //no soporta varios countries
-            startDate: analysis.startDate,
-            endDate: analysis.endDate,
-            validationRuleGroupId: options.validationRuleGroupId,
+        const concurrencyRequest = 1;
+        const $requests = Future.parallel(
+            analysis.countriesAnalysis.map(countryId =>
+                this.validationRuleAnalysisRepository.get({
+                    countryId: countryId,
+                    startDate: analysis.startDate,
+                    endDate: analysis.endDate,
+                    validationRuleGroupId: options.validationRuleGroupId,
+                })
+            ),
+            { concurrency: concurrencyRequest }
+        );
+        return $requests.flatMap(result => {
+            const rules = _(result).flatten().value();
+            return Future.success(rules);
         });
     }
 
