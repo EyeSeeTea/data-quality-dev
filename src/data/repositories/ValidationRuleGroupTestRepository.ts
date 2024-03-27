@@ -4,7 +4,7 @@ import { Future } from "$/domain/entities/generic/Future";
 import { FutureData } from "../api-futures";
 
 export class ValidationRuleTestRepository implements ValidationRuleRepository {
-    getById(id: string): FutureData<ValidationRuleGroup> {
+    getById(): FutureData<ValidationRuleGroup> {
         throw new Error("Method not implemented.");
     }
     get(): FutureData<ValidationRuleGroup[]> {
