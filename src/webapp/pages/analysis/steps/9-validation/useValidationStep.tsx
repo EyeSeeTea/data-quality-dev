@@ -21,27 +21,21 @@ export function useValidationStep(props: UseValidationStepProps) {
         loading.show(true, i18n.t("Loading"));
 
         const fetchData = async () => {
-            try {
-                compositionRoot.validationRules.get.execute().run(
-                    (items: ValidationRuleGroup[]) => {
-                        const finalItems = items.map(item => ({
-                            value: item.id.toString(),
-                            text: item.name,
-                        }));
-                        setValidationRules(finalItems);
-                        loading.show(false);
-                    },
-                    (error: Error) => {
-                        loading.show(false);
-                        snackbar.error((error as Error).message);
-                    }
-                );
-            } catch (error: any) {
-                loading.hide();
-                snackbar.error(error.message);
-            }
+            compositionRoot.validationRules.get.execute().run(
+                (items: ValidationRuleGroup[]) => {
+                    const finalItems = items.map(item => ({
+                        value: item.id.toString(),
+                        text: item.name,
+                    }));
+                    setValidationRules(finalItems);
+                    loading.show(false);
+                },
+                error => {
+                    loading.show(false);
+                    snackbar.error(error.message);
+                }
+            );
         };
-
         fetchData();
     }, [section.id, compositionRoot.validationRules.get, loading, snackbar]);
 
