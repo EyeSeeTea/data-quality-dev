@@ -21,7 +21,7 @@ export class ValidationRuleAnalysisD2Repository implements ValidationRuleAnalysi
                     ou: options.countryId,
                     startDate: options.startDate,
                     endDate: options.endDate,
-                    vrg: options.vrg,
+                    vrg: options.validationRuleGroupId,
                 },
             })
         ).map(response => {

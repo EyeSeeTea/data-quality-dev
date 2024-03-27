@@ -67,7 +67,7 @@ export class RunValidationsUseCase {
             countryId: analysis.countriesAnalysis[0] ?? "", //no soporta varios countries
             startDate: analysis.startDate,
             endDate: analysis.endDate,
-            vrg: options.validationRuleGroupId,
+            validationRuleGroupId: options.validationRuleGroupId,
         });
     }
 

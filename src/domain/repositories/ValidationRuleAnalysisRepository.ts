@@ -10,5 +10,5 @@ export type ValidationRuleOptions = {
     countryId: Id;
     startDate: DateISOString;
     endDate: DateISOString;
-    vrg: Id;
+    validationRuleGroupId: Id;
 };
