@@ -23,7 +23,7 @@ export const SelectorInline: React.FC<SelectorInlineProps> = React.memo(props =>
 
     return (
         <>
-            <ButtonTag text={text} onClick={onOpenMenu} />
+            <ButtonTag text={text ? text : "No Action"} onClick={onOpenMenu} />
             <Menu
                 id="simple-menu"
                 anchorEl={anchorEl}

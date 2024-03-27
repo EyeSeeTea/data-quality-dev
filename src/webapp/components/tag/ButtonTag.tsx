@@ -12,13 +12,9 @@ export type ButtonProps = {
 };
 
 export const ButtonTag: React.FC<Props> = memo(({ text, onClick }) => {
-    return text ? (
+    return (
         <Button $text={text} onClick={onClick} aria-controls="simple-menu" aria-haspopup="true">
             {text}
-        </Button>
-    ) : (
-        <Button $text={text} onClick={onClick} aria-controls="simple-menu" aria-haspopup="true">
-            {(text = "No Action")}
         </Button>
     );
 });
