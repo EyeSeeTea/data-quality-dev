@@ -1,12 +1,13 @@
 import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
 import { Future } from "$/domain/entities/generic/Future";
-import { IssueRepository } from "$/domain/repositories/IssueRepository";
+import { GetIssuesOptions, IssueRepository } from "$/domain/repositories/IssueRepository";
 import { Id, Period } from "$/domain/entities/Ref";
 import { getUid } from "$/utils/uid";
 import { IssueStatus } from "$/domain/entities/IssueStatus";
 import _ from "$/domain/entities/generic/Collection";
 import { FutureData } from "$/data/api-futures";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
+import { RowsPaginated } from "$/domain/entities/Pagination";
 
 export class UCIssue {
     constructor(private issueRepository: IssueRepository) {}
@@ -86,6 +87,35 @@ export class UCIssue {
             .map(response => {
                 return response.pagination.total;
             });
+    }
+
+    getAllIssues(
+        filters: GetIssuesOptions["filters"],
+        state: { initialPage: number; issues: QualityAnalysisIssue[] }
+    ): FutureData<QualityAnalysisIssue[]> {
+        const { initialPage, issues } = state;
+        return this.getIssues(filters, initialPage).flatMap(response => {
+            const newIssues = [...issues, ...response.rows];
+            if (response.pagination.page >= response.pagination.pageCount) {
+                return Future.success(newIssues);
+            } else {
+                return this.getAllIssues(filters, {
+                    initialPage: initialPage + 1,
+                    issues: newIssues,
+                });
+            }
+        });
+    }
+
+    private getIssues(
+        filters: GetIssuesOptions["filters"],
+        page: number
+    ): FutureData<RowsPaginated<QualityAnalysisIssue>> {
+        return this.issueRepository.get({
+            filters: filters,
+            pagination: { page: page, pageSize: 100 },
+            sorting: { field: "number", order: "asc" },
+        });
     }
 }
 
