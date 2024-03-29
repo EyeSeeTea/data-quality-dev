@@ -112,6 +112,10 @@ export class GetMissingDisaggregatesUseCase {
 
         const onlyMissing = missingValues.filter(missingValue => missingValue.hasMissingValues);
         let acumulativeIssueNumber = totalIssues;
+        const sectionNumber = this.issueUseCase.getSectionNumber(
+            analysis.sections,
+            options.sectionId
+        );
 
         return _(onlyMissing)
             .map((missingDisaggregate): QualityAnalysisIssue[] => {
@@ -122,7 +126,7 @@ export class GetMissingDisaggregatesUseCase {
 
                 const issues = missingCombinations.map((missingCombination, index) => {
                     const currentNumber = acumulativeIssueNumber + (index + 1);
-                    const prefix = `${analysis.sequential.value}-S03`;
+                    const prefix = `${analysis.sequential.value}-${sectionNumber}`;
                     const issueNumber = this.issueUseCase.generateIssueNumber(
                         currentNumber,
                         prefix
