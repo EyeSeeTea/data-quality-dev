@@ -12,7 +12,8 @@ import i18n from "$/utils/i18n";
 import _ from "$/domain/entities/generic/Collection";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 import { Maybe } from "$/utils/ts-utils";
-import { IssueTable } from "$/webapp/components/issues/IssueTable";
+import { Typography } from "@material-ui/core";
+import { SummaryStep } from "./SummaryStep";
 
 function buildStepsFromSections(
     analysis: QualityAnalysis,
@@ -52,9 +53,7 @@ function buildStepsFromSections(
         {
             key: "all",
             label: i18n.t("Summary"),
-            component: () => (
-                <IssueTable analysisId={analysis.id} sectionId={undefined} reload={0} showExport />
-            ),
+            component: () => <SummaryStep analysis={analysis} name={i18n.t("Summary")} />,
             completed: false,
         },
     ];
@@ -106,3 +105,18 @@ export type PageStepProps = {
 };
 
 export type UpdateAnalysisState = React.Dispatch<React.SetStateAction<Maybe<QualityAnalysis>>>;
+
+const Container = styled.section``;
+
+const TitleContainer = styled.div`
+    min-height: 5rem;
+    display: flex;
+    align-items: center;
+    margin-block-end: 1.75rem;
+`;
+
+const StyledTypography = styled(Typography)`
+    font-size: 1.2rem;
+    font-weight: 500;
+    vertical-align: center;
+`;
