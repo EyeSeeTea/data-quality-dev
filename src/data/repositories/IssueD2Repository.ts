@@ -21,6 +21,7 @@ import { Maybe } from "$/utils/ts-utils";
 import { IssueAction } from "$/domain/entities/IssueAction";
 import { IssueStatus } from "$/domain/entities/IssueStatus";
 import { getDefaultModules } from "../common/D2Module";
+import { getProgramStageIndexById } from "../common/utils";
 
 export class IssueD2Repository implements IssueRepository {
     d2DataElement: D2DataElement;
@@ -151,11 +152,7 @@ export class IssueD2Repository implements IssueRepository {
             if (!enrollment)
                 return Future.error(new Error(`Cannot found Enrollment in TEI: ${tei}`));
 
-            const programStageIndex = this.metadata.programs.qualityIssues.programStages.findIndex(
-                programStage => programStage.id === issue.type
-            );
-            if (programStageIndex === -1)
-                return Future.error(new Error(`Cannot found programStage: ${issue.type}`));
+            const programStageIndex = getProgramStageIndexById(issue.type, this.metadata);
 
             return Future.fromPromise(
                 logger.info({

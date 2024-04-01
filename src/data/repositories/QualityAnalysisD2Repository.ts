@@ -32,6 +32,7 @@ import { D2OrgUnit } from "../common/D2Country";
 import { getUid } from "../../utils/uid";
 import { DATA_QUALITY_NAMESPACE } from "$/domain/entities/Settings";
 import { getDefaultModules } from "../common/D2Module";
+import { getProgramStageIndexById } from "../common/utils";
 
 export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
     d2DataElement: D2DataElement;
@@ -351,10 +352,7 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
         event: D2TrackerEvent,
         issue: QualityAnalysisIssue
     ): DataValue[] {
-        const programStageIndex = this.metadata.programs.qualityIssues.programStages.findIndex(
-            programStage => programStage.id === issue.type
-        );
-        if (programStageIndex === -1) throw new Error(`Cannot found programStage: ${issue.type}`);
+        const programStageIndex = getProgramStageIndexById(issue.type, this.metadata);
 
         const currentDataValues = [
             {
