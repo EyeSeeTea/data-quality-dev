@@ -51,7 +51,7 @@ export class IssueD2Repository implements IssueRepository {
                 // TODO: order and filter does not work together
                 // ERROR: Query failed because of a syntax error (SqlState: 42703)",
                 // disabling order if any filter is present
-                order: filtersParams ? undefined : this.buildOrder(options.sorting) || undefined,
+                order: filtersParams ? undefined : this.buildOrder(options.sorting),
                 filter: filtersParams,
                 event: filters.id ? filters.id : undefined,
             })

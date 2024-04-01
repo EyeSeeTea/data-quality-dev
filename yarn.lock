@@ -3383,10 +3383,8 @@
     real-cancellable-promise "^1.1.2"
     typed-immutable-map "0.2.0"
 
-"@eyeseetea/d2-ui-components@2.7.0-beta.5":
-  version "2.7.0-beta.5"
-  resolved "https://registry.yarnpkg.com/@eyeseetea/d2-ui-components/-/d2-ui-components-2.7.0-beta.5.tgz#a12fcdda0d0e70d00dac8d9fb3a70ba13ba7c64a"
-  integrity sha512-9FG89YQmsOmEA/MH3qxgGFgk/nHYNNSN3FDS136SJAsMvyA5Oa/XoreEZ+uqnuSbw1JtFj5bCh1A2Y+mgzHBDA==
+"@eyeseetea/d2-ui-components@file:../d2-ui-components/build":
+  version "2.8.0"
   dependencies:
     "@date-io/core" "1.3.6"
     "@date-io/moment" "1.0.2"

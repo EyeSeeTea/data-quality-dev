@@ -75,7 +75,7 @@ const metadataFields = {
             id: true,
             name: true,
             code: true,
-            programStages: { id: true, name: true, description: true },
+            programStages: { id: true, code: true, name: true, description: true },
         },
         filter: { code: { in: rec(metadataCodes.programs).values() } },
     },

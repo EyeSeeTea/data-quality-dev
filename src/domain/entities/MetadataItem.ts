@@ -6,6 +6,7 @@ export interface OptionSet extends NamedCodeRef {
 
 export interface ProgramStage extends NamedRef {
     description: string;
+    code: string;
 }
 
 export interface MetadataItem {
