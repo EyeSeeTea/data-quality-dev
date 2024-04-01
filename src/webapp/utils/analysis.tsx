@@ -6,22 +6,16 @@ import { TableColumn } from "@eyeseetea/d2-ui-components";
 import styled from "styled-components";
 import { Tag } from "../components/tag/Tag";
 
-export function mapAnalysisStatusToColor(sectionStatus: string) {
+function mapAnalysisStatusToColor(sectionStatus: string) {
     switch (sectionStatus) {
+        case "pending":
+            return "default";
         case "success_with_issues":
             return "danger";
-        case "Success":
-            return "success";
-        case "In treatment":
+        case "success":
             return "success";
         case "Completed":
-            return "done";
-        case "Resolved":
-            return "done";
-        case "Dismissed":
-            return "inactive";
-        case "Waiting for focal point ":
-            return "warning";
+            return "success";
         default:
             return "default";
     }

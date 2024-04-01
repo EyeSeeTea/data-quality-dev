@@ -31,7 +31,7 @@ export const Container = styled.span<ContainerProps>`
     background-color: ${customTheme.color.lighterGrey};
 
     ${({ $status }) =>
-        $status === "done" &&
+        $status === "success" &&
         css`
             color: ${customTheme.color.light};
             background-color: ${customTheme.color.intenseGreen};

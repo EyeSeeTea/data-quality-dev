@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Menu } from "@material-ui/core";
 import { MenuItem } from "material-ui";
 import { ButtonTag } from "../tag/ButtonTag";
-import { mapAnalysisStatusToColor } from "$/webapp/utils/analysis";
+import { mapIssueStatusAndActionToColor } from "$/webapp/utils/issues";
 
 export const SelectorInline: React.FC<SelectorInlineProps> = React.memo(props => {
     const { value, items, onChange } = props;
@@ -24,7 +24,11 @@ export const SelectorInline: React.FC<SelectorInlineProps> = React.memo(props =>
 
     return (
         <>
-            <ButtonTag status={mapAnalysisStatusToColor(text)} text={text} onClick={onOpenMenu} />
+            <ButtonTag
+                status={mapIssueStatusAndActionToColor(text)}
+                text={text}
+                onClick={onOpenMenu}
+            />
             <Menu
                 id="simple-menu"
                 anchorEl={anchorEl}
