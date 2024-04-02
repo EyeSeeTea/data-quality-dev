@@ -208,7 +208,7 @@ export function useTableConfig(props: UseTableConfigProps) {
                     },
                 },
             ],
-            initialSorting: { field: "number", order: "desc" },
+            initialSorting: { field: "number", order: "asc" },
             paginationOptions: {
                 pageSizeOptions: [10, 20, 50],
                 pageSizeInitialValue: 20,

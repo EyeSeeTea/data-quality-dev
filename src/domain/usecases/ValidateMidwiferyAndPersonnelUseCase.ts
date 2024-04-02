@@ -115,9 +115,10 @@ export class ValidateMidwiferyAndPersonnelUseCase {
         const onlyGreaterMidwifery = midwiferyNursing.filter(
             midwifery => midwifery.isMidwiferyGreater
         );
+        const sectionNumber = this.issueUseCase.getSectionNumber(analysis.sections, sectionId);
         return onlyGreaterMidwifery.map((midwifery, index) => {
             const currentNumber = totalIssues + (index + 1);
-            const prefix = `${analysis.sequential.value}-S07`;
+            const prefix = `${analysis.sequential.value}-${sectionNumber}`;
             const issueNumber = this.issueUseCase.generateIssueNumber(currentNumber, prefix);
             return this.issueUseCase.buildDefaultIssue(
                 {

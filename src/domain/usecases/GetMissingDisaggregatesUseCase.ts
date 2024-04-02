@@ -23,9 +23,9 @@ import { MissingComboValue } from "$/domain/entities/MissingComboValue";
 
 const separator = " - ";
 export class GetMissingDisaggregatesUseCase {
-    analysisUseCase: UCAnalysis;
-    issueUseCase: UCIssue;
-    dataValueUseCase: UCDataValue;
+    private analysisUseCase: UCAnalysis;
+    private issueUseCase: UCIssue;
+    private dataValueUseCase: UCDataValue;
     constructor(
         private analysisRepository: QualityAnalysisRepository,
         private moduleRepository: ModuleRepository,
@@ -79,14 +79,14 @@ export class GetMissingDisaggregatesUseCase {
                         options
                     );
 
-                    const issues2 = this.createIssuesFromMissingCombos(
+                    const issueMissingCombos = this.createIssuesFromMissingCombos(
                         missingComboValues as MissingComboValue[],
                         analysis,
                         totalIssues + issues.length,
                         options
                     );
 
-                    const allIssues = [...issues, ...issues2];
+                    const allIssues = [...issues, ...issueMissingCombos];
 
                     return this.issueUseCase.save(allIssues, analysis.id).flatMap(() => {
                         const analysisUpdate = this.analysisUseCase.updateAnalysis(
@@ -112,6 +112,10 @@ export class GetMissingDisaggregatesUseCase {
 
         const onlyMissing = missingValues.filter(missingValue => missingValue.hasMissingValues);
         let acumulativeIssueNumber = totalIssues;
+        const sectionNumber = this.issueUseCase.getSectionNumber(
+            analysis.sections,
+            options.sectionId
+        );
 
         return _(onlyMissing)
             .map((missingDisaggregate): QualityAnalysisIssue[] => {
@@ -122,7 +126,7 @@ export class GetMissingDisaggregatesUseCase {
 
                 const issues = missingCombinations.map((missingCombination, index) => {
                     const currentNumber = acumulativeIssueNumber + (index + 1);
-                    const prefix = `${analysis.sequential.value}-S03`;
+                    const prefix = `${analysis.sequential.value}-${sectionNumber}`;
                     const issueNumber = this.issueUseCase.generateIssueNumber(
                         currentNumber,
                         prefix
@@ -163,13 +167,18 @@ export class GetMissingDisaggregatesUseCase {
 
         let acumulativeIssueNumber = totalIssues;
 
+        const sectionNumber = this.issueUseCase.getSectionNumber(
+            analysis.sections,
+            options.sectionId
+        );
+
         return _(onlyMissing)
             .map((missingCombo): QualityAnalysisIssue[] => {
                 const missingDataElements = MissingComboValue.getMissingCombinations(missingCombo);
 
                 const issues = missingDataElements.map((missingDataElement, index) => {
                     const currentNumber = acumulativeIssueNumber + (index + 1);
-                    const prefix = `${analysis.sequential.value}-S03`;
+                    const prefix = `${analysis.sequential.value}-${sectionNumber}`;
                     const issueNumber = this.issueUseCase.generateIssueNumber(
                         currentNumber,
                         prefix

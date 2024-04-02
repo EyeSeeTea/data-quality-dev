@@ -21,6 +21,7 @@ import { Maybe } from "$/utils/ts-utils";
 import { IssueAction } from "$/domain/entities/IssueAction";
 import { IssueStatus } from "$/domain/entities/IssueStatus";
 import { getDefaultModules } from "../common/D2Module";
+import { getProgramStageIndexById } from "../common/utils";
 
 export class IssueD2Repository implements IssueRepository {
     d2DataElement: D2DataElement;
@@ -51,7 +52,11 @@ export class IssueD2Repository implements IssueRepository {
                 // TODO: order and filter does not work together
                 // ERROR: Query failed because of a syntax error (SqlState: 42703)",
                 // disabling order if any filter is present
-                order: filtersParams ? undefined : this.buildOrder(options.sorting) || undefined,
+                order: filtersParams
+                    ? undefined
+                    : `${this.getDataElementIdOrThrow("sectionNumber")}:asc,${this.buildOrder(
+                          options.sorting
+                      )}`,
                 filter: filtersParams,
                 event: filters.id ? filters.id : undefined,
             })
@@ -146,6 +151,9 @@ export class IssueD2Repository implements IssueRepository {
             const enrollment = _(tei.enrollments || []).first();
             if (!enrollment)
                 return Future.error(new Error(`Cannot found Enrollment in TEI: ${tei}`));
+
+            const programStageIndex = getProgramStageIndexById(issue.type, this.metadata);
+
             return Future.fromPromise(
                 logger.info({
                     config: {
@@ -209,6 +217,10 @@ export class IssueD2Repository implements IssueRepository {
                         {
                             id: this.metadata.dataElements.comments.id,
                             value: issue.comments,
+                        },
+                        {
+                            id: this.metadata.dataElements.sectionNumber.id,
+                            value: String(programStageIndex + 1),
                         },
                     ],
                 })

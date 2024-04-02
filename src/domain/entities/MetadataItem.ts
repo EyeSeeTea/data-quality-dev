@@ -4,8 +4,9 @@ export interface OptionSet extends NamedCodeRef {
     options: Array<{ id: Id; name: string; code: string }>;
 }
 
-export interface ProgramStage extends NamedRef {
+export interface ProgramStage extends NamedCodeRef {
     description: string;
+    sortOrder: number;
 }
 
 export interface MetadataItem {
@@ -38,6 +39,7 @@ export interface MetadataItem {
         contactEmails: NamedCodeRef;
         comments: NamedCodeRef;
         correlative: NamedCodeRef;
+        sectionNumber: NamedCodeRef;
     };
     programs: { qualityIssues: NamedRef & { programStages: ProgramStage[] } };
     userGroups: {
