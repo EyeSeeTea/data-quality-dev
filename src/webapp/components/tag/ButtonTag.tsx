@@ -26,11 +26,11 @@ export const Button = styled.button<ButtonProps>`
     align-items: center;
     justify-content: center;
     padding-block: 7px;
-    padding-inline: 4px;
+    padding-inline: 10px;
     border-radius: 19px;
     min-height: 24px;
     font-size: 0.8125rem;
-    width: 100%;
+    width: fit-content;
     white-space: nowrap;
     text-transform: capitalize;
     color: ${customTheme.color.dark};
