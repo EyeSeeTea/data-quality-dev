@@ -12,7 +12,6 @@ import i18n from "$/utils/i18n";
 import _ from "$/domain/entities/generic/Collection";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 import { Maybe } from "$/utils/ts-utils";
-import { Typography } from "@material-ui/core";
 import { SummaryStep } from "./SummaryStep";
 
 function buildStepsFromSections(
@@ -105,18 +104,3 @@ export type PageStepProps = {
 };
 
 export type UpdateAnalysisState = React.Dispatch<React.SetStateAction<Maybe<QualityAnalysis>>>;
-
-const Container = styled.section``;
-
-const TitleContainer = styled.div`
-    min-height: 5rem;
-    display: flex;
-    align-items: center;
-    margin-block-end: 1.75rem;
-`;
-
-const StyledTypography = styled(Typography)`
-    font-size: 1.2rem;
-    font-weight: 500;
-    vertical-align: center;
-`;
