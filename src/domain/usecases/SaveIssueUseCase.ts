@@ -128,7 +128,9 @@ export class SaveIssueUseCase {
     ): QualityAnalysisIssue {
         switch (options.propertyToUpdate) {
             case "azureUrl": {
-                return this.setNewValue(issue, options);
+                if (this.isUrl(options.valueToUpdate as string))
+                    return this.setNewValue(issue, options);
+                throw Error("Invalid URL");
             }
             case "actionDescription": {
                 return this.setNewValue(issue, options);
@@ -198,6 +200,15 @@ export class SaveIssueUseCase {
 
     private getAnalysis(options: SaveIssueOptions): FutureData<QualityAnalysis> {
         return this.analysisRepository.getById(options.analysisId);
+    }
+
+    private isUrl(value: string): boolean {
+        if (!value) return true;
+        // Expresión regular para validar una URL
+        const regex = /^(http|https):\/\/[^ "]+$/;
+
+        // Verifica si el texto coincide con la expresión regular
+        return regex.test(value);
     }
 }
 
