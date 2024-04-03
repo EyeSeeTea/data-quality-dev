@@ -8,6 +8,7 @@ import _ from "$/domain/entities/generic/Collection";
 import { FutureData } from "$/data/api-futures";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { RowsPaginated } from "$/domain/entities/Pagination";
+import { IssueAction } from "$/domain/entities/IssueAction";
 
 export class UCIssue {
     constructor(private issueRepository: IssueRepository) {}
@@ -52,7 +53,11 @@ export class UCIssue {
                 code: "0",
                 name: "",
             }),
-            action: undefined,
+            action: IssueAction.create({
+                id: "",
+                code: "0",
+                name: "",
+            }),
             actionDescription: "",
             type: sectionId,
             comments: "",

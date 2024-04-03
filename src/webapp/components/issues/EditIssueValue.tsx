@@ -118,7 +118,7 @@ export const EditIssueValue: React.FC<EditIssueValueProps> = React.memo(props =>
                     items={metadata.optionSets.nhwaStatus.options.map(option => {
                         return { id: option.code, label: option.name };
                     })}
-                    value={issue.status?.name || "Not treated"}
+                    value={issue.status?.name || ""}
                     onChange={onSave}
                 />
             );
@@ -128,7 +128,7 @@ export const EditIssueValue: React.FC<EditIssueValueProps> = React.memo(props =>
                     items={metadata.optionSets.nhwaAction.options.map(option => {
                         return { id: option.code, label: option.name };
                     })}
-                    value={issue.action?.name || "No action"}
+                    value={issue.action?.name || ""}
                     onChange={onSave}
                 />
             );
