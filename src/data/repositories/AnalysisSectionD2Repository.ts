@@ -8,15 +8,18 @@ export class AnalysisSectionD2Repository implements AnalysisSectionRepository {
     constructor(private metadata: MetadataItem) {}
 
     get(): FutureData<QualityAnalysisSection[]> {
-        const sections = this.metadata.programs.qualityIssues.programStages.map(programStage => {
-            return QualityAnalysisSection.create({
-                id: programStage.id,
-                description: programStage.description,
-                name: programStage.name,
-                issues: [],
-                status: "",
-            });
-        });
+        const sections = this.metadata.programs.qualityIssues.programStages.map(
+            (programStage, index) => {
+                return QualityAnalysisSection.create({
+                    id: programStage.id,
+                    description: programStage.description,
+                    name: programStage.name,
+                    issues: [],
+                    position: index + 1,
+                    status: "",
+                });
+            }
+        );
         return Future.success(sections);
     }
 }

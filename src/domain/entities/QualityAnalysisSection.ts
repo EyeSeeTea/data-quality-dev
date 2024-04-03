@@ -8,6 +8,7 @@ export interface QualityAnalysisSectionAttrs {
     description: string;
     issues: QualityAnalysisIssue[];
     status: string;
+    position: number;
 }
 
 const SECTION_PENDING_STATE = "pending";

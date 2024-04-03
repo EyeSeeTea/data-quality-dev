@@ -9,6 +9,7 @@ import { FutureData } from "$/data/api-futures";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { RowsPaginated } from "$/domain/entities/Pagination";
 import { IssueAction } from "$/domain/entities/IssueAction";
+import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 
 export class UCIssue {
     constructor(private issueRepository: IssueRepository) {}
@@ -121,6 +122,23 @@ export class UCIssue {
             pagination: { page: page, pageSize: 100 },
             sorting: { field: "number", order: "asc" },
         });
+    }
+
+    getSectionById(sections: QualityAnalysisSection[], sectionId: Id): QualityAnalysisSection {
+        const section = sections.find(section => section.id === sectionId);
+        if (!section) throw new Error(`Section with id ${sectionId} not found`);
+        return section;
+    }
+
+    getSectionNumber(sections: QualityAnalysisSection[], sectionId: Id): string {
+        const section = this.getSectionById(sections, sectionId);
+        return this.getSectionNumberFormat(section);
+    }
+
+    private getSectionNumberFormat(section: QualityAnalysisSection): string {
+        const stepNumber =
+            section.position < 10 ? `0${section.position}` : String(section.position);
+        return `S${stepNumber}`;
     }
 }
 
