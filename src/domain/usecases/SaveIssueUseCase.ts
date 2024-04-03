@@ -128,37 +128,25 @@ export class SaveIssueUseCase {
     ): QualityAnalysisIssue {
         switch (options.propertyToUpdate) {
             case "azureUrl": {
-                return this.setNewValue(options);
+                return this.setNewValue(issue, options);
             }
             case "actionDescription": {
-                return QualityAnalysisIssue.create({
-                    ...issue,
-                    actionDescription: options.valueToUpdate as string,
-                });
+                return this.setNewValue(issue, options);
             }
             case "contactEmails": {
-                return QualityAnalysisIssue.create({
-                    ...issue,
-                    contactEmails: options.valueToUpdate as string,
-                });
+                return this.setNewValue(issue, options);
             }
             case "comments": {
-                return QualityAnalysisIssue.create({
-                    ...issue,
-                    comments: options.valueToUpdate as string,
-                });
+                return this.setNewValue(issue, options);
             }
             case "description": {
-                return QualityAnalysisIssue.create({
-                    ...issue,
-                    description: options.valueToUpdate as string,
-                });
+                return this.setNewValue(issue, options);
             }
             case "status": {
                 const actionSelected = this.metadata.optionSets.nhwaStatus.options.find(
                     option => option.code === options.valueToUpdate
                 );
-                if (!actionSelected) return options.issue;
+                if (!actionSelected) return issue;
 
                 return QualityAnalysisIssue.create({
                     ...issue,
@@ -198,9 +186,12 @@ export class SaveIssueUseCase {
         return cc ? `${to} || CC:${cc}` : to;
     }
 
-    private setNewValue(options: SaveIssueOptions): QualityAnalysisIssue {
+    private setNewValue(
+        issue: QualityAnalysisIssue,
+        options: SaveIssueOptions
+    ): QualityAnalysisIssue {
         return QualityAnalysisIssue.create({
-            ...options.issue,
+            ...issue,
             [options.propertyToUpdate]: options.valueToUpdate,
         });
     }
