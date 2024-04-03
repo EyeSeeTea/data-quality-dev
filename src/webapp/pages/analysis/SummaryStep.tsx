@@ -15,7 +15,13 @@ export const SummaryStep: React.FC<PageProps> = React.memo(({ name, analysis }) 
             <TitleContainer>
                 <StyledTypography variant="h2">{name}</StyledTypography>
             </TitleContainer>
-            <IssueTable analysisId={analysis.id} sectionId={undefined} reload={0} showExport />
+            <IssueTable
+                analysisId={analysis.id}
+                sectionId={undefined}
+                reload={0}
+                showExport
+                showStepFilter
+            />
         </Container>
     );
 });

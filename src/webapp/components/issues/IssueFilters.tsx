@@ -46,8 +46,9 @@ function extractCountriesNames(countries: Country[], totalCountriesSelected: num
 
 export const IssueFilters: React.FC<IssueFiltersProps> = props => {
     const { api, compositionRoot, currentUser, metadata } = useAppContext();
+
     const snackbar = useSnackbar();
-    const { initialFilters, onChange } = props;
+    const { initialFilters, onChange, showStepFilter } = props;
     const [openCountry, setOpenCountry] = React.useState(false);
     const [selectedCountriesIds, setSelectedCountriesIds] = React.useState<Id[]>([]);
     const [countries, setCountries] = React.useState<Country[]>([]);
@@ -67,6 +68,14 @@ export const IssueFilters: React.FC<IssueFiltersProps> = props => {
 
     const status = metadata.optionSets.nhwaStatus.options.map(option => {
         return { value: option.code, text: option.name };
+    });
+
+    // const step = metadata.programs.qualityIssues.programStages.map(option => {
+    //     return { value: option.code, text: option.name };
+    // });
+
+    const step = metadata.programs.qualityIssues.programStages.map((option, index) => {
+        return { value: String(index + 1), text: option.name };
     });
 
     const onClickCountry = () => {
@@ -124,7 +133,6 @@ export const IssueFilters: React.FC<IssueFiltersProps> = props => {
                     value={countryNamesString}
                 />
             </div>
-
             <SelectMultiCheckboxes
                 label={i18n.t("Periods")}
                 onChange={values => onFilterChange(values, "periods")}
@@ -145,7 +153,6 @@ export const IssueFilters: React.FC<IssueFiltersProps> = props => {
                 options={actions}
                 value={initialFilters.actions || []}
             />
-
             <Dropdown
                 className="config-form-selector"
                 label={i18n.t("Follow Up")}
@@ -153,6 +160,14 @@ export const IssueFilters: React.FC<IssueFiltersProps> = props => {
                 onChange={value => onFilterChange(value, "followUp")}
                 value={initialFilters.followUp}
             />
+            {showStepFilter ? (
+                <SelectMultiCheckboxes
+                    label={i18n.t("Step")}
+                    onChange={values => onFilterChange(values, "step")}
+                    options={step}
+                    value={initialFilters.step || []}
+                />
+            ) : null}
         </FilterContainer>
     );
 };
@@ -160,6 +175,7 @@ export const IssueFilters: React.FC<IssueFiltersProps> = props => {
 type IssueFiltersProps = {
     initialFilters: IssueFilterState;
     onChange: React.Dispatch<React.SetStateAction<GetIssuesOptions["filters"]>>;
+    showStepFilter?: boolean;
 };
 
 export type IssueFilterState = {
@@ -168,6 +184,7 @@ export type IssueFilterState = {
     followUp: Maybe<string>;
     periods: Period[];
     status: Maybe<Id[]>;
+    step: Maybe<Id[]>;
 };
 
 const FilterContainer = styled.div`

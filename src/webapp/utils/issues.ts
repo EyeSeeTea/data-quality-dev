@@ -10,4 +10,5 @@ export const initialFilters: GetIssuesOptions["filters"] = {
     sectionId: "",
     id: undefined,
     followUp: undefined,
+    step: [],
 };
