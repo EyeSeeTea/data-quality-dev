@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Wizard, WizardStep, useLoading } from "@eyeseetea/d2-ui-components";
+import { Wizard, WizardStep, useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
 import { PageHeader } from "$/webapp/components/page-header/PageHeader";
 import { getComponentFromSectionName } from "./steps";
 import styled from "styled-components";
@@ -65,16 +65,21 @@ export const AnalysisPage: React.FC<PageProps> = React.memo(props => {
     const id = useParams<{ id: string }>();
     const history = useHistory();
     const loading = useLoading();
+    const snackbar = useSnackbar();
     const onBack = () => {
         history.push("/");
     };
 
-    const { analysis, setAnalysis, isLoading } = useAnalysisById(id);
+    const { analysis, setAnalysis, isLoading, error } = useAnalysisById(id);
 
     useEffect(() => {
         if (isLoading) loading.show();
         else loading.hide();
     }, [isLoading, loading]);
+
+    useEffect(() => {
+        if (error) snackbar.error(error);
+    }, [error, snackbar]);
 
     const analysisSteps = React.useMemo(() => {
         if (!analysis) return [];

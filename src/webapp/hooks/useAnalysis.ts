@@ -2,15 +2,14 @@ import React, { useState } from "react";
 
 import { Id } from "$/domain/entities/Ref";
 import { useAppContext } from "../contexts/app-context";
-import { useSnackbar } from "@eyeseetea/d2-ui-components";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 
 export function useAnalysisById(props: UseAnalysisByIdProps) {
     const { id } = props;
     const { compositionRoot } = useAppContext();
-    const snackbar = useSnackbar();
     const [isLoading, setLoading] = useState<boolean>(false);
     const [analysis, setAnalysis] = React.useState<QualityAnalysis>();
+    const [error, setError] = useState<string | undefined>(undefined);
 
     React.useEffect(() => {
         setLoading(true);
@@ -21,12 +20,12 @@ export function useAnalysisById(props: UseAnalysisByIdProps) {
             },
             err => {
                 setLoading(false);
-                snackbar.error(err.message);
+                setError(err.message);
             }
         );
-    }, [compositionRoot.qualityAnalysis.getById, snackbar, id]);
+    }, [compositionRoot.qualityAnalysis.getById, id]);
 
-    return { analysis, setAnalysis, isLoading };
+    return { analysis, setAnalysis, isLoading, error };
 }
 
 type UseAnalysisByIdProps = { id: Id };
