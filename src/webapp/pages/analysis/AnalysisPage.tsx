@@ -72,7 +72,7 @@ export const AnalysisPage: React.FC<PageProps> = React.memo(props => {
     const { analysis, setAnalysis, isLoading } = useAnalysisById(id);
 
     useEffect(() => {
-        if (isLoading) loading.show(true, "hola");
+        if (isLoading) loading.show();
         else loading.hide();
     }, [isLoading, loading]);
 
