@@ -6,6 +6,7 @@ export interface OptionSet extends NamedCodeRef {
 
 export interface ProgramStage extends NamedCodeRef {
     description: string;
+    code: string;
     sortOrder: number;
 }
 
