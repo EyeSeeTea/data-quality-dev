@@ -70,10 +70,6 @@ export const IssueFilters: React.FC<IssueFiltersProps> = props => {
         return { value: option.code, text: option.name };
     });
 
-    // const step = metadata.programs.qualityIssues.programStages.map(option => {
-    //     return { value: option.code, text: option.name };
-    // });
-
     const step = metadata.programs.qualityIssues.programStages.map((option, index) => {
         return { value: String(index + 1), text: option.name };
     });
