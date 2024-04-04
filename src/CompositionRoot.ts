@@ -132,6 +132,7 @@ function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) 
         issues: {
             save: new SaveIssueUseCase(
                 repositories.qualityAnalysisRepository,
+                repositories.issueRepository,
                 repositories.usersRepository,
                 metadata
             ),
