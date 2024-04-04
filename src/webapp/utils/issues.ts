@@ -11,3 +11,22 @@ export const initialFilters: GetIssuesOptions["filters"] = {
     id: undefined,
     followUp: undefined,
 };
+
+export function mapIssueStatusAndActionToColor(buttonStatus: string) {
+    switch (buttonStatus) {
+        case "Success":
+            return "success";
+        case "In treatment":
+            return "success";
+        case "Completed":
+            return "done";
+        case "Resolved":
+            return "done";
+        case "Dismissed":
+            return "inactive";
+        case "Waiting for focal point ":
+            return "warning";
+        default:
+            return "default";
+    }
+}
