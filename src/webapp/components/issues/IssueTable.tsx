@@ -149,7 +149,14 @@ export function useTableConfig(props: UseTableConfigProps) {
                     sortable: false,
                     hidden: true,
                     getValue: value => {
-                        return <EditIssueValue key={value.id} field="azureUrl" issue={value} />;
+                        return (
+                            <EditIssueValue
+                                key={value.id}
+                                field="azureUrl"
+                                issue={value}
+                                setRefresh={setRefresh}
+                            />
+                        );
                     },
                 },
                 {
