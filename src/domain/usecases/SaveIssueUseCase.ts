@@ -12,22 +12,27 @@ import { QualityAnalysisRepository } from "$/domain/repositories/QualityAnalysis
 import { UserRepository } from "$/domain/repositories/UserRepository";
 import _ from "$/domain/entities/generic/Collection";
 import { Maybe } from "$/utils/ts-utils";
+import { IssueRepository } from "../repositories/IssueRepository";
 
 export class SaveIssueUseCase {
     constructor(
         private analysisRepository: QualityAnalysisRepository,
+        private issueRepository: IssueRepository,
         private userRepository: UserRepository,
         private metadata: MetadataItem
     ) {}
 
     execute(options: SaveIssueOptions): FutureData<SaveIssueResponse> {
-        return this.getAnalysis(options).flatMap(analysis => {
-            return this.generateContactEmails(analysis, options).flatMap(contactEmails => {
-                const issueToUpdate = this.buildIssueWithNewValue(options, contactEmails);
+        return Future.joinObj({
+            analysis: this.getAnalysis(options),
+            issue: this.getIssueById(options.issue.id),
+        }).flatMap(({ analysis, issue }) => {
+            return this.generateContactEmails(analysis, options, issue).flatMap(contactEmails => {
+                const issueToUpdate = this.buildIssueWithNewValue(options, issue, contactEmails);
                 const analysisUpdate = QualityAnalysis.build({
                     ...analysis,
                     sections: analysis.sections.map(section => {
-                        if (section.id !== options.issue.type) return section;
+                        if (section.id !== issue.type) return section;
                         return QualityAnalysisSection.create({
                             ...section,
                             issues: [issueToUpdate],
@@ -42,15 +47,20 @@ export class SaveIssueUseCase {
         });
     }
 
+    private getIssueById(issueId: Id): FutureData<QualityAnalysisIssue> {
+        return this.issueRepository.getById(issueId);
+    }
+
     private generateContactEmails(
         analysis: QualityAnalysis,
-        options: SaveIssueOptions
+        options: SaveIssueOptions,
+        issue: QualityAnalysisIssue
     ): FutureData<Maybe<ContactEmailsUsers>> {
         if (options.propertyToUpdate === "followUp" && options.valueToUpdate === true) {
             const usersIds = this.getUsersIdsFromGroup(analysis);
             if (usersIds.length === 0) return Future.success(undefined);
 
-            return this.getUsersByIds(usersIds, options.issue).flatMap(users => {
+            return this.getUsersByIds(usersIds, issue).flatMap(users => {
                 const contactEmails = this.getContactEmailsUsers(users);
                 return Future.success(contactEmails);
             });
@@ -113,44 +123,35 @@ export class SaveIssueUseCase {
 
     private buildIssueWithNewValue(
         options: SaveIssueOptions,
+        issue: QualityAnalysisIssue,
         contactEmails: Maybe<ContactEmailsUsers>
     ): QualityAnalysisIssue {
         switch (options.propertyToUpdate) {
             case "azureUrl": {
-                return this.setNewValue(options);
+                if (this.isUrl(options.valueToUpdate as string))
+                    return this.setNewValue(issue, options);
+                throw Error("Invalid URL");
             }
             case "actionDescription": {
-                return QualityAnalysisIssue.create({
-                    ...options.issue,
-                    actionDescription: options.valueToUpdate as string,
-                });
+                return this.setNewValue(issue, options);
             }
             case "contactEmails": {
-                return QualityAnalysisIssue.create({
-                    ...options.issue,
-                    contactEmails: options.valueToUpdate as string,
-                });
+                return this.setNewValue(issue, options);
             }
             case "comments": {
-                return QualityAnalysisIssue.create({
-                    ...options.issue,
-                    comments: options.valueToUpdate as string,
-                });
+                return this.setNewValue(issue, options);
             }
             case "description": {
-                return QualityAnalysisIssue.create({
-                    ...options.issue,
-                    description: options.valueToUpdate as string,
-                });
+                return this.setNewValue(issue, options);
             }
             case "status": {
                 const actionSelected = this.metadata.optionSets.nhwaStatus.options.find(
                     option => option.code === options.valueToUpdate
                 );
-                if (!actionSelected) return options.issue;
+                if (!actionSelected) return issue;
 
                 return QualityAnalysisIssue.create({
-                    ...options.issue,
+                    ...issue,
                     status: IssueStatus.create(actionSelected),
                 });
             }
@@ -161,14 +162,14 @@ export class SaveIssueUseCase {
                 if (!actionSelected) return options.issue;
 
                 return QualityAnalysisIssue.create({
-                    ...options.issue,
+                    ...issue,
                     action: IssueAction.create(actionSelected),
                 });
             }
             case "followUp": {
                 const value = options.valueToUpdate as boolean;
                 return QualityAnalysisIssue.create({
-                    ...options.issue,
+                    ...issue,
                     contactEmails: value
                         ? this.getContactEmailsString(contactEmails)
                         : options.issue.contactEmails,
@@ -187,15 +188,27 @@ export class SaveIssueUseCase {
         return cc ? `${to} || CC:${cc}` : to;
     }
 
-    private setNewValue(options: SaveIssueOptions): QualityAnalysisIssue {
+    private setNewValue(
+        issue: QualityAnalysisIssue,
+        options: SaveIssueOptions
+    ): QualityAnalysisIssue {
         return QualityAnalysisIssue.create({
-            ...options.issue,
+            ...issue,
             [options.propertyToUpdate]: options.valueToUpdate,
         });
     }
 
     private getAnalysis(options: SaveIssueOptions): FutureData<QualityAnalysis> {
         return this.analysisRepository.getById(options.analysisId);
+    }
+
+    private isUrl(value: string): boolean {
+        if (!value) return true;
+        // Expresión regular para validar una URL
+        const regex = /^(http|https):\/\/[^ "]+$/;
+
+        // Verifica si el texto coincide con la expresión regular
+        return regex.test(value);
     }
 }
 

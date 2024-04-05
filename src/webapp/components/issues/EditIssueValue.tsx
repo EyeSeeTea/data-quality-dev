@@ -61,6 +61,7 @@ export function useUpdateIssueProperty(props: UpdateIssuePropertyProps) {
                         );
                     },
                     err => {
+                        if (setRefresh) setRefresh(refresh => refresh + 1);
                         snackbar.error(err.message);
                         loading.hide();
                     }
@@ -103,7 +104,14 @@ export const EditIssueValue: React.FC<EditIssueValueProps> = React.memo(props =>
         case "actionDescription":
             return <InputInline value={issue.actionDescription} onSave={onSave} />;
         case "azureUrl":
-            return <InputInline value={issue.azureUrl} onSave={onSave} />;
+            return (
+                <InputInline
+                    key={issue.azureUrl}
+                    inputType="url"
+                    value={issue.azureUrl}
+                    onSave={onSave}
+                />
+            );
         case "followUp":
             return (
                 <CheckboxInline
