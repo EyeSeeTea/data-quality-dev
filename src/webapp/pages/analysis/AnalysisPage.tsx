@@ -36,7 +36,13 @@ const useStyles = makeStyles(() => ({
     inactive: {
         backgroundColor: "#8E8E8E",
     },
-    largeIcon: { fontSize: "32px" },
+    largeIcon: {
+        fontSize: "20px",
+        color: "#fff",
+        backgroundColor: "#1976d2",
+        borderRadius: 50,
+        padding: "0.125rem",
+    },
 }));
 
 function StepIcon(props: { completed: boolean; active: boolean; text: string }) {
