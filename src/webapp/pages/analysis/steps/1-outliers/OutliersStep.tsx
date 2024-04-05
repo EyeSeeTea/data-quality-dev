@@ -1,5 +1,5 @@
 import React from "react";
-import { Dropdown } from "@eyeseetea/d2-ui-components";
+import { Dropdown, useLoading } from "@eyeseetea/d2-ui-components";
 
 import i18n from "$/utils/i18n";
 import { algorithmList, thresholdList, useAnalysisOutlier } from "./useOutliers";
@@ -14,13 +14,19 @@ export const OutliersStep: React.FC<PageStepProps> = React.memo(props => {
 
     const [reload, refreshReload] = React.useState(0);
     const [qualityFilters, setQualityFilters] = React.useState(defaultOutlierParams);
+    const loading = useLoading();
 
-    const { runAnalysisOutlier } = useAnalysisOutlier({
+    const { runAnalysisOutlier, isLoading } = useAnalysisOutlier({
         onSucess: qualityAnalysis => {
             refreshReload(reload + 1);
             updateAnalysis(qualityAnalysis);
         },
     });
+
+    React.useEffect(() => {
+        if (isLoading) loading.show(isLoading, i18n.t("Running analysis..."));
+        else loading.hide();
+    }, [isLoading, loading]);
 
     const runAnalysis = () => {
         runAnalysisOutlier(

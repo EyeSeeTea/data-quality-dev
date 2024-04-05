@@ -28,11 +28,11 @@ export function useAnalysisOutlier(props: UseRunAnalysisProps) {
     const { onSucess } = props;
     const { compositionRoot } = useAppContext();
     const snackbar = useSnackbar();
-    const loading = useLoading();
+    const [isLoading, setLoading] = React.useState<boolean>(false);
 
     const runAnalysisOutlier = React.useCallback(
         (algorithm: string, analysisId: Id, sectionId: Id, threshold: string) => {
-            loading.show(true, i18n.t("Running analysis..."));
+            setLoading(true);
             compositionRoot.outlier.run
                 .execute({
                     sectionId: sectionId,
@@ -42,19 +42,19 @@ export function useAnalysisOutlier(props: UseRunAnalysisProps) {
                 })
                 .run(
                     qualityAnalysis => {
-                        loading.hide();
+                        setLoading(false);
                         onSucess(qualityAnalysis);
                     },
                     err => {
                         snackbar.error(err.message);
-                        loading.hide();
+                        setLoading(false);
                     }
                 );
         },
-        [compositionRoot.outlier.run, loading, snackbar, onSucess]
+        [compositionRoot.outlier.run, snackbar, onSucess]
     );
 
-    return { runAnalysisOutlier };
+    return { runAnalysisOutlier, isLoading };
 }
 
 type UseRunAnalysisProps = { onSucess: (qualityAnalysis: QualityAnalysis) => void };
