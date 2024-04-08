@@ -4,7 +4,7 @@ import { Wizard, WizardStep } from "@eyeseetea/d2-ui-components";
 import SettingsIcon from "@material-ui/icons/Settings";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-
+import customTheme from "$/webapp/pages/app/themes/customTheme";
 import { PageHeader } from "$/webapp/components/page-header/PageHeader";
 import { getComponentFromSectionName } from "./steps";
 import styled from "styled-components";
@@ -36,6 +36,12 @@ const useStyles = makeStyles(() => ({
     inactive: {
         backgroundColor: "#8E8E8E",
     },
+    completed: {
+        backgroundColor: customTheme.color.intenseGreen,
+    },
+    withIssues: {
+        backgroundColor: customTheme.color.error,
+    },
     largeIcon: {
         fontSize: "20px",
         color: "#fff",
@@ -45,10 +51,25 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-function StepIcon(props: { completed: boolean; active: boolean; text: string }) {
-    const { active, completed, text } = props;
+function StepIcon(props: {
+    completed: boolean;
+    active: boolean;
+    text: string;
+    hasIssues: boolean;
+}) {
+    const { active, completed, text, hasIssues } = props;
     const classes = useStyles();
-    if (completed) return <CheckCircleIcon className={classes.largeIcon} htmlColor="#B5DFB7" />;
+    if (completed)
+        return (
+            <CheckCircleIcon
+                className={classes.largeIcon}
+                htmlColor={`${customTheme.color.intenseGreen}`}
+            />
+        );
+
+    const issueClasses = _([classes.circle, classes.withIssues]).compact().join(" ");
+
+    if (hasIssues) return <div className={issueClasses}>{text}</div>;
 
     const mergeClasses = _([classes.circle, active ? classes.active : classes.inactive])
         .compact()
@@ -71,10 +92,18 @@ function buildStepsFromSections(
             const index = analysis.sections.findIndex(s => s.id === section.id) + 1;
             const isActive = currentSection === section.name;
             const isCompleted = !QualityAnalysisSection.isPending(section);
+            const hasIssues = section.issues.length > 0;
 
             return {
                 id: section.id,
-                icon: <StepIcon active={isActive} completed={isCompleted} text={String(index)} />,
+                icon: (
+                    <StepIcon
+                        active={isActive}
+                        completed={isCompleted}
+                        text={String(index)}
+                        hasIssues={hasIssues}
+                    />
+                ),
                 key: section.name.toLowerCase(),
                 label: section.name,
                 component: () => (

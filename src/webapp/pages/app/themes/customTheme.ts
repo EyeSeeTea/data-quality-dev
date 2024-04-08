@@ -12,6 +12,7 @@ const customTheme = {
         lightRed: "#FFB8B8",
         lightWarning: "#FFF4E5",
         warning: "#663C00",
+        error: "#B80000",
     },
 };
 
