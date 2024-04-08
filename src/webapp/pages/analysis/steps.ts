@@ -27,9 +27,9 @@ const sectionsComponents = [
     },
 ];
 
-export function getComponentFromSectionName(name: string) {
+export function getComponentFromSectionName(code: string) {
     const sectionComponent = sectionsComponents.find(
-        component => component.name.toLowerCase() === name.toLowerCase()
+        component => component.name.toLowerCase() === code.toLowerCase()
     );
     if (!sectionComponent) return undefined;
     return sectionComponent.component;

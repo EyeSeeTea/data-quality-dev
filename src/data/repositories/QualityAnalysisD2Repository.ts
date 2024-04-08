@@ -32,6 +32,7 @@ import { D2OrgUnit } from "../common/D2Country";
 import { getUid } from "../../utils/uid";
 import { DATA_QUALITY_NAMESPACE } from "$/domain/entities/Settings";
 import { getDefaultModules } from "../common/D2Module";
+import { getProgramStageIndexById } from "../common/utils";
 
 export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
     d2DataElement: D2DataElement;
@@ -351,6 +352,8 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
         event: D2TrackerEvent,
         issue: QualityAnalysisIssue
     ): DataValue[] {
+        const programStageIndex = getProgramStageIndexById(issue.type, this.metadata);
+
         const currentDataValues = [
             {
                 dataElement: this.metadata.dataElements.correlative.id,
@@ -407,6 +410,10 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
             {
                 dataElement: this.metadata.dataElements.status.id,
                 value: this.getValueOrDefault(issue.status?.code),
+            },
+            {
+                dataElement: this.metadata.dataElements.sectionNumber.id,
+                value: String(programStageIndex + 1),
             },
         ];
         return currentDataValues.map((dataValue): DataValue => {
@@ -543,7 +550,7 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
         sectionsInfo: Maybe<AnalysisSectionStatus>,
         qaIssues: QualityAnalysisIssue[]
     ): QualityAnalysisSection[] {
-        return this.metadata.programs.qualityIssues.programStages.map(programStage => {
+        return this.metadata.programs.qualityIssues.programStages.map((programStage, index) => {
             const sectionData = sectionsInfo?.extraInfo?.find(
                 section => section.id === programStage.id
             );
@@ -552,6 +559,7 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
                 name: programStage.name,
                 description: programStage.description,
                 issues: qaIssues.filter(issue => issue.type === programStage.id),
+                position: index + 1,
                 status: sectionData?.status || "",
             });
         });

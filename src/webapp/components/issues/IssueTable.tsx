@@ -149,7 +149,14 @@ export function useTableConfig(props: UseTableConfigProps) {
                     sortable: false,
                     hidden: true,
                     getValue: value => {
-                        return <EditIssueValue key={value.id} field="azureUrl" issue={value} />;
+                        return (
+                            <EditIssueValue
+                                key={value.id}
+                                field="azureUrl"
+                                issue={value}
+                                setRefresh={setRefresh}
+                            />
+                        );
                     },
                 },
                 {
@@ -208,7 +215,7 @@ export function useTableConfig(props: UseTableConfigProps) {
                     },
                 },
             ],
-            initialSorting: { field: "number", order: "desc" },
+            initialSorting: { field: "number", order: "asc" },
             paginationOptions: {
                 pageSizeOptions: [10, 20, 50],
                 pageSizeInitialValue: 20,

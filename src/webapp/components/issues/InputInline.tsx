@@ -7,10 +7,11 @@ import i18n from "$/utils/i18n";
 import styled from "styled-components";
 
 export const InputInline: React.FC<InputInlineProps> = React.memo(props => {
-    const { value, onSave } = props;
+    const { inputType, value, onSave } = props;
     const [showInput, setShowInput] = React.useState(false);
     const [text, setText] = React.useState(() => value);
     const inputRef = React.useRef<HTMLInputElement>();
+    const refForm = React.useRef<HTMLFormElement>(null);
 
     const onDoubleClick = () => {
         setShowInput(true);
@@ -21,41 +22,38 @@ export const InputInline: React.FC<InputInlineProps> = React.memo(props => {
     };
 
     const onKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === "Enter") {
-            const currentValue = inputRef.current?.value || "";
-            setShowInput(false);
-            setText(currentValue);
-            onSave(currentValue);
+        if (event.key === "Enter" && refForm.current) {
+            refForm.current.requestSubmit();
         }
+    };
+
+    const onSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        setShowInput(false);
+        setText(inputRef.current?.value || "");
+        onSave(inputRef.current?.value || "");
     };
 
     return (
         <>
             {showInput ? (
-                <div>
+                <form ref={refForm} onSubmit={onSubmit}>
                     <TextField
                         onKeyUp={onKeyUp}
                         autoFocus
                         defaultValue={text}
                         inputRef={inputRef}
+                        type={inputType || "text"}
                     />
                     <div>
-                        <IconButton
-                            aria-label={i18n.t("Save")}
-                            onClick={() => {
-                                setShowInput(false);
-                                setText(inputRef.current?.value || "");
-                                onSave(inputRef.current?.value || "");
-                            }}
-                            size="small"
-                        >
+                        <IconButton aria-label={i18n.t("Save")} size="small" type="submit">
                             <SaveIcon />
                         </IconButton>
                         <IconButton aria-label={i18n.t("Cancel")} onClick={onCancel} size="small">
                             <CancelIcon />
                         </IconButton>
                     </div>
-                </div>
+                </form>
             ) : (
                 <CellContainer
                     style={{ height: text.length === 0 ? "70px" : undefined }}
@@ -78,4 +76,8 @@ const CellContainer = styled.div`
     }
 `;
 
-type InputInlineProps = { value: string; onSave: (value: string) => void };
+type InputInlineProps = {
+    inputType?: React.HTMLInputTypeAttribute;
+    value: string;
+    onSave: (value: string) => void;
+};

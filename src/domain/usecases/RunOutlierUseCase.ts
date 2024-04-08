@@ -1,11 +1,8 @@
 import { FutureData } from "$/data/api-futures";
-import { IssueStatus } from "$/domain/entities/IssueStatus";
 import { Outlier } from "$/domain/entities/Outlier";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
-import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
 import { Id } from "$/domain/entities/Ref";
 import { Future } from "$/domain/entities/generic/Future";
-import { getUid } from "$/utils/uid";
 import { IssueRepository } from "$/domain/repositories/IssueRepository";
 import { OutlierRepository } from "$/domain/repositories/OutlierRepository";
 import { QualityAnalysisRepository } from "$/domain/repositories/QualityAnalysisRepository";
@@ -16,8 +13,8 @@ import { UCIssue } from "./common/UCIssue";
 import { UCAnalysis } from "./common/UCAnalysis";
 
 export class RunOutlierUseCase {
-    issueUseCase: UCIssue;
-    analysisUseCase: UCAnalysis;
+    private issueUseCase: UCIssue;
+    private analysisUseCase: UCAnalysis;
     constructor(
         private outlierRepository: OutlierRepository,
         private analysisRepository: QualityAnalysisRepository,
@@ -99,32 +96,26 @@ export class RunOutlierUseCase {
         options: RunOutlierUseCaseOptions
     ): FutureData<void> {
         if (outliers.length === 0) return Future.success(undefined);
+        const sectionNumber = this.issueUseCase.getSectionNumber(
+            analysis.sections,
+            options.sectionId
+        );
         const issuesToSave = outliers.map((outlier, index) => {
             const currentNumber = totalIssues + 1 + index;
-            const correlative = currentNumber < 10 ? `0${currentNumber}` : currentNumber;
-            const issueNumber = `${analysis.sequential.value}-S01-I${correlative}`;
-            return new QualityAnalysisIssue({
-                id: getUid(`issue-event_${options.sectionId}_${new Date().getTime()}`),
-                number: issueNumber,
-                azureUrl: "",
-                period: outlier.period,
-                country: { id: outlier.countryId, name: "", path: "", writeAccess: false },
-                dataElement: { id: outlier.dataElementId, name: "" },
-                categoryOption: { id: outlier.categoryOptionId, name: "" },
-                description: this.getDescriptionIssue(outlier, options),
-                followUp: false,
-                status: IssueStatus.create({
-                    id: "",
-                    code: "0",
-                    name: "",
-                }),
-                action: undefined,
-                actionDescription: "",
-                type: options.sectionId,
-                comments: "",
-                contactEmails: "",
-                correlative: String(currentNumber),
-            });
+            const prefix = `${analysis.sequential.value}-${sectionNumber}`;
+            const issueNumber = this.issueUseCase.generateIssueNumber(currentNumber, prefix);
+            return this.issueUseCase.buildDefaultIssue(
+                {
+                    categoryOptionComboId: outlier.categoryOptionId,
+                    correlative: String(currentNumber),
+                    countryId: outlier.countryId,
+                    dataElementId: outlier.dataElementId,
+                    description: this.getDescriptionIssue(outlier, options),
+                    issueNumber: issueNumber,
+                    period: outlier.period,
+                },
+                options.sectionId
+            );
         });
         return this.issueUseCase.save(issuesToSave, analysis.id);
     }
