@@ -237,7 +237,6 @@ export function useGetRows(
 ) {
     const { compositionRoot } = useAppContext();
     const [loading, setLoading] = React.useState(false);
-
     const getRows = React.useCallback<GetRows<QualityAnalysisIssue>>(
         (search, pagination, sorting) => {
             return new Promise((resolve, reject) => {
@@ -262,6 +261,7 @@ export function useGetRows(
                             sectionId: sectionId,
                             id: undefined,
                             followUp: filters.followUp,
+                            step: filters.step,
                         },
                     })
                     .run(
@@ -277,16 +277,17 @@ export function useGetRows(
             });
         },
         [
-            compositionRoot.summary.get,
-            filters.actions,
-            filters.followUp,
-            filters.periods,
-            filters.status,
-            filters.countries,
-            sectionId,
-            analysisId,
             reloadKey,
             refreshIssue,
+            compositionRoot.summary.get,
+            filters.actions,
+            filters.countries,
+            filters.periods,
+            filters.status,
+            filters.followUp,
+            filters.step,
+            analysisId,
+            sectionId,
         ]
     );
 
@@ -294,7 +295,7 @@ export function useGetRows(
 }
 
 export const IssueTable: React.FC<IssueTableProps> = React.memo(props => {
-    const { analysisId, reload, sectionId, showExport } = props;
+    const { analysisId, reload, sectionId, showExport, showStepFilter } = props;
     const [filters, setFilters] = React.useState(initialFilters);
 
     const { tableConfig, refresh } = useTableConfig({
@@ -302,13 +303,20 @@ export const IssueTable: React.FC<IssueTableProps> = React.memo(props => {
         analysisId: analysisId,
         sectionId: sectionId,
         showExport: showExport,
+        showStepFilter: showStepFilter,
     });
     const { getRows, loading } = useGetRows(filters, reload, analysisId, sectionId, refresh);
     const config = useObjectsTable(tableConfig, getRows);
 
     const filterComponents = React.useMemo(() => {
-        return <IssueFilters initialFilters={filters} onChange={setFilters} />;
-    }, [filters]);
+        return (
+            <IssueFilters
+                initialFilters={filters}
+                showStepFilter={showStepFilter}
+                onChange={setFilters}
+            />
+        );
+    }, [filters, showStepFilter]);
 
     return <ObjectsTable loading={loading} {...config} filterComponents={filterComponents} />;
 });
@@ -318,6 +326,7 @@ type IssueTableProps = {
     reload: number;
     sectionId: Maybe<Id>;
     showExport?: boolean;
+    showStepFilter?: boolean;
 };
 
 type UseTableConfigProps = {
@@ -325,6 +334,7 @@ type UseTableConfigProps = {
     filters: GetIssuesOptions["filters"];
     sectionId: Maybe<Id>;
     showExport?: boolean;
+    showStepFilter?: boolean;
 };
 
 type UseCopyContactEmailsProps = { onSuccess?: () => void };
