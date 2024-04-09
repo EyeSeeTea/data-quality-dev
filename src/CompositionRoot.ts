@@ -180,7 +180,9 @@ function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) 
                 repositories.qualityAnalysisRepository,
                 repositories.issueRepository,
                 repositories.validationRuleAnalysisRepository,
-                repositories.validationRuleGroupRepository
+                repositories.validationRuleGroupRepository,
+                repositories.countryRepository,
+                metadata
             ),
         },
     };

@@ -4,6 +4,8 @@ import { Id } from "$/domain/entities/Ref";
 import _ from "$/domain/entities/generic/Collection";
 import { Country } from "$/domain/entities/Country";
 import { Future } from "$/domain/entities/generic/Future";
+import { CountryOptions } from "$/domain/repositories/CountryRepository";
+import { RowsPaginated } from "$/domain/entities/Pagination";
 
 export class D2OrgUnit {
     constructor(private api: D2Api) {}
@@ -15,13 +17,7 @@ export class D2OrgUnit {
                 .map(countriesIds => {
                     return apiToFuture(
                         this.api.models.organisationUnits.get({
-                            fields: {
-                                id: true,
-                                displayName: true,
-                                displayFormName: true,
-                                displayShortName: true,
-                                path: true,
-                            },
+                            fields: orgUnitFields,
                             filter: { id: { in: countriesIds } },
                         })
                     ).map(d2Response => {
@@ -48,4 +44,64 @@ export class D2OrgUnit {
             return Future.success(allCountries);
         });
     }
+
+    getAll(
+        options: CountryOptions,
+        state: { initialPage: number; countries: Country[] }
+    ): FutureData<Country[]> {
+        const { initialPage, countries } = state;
+        return this.getCountries(options, initialPage).flatMap(response => {
+            const newCountries = [...countries, ...response.rows];
+            if (response.pagination.page >= response.pagination.pageCount) {
+                return Future.success(newCountries);
+            } else {
+                return this.getAll(options, {
+                    initialPage: initialPage + 1,
+                    countries: newCountries,
+                });
+            }
+        });
+    }
+
+    private getCountries(
+        options: CountryOptions,
+        page: number
+    ): FutureData<RowsPaginated<Country>> {
+        return apiToFuture(
+            this.api.models.organisationUnits.get({
+                fields: orgUnitFields,
+                filter: { level: { eq: options.level || undefined } },
+                page: page,
+                pageSize: 100,
+            })
+        ).map(d2Response => {
+            return {
+                pagination: {
+                    page: d2Response.pager.page,
+                    pageCount: d2Response.pager.pageCount,
+                    pageSize: d2Response.pager.pageSize,
+                    total: d2Response.pager.total,
+                },
+                rows: d2Response.objects.map(d2OrgUnit => {
+                    return {
+                        id: d2OrgUnit.id,
+                        name:
+                            d2OrgUnit.displayShortName ||
+                            d2OrgUnit.displayFormName ||
+                            d2OrgUnit.displayName,
+                        path: d2OrgUnit.path,
+                        writeAccess: false,
+                    };
+                }),
+            };
+        });
+    }
 }
+
+const orgUnitFields = {
+    id: true,
+    displayName: true,
+    displayFormName: true,
+    displayShortName: true,
+    path: true,
+};

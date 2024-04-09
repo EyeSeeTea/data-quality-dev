@@ -25,11 +25,7 @@ export class ValidationRuleD2Repository implements ValidationRuleGroupRepository
     getById(id: Id): FutureData<ValidationRuleGroup> {
         return apiToFuture(
             this.api.models.validationRuleGroups.get({
-                fields: {
-                    id: true,
-                    name: true,
-                    description: true,
-                },
+                fields: { id: true, name: true, description: true },
                 filter: { id: { eq: id } },
             })
         ).flatMap(d2Response => {
