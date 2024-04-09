@@ -399,6 +399,11 @@ export class IssueD2Repository implements IssueRepository {
 
         const followUpFilter = this.buildFollowUpFilter(filter.followUp);
 
+        const stepFilter = this.buildFilterMultipleValue(
+            filter.step,
+            this.metadata.dataElements.sectionNumber.id
+        );
+
         const allFilters = _([
             numberFilter,
             periodsFilter,
@@ -406,6 +411,7 @@ export class IssueD2Repository implements IssueRepository {
             actionsFilter,
             countriesFilter,
             followUpFilter,
+            stepFilter,
         ])
             .compact()
             .value();

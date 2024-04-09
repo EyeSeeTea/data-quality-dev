@@ -17,7 +17,7 @@ import i18n from "$/utils/i18n";
 import _ from "$/domain/entities/generic/Collection";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 import { Maybe } from "$/utils/ts-utils";
-import { IssueTable } from "$/webapp/components/issues/IssueTable";
+import { SummaryStep } from "./SummaryStep";
 import { ClassNameMap } from "@material-ui/styles";
 
 const useStyles = makeStyles(() => ({
@@ -133,9 +133,8 @@ function buildStepsFromSections(
             icon: <ListAltIcon className={classes.largeIcon} color="primary" />,
             key: "Summary",
             label: i18n.t("Summary"),
-            component: () => (
-                <IssueTable analysisId={analysis.id} sectionId={undefined} reload={0} showExport />
-            ),
+            component: () => <SummaryStep analysis={analysis} name={i18n.t("Summary")} />,
+            completed: false,
         },
     ];
 }
