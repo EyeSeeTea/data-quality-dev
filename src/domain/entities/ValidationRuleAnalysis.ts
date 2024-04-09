@@ -1,4 +1,5 @@
 import { Id, Period } from "./Ref";
+import { ValidationRule } from "./ValidationRuleGroup";
 
 export type ValidationRuleAnalysis = {
     id: Id;
@@ -8,4 +9,5 @@ export type ValidationRuleAnalysis = {
     leftValue: number;
     rightValue: number;
     operator: string;
+    validationRule: ValidationRule;
 };

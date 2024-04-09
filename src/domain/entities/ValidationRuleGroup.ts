@@ -1,4 +1,5 @@
 import { Maybe } from "$/utils/ts-utils";
+import { NamedRef } from "@eyeseetea/d2-logger/domain/entities/Base";
 import { Id } from "./Ref";
 
 export type ValidationRuleGroup = {
@@ -6,3 +7,5 @@ export type ValidationRuleGroup = {
     name: string;
     description: Maybe<string>;
 };
+
+export type ValidationRule = NamedRef & { description: Maybe<string> };

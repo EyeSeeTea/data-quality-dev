@@ -139,10 +139,10 @@ export class RunValidationsUseCase {
         validationRuleGroup: ValidationRuleGroup,
         rule: ValidationRuleAnalysis
     ): string {
-        if (validationRuleGroup.description) {
-            return `Validation Rule ${validationRuleGroup.description} for Validation Rule Group ${validationRuleGroup.name} failed: ${rule.leftValue} ${rule.operator} ${rule.rightValue}`;
+        if (rule.validationRule.description) {
+            return `Validation Rule ${rule.validationRule.name} - ${rule.validationRule.description} associated to the Validation Rule Group ${validationRuleGroup.name} failed: ${rule.leftValue} ${rule.operator} ${rule.rightValue}`;
         } else {
-            return `Validation Rule Group ${validationRuleGroup.name} failed: ${rule.leftValue} ${rule.operator} ${rule.rightValue}`;
+            return `Validation Rule ${rule.validationRule.name} associated to the Validation Rule Group ${validationRuleGroup.name} failed: ${rule.leftValue} ${rule.operator} ${rule.rightValue}`;
         }
     }
 
