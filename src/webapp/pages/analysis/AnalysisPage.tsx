@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core";
 import { Wizard, WizardStep } from "@eyeseetea/d2-ui-components";
 import SettingsIcon from "@material-ui/icons/Settings";
 import ListAltIcon from "@material-ui/icons/ListAlt";
-import CheckIcon from "@material-ui/icons/Check";
 import customTheme from "$/webapp/pages/app/themes/customTheme";
 import { PageHeader } from "$/webapp/components/page-header/PageHeader";
 import { getComponentFromSectionName } from "./steps";
@@ -31,15 +30,15 @@ const useStyles = makeStyles(() => ({
         width: "24px",
     },
     active: {
-        backgroundColor: "#1976d2",
+        backgroundColor: "#8E8E8E",
     },
-    inactive: {
+    pending: {
         backgroundColor: "#8E8E8E",
     },
     completed: {
         backgroundColor: customTheme.color.intenseGreen,
     },
-    withIssues: {
+    error: {
         backgroundColor: customTheme.color.error,
     },
     largeIcon: {
@@ -52,37 +51,38 @@ const useStyles = makeStyles(() => ({
 }));
 
 function StepIcon(props: {
-    completed: boolean;
     active: boolean;
     text: string;
     hasIssues: boolean;
+    isPending: boolean;
 }) {
-    const { active, text, hasIssues } = props;
+    const { active, text, hasIssues, isPending } = props;
     const classes = useStyles();
-    if (!hasIssues)
-        return (
-            <CheckIcon
-                className={classes.largeIcon}
-                htmlColor={`${customTheme.color.intenseGreen}`}
-            />
-        );
 
-    const issueClasses = _([classes.circle, classes.withIssues]).compact().join(" ");
-
-    if (hasIssues) return <div className={issueClasses}>{text}</div>;
-
-    const mergeClasses = _([classes.circle, active ? classes.active : classes.inactive])
+    const issuesClasses = _([classes.circle, active ? classes.active : classes.error])
+        .compact()
+        .join(" ");
+    const pendingClasses = _([classes.circle, active ? classes.active : classes.pending])
+        .compact()
+        .join(" ");
+    const completedClasses = _([classes.circle, active ? classes.active : classes.completed])
         .compact()
         .join(" ");
 
-    return <div className={mergeClasses}>{text}</div>;
+    if (isPending) {
+        return <div className={pendingClasses}>{text}</div>;
+    } else if (hasIssues) {
+        return <div className={issuesClasses}>{text}</div>;
+    } else {
+        return <div className={completedClasses}>{text}</div>;
+    }
 }
 
 function buildStepsFromSections(
     analysis: QualityAnalysis,
     updateAnalysis: UpdateAnalysisState,
     currentSection: Maybe<string>,
-    classes: ClassNameMap<"circle" | "active" | "inactive" | "largeIcon">
+    classes: ClassNameMap<"circle" | "active" | "pending" | "completed" | "error" | "largeIcon">
 ): WizardStep[] {
     const sectionSteps = _(analysis.sections)
         .map((section): Maybe<WizardStep & { id: string }> => {
@@ -91,15 +91,15 @@ function buildStepsFromSections(
 
             const index = analysis.sections.findIndex(s => s.id === section.id) + 1;
             const isActive = currentSection === section.name;
-            const isCompleted = !QualityAnalysisSection.isPending(section);
-            const hasIssues = section.issues.length > 0;
+            const isPending = section.status === "pending";
+            const hasIssues = section.status === "success_with_issues";
 
             return {
                 id: section.id,
                 icon: (
                     <StepIcon
                         active={isActive}
-                        completed={isCompleted}
+                        isPending={isPending}
                         text={String(index)}
                         hasIssues={hasIssues}
                     />
@@ -114,7 +114,6 @@ function buildStepsFromSections(
                         updateAnalysis={updateAnalysis}
                     />
                 ),
-                completed: isCompleted,
             };
         })
         .compact()
@@ -126,11 +125,11 @@ function buildStepsFromSections(
             label: i18n.t("Configuration"),
             component: ConfigurationStep,
             completed: false,
-            icon: <SettingsIcon className={classes.largeIcon} color="primary" />,
+            icon: <SettingsIcon className={classes.largeIcon} />,
         },
         ...sectionSteps,
         {
-            icon: <ListAltIcon className={classes.largeIcon} color="primary" />,
+            icon: <ListAltIcon className={classes.largeIcon} />,
             key: "Summary",
             label: i18n.t("Summary"),
             component: () => <SummaryStep analysis={analysis} name={i18n.t("Summary")} />,
