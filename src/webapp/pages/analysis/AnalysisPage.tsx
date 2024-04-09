@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core";
 import { Wizard, WizardStep } from "@eyeseetea/d2-ui-components";
 import SettingsIcon from "@material-ui/icons/Settings";
 import ListAltIcon from "@material-ui/icons/ListAlt";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import CheckIcon from "@material-ui/icons/Check";
 import customTheme from "$/webapp/pages/app/themes/customTheme";
 import { PageHeader } from "$/webapp/components/page-header/PageHeader";
 import { getComponentFromSectionName } from "./steps";
@@ -57,11 +57,11 @@ function StepIcon(props: {
     text: string;
     hasIssues: boolean;
 }) {
-    const { active, completed, text, hasIssues } = props;
+    const { active, text, hasIssues } = props;
     const classes = useStyles();
-    if (completed)
+    if (!hasIssues)
         return (
-            <CheckCircleIcon
+            <CheckIcon
                 className={classes.largeIcon}
                 htmlColor={`${customTheme.color.intenseGreen}`}
             />
