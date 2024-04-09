@@ -101,7 +101,9 @@ export class RunValidationsUseCase {
                 country: { id: rule.countryId, name: "", path: "", writeAccess: false },
                 dataElement: undefined,
                 categoryOption: { id: rule.categoryOptionId, name: "" },
-                description: `Validation Rule ${validationRuleGroup.description} for ${validationRuleGroup.name} failed: ${rule.leftValue} ${rule.operator} ${rule.rightValue}`,
+                description: validationRuleGroup.description
+                    ? `Validation Rule ${validationRuleGroup.description} for ${validationRuleGroup.name} failed: ${rule.leftValue} ${rule.operator} ${rule.rightValue}`
+                    : `Validation Rule Group ${validationRuleGroup.name} failed: ${rule.leftValue} ${rule.operator} ${rule.rightValue}`,
                 followUp: false,
                 status: IssueStatus.create({
                     id: "",
