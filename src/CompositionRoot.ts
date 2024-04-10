@@ -42,6 +42,7 @@ import { GetQualityAnalysisUseCase } from "./domain/usecases/GetQualityAnalisysU
 import { GetSettingsUseCase } from "./domain/usecases/GetSettingsUseCase";
 import { SaveIssueUseCase } from "./domain/usecases/SaveIssueUseCase";
 import { SaveConfigAnalysisUseCase } from "./domain/usecases/SaveConfigAnalysisUseCase";
+import { ValidationRuleGroupRepository } from "./domain/repositories/ValidationRuleGroupRepository";
 import { GetAllIssuesUseCase } from "./domain/usecases/GetAllIssuesUseCase";
 import { D2Api } from "./types/d2-api";
 import { RunPractitionersValidationUseCase } from "./domain/usecases/RunPractitionersValidationUseCase";
@@ -53,7 +54,14 @@ import { GetMissingDisaggregatesUseCase } from "./domain/usecases/GetMissingDisa
 import { GetCategoryDesaggregationsUseCase } from "$/domain/usecases/GetCategoryDesaggregationsUseCase";
 import { ValidateMidwiferyAndPersonnelUseCase } from "./domain/usecases/ValidateMidwiferyAndPersonnelUseCase";
 import { GetMidwiferyPersonnelDisaggregationsUseCase } from "$/domain/usecases/GetMidwiferyPersonnelDisaggregationsUseCase";
+import { ValidationRuleD2Repository } from "./data/repositories/ValidationRuleGroupD2Repository";
+import { ValidationRuleTestRepository } from "./data/repositories/ValidationRuleGroupTestRepository";
+import { GetValidationRuleGroupUseCase } from "./domain/usecases/GetValidationRuleGroupUseCase";
 import { CopyContactEmailsUseCase } from "$/domain/usecases/CopyContactEmailsUseCase";
+import { RunValidationsUseCase } from "./domain/usecases/RunValidationsUseCase";
+import { ValidationRuleAnalysisD2Repository } from "./data/repositories/ValidationRuleAnalysisD2Repository";
+import { ValidationRuleAnalysisRepository } from "./domain/repositories/ValidationRuleAnalysisRepository";
+import { ValidationRuleAnalysisTestRepository } from "./data/repositories/ValidationRuleAnalysisTestRepository";
 import { ExportIssuesUseCase } from "$/domain/usecases/ExportIssuesUseCase";
 import { IssueExportRepository } from "$/domain/repositories/IssueExportRepository";
 import { IssueSpreadSheetRepository } from "./data/repositories/IssueSpreadSheetRepository";
@@ -73,6 +81,8 @@ type Repositories = {
     countryRepository: CountryRepository;
     sequentialRepository: SequentialRepository;
     dataValueRepository: DataValueRepository;
+    validationRuleGroupRepository: ValidationRuleGroupRepository;
+    validationRuleAnalysisRepository: ValidationRuleAnalysisRepository;
     issueExportRepository: IssueExportRepository;
 };
 
@@ -97,6 +107,9 @@ function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) 
             remove: new RemoveQualityUseCase(repositories.qualityAnalysisRepository),
             saveConfig: new SaveConfigAnalysisUseCase(repositories.qualityAnalysisRepository),
             updateStatus: new UpdateStatusAnalysisUseCase(repositories.qualityAnalysisRepository),
+            validationRuleGroup: {
+                get: new GetValidationRuleGroupUseCase(repositories.validationRuleGroupRepository),
+            },
         },
         outlier: {
             get: new GetOutlierIssuesUseCase(repositories.issueRepository),
@@ -161,6 +174,17 @@ function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) 
                 repositories.settingsRepository
             ),
         },
+        validationRules: {
+            get: new GetValidationRuleGroupUseCase(repositories.validationRuleGroupRepository),
+            run: new RunValidationsUseCase(
+                repositories.qualityAnalysisRepository,
+                repositories.issueRepository,
+                repositories.validationRuleAnalysisRepository,
+                repositories.validationRuleGroupRepository,
+                repositories.countryRepository,
+                metadata
+            ),
+        },
     };
 }
 
@@ -177,6 +201,8 @@ export function getWebappCompositionRoot(api: D2Api, metadata: MetadataItem) {
         countryRepository: new CountryD2Repository(api),
         sequentialRepository: new SequentialD2Repository(api, metadata),
         dataValueRepository: new DataValueD2Repository(api),
+        validationRuleGroupRepository: new ValidationRuleD2Repository(api),
+        validationRuleAnalysisRepository: new ValidationRuleAnalysisD2Repository(api),
         issueExportRepository: new IssueSpreadSheetRepository(metadata),
     };
 
@@ -196,6 +222,8 @@ export function getTestCompositionRoot() {
         countryRepository: new CountryTestRepository(),
         sequentialRepository: new SequentialTestRepository(),
         dataValueRepository: new DataValueTestRepository(),
+        validationRuleGroupRepository: new ValidationRuleTestRepository(),
+        validationRuleAnalysisRepository: new ValidationRuleAnalysisTestRepository(),
         issueExportRepository: new IssueSpreadSheetTestRepository(),
     };
 
