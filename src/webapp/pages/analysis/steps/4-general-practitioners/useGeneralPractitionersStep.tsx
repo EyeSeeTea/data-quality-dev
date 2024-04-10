@@ -61,10 +61,7 @@ export function useGeneralPractitionersStep(props: UseGeneralPractitionersStepPr
         compositionRoot.modules.getDisaggregations.execute(analysis.module.id).run(
             disaggregations => {
                 const initialDisaggregations = disaggregations.map(disaggregation => {
-                    return {
-                        value: disaggregation.id,
-                        text: disaggregation.name,
-                    };
+                    return { value: disaggregation.id, text: disaggregation.name };
                 });
                 setDisaggregations(initialDisaggregations);
                 setSelectedDissagregations(initialDisaggregations.map(item => item.value));

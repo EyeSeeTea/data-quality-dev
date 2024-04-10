@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, TextField } from "@material-ui/core";
-import { Dropdown, OrgUnitsSelector, useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
+import { Dropdown, OrgUnitsSelector, useSnackbar } from "@eyeseetea/d2-ui-components";
 
 import i18n from "$/utils/i18n";
 import { useAppContext } from "$/webapp/contexts/app-context";
@@ -25,30 +25,26 @@ export function getIdFromCountriesPaths(paths: string[]): string[] {
 export function useCountries(props: UseCountriesProps) {
     const { ids } = props;
     const { compositionRoot } = useAppContext();
-    const loading = useLoading();
     const snackbar = useSnackbar();
     const [countries, setCountries] = React.useState<Country[]>();
 
     React.useEffect(() => {
         if (ids.length === 0) return;
-        loading.show();
         compositionRoot.countries.getByIds.execute(ids).run(
             result => {
                 setCountries(result);
-                loading.hide();
             },
             err => {
                 snackbar.error(err.message);
-                loading.hide();
             }
         );
-    }, [compositionRoot.countries.getByIds, loading, ids, snackbar]);
+    }, [compositionRoot.countries.getByIds, ids, snackbar]);
 
     return { countries };
 }
 
 export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(props => {
-    const { initialCountries, initialData, onSave } = props;
+    const { initialData, onSave } = props;
     const { api, currentUser, metadata } = useAppContext();
     const { countries } = useCountries({ ids: initialData.countriesAnalysis });
     const [formData, setFormData] = React.useState<QualityAnalysis>(() => {
@@ -152,20 +148,18 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
                 </DropdownWrapper>
             </FormControlsContainer>
 
-            {initialCountries.length > 0 && (
-                <OrgUnitContainer $disabled={disableSave}>
-                    <OrgUnitsSelector
-                        api={api}
-                        onChange={onOrgUnitsChange}
-                        selected={selectedOrgUnits}
-                        levels={[1, 2, 3]}
-                        selectableLevels={[1, 2, 3]}
-                        rootIds={currentUser.countries.map(country => country.id)}
-                        withElevation={false}
-                        initiallyExpanded={selectedOrgUnits}
-                    />
-                </OrgUnitContainer>
-            )}
+            <OrgUnitContainer $disabled={disableSave}>
+                <OrgUnitsSelector
+                    api={api}
+                    onChange={onOrgUnitsChange}
+                    selected={selectedOrgUnits}
+                    levels={[1, 2, 3]}
+                    selectableLevels={[1, 2, 3]}
+                    rootIds={currentUser.countries.map(country => country.id)}
+                    withElevation={false}
+                />
+            </OrgUnitContainer>
+
             <ActionsContainer>
                 <Button type="submit" variant="contained" color="primary">
                     {i18n.t("Save Config Analysis")}
@@ -176,7 +170,6 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
 });
 
 type ConfigurationFormProps = {
-    initialCountries: Id[];
     initialData: QualityAnalysis;
     onSave: (data: QualityAnalysis) => void;
 };

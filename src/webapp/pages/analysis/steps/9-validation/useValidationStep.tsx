@@ -1,49 +1,26 @@
-import { useCallback, useEffect, useState } from "react";
+import React from "react";
 import i18n from "$/utils/i18n";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 import { UpdateAnalysisState } from "../../AnalysisPage";
-import { ValidationRuleGroup } from "$/domain/entities/ValidationRuleGroup";
+import { Maybe } from "$/utils/ts-utils";
 
 export function useValidationStep(props: UseValidationStepProps) {
     const { analysis, section, updateAnalysis } = props;
-    const { compositionRoot } = useAppContext();
+    const { compositionRoot, validationRuleGroups } = useAppContext();
     const snackbar = useSnackbar();
     const loading = useLoading();
 
-    const [reload, refreshReload] = useState(0);
-    const [validationRules, setValidationRules] = useState<{ value: string; text: string }[]>([]);
-    const [selectedValidationRule, setSelectedValidationRule] = useState<string | undefined>("");
+    const [reload, refreshReload] = React.useState(0);
+    const [selectedValidationRule, setSelectedValidationRule] = React.useState<Maybe<string>>("");
 
-    useEffect(() => {
-        loading.show(true, i18n.t("Loading"));
-
-        const fetchData = async () => {
-            compositionRoot.validationRules.get.execute().run(
-                (items: ValidationRuleGroup[]) => {
-                    const finalItems = items.map(item => ({
-                        value: item.id.toString(),
-                        text: item.name,
-                    }));
-                    setValidationRules(finalItems);
-                    loading.show(false);
-                },
-                error => {
-                    loading.show(false);
-                    snackbar.error(error.message);
-                }
-            );
-        };
-        fetchData();
-    }, [section.id, compositionRoot.validationRules.get, loading, snackbar]);
-
-    const handleChange = (value: string | undefined) => {
+    const handleChange = (value: Maybe<string>) => {
         setSelectedValidationRule(value);
     };
 
-    const runAnalysis = useCallback(() => {
+    const runAnalysis = React.useCallback(() => {
         loading.show(true, i18n.t("Running analysis..."));
         compositionRoot.validationRules.run
             .execute({
@@ -73,10 +50,16 @@ export function useValidationStep(props: UseValidationStepProps) {
         snackbar,
     ]);
 
+    const validationRulesOptions = React.useMemo(() => {
+        return validationRuleGroups.map(validationRuleGroup => {
+            return { text: validationRuleGroup.name, value: validationRuleGroup.id };
+        });
+    }, [validationRuleGroups]);
+
     return {
         analysis,
         reload,
-        validationRules,
+        validationRules: validationRulesOptions,
         handleChange,
         runAnalysis,
         selectedValidationRule,
