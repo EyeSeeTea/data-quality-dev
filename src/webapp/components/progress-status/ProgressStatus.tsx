@@ -2,10 +2,11 @@ import Typography from "@material-ui/core/Typography";
 import styled, { css } from "styled-components";
 import React from "react";
 import customTheme from "$/webapp/pages/app/themes/customTheme";
-import { Step } from "$/webapp/pages/dashboard/mock";
+import Tooltip from "@material-ui/core/Tooltip";
 
 type Props = {
-    status: Step["status"];
+    status: string;
+    name: string;
     position: number;
 };
 
@@ -33,6 +34,7 @@ const Container = styled.li<ContainerProps>`
     height: 1.75rem;
     width: 1.75rem;
     background-color: ${customTheme.color.lightGrey};
+    cursor: default;
 
     ${({ $status }) =>
         $status === "success" &&

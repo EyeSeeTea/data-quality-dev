@@ -37,6 +37,7 @@ const metadataCodes = {
         contactEmails: "NHWA_DQI_Contact_Emails",
         comments: "NHWA_DQI_Comments",
         correlative: "NHWA_DQI_Issue_Correlative_Number",
+        sectionNumber: "NHWA_DQI_Section_Number",
     },
     dataSets: { module1: "NHWA-M1-2023", module2: "NHWA-M2-2023" },
     userGroups: {
@@ -75,9 +76,10 @@ const metadataFields = {
             id: true,
             name: true,
             code: true,
-            programStages: { id: true, name: true, description: true },
+            programStages: { id: true, code: true, name: true, description: true, sortOrder: true },
         },
         filter: { code: { in: rec(metadataCodes.programs).values() } },
+        order: "sortOrder:asc",
     },
     userGroups: {
         fields: { id: true, name: true, code: true, users: true },

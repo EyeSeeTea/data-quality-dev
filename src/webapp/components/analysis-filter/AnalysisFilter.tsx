@@ -11,7 +11,7 @@ import { Id } from "$/domain/entities/Ref";
 
 const currentYear = new Date().getFullYear();
 
-export const periods = Collection.range(currentYear - 5, currentYear)
+export const periods = Collection.range(currentYear - 5, currentYear + 1)
     .map(period => {
         return { value: period.toString(), text: period.toString() };
     })
@@ -79,7 +79,7 @@ export const AnalysisFilters: React.FC<AnalysisFiltersProps> = props => {
             />
 
             <MenuButton
-                label={i18n.t("New Data Quality")}
+                label={i18n.t("New Data Quality Report")}
                 items={modules.map(module => ({ id: module.id, label: module.name }))}
                 onItemSelected={onModuleSelected}
             />

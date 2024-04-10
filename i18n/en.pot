@@ -5,8 +5,56 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-03-18T13:19:03.147Z\n"
-"PO-Revision-Date: 2024-03-18T13:19:03.147Z\n"
+"POT-Creation-Date: 2024-04-03T15:04:11.778Z\n"
+"PO-Revision-Date: 2024-04-03T15:04:11.779Z\n"
+
+msgid "ID"
+msgstr ""
+
+msgid "Number"
+msgstr ""
+
+msgid "Azure URL"
+msgstr ""
+
+msgid "Period"
+msgstr ""
+
+msgid "Country"
+msgstr ""
+
+msgid "Data Element"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Follow Up"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Action"
+msgstr ""
+
+msgid "Action Description"
+msgstr ""
+
+msgid "Comments"
+msgstr ""
+
+msgid "Contact Emails"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
@@ -38,10 +86,7 @@ msgstr ""
 msgid "End Date"
 msgstr ""
 
-msgid "Status"
-msgstr ""
-
-msgid "New Data Quality"
+msgid "New Data Quality Report"
 msgstr ""
 
 msgid "Add"
@@ -79,12 +124,6 @@ msgstr ""
 msgid "Double click to edit"
 msgstr ""
 
-msgid "Yes"
-msgstr ""
-
-msgid "No"
-msgstr ""
-
 msgid "{{countryNames}} and {{moreCountriesCount}} more"
 msgstr ""
 
@@ -97,49 +136,28 @@ msgstr ""
 msgid "Periods"
 msgstr ""
 
-msgid "Action"
+msgid "Step"
 msgstr ""
 
-msgid "Follow Up"
-msgstr ""
-
-msgid "Copying contact emails..."
+msgid "Copying Contact Emails and marking for Follow-Up"
 msgstr ""
 
 msgid "Contact emails copied"
 msgstr ""
 
-msgid "Extend Contact Emails"
+msgid "Exporting Issues..."
+msgstr ""
+
+msgid "Issues exported"
+msgstr ""
+
+msgid "Export"
+msgstr ""
+
+msgid "Extend Follow-Up + Contact Emails"
 msgstr ""
 
 msgid "Issue"
-msgstr ""
-
-msgid "Country"
-msgstr ""
-
-msgid "Period"
-msgstr ""
-
-msgid "Data Element"
-msgstr ""
-
-msgid "Category"
-msgstr ""
-
-msgid "Description"
-msgstr ""
-
-msgid "Azure URL"
-msgstr ""
-
-msgid "Contact Emails"
-msgstr ""
-
-msgid "Action Description"
-msgstr ""
-
-msgid "Comments"
 msgstr ""
 
 msgid "Issue Number"
@@ -151,7 +169,7 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-msgid "Creating Data Quality..."
+msgid "Creating Data Quality Report..."
 msgstr ""
 
 msgid "Quality Analysis created"
@@ -179,6 +197,9 @@ msgid "Data Quality Analysis"
 msgstr ""
 
 msgid "Configuration"
+msgstr ""
+
+msgid "Summary"
 msgstr ""
 
 msgid "Algorithm"
@@ -211,30 +232,6 @@ msgstr ""
 msgid "Run to get results"
 msgstr ""
 
-msgid "Activity Level"
-msgstr ""
-
-msgid "Sex"
-msgstr ""
-
-msgid "Age group"
-msgstr ""
-
-msgid "Place of Birth"
-msgstr ""
-
-msgid "Ownership"
-msgstr ""
-
-msgid "Vacancy rate"
-msgstr ""
-
-msgid "Applications"
-msgstr ""
-
-msgid "Enrolled"
-msgstr ""
-
 msgid "No Issues found"
 msgstr ""
 
@@ -242,33 +239,6 @@ msgid "Are you sure you want to {{action}} the selected rows?"
 msgstr ""
 
 msgid "Yes, {{actionButton}}"
-msgstr ""
-
-msgid "Ready"
-msgstr ""
-
-msgid "Running"
-msgstr ""
-
-msgid "Failure"
-msgstr ""
-
-msgid "Done"
-msgstr ""
-
-msgid "Module 1"
-msgstr ""
-
-msgid "Module 2"
-msgstr ""
-
-msgid "Selected element deleted successfully"
-msgstr ""
-
-msgid "Status changed"
-msgstr ""
-
-msgid "Start analysis"
 msgstr ""
 
 msgid "Hello {{name}}"
