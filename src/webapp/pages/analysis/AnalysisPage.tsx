@@ -29,9 +29,6 @@ const useStyles = makeStyles(() => ({
         justifyContent: "center",
         width: "24px",
     },
-    active: {
-        backgroundColor: "#8E8E8E",
-    },
     pending: {
         backgroundColor: "#8E8E8E",
     },
@@ -51,38 +48,35 @@ const useStyles = makeStyles(() => ({
 }));
 
 function StepIcon(props: {
-    active: boolean;
     text: string;
     hasIssues: boolean;
     isPending: boolean;
+    isCompleted: boolean;
 }) {
-    const { active, text, hasIssues, isPending } = props;
+    const { text, hasIssues, isPending, isCompleted } = props;
     const classes = useStyles();
 
-    const issuesClasses = _([classes.circle, active ? classes.active : classes.error])
-        .compact()
-        .join(" ");
-    const pendingClasses = _([classes.circle, active ? classes.active : classes.pending])
-        .compact()
-        .join(" ");
-    const completedClasses = _([classes.circle, active ? classes.active : classes.completed])
-        .compact()
-        .join(" ");
+    const buildIconClasses = React.useMemo(() => {
+        const baseClasses = [classes.circle];
 
-    if (isPending) {
-        return <div className={pendingClasses}>{text}</div>;
-    } else if (hasIssues) {
-        return <div className={issuesClasses}>{text}</div>;
-    } else {
-        return <div className={completedClasses}>{text}</div>;
-    }
+        if (isCompleted) {
+            return [...baseClasses, classes.completed].join(" ");
+        } else if (hasIssues) {
+            return [...baseClasses, classes.error].join(" ");
+        } else if (isPending) {
+            return [...baseClasses, classes.pending].join(" ");
+        } else {
+            return [...baseClasses, classes.pending].join(" ");
+        }
+    }, [classes, hasIssues, isCompleted, isPending]);
+    return <div className={buildIconClasses}>{text}</div>;
 }
 
 function buildStepsFromSections(
     analysis: QualityAnalysis,
     updateAnalysis: UpdateAnalysisState,
     currentSection: Maybe<string>,
-    classes: ClassNameMap<"circle" | "active" | "pending" | "completed" | "error" | "largeIcon">
+    classes: ClassNameMap<"circle" | "pending" | "completed" | "error" | "largeIcon">
 ): WizardStep[] {
     const sectionSteps = _(analysis.sections)
         .map((section): Maybe<WizardStep & { id: string }> => {
@@ -90,15 +84,15 @@ function buildStepsFromSections(
             if (!StepComponent) return undefined;
 
             const index = analysis.sections.findIndex(s => s.id === section.id) + 1;
-            const isActive = currentSection === section.name;
-            const isPending = section.status === "pending";
+            const isPending = QualityAnalysisSection.isPending(section);
             const hasIssues = section.status === "success_with_issues";
+            const isCompleted = section.status === "success";
 
             return {
                 id: section.id,
                 icon: (
                     <StepIcon
-                        active={isActive}
+                        isCompleted={isCompleted}
                         isPending={isPending}
                         text={String(index)}
                         hasIssues={hasIssues}
