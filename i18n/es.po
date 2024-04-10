@@ -232,30 +232,6 @@ msgstr ""
 msgid "Run to get results"
 msgstr ""
 
-msgid "Activity Level"
-msgstr ""
-
-msgid "Sex"
-msgstr ""
-
-msgid "Age group"
-msgstr ""
-
-msgid "Place of Birth"
-msgstr ""
-
-msgid "Ownership"
-msgstr ""
-
-msgid "Vacancy rate"
-msgstr ""
-
-msgid "Applications"
-msgstr ""
-
-msgid "Enrolled"
-msgstr ""
-
 msgid "No Issues found"
 msgstr ""
 

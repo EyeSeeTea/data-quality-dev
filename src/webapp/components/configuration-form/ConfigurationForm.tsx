@@ -162,6 +162,7 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
                         selectableLevels={[1, 2, 3]}
                         rootIds={currentUser.countries.map(country => country.id)}
                         withElevation={false}
+                        initiallyExpanded={selectedOrgUnits}
                     />
                 </OrgUnitContainer>
             )}
