@@ -2,7 +2,6 @@ import Typography from "@material-ui/core/Typography";
 import styled, { css } from "styled-components";
 import React from "react";
 import customTheme from "$/webapp/pages/app/themes/customTheme";
-import Tooltip from "@material-ui/core/Tooltip";
 
 type Props = {
     status: string;
