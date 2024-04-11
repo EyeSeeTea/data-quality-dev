@@ -1,13 +1,15 @@
 import React from "react";
+import { ClassNameMap } from "@material-ui/styles";
 import { makeStyles } from "@material-ui/core";
 import { Wizard, WizardStep } from "@eyeseetea/d2-ui-components";
 import SettingsIcon from "@material-ui/icons/Settings";
 import ListAltIcon from "@material-ui/icons/ListAlt";
+import styled from "styled-components";
+import { useHistory, useParams } from "react-router-dom";
+
 import customTheme from "$/webapp/pages/app/themes/customTheme";
 import { PageHeader } from "$/webapp/components/page-header/PageHeader";
 import { getComponentFromSectionName } from "./steps";
-import styled from "styled-components";
-import { useHistory, useParams } from "react-router-dom";
 import { PageContainer } from "$/webapp/components/page-container/PageContainer";
 import { useAnalysisById } from "$/webapp/hooks/useAnalysis";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
@@ -17,7 +19,6 @@ import _ from "$/domain/entities/generic/Collection";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 import { Maybe } from "$/utils/ts-utils";
 import { SummaryStep } from "./SummaryStep";
-import { ClassNameMap } from "@material-ui/styles";
 
 const useStyles = makeStyles(() => ({
     circle: {
@@ -117,7 +118,9 @@ function buildStepsFromSections(
         {
             key: "Configuration",
             label: i18n.t("Configuration"),
-            component: ConfigurationStep,
+            component: () => (
+                <ConfigurationStep updateAnalysis={updateAnalysis} analysis={analysis} />
+            ),
             completed: false,
             icon: <SettingsIcon className={classes.largeIcon} />,
         },
@@ -149,6 +152,15 @@ export const AnalysisPage: React.FC<PageProps> = React.memo(() => {
         return buildStepsFromSections(analysis, setAnalysis, currentSection, classes);
     }, [analysis, setAnalysis, currentSection, classes]);
 
+    const onStepChange = React.useCallback(
+        (value: string) => {
+            if (!analysis) return;
+            const section = analysis.sections.find(s => s.name.toLowerCase() === value);
+            setSection(section?.name || value);
+        },
+        [analysis]
+    );
+
     if (!analysis) return null;
 
     const firstSectionName = _(analysis.sections).first()?.name.toLowerCase();
@@ -164,10 +176,7 @@ export const AnalysisPage: React.FC<PageProps> = React.memo(() => {
                 lastClickableStepIndex={analysisSteps.length}
                 initialStepKey={firstSectionName}
                 steps={analysisSteps}
-                onStepChange={value => {
-                    const section = analysis.sections.find(s => s.name.toLowerCase() === value);
-                    setSection(section?.name || value);
-                }}
+                onStepChange={onStepChange}
             />
         </PageContainer>
     );
