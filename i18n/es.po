@@ -38,9 +38,6 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-msgid "Action"
-msgstr ""
-
 msgid "Action Description"
 msgstr ""
 
@@ -137,51 +134,12 @@ msgstr ""
 msgid "Select all {{total}} items in all pages"
 msgstr ""
 
-msgid "Issue"
-msgstr ""
-
-msgid "Country"
-msgstr ""
-
-msgid "Period"
-msgstr ""
-
-msgid "Data Element"
-msgstr ""
-
 msgid "Category"
-msgstr ""
-
-msgid "Description"
-msgstr ""
-
-msgid "Azure URL"
-msgstr ""
-
-msgid "Follow Up"
-msgstr ""
-
-msgid "Action"
-msgstr ""
-
-msgid "Contact Emails"
-msgstr ""
-
-msgid "Action Description"
-msgstr ""
-
-msgid "Comments"
-msgstr ""
-
-msgid "Issue Number"
 msgstr ""
 
 msgid ""
 "No user with Capture rights and Organisation Unit associated to the issue "
 "was found"
-msgstr ""
-
-msgid "Updating Issue..."
 msgstr ""
 
 msgid "Issue Updated"
@@ -217,9 +175,6 @@ msgstr ""
 msgid "Contact emails copied"
 msgstr ""
 
-msgid "Exporting Issues..."
-msgstr ""
-
 msgid "Issues exported"
 msgstr ""
 
@@ -251,9 +206,6 @@ msgid "Removing..."
 msgstr ""
 
 msgid "Quality Analysis deleted"
-msgstr ""
-
-msgid "Updating Status..."
 msgstr ""
 
 msgid "Quality Analysis updated"

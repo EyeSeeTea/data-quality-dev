@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-04-11T17:50:37.845Z\n"
-"PO-Revision-Date: 2024-04-11T17:50:37.845Z\n"
+"POT-Creation-Date: 2024-04-12T08:52:28.566Z\n"
+"PO-Revision-Date: 2024-04-12T08:52:28.567Z\n"
 
 msgid "ID"
 msgstr ""
@@ -102,6 +102,39 @@ msgid "Module"
 msgstr ""
 
 msgid "Save Config Analysis"
+msgstr ""
+
+msgid "Columns to show in table"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Actions"
+msgstr ""
+
+msgid "Column settings"
+msgstr ""
+
+msgid "Loading details..."
+msgstr ""
+
+msgid "No detail fields provided"
+msgstr ""
+
+msgid "Column"
+msgstr ""
+
+msgid "Clear selection"
+msgstr ""
+
+msgid "There are {{total}} items selected in all pages."
+msgstr ""
+
+msgid "All {{total}} items on this page are selected."
+msgstr ""
+
+msgid "Select all {{total}} items in all pages"
 msgstr ""
 
 msgid ""
