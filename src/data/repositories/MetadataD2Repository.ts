@@ -120,3 +120,5 @@ type MetadataResponse = MetadataPick<MetadataRequest>;
 type MetadataIndexed = {
     [K in keyof Codes]: { [K2 in keyof Codes[K]]: MetadataResponse[K][number] };
 };
+
+export const MODULE_2_CODE = "NHWA-M2-2023";

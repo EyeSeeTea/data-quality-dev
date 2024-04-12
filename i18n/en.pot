@@ -253,6 +253,9 @@ msgstr ""
 msgid "Double Counts Threshold"
 msgstr ""
 
+msgid "The selected step is not available for the selected module"
+msgstr ""
+
 msgid "Validation Rule Group"
 msgstr ""
 

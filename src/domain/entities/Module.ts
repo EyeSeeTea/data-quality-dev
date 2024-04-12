@@ -1,7 +1,7 @@
 import { DataElement } from "./DataElement";
-import { NamedRef } from "./Ref";
+import { NamedCodeRef, NamedRef } from "./Ref";
 
-export type Module = NamedRef & {
+export type Module = NamedCodeRef & {
     dataElements: DataElement[];
     disaggregations: NamedRef[];
 };
