@@ -215,7 +215,11 @@ export class RunPractitionersValidationUseCase {
     ) {
         const section = getCurrentSection(analysis, options.sectionId);
         const { dataElementId, period, countryId, categoryOptionComboId } = dataValue;
-        const prefix = `${analysis.sequential.value}-S04`;
+        const sectionNumber = this.issueUseCase.getSectionNumber(
+            analysis.sections,
+            options.sectionId
+        );
+        const prefix = `${analysis.sequential.value}-${sectionNumber}`;
         const issueNumber = this.issueUseCase.generateIssueNumber(currentNumber, prefix);
         return this.issueUseCase.buildDefaultIssue(
             {

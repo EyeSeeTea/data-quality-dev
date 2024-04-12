@@ -33,9 +33,12 @@ function App(props: AppProps) {
         async function setup() {
             const isShareButtonVisible = appConfig.appearance.showShareButton;
             const currentUser = await compositionRoot.users.getCurrent.execute().toPromise();
+            const validationRuleGroups = await compositionRoot.validationRules.get
+                .execute()
+                .toPromise();
             if (!currentUser) throw new Error("User not logged in");
 
-            setAppContext({ api, currentUser, compositionRoot, metadata });
+            setAppContext({ api, currentUser, compositionRoot, metadata, validationRuleGroups });
             setShowShareButton(isShareButtonVisible);
             setLoading(false);
         }

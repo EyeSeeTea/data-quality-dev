@@ -19,7 +19,6 @@ export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
     const [selectedDisaggregations, setSelectedDissagregations] = React.useState<string[]>([]);
 
     React.useEffect(() => {
-        loading.show(true, i18n.t("Loading"));
         compositionRoot.nursingMidwifery.getDisaggregations.execute(section.id).run(
             result => {
                 const selectedDisaggregations = result.map(item => ({
@@ -28,10 +27,8 @@ export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
                 }));
                 setDisaggregations(selectedDisaggregations);
                 setSelectedDissagregations(selectedDisaggregations.map(item => item.value));
-                loading.hide();
             },
             error => {
-                loading.hide();
                 snackbar.error(error.message);
             }
         );

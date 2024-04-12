@@ -2,7 +2,6 @@ import Typography from "@material-ui/core/Typography";
 import styled, { css } from "styled-components";
 import React from "react";
 import customTheme from "$/webapp/pages/app/themes/customTheme";
-import Tooltip from "@material-ui/core/Tooltip";
 
 type Props = {
     status: string;
@@ -14,15 +13,16 @@ export type ContainerProps = {
     $status: Props["status"];
 };
 
-export const ProgressStatus: React.FC<Props> = React.memo(({ status, name, position }) => {
-    return (
-        <Container $status={status}>
-            <Tooltip title={name}>
+export const ProgressStatus: React.FC<Props> = React.memo(
+    React.forwardRef<HTMLLIElement, Props>((props, ref) => {
+        const { status, position, ...rest } = props;
+        return (
+            <Container {...rest} ref={ref} $status={status}>
                 <StyledTypography>{position}</StyledTypography>
-            </Tooltip>
-        </Container>
-    );
-});
+            </Container>
+        );
+    })
+);
 
 const Container = styled.li<ContainerProps>`
     border-radius: 50%;

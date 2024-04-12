@@ -12,22 +12,29 @@ import {
 } from "$/webapp/components/analysis-actions/AnalysisActions";
 import { Module } from "$/domain/entities/Module";
 import { Id } from "$/domain/entities/Ref";
+import _ from "$/domain/entities/generic/Collection";
+import { useTableUtils } from "./useTable";
 
 export function useTableConfig(props: UseTableConfigProps) {
     const { onRemoveQualityAnalysis } = props;
     const { actions } = useAnalysisTableActions({
         onDelete: onRemoveQualityAnalysis,
     });
+    const { saveColumns, columnsToShow } = useTableUtils<QualityAnalysis>({
+        storageId: "analysis",
+        columns: analysisColumns,
+    });
 
     const tableConfig = React.useMemo<TableConfig<QualityAnalysis>>(() => {
         return {
             actions: actions,
-            columns: analysisColumns,
+            columns: columnsToShow,
             initialSorting: { field: "name", order: "desc" },
             paginationOptions: { pageSizeOptions: [10, 25, 50], pageSizeInitialValue: 25 },
             searchBoxLabel: i18n.t("Name"),
+            onReorderColumns: saveColumns,
         };
-    }, [actions]);
+    }, [actions, saveColumns, columnsToShow]);
 
     return { tableConfig };
 }

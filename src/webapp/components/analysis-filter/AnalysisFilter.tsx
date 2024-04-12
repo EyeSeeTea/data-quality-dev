@@ -11,7 +11,7 @@ import { Id } from "$/domain/entities/Ref";
 
 const currentYear = new Date().getFullYear();
 
-export const periods = Collection.range(currentYear - 5, currentYear)
+export const periods = Collection.range(currentYear - 5, currentYear + 1)
     .map(period => {
         return { value: period.toString(), text: period.toString() };
     })

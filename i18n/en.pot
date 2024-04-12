@@ -5,8 +5,56 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-03-20T20:03:34.709Z\n"
-"PO-Revision-Date: 2024-03-20T20:03:34.710Z\n"
+"POT-Creation-Date: 2024-04-11T17:50:37.845Z\n"
+"PO-Revision-Date: 2024-04-11T17:50:37.845Z\n"
+
+msgid "ID"
+msgstr ""
+
+msgid "Number"
+msgstr ""
+
+msgid "Azure URL"
+msgstr ""
+
+msgid "Period"
+msgstr ""
+
+msgid "Country"
+msgstr ""
+
+msgid "Data Element"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Follow Up"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Action"
+msgstr ""
+
+msgid "Action Description"
+msgstr ""
+
+msgid "Comments"
+msgstr ""
+
+msgid "Contact Emails"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
 
 msgid "Cannot be blank: {{fieldName}}"
 msgstr ""
@@ -38,9 +86,6 @@ msgstr ""
 msgid "End Date"
 msgstr ""
 
-msgid "Status"
-msgstr ""
-
 msgid "New Data Quality Report"
 msgstr ""
 
@@ -57,78 +102,6 @@ msgid "Module"
 msgstr ""
 
 msgid "Save Config Analysis"
-msgstr ""
-
-msgid "Columns to show in table"
-msgstr ""
-
-msgid "Close"
-msgstr ""
-
-msgid "Actions"
-msgstr ""
-
-msgid "Column settings"
-msgstr ""
-
-msgid "Loading details..."
-msgstr ""
-
-msgid "No detail fields provided"
-msgstr ""
-
-msgid "Column"
-msgstr ""
-
-msgid "Clear selection"
-msgstr ""
-
-msgid "There are {{total}} items selected in all pages."
-msgstr ""
-
-msgid "All {{total}} items on this page are selected."
-msgstr ""
-
-msgid "Select all {{total}} items in all pages"
-msgstr ""
-
-msgid "Issue"
-msgstr ""
-
-msgid "Country"
-msgstr ""
-
-msgid "Period"
-msgstr ""
-
-msgid "Data Element"
-msgstr ""
-
-msgid "Category"
-msgstr ""
-
-msgid "Description"
-msgstr ""
-
-msgid "Azure URL"
-msgstr ""
-
-msgid "Follow Up"
-msgstr ""
-
-msgid "Action"
-msgstr ""
-
-msgid "Contact Emails"
-msgstr ""
-
-msgid "Action Description"
-msgstr ""
-
-msgid "Comments"
-msgstr ""
-
-msgid "Issue Number"
 msgstr ""
 
 msgid ""
@@ -151,10 +124,7 @@ msgstr ""
 msgid "Double click to edit"
 msgstr ""
 
-msgid "Yes"
-msgstr ""
-
-msgid "No"
+msgid "Issue"
 msgstr ""
 
 msgid "{{countryNames}} and {{moreCountriesCount}} more"
@@ -166,19 +136,37 @@ msgstr ""
 msgid "Periods"
 msgstr ""
 
-msgid "Copying contact emails..."
+msgid "Step"
+msgstr ""
+
+msgid "Copying Contact Emails and marking for Follow-Up"
 msgstr ""
 
 msgid "Contact emails copied"
 msgstr ""
 
-msgid "Extend Contact Emails"
+msgid "Exporting Issues..."
+msgstr ""
+
+msgid "Issues exported"
+msgstr ""
+
+msgid "Export"
+msgstr ""
+
+msgid "Extend Follow-Up + Contact Emails"
+msgstr ""
+
+msgid "Issue Number"
 msgstr ""
 
 msgid "Back"
 msgstr ""
 
 msgid "Help"
+msgstr ""
+
+msgid "Loading Analysis..."
 msgstr ""
 
 msgid "Creating Data Quality Report..."
@@ -232,9 +220,6 @@ msgstr ""
 msgid "Double Counts Threshold"
 msgstr ""
 
-msgid "Loading"
-msgstr ""
-
 msgid "Validation Rule Group"
 msgstr ""
 
@@ -242,30 +227,6 @@ msgid "Run"
 msgstr ""
 
 msgid "Run to get results"
-msgstr ""
-
-msgid "Activity Level"
-msgstr ""
-
-msgid "Sex"
-msgstr ""
-
-msgid "Age group"
-msgstr ""
-
-msgid "Place of Birth"
-msgstr ""
-
-msgid "Ownership"
-msgstr ""
-
-msgid "Vacancy rate"
-msgstr ""
-
-msgid "Applications"
-msgstr ""
-
-msgid "Enrolled"
 msgstr ""
 
 msgid "No Issues found"

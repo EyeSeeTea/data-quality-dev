@@ -4,6 +4,7 @@ import { Id } from "$/domain/entities/Ref";
 import { useAppContext } from "../contexts/app-context";
 import { useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
+import i18n from "$/utils/i18n";
 
 export function useAnalysisById(props: UseAnalysisByIdProps) {
     const { id } = props;
@@ -13,7 +14,7 @@ export function useAnalysisById(props: UseAnalysisByIdProps) {
     const [analysis, setAnalysis] = React.useState<QualityAnalysis>();
 
     React.useEffect(() => {
-        loading.show();
+        loading.show(true, i18n.t("Loading Analysis..."));
         compositionRoot.qualityAnalysis.getById.execute(id).run(
             analysis => {
                 setAnalysis(analysis);
