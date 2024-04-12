@@ -13,11 +13,12 @@ import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
 import { GetIssuesOptions } from "$/domain/repositories/IssueRepository";
 import i18n from "$/utils/i18n";
 import { Id } from "$/domain/entities/Ref";
-import { EditIssueValue } from "./EditIssueValue";
 import { IssueFilters } from "./IssueFilters";
 import { initialFilters } from "$/webapp/utils/issues";
 import { Maybe } from "$/utils/ts-utils";
 import CloudDownload from "@material-ui/icons/CloudDownload";
+import { useTableUtils } from "$/webapp/hooks/useTable";
+import { useIssueColumns } from "./IssueColumns";
 
 export function useCopyContactEmails(props: UseCopyContactEmailsProps) {
     const { onSuccess } = props;
@@ -85,7 +86,12 @@ export function useExportIssues() {
 
 export function useTableConfig(props: UseTableConfigProps) {
     const { analysisId, filters, sectionId, showExport } = props;
-    const [refresh, setRefresh] = React.useState(0);
+    const { issueColumns, refresh, setRefresh } = useIssueColumns();
+
+    const { saveColumns, columnsToShow } = useTableUtils<QualityAnalysisIssue>({
+        storageId: "issues",
+        columns: issueColumns,
+    });
 
     const onSuccess = React.useCallback(() => {
         setRefresh(value => value + 1);
@@ -120,101 +126,7 @@ export function useTableConfig(props: UseTableConfigProps) {
                     },
                 },
             ],
-            columns: [
-                { name: "number", text: i18n.t("Issue"), sortable: true },
-                { name: "country", text: i18n.t("Country"), sortable: false },
-                { name: "period", text: i18n.t("Period"), sortable: false },
-                { name: "dataElement", text: i18n.t("Data Element"), sortable: false },
-                {
-                    name: "categoryOption",
-                    text: i18n.t("Category"),
-                    sortable: false,
-                },
-                {
-                    name: "description",
-                    text: i18n.t("Description"),
-                    sortable: false,
-                },
-                {
-                    name: "status",
-                    text: i18n.t("Status"),
-                    sortable: false,
-                    getValue: value => {
-                        return <EditIssueValue key={value.id} field="status" issue={value} />;
-                    },
-                },
-                {
-                    name: "azureUrl",
-                    text: i18n.t("Azure URL"),
-                    sortable: false,
-                    hidden: true,
-                    getValue: value => {
-                        return (
-                            <EditIssueValue
-                                key={value.id}
-                                field="azureUrl"
-                                issue={value}
-                                setRefresh={setRefresh}
-                            />
-                        );
-                    },
-                },
-                {
-                    name: "followUp",
-                    text: i18n.t("Follow Up"),
-                    sortable: false,
-                    getValue: value => (
-                        <EditIssueValue
-                            key={value.id}
-                            field="followUp"
-                            issue={value}
-                            setRefresh={setRefresh}
-                        />
-                    ),
-                },
-                {
-                    name: "action",
-                    text: i18n.t("Action"),
-                    sortable: false,
-                    getValue: value => {
-                        return <EditIssueValue key={value.id} field="action" issue={value} />;
-                    },
-                },
-                {
-                    name: "contactEmails",
-                    text: i18n.t("Contact Emails"),
-                    sortable: false,
-                    getValue: value => {
-                        return (
-                            <EditIssueValue key={value.id} field="contactEmails" issue={value} />
-                        );
-                    },
-                },
-                {
-                    name: "actionDescription",
-                    text: i18n.t("Action Description"),
-                    sortable: false,
-                    hidden: true,
-                    getValue: value => {
-                        return (
-                            <EditIssueValue
-                                key={value.id}
-                                field="actionDescription"
-                                issue={value}
-                            />
-                        );
-                    },
-                },
-                {
-                    name: "comments",
-                    text: i18n.t("Comments"),
-                    sortable: false,
-                    hidden: true,
-                    getValue: value => {
-                        return <EditIssueValue key={value.id} field="comments" issue={value} />;
-                    },
-                },
-            ],
+            columns: columnsToShow,
             initialSorting: { field: "number", order: "asc" },
             paginationOptions: {
                 pageSizeOptions: [10, 20, 50],
@@ -222,8 +134,18 @@ export function useTableConfig(props: UseTableConfigProps) {
                 renderPosition: { bottom: true, top: false },
             },
             searchBoxLabel: i18n.t("Issue Number"),
+            onReorderColumns: saveColumns,
         };
-    }, [filters, analysisId, sectionId, copyContactEmails, exportIssues, showExport]);
+    }, [
+        columnsToShow,
+        filters,
+        analysisId,
+        sectionId,
+        copyContactEmails,
+        exportIssues,
+        showExport,
+        saveColumns,
+    ]);
 
     return { tableConfig, refresh };
 }

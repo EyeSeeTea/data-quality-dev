@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-04-11T08:40:42.505Z\n"
-"PO-Revision-Date: 2024-04-11T08:40:42.506Z\n"
+"POT-Creation-Date: 2024-04-11T17:50:37.845Z\n"
+"PO-Revision-Date: 2024-04-11T17:50:37.845Z\n"
 
 msgid "ID"
 msgstr ""
@@ -124,6 +124,9 @@ msgstr ""
 msgid "Double click to edit"
 msgstr ""
 
+msgid "Issue"
+msgstr ""
+
 msgid "{{countryNames}} and {{moreCountriesCount}} more"
 msgstr ""
 
@@ -157,9 +160,6 @@ msgstr ""
 msgid "Extend Follow-Up + Contact Emails"
 msgstr ""
 
-msgid "Issue"
-msgstr ""
-
 msgid "Issue Number"
 msgstr ""
 
@@ -167,6 +167,9 @@ msgid "Back"
 msgstr ""
 
 msgid "Help"
+msgstr ""
+
+msgid "Loading Analysis..."
 msgstr ""
 
 msgid "Creating Data Quality Report..."

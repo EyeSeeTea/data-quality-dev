@@ -9,11 +9,7 @@ import { StepAnalysis } from "../StepAnalysis";
 export const ValidationStep: React.FC<PageStepProps> = React.memo(props => {
     const { analysis, section, title, updateAnalysis } = props;
     const { validationRules, handleChange, runAnalysis, reload, selectedValidationRule } =
-        useValidationStep({
-            analysis,
-            section,
-            updateAnalysis,
-        });
+        useValidationStep({ analysis, section, updateAnalysis });
 
     return (
         <StepAnalysis
