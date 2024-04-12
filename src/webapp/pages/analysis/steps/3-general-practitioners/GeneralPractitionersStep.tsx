@@ -1,4 +1,3 @@
-import React from "react";
 import { Dropdown } from "@eyeseetea/d2-ui-components";
 
 import i18n from "$/utils/i18n";
@@ -10,6 +9,7 @@ import { SelectMultiCheckboxes } from "$/webapp/components/selectmulti-checkboxe
 import { PageStepProps } from "../../AnalysisPage";
 import { EmptyState } from "$/webapp/components/empty-state/EmptyState";
 import { Typography } from "@material-ui/core";
+import React from "react";
 
 export const GeneralPractitionersStep: React.FC<PageStepProps> = React.memo(props => {
     const { analysis, section, title, updateAnalysis } = props;
@@ -65,7 +65,7 @@ export const GeneralPractitionersStep: React.FC<PageStepProps> = React.memo(prop
             </AnalysisHeader>
             <EmptyState
                 message={i18n.t("The selected step is not available for the selected module")}
-                variant={"neutral"}
+                variant="neutral"
             />
         </>
     );
