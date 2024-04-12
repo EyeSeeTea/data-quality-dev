@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-04-11T17:50:37.845Z\n"
-"PO-Revision-Date: 2024-04-11T17:50:37.845Z\n"
+"POT-Creation-Date: 2024-04-12T08:46:18.632Z\n"
+"PO-Revision-Date: 2024-04-12T08:46:18.633Z\n"
 
 msgid "ID"
 msgstr ""
@@ -221,6 +221,9 @@ msgid "Disaggregations"
 msgstr ""
 
 msgid "Double Counts Threshold"
+msgstr ""
+
+msgid "The selected step is not available for the selected module"
 msgstr ""
 
 msgid "Validation Rule Group"

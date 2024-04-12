@@ -1,8 +1,8 @@
-import { GeneralPractitionersStep } from "./steps/4-general-practitioners/GeneralPractitionersStep";
-import { DisaggregatesStep } from "./steps/3-disaggregates/DisaggregatesStep";
-import { NursingMidwiferyStep } from "./steps/7-nursingMidwifery/NursingMidwiferyStep";
+import { GeneralPractitionersStep } from "./steps/3-general-practitioners/GeneralPractitionersStep";
+import { DisaggregatesStep } from "./steps/2-disaggregates/DisaggregatesStep";
+import { NursingMidwiferyStep } from "./steps/4-nursingMidwifery/NursingMidwiferyStep";
 import { OutliersStep } from "./steps/1-outliers/OutliersStep";
-import { ValidationStep } from "./steps/9-validation/ValidationStep";
+import { ValidationStep } from "./steps/5-validation/ValidationStep";
 
 const sectionsComponents = [
     {

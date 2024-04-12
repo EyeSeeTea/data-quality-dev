@@ -68,6 +68,7 @@ export class ModuleD2Repository implements ModuleRepository {
 
                 return {
                     id: d2DataSet.id,
+                    code: d2DataSet.code,
                     name: d2DataSet.displayName,
                     dataElements: _(d2DataSet.dataSetElements)
                         .map((d2DataSetElement): Maybe<DataElement> => {
