@@ -38,9 +38,6 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-msgid "Action"
-msgstr ""
-
 msgid "Action Description"
 msgstr ""
 
@@ -104,12 +101,45 @@ msgstr ""
 msgid "Save Config Analysis"
 msgstr ""
 
+msgid "Columns to show in table"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Actions"
+msgstr ""
+
+msgid "Column settings"
+msgstr ""
+
+msgid "Loading details..."
+msgstr ""
+
+msgid "No detail fields provided"
+msgstr ""
+
+msgid "Column"
+msgstr ""
+
+msgid "Clear selection"
+msgstr ""
+
+msgid "There are {{total}} items selected in all pages."
+msgstr ""
+
+msgid "All {{total}} items on this page are selected."
+msgstr ""
+
+msgid "Select all {{total}} items in all pages"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
 msgid ""
 "No user with Capture rights and Organisation Unit associated to the issue "
 "was found"
-msgstr ""
-
-msgid "Updating Issue..."
 msgstr ""
 
 msgid "Issue Updated"
@@ -130,9 +160,6 @@ msgstr ""
 msgid "{{countryNames}} and {{moreCountriesCount}} more"
 msgstr ""
 
-msgid "Close"
-msgstr ""
-
 msgid "Countries"
 msgstr ""
 
@@ -146,9 +173,6 @@ msgid "Copying Contact Emails and marking for Follow-Up"
 msgstr ""
 
 msgid "Contact emails copied"
-msgstr ""
-
-msgid "Exporting Issues..."
 msgstr ""
 
 msgid "Issues exported"
@@ -182,9 +206,6 @@ msgid "Removing..."
 msgstr ""
 
 msgid "Quality Analysis deleted"
-msgstr ""
-
-msgid "Updating Status..."
 msgstr ""
 
 msgid "Quality Analysis updated"
