@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2024-03-26T21:46:55.700Z\n"
+"POT-Creation-Date: 2024-04-12T08:46:18.632Z\n"
 "PO-Revision-Date: 2018-10-25T09:02:35.143Z\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,9 +36,6 @@ msgid "Follow Up"
 msgstr ""
 
 msgid "Status"
-msgstr ""
-
-msgid "Action"
 msgstr ""
 
 msgid "Action Description"
@@ -104,12 +101,45 @@ msgstr ""
 msgid "Save Config Analysis"
 msgstr ""
 
+msgid "Columns to show in table"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Actions"
+msgstr ""
+
+msgid "Column settings"
+msgstr ""
+
+msgid "Loading details..."
+msgstr ""
+
+msgid "No detail fields provided"
+msgstr ""
+
+msgid "Column"
+msgstr ""
+
+msgid "Clear selection"
+msgstr ""
+
+msgid "There are {{total}} items selected in all pages."
+msgstr ""
+
+msgid "All {{total}} items on this page are selected."
+msgstr ""
+
+msgid "Select all {{total}} items in all pages"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
 msgid ""
 "No user with Capture rights and Organisation Unit associated to the issue "
 "was found"
-msgstr ""
-
-msgid "Updating Issue..."
 msgstr ""
 
 msgid "Issue Updated"
@@ -124,10 +154,10 @@ msgstr ""
 msgid "Double click to edit"
 msgstr ""
 
-msgid "{{countryNames}} and {{moreCountriesCount}} more"
+msgid "Issue"
 msgstr ""
 
-msgid "Close"
+msgid "{{countryNames}} and {{moreCountriesCount}} more"
 msgstr ""
 
 msgid "Countries"
@@ -136,13 +166,13 @@ msgstr ""
 msgid "Periods"
 msgstr ""
 
+msgid "Step"
+msgstr ""
+
 msgid "Copying Contact Emails and marking for Follow-Up"
 msgstr ""
 
 msgid "Contact emails copied"
-msgstr ""
-
-msgid "Exporting Issues..."
 msgstr ""
 
 msgid "Issues exported"
@@ -154,9 +184,6 @@ msgstr ""
 msgid "Extend Follow-Up + Contact Emails"
 msgstr ""
 
-msgid "Issue"
-msgstr ""
-
 msgid "Issue Number"
 msgstr ""
 
@@ -165,6 +192,9 @@ msgstr "Volver"
 
 msgid "Help"
 msgstr "Ayuda"
+
+msgid "Loading Analysis..."
+msgstr ""
 
 msgid "Creating Data Quality Report..."
 msgstr ""
@@ -176,9 +206,6 @@ msgid "Removing..."
 msgstr ""
 
 msgid "Quality Analysis deleted"
-msgstr ""
-
-msgid "Updating Status..."
 msgstr ""
 
 msgid "Quality Analysis updated"
@@ -217,7 +244,7 @@ msgstr ""
 msgid "Double Counts Threshold"
 msgstr ""
 
-msgid "Loading"
+msgid "The selected step is not available for the selected module"
 msgstr ""
 
 msgid "Validation Rule Group"
@@ -227,30 +254,6 @@ msgid "Run"
 msgstr ""
 
 msgid "Run to get results"
-msgstr ""
-
-msgid "Activity Level"
-msgstr ""
-
-msgid "Sex"
-msgstr ""
-
-msgid "Age group"
-msgstr ""
-
-msgid "Place of Birth"
-msgstr ""
-
-msgid "Ownership"
-msgstr ""
-
-msgid "Vacancy rate"
-msgstr ""
-
-msgid "Applications"
-msgstr ""
-
-msgid "Enrolled"
 msgstr ""
 
 msgid "No Issues found"

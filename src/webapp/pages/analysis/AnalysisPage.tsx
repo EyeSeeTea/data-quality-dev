@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
 import { Wizard, WizardStep, useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
+import { ClassNameMap } from "@material-ui/styles";
 import { makeStyles } from "@material-ui/core";
 import SettingsIcon from "@material-ui/icons/Settings";
 import ListAltIcon from "@material-ui/icons/ListAlt";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-
-import { PageHeader } from "$/webapp/components/page-header/PageHeader";
-import { getComponentFromSectionName } from "./steps";
 import styled from "styled-components";
 import { useHistory, useParams } from "react-router-dom";
+
+import customTheme from "$/webapp/pages/app/themes/customTheme";
+import { PageHeader } from "$/webapp/components/page-header/PageHeader";
+import { getComponentFromSectionName } from "./steps";
 import { PageContainer } from "$/webapp/components/page-container/PageContainer";
 import { useAnalysisById } from "$/webapp/hooks/useAnalysis";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
@@ -17,8 +18,7 @@ import i18n from "$/utils/i18n";
 import _ from "$/domain/entities/generic/Collection";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 import { Maybe } from "$/utils/ts-utils";
-import { IssueTable } from "$/webapp/components/issues/IssueTable";
-import { ClassNameMap } from "@material-ui/styles";
+import { SummaryStep } from "./SummaryStep";
 
 const useStyles = makeStyles(() => ({
     circle: {
@@ -30,32 +30,54 @@ const useStyles = makeStyles(() => ({
         justifyContent: "center",
         width: "24px",
     },
-    active: {
-        backgroundColor: "#1976d2",
-    },
-    inactive: {
+    pending: {
         backgroundColor: "#8E8E8E",
     },
-    largeIcon: { fontSize: "32px" },
+    completed: {
+        backgroundColor: customTheme.color.intenseGreen,
+    },
+    error: {
+        backgroundColor: customTheme.color.error,
+    },
+    largeIcon: {
+        fontSize: "20px",
+        color: "#fff",
+        backgroundColor: "#1976d2",
+        borderRadius: 50,
+        padding: "0.125rem",
+    },
 }));
 
-function StepIcon(props: { completed: boolean; active: boolean; text: string }) {
-    const { active, completed, text } = props;
+function StepIcon(props: {
+    text: string;
+    hasIssues: boolean;
+    isPending: boolean;
+    isCompleted: boolean;
+}) {
+    const { text, hasIssues, isPending, isCompleted } = props;
     const classes = useStyles();
-    if (completed) return <CheckCircleIcon className={classes.largeIcon} htmlColor="#B5DFB7" />;
 
-    const mergeClasses = _([classes.circle, active ? classes.active : classes.inactive])
-        .compact()
-        .join(" ");
+    const buildIconClasses = React.useMemo(() => {
+        const baseClasses = [classes.circle];
 
-    return <div className={mergeClasses}>{text}</div>;
+        if (isCompleted) {
+            return [...baseClasses, classes.completed].join(" ");
+        } else if (hasIssues) {
+            return [...baseClasses, classes.error].join(" ");
+        } else if (isPending) {
+            return [...baseClasses, classes.pending].join(" ");
+        } else {
+            return [...baseClasses, classes.pending].join(" ");
+        }
+    }, [classes, hasIssues, isCompleted, isPending]);
+    return <div className={buildIconClasses}>{text}</div>;
 }
 
 function buildStepsFromSections(
     analysis: QualityAnalysis,
     updateAnalysis: UpdateAnalysisState,
     currentSection: Maybe<string>,
-    classes: ClassNameMap<"circle" | "active" | "inactive" | "largeIcon">
+    classes: ClassNameMap<"circle" | "pending" | "completed" | "error" | "largeIcon">
 ): WizardStep[] {
     const sectionSteps = _(analysis.sections)
         .map((section): Maybe<WizardStep & { id: string }> => {
@@ -63,12 +85,20 @@ function buildStepsFromSections(
             if (!StepComponent) return undefined;
 
             const index = analysis.sections.findIndex(s => s.id === section.id) + 1;
-            const isActive = currentSection === section.name;
-            const isCompleted = !QualityAnalysisSection.isPending(section);
+            const isPending = QualityAnalysisSection.isPending(section);
+            const hasIssues = section.status === "success_with_issues";
+            const isCompleted = section.status === "success";
 
             return {
                 id: section.id,
-                icon: <StepIcon active={isActive} completed={isCompleted} text={String(index)} />,
+                icon: (
+                    <StepIcon
+                        isCompleted={isCompleted}
+                        isPending={isPending}
+                        text={String(index)}
+                        hasIssues={hasIssues}
+                    />
+                ),
                 key: section.name.toLowerCase(),
                 label: section.name,
                 component: () => (
@@ -79,7 +109,6 @@ function buildStepsFromSections(
                         updateAnalysis={updateAnalysis}
                     />
                 ),
-                completed: isCompleted,
             };
         })
         .compact()
@@ -89,18 +118,19 @@ function buildStepsFromSections(
         {
             key: "Configuration",
             label: i18n.t("Configuration"),
-            component: ConfigurationStep,
+            component: () => (
+                <ConfigurationStep updateAnalysis={updateAnalysis} analysis={analysis} />
+            ),
             completed: false,
-            icon: <SettingsIcon className={classes.largeIcon} color="primary" />,
+            icon: <SettingsIcon className={classes.largeIcon} />,
         },
         ...sectionSteps,
         {
-            icon: <ListAltIcon className={classes.largeIcon} color="primary" />,
+            icon: <ListAltIcon className={classes.largeIcon} />,
             key: "Summary",
             label: i18n.t("Summary"),
-            component: () => (
-                <IssueTable analysisId={analysis.id} sectionId={undefined} reload={0} showExport />
-            ),
+            component: () => <SummaryStep analysis={analysis} name={i18n.t("Summary")} />,
+            completed: false,
         },
     ];
 }
@@ -133,6 +163,15 @@ export const AnalysisPage: React.FC<PageProps> = React.memo(() => {
         return buildStepsFromSections(analysis, setAnalysis, currentSection, classes);
     }, [analysis, setAnalysis, currentSection, classes]);
 
+    const onStepChange = React.useCallback(
+        (value: string) => {
+            if (!analysis) return;
+            const section = analysis.sections.find(s => s.name.toLowerCase() === value);
+            setSection(section?.name || value);
+        },
+        [analysis]
+    );
+
     if (!analysis) return null;
 
     const firstSectionName = _(analysis.sections).first()?.name.toLowerCase();
@@ -148,10 +187,7 @@ export const AnalysisPage: React.FC<PageProps> = React.memo(() => {
                 lastClickableStepIndex={analysisSteps.length}
                 initialStepKey={firstSectionName}
                 steps={analysisSteps}
-                onStepChange={value => {
-                    const section = analysis.sections.find(s => s.name.toLowerCase() === value);
-                    setSection(section?.name || value);
-                }}
+                onStepChange={onStepChange}
             />
         </PageContainer>
     );

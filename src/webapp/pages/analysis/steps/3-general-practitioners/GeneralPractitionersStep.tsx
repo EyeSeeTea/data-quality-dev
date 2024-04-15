@@ -8,6 +8,8 @@ import styled from "styled-components";
 import { useGeneralPractitionersStep } from "./useGeneralPractitionersStep";
 import { SelectMultiCheckboxes } from "$/webapp/components/selectmulti-checkboxes/SelectMultiCheckboxes";
 import { PageStepProps } from "../../AnalysisPage";
+import { EmptyState } from "$/webapp/components/empty-state/EmptyState";
+import { Typography } from "@material-ui/core";
 
 export const GeneralPractitionersStep: React.FC<PageStepProps> = React.memo(props => {
     const { analysis, section, title, updateAnalysis } = props;
@@ -39,8 +41,8 @@ export const GeneralPractitionersStep: React.FC<PageStepProps> = React.memo(prop
         runAnalysis();
     };
 
-    return (
-        <div>
+    return analysis.module.name !== "NHWA Module 2" ? (
+        <>
             <StepAnalysis
                 id={analysis.id}
                 onRun={onClick}
@@ -63,10 +65,34 @@ export const GeneralPractitionersStep: React.FC<PageStepProps> = React.memo(prop
                     label={i18n.t("Double Counts Threshold")}
                 />
             </StepAnalysis>
-        </div>
+        </>
+    ) : (
+        <>
+            <AnalysisHeader>
+                <StyledTypography variant="h2">{title}</StyledTypography>
+            </AnalysisHeader>
+            <EmptyState
+                message={i18n.t("The selected step is not available for the selected module")}
+                variant="neutral"
+            />
+        </>
     );
 });
 
 const StyledDropdown = styled(Dropdown)`
     min-width: 14rem;
+`;
+
+const AnalysisHeader = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 5rem;
+    gap: 8rem;
+    margin-block-end: 1.75rem;
+`;
+
+const StyledTypography = styled(Typography)`
+    font-size: 1.2rem;
+    font-weight: 500;
 `;

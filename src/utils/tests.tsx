@@ -13,6 +13,7 @@ export function getTestContext() {
         compositionRoot: getTestCompositionRoot(),
         metadata: {} as MetadataItem,
         api: {} as D2Api,
+        validationRuleGroups: [],
     };
 
     return context;

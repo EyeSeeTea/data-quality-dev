@@ -2,6 +2,7 @@ import i18n from "$/utils/i18n";
 import { ProgressStatus } from "../components/progress-status/ProgressStatus";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { TableColumn } from "@eyeseetea/d2-ui-components";
+import { Tooltip } from "@material-ui/core";
 
 import styled from "styled-components";
 import { Tag } from "../components/tag/Tag";
@@ -42,12 +43,13 @@ export const analysisColumns: TableColumn<QualityAnalysis>[] = [
             return (
                 <ProgressContainer>
                     {row.sections.map((value, index) => (
-                        <ProgressStatus
-                            key={index}
-                            position={index + 1}
-                            status={mapAnalysisStatusToColor(value.status)}
-                            name={value.name}
-                        />
+                        <Tooltip key={value.id} title={value.name}>
+                            <ProgressStatus
+                                position={index + 1}
+                                name={value.name}
+                                status={mapAnalysisStatusToColor(value.status)}
+                            />
+                        </Tooltip>
                     ))}
                 </ProgressContainer>
             );

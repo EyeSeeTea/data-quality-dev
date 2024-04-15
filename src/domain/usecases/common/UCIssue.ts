@@ -86,6 +86,7 @@ export class UCIssue {
                     status: undefined,
                     id: undefined,
                     followUp: undefined,
+                    step: undefined,
                 },
                 pagination: { page: 1, pageSize: 10 },
                 sorting: { field: "number", order: "asc" },

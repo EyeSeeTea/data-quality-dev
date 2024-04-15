@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-03-26T21:46:55.700Z\n"
-"PO-Revision-Date: 2024-03-26T21:46:55.700Z\n"
+"POT-Creation-Date: 2024-04-12T08:52:28.566Z\n"
+"PO-Revision-Date: 2024-04-12T08:52:28.567Z\n"
 
 msgid "ID"
 msgstr ""
@@ -104,6 +104,39 @@ msgstr ""
 msgid "Save Config Analysis"
 msgstr ""
 
+msgid "Columns to show in table"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Actions"
+msgstr ""
+
+msgid "Column settings"
+msgstr ""
+
+msgid "Loading details..."
+msgstr ""
+
+msgid "No detail fields provided"
+msgstr ""
+
+msgid "Column"
+msgstr ""
+
+msgid "Clear selection"
+msgstr ""
+
+msgid "There are {{total}} items selected in all pages."
+msgstr ""
+
+msgid "All {{total}} items on this page are selected."
+msgstr ""
+
+msgid "Select all {{total}} items in all pages"
+msgstr ""
+
 msgid ""
 "No user with Capture rights and Organisation Unit associated to the issue "
 "was found"
@@ -124,16 +157,19 @@ msgstr ""
 msgid "Double click to edit"
 msgstr ""
 
-msgid "{{countryNames}} and {{moreCountriesCount}} more"
+msgid "Issue"
 msgstr ""
 
-msgid "Close"
+msgid "{{countryNames}} and {{moreCountriesCount}} more"
 msgstr ""
 
 msgid "Countries"
 msgstr ""
 
 msgid "Periods"
+msgstr ""
+
+msgid "Step"
 msgstr ""
 
 msgid "Copying Contact Emails and marking for Follow-Up"
@@ -154,9 +190,6 @@ msgstr ""
 msgid "Extend Follow-Up + Contact Emails"
 msgstr ""
 
-msgid "Issue"
-msgstr ""
-
 msgid "Issue Number"
 msgstr ""
 
@@ -164,6 +197,9 @@ msgid "Back"
 msgstr ""
 
 msgid "Help"
+msgstr ""
+
+msgid "Loading Analysis..."
 msgstr ""
 
 msgid "Creating Data Quality Report..."
@@ -217,7 +253,7 @@ msgstr ""
 msgid "Double Counts Threshold"
 msgstr ""
 
-msgid "Loading"
+msgid "The selected step is not available for the selected module"
 msgstr ""
 
 msgid "Validation Rule Group"
@@ -227,30 +263,6 @@ msgid "Run"
 msgstr ""
 
 msgid "Run to get results"
-msgstr ""
-
-msgid "Activity Level"
-msgstr ""
-
-msgid "Sex"
-msgstr ""
-
-msgid "Age group"
-msgstr ""
-
-msgid "Place of Birth"
-msgstr ""
-
-msgid "Ownership"
-msgstr ""
-
-msgid "Vacancy rate"
-msgstr ""
-
-msgid "Applications"
-msgstr ""
-
-msgid "Enrolled"
 msgstr ""
 
 msgid "No Issues found"
