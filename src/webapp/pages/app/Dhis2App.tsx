@@ -65,7 +65,7 @@ async function getData(): Promise<CompositionRootResult> {
 
         const userSettings = await api.get<{ keyUiLocale: string }>("/userSettings").getData();
         configI18n(userSettings);
-        await setupLogger("http://localhost:8080", metadata.programs.qualityIssues.id);
+        await setupLogger(api.baseUrl, metadata.programs.qualityIssues.id);
         return { type: "loaded", data: { baseUrl, compositionRoot, metadata: metadata, api: api } };
     } catch (err) {
         return { type: "error", error: { baseUrl, error: err as Error } };
