@@ -4,6 +4,7 @@ import { Feedback } from "@eyeseetea/feedback-component";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 //@ts-ignore
 import OldMuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import { LoadingProvider } from "@eyeseetea/d2-ui-components";
 import React, { useEffect, useState } from "react";
 import { appConfig } from "../../../app-config";
 import { CompositionRoot } from "../../../CompositionRoot";
@@ -13,13 +14,17 @@ import { Router } from "../Router";
 import "./App.css";
 import muiThemeLegacy from "./themes/dhis2-legacy.theme";
 import { muiTheme } from "./themes/dhis2.theme";
+import { MetadataItem } from "$/domain/entities/MetadataItem";
+import { D2Api } from "$/types/d2-api";
 
 export interface AppProps {
     compositionRoot: CompositionRoot;
+    metadata: MetadataItem;
+    api: D2Api;
 }
 
 function App(props: AppProps) {
-    const { compositionRoot } = props;
+    const { api, compositionRoot, metadata } = props;
     const [showShareButton, setShowShareButton] = useState(false);
     const [loading, setLoading] = useState(true);
     const [appContext, setAppContext] = useState<AppContextState | null>(null);
@@ -28,38 +33,44 @@ function App(props: AppProps) {
         async function setup() {
             const isShareButtonVisible = appConfig.appearance.showShareButton;
             const currentUser = await compositionRoot.users.getCurrent.execute().toPromise();
+            const validationRuleGroups = await compositionRoot.validationRules.get
+                .execute()
+                .toPromise();
             if (!currentUser) throw new Error("User not logged in");
 
-            setAppContext({ currentUser, compositionRoot });
+            setAppContext({ api, currentUser, compositionRoot, metadata, validationRuleGroups });
             setShowShareButton(isShareButtonVisible);
             setLoading(false);
         }
         setup();
-    }, [compositionRoot]);
+    }, [api, compositionRoot, metadata]);
 
     if (loading) return null;
 
     return (
         <MuiThemeProvider theme={muiTheme}>
             <OldMuiThemeProvider muiTheme={muiThemeLegacy}>
-                <SnackbarProvider>
-                    <HeaderBar appName="Skeleton App" />
+                {/* @ts-ignore */}
+                <LoadingProvider>
+                    <SnackbarProvider>
+                        <HeaderBar appName="Data Quality" />
 
-                    {appConfig.feedback && appContext && (
-                        <Feedback
-                            options={appConfig.feedback}
-                            username={appContext.currentUser.username}
-                        />
-                    )}
+                        {appConfig.feedback && appContext && (
+                            <Feedback
+                                options={appConfig.feedback}
+                                username={appContext.currentUser.username}
+                            />
+                        )}
 
-                    <div id="app" className="content">
-                        <AppContext.Provider value={appContext}>
-                            <Router />
-                        </AppContext.Provider>
-                    </div>
+                        <div id="app" className="content">
+                            <AppContext.Provider value={appContext}>
+                                <Router />
+                            </AppContext.Provider>
+                        </div>
 
-                    <Share visible={showShareButton} />
-                </SnackbarProvider>
+                        <Share visible={showShareButton} />
+                    </SnackbarProvider>
+                </LoadingProvider>
             </OldMuiThemeProvider>
         </MuiThemeProvider>
     );

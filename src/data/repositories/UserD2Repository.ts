@@ -1,40 +1,24 @@
-import { User } from "../../domain/entities/User";
-import { UserRepository } from "../../domain/repositories/UserRepository";
-import { D2Api, MetadataPick } from "../../types/d2-api";
-import { apiToFuture, FutureData } from "../api-futures";
+import { User } from "$/domain/entities/User";
+import { UserRepository } from "$/domain/repositories/UserRepository";
+import { D2Api } from "$/types/d2-api";
+import { FutureData } from "$/data/api-futures";
+import { D2User } from "$/data/common/D2User";
 
 export class UserD2Repository implements UserRepository {
-    constructor(private api: D2Api) {}
+    private d2User: D2User;
+    constructor(private api: D2Api) {
+        this.d2User = new D2User(this.api);
+    }
+
+    getByIds(ids: string[]): FutureData<User[]> {
+        return this.d2User.getByIds(ids);
+    }
 
     public getCurrent(): FutureData<User> {
-        return apiToFuture(
-            this.api.currentUser.get({
-                fields: userFields,
-            })
-        ).map(d2User => {
-            const res = this.buildUser(d2User);
-            return res;
-        });
+        return this.d2User.getCurrent();
     }
 
-    private buildUser(d2User: D2User) {
-        return new User({
-            id: d2User.id,
-            name: d2User.displayName,
-            userGroups: d2User.userGroups,
-            ...d2User.userCredentials,
-        });
+    public getByUsernames(userIds: string[]): FutureData<User[]> {
+        return this.d2User.getByUsernames(userIds);
     }
 }
-
-const userFields = {
-    id: true,
-    displayName: true,
-    userGroups: { id: true, name: true },
-    userCredentials: {
-        username: true,
-        userRoles: { id: true, name: true, authorities: true },
-    },
-} as const;
-
-type D2User = MetadataPick<{ users: { fields: typeof userFields } }>["users"][number];

@@ -5,13 +5,192 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2023-09-18T13:40:05.079Z\n"
-"PO-Revision-Date: 2023-09-18T13:40:05.079Z\n"
+"POT-Creation-Date: 2024-04-12T08:52:28.566Z\n"
+"PO-Revision-Date: 2024-04-12T08:52:28.567Z\n"
+
+msgid "ID"
+msgstr ""
+
+msgid "Number"
+msgstr ""
+
+msgid "Azure URL"
+msgstr ""
+
+msgid "Period"
+msgstr ""
+
+msgid "Country"
+msgstr ""
+
+msgid "Data Element"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Follow Up"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Action"
+msgstr ""
+
+msgid "Action Description"
+msgstr ""
+
+msgid "Comments"
+msgstr ""
+
+msgid "Contact Emails"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "Cannot be blank: {{fieldName}}"
+msgstr ""
+
+msgid "No disaggregations selected"
+msgstr ""
+
+msgid "This analysis is not available for this module"
+msgstr ""
+
+msgid "Open analysis"
+msgstr ""
+
+msgid "Mark as Complete"
+msgstr ""
+
+msgid "Mark as In Progress"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Dataset"
+msgstr ""
+
+msgid "Start Date"
+msgstr ""
+
+msgid "End Date"
+msgstr ""
+
+msgid "New Data Quality Report"
+msgstr ""
 
 msgid "Add"
 msgstr ""
 
 msgid "List"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Module"
+msgstr ""
+
+msgid "Save Config Analysis"
+msgstr ""
+
+msgid "Columns to show in table"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Actions"
+msgstr ""
+
+msgid "Column settings"
+msgstr ""
+
+msgid "Loading details..."
+msgstr ""
+
+msgid "No detail fields provided"
+msgstr ""
+
+msgid "Column"
+msgstr ""
+
+msgid "Clear selection"
+msgstr ""
+
+msgid "There are {{total}} items selected in all pages."
+msgstr ""
+
+msgid "All {{total}} items on this page are selected."
+msgstr ""
+
+msgid "Select all {{total}} items in all pages"
+msgstr ""
+
+msgid ""
+"No user with Capture rights and Organisation Unit associated to the issue "
+"was found"
+msgstr ""
+
+msgid "Updating Issue..."
+msgstr ""
+
+msgid "Issue Updated"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Double click to edit"
+msgstr ""
+
+msgid "Issue"
+msgstr ""
+
+msgid "{{countryNames}} and {{moreCountriesCount}} more"
+msgstr ""
+
+msgid "Countries"
+msgstr ""
+
+msgid "Periods"
+msgstr ""
+
+msgid "Step"
+msgstr ""
+
+msgid "Copying Contact Emails and marking for Follow-Up"
+msgstr ""
+
+msgid "Contact emails copied"
+msgstr ""
+
+msgid "Exporting Issues..."
+msgstr ""
+
+msgid "Issues exported"
+msgstr ""
+
+msgid "Export"
+msgstr ""
+
+msgid "Extend Follow-Up + Contact Emails"
+msgstr ""
+
+msgid "Issue Number"
 msgstr ""
 
 msgid "Back"
@@ -20,8 +199,89 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
+msgid "Loading Analysis..."
+msgstr ""
+
+msgid "Creating Data Quality Report..."
+msgstr ""
+
+msgid "Quality Analysis created"
+msgstr ""
+
+msgid "Removing..."
+msgstr ""
+
+msgid "Quality Analysis deleted"
+msgstr ""
+
+msgid "Updating Status..."
+msgstr ""
+
+msgid "Quality Analysis updated"
+msgstr ""
+
+msgid "Saving..."
+msgstr ""
+
+msgid "Analysis"
+msgstr ""
+
+msgid "Data Quality Analysis"
+msgstr ""
+
+msgid "Configuration"
+msgstr ""
+
+msgid "Summary"
+msgstr ""
+
+msgid "Algorithm"
+msgstr ""
+
+msgid "Threshold"
+msgstr ""
+
+msgid "Running analysis..."
+msgstr ""
+
+msgid "CatCombos"
+msgstr ""
+
+msgid "Disaggregations"
+msgstr ""
+
+msgid "Double Counts Threshold"
+msgstr ""
+
+msgid "The selected step is not available for the selected module"
+msgstr ""
+
+msgid "Validation Rule Group"
+msgstr ""
+
+msgid "Run"
+msgstr ""
+
+msgid "Run to get results"
+msgstr ""
+
+msgid "No Issues found"
+msgstr ""
+
+msgid "Are you sure you want to {{action}} the selected rows?"
+msgstr ""
+
+msgid "Yes, {{actionButton}}"
+msgstr ""
+
 msgid "Hello {{name}}"
 msgstr ""
 
 msgid "Detail page"
+msgstr ""
+
+msgid "Progress"
+msgstr ""
+
+msgid "Last Modification"
 msgstr ""

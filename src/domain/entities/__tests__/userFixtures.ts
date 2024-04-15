@@ -1,5 +1,5 @@
 import { User, UserRole } from "../User";
-import { NamedRef } from "../Ref";
+import { UserGroup } from "../UserGroup";
 
 export function createAdminUser(): User {
     const adminRoles = [{ id: "Hg7n0MwzUQn", name: "Super user", authorities: ["ALL"] }];
@@ -11,21 +11,27 @@ export function createNonAdminUser(): User {
 
     return createUser(nonAdminRoles, []);
 }
-export function createUserWithGroups(userGroups: NamedRef[] = []): User {
+export function createUserWithGroups(userGroups: UserGroup[] = []): User {
     return new User({
         id: "YjJdEO6d38H",
         name: "John Traore",
         username: "user",
         userRoles: [],
         userGroups,
+        countries: [],
+        email: "john@company.com",
+        lastLogin: "",
     });
 }
-function createUser(userRoles: UserRole[], userGroups: NamedRef[] = []): User {
+function createUser(userRoles: UserRole[], userGroups: UserGroup[] = []): User {
     return new User({
         id: "kQiwoyMYHBS",
         name: "John Traore",
         username: "user",
         userRoles,
         userGroups,
+        countries: [],
+        email: "john@company.com",
+        lastLogin: "",
     });
 }

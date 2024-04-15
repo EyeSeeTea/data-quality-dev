@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { createAdminUser, createNonAdminUser, createUserWithGroups } from "./userFixtures";
+import { UserGroup } from "../UserGroup";
 
 describe("User", () => {
     it("should be admin if has a role with authority ALL", () => {
@@ -15,7 +16,9 @@ describe("User", () => {
     it("should return belong to user group equal to false when the id exist", () => {
         const userGroupId = "BwyMfDBLih9";
 
-        const user = createUserWithGroups([{ id: userGroupId, name: "Group 1" }]);
+        const user = createUserWithGroups([
+            UserGroup.build({ id: userGroupId, name: "Group 1", usersIds: [] }).get(),
+        ]);
 
         expect(user.belongToUserGroup(userGroupId)).toBe(true);
     });
@@ -23,7 +26,9 @@ describe("User", () => {
         const existedUserGroupId = "BwyMfDBLih9";
         const nonExistedUserGroupId = "f31IM13BgwJ";
 
-        const user = createUserWithGroups([{ id: existedUserGroupId, name: "Group 1" }]);
+        const user = createUserWithGroups([
+            UserGroup.build({ id: existedUserGroupId, name: "Group 1", usersIds: [] }).get(),
+        ]);
 
         expect(user.belongToUserGroup(nonExistedUserGroupId)).toBe(false);
     });
