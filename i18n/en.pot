@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-04-12T08:52:28.566Z\n"
-"PO-Revision-Date: 2024-04-12T08:52:28.567Z\n"
+"POT-Creation-Date: 2024-04-17T08:06:32.217Z\n"
+"PO-Revision-Date: 2024-04-17T08:06:32.218Z\n"
 
 msgid "ID"
 msgstr ""
@@ -199,9 +199,6 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-msgid "Loading Analysis..."
-msgstr ""
-
 msgid "Creating Data Quality Report..."
 msgstr ""
 
@@ -235,13 +232,13 @@ msgstr ""
 msgid "Summary"
 msgstr ""
 
+msgid "Running analysis..."
+msgstr ""
+
 msgid "Algorithm"
 msgstr ""
 
 msgid "Threshold"
-msgstr ""
-
-msgid "Running analysis..."
 msgstr ""
 
 msgid "CatCombos"
