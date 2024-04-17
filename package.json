@@ -1,7 +1,7 @@
 {
     "name": "data-quality",
     "description": "Data Quality",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "license": "GPL-3.0",
     "author": "EyeSeeTea team",
     "homepage": ".",
@@ -115,8 +115,8 @@
         "script-example": "npx ts-node src/scripts/example.ts"
     },
     "manifest.webapp": {
-        "name": "Data Quality",
-        "description": "Data Quality",
+        "name": "NHWA Data Quality",
+        "description": "NWHA Data Quality",
         "icons": {
             "48": "icon.png"
         },
