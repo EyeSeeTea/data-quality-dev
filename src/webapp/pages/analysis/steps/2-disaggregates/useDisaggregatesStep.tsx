@@ -14,6 +14,7 @@ export function useDisaggregatesStep(props: UseDisaggregatesStepProps) {
 
     const [reload, refreshReload] = React.useState(0);
     const [isLoading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | undefined>(undefined);
 
     const [disaggregations, setDisaggregations] = React.useState<Option[]>([]);
     const [selectedDisagregations, setSelectedDisagregations] = React.useState<string[]>([]);
@@ -56,7 +57,7 @@ export function useDisaggregatesStep(props: UseDisaggregatesStepProps) {
                     setLoading(false);
                 },
                 err => {
-                    snackbar.error(err.message);
+                    setError(err.message);
                     setLoading(false);
                 }
             );
@@ -70,6 +71,7 @@ export function useDisaggregatesStep(props: UseDisaggregatesStepProps) {
         selectedDisagregations,
         reload,
         isLoading,
+        error,
     };
 }
 

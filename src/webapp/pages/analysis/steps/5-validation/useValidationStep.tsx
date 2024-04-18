@@ -1,6 +1,5 @@
 import React from "react";
 import { useAppContext } from "$/webapp/contexts/app-context";
-import { useSnackbar } from "@eyeseetea/d2-ui-components";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 import { UpdateAnalysisState } from "../../AnalysisPage";
@@ -9,8 +8,10 @@ import { Maybe } from "$/utils/ts-utils";
 export function useValidationStep(props: UseValidationStepProps) {
     const { analysis, section, updateAnalysis } = props;
     const { compositionRoot, validationRuleGroups } = useAppContext();
-    const snackbar = useSnackbar();
+
     const [isLoading, setLoading] = React.useState<boolean>(false);
+    const [error, setError] = React.useState<string | undefined>(undefined);
+
     const [reload, refreshReload] = React.useState(0);
     const [selectedValidationRule, setSelectedValidationRule] = React.useState<Maybe<string>>("");
 
@@ -33,7 +34,7 @@ export function useValidationStep(props: UseValidationStepProps) {
                     setLoading(false);
                 },
                 err => {
-                    snackbar.error(err.message);
+                    setError(err.message);
                     setLoading(false);
                 }
             );
@@ -44,7 +45,6 @@ export function useValidationStep(props: UseValidationStepProps) {
         section.id,
         reload,
         updateAnalysis,
-        snackbar,
     ]);
 
     const validationRulesOptions = React.useMemo(() => {
@@ -62,6 +62,7 @@ export function useValidationStep(props: UseValidationStepProps) {
         selectedValidationRule,
         setSelectedValidationRule,
         isLoading,
+        error,
     };
 }
 

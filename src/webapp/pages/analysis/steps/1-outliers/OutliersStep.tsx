@@ -1,6 +1,6 @@
 import React from "react";
 import { Dropdown, useLoading } from "@eyeseetea/d2-ui-components";
-
+import { useSnackbar } from "@eyeseetea/d2-ui-components";
 import i18n from "$/utils/i18n";
 import { algorithmList, thresholdList, useAnalysisOutlier } from "./useOutliers";
 import { Maybe } from "$/utils/ts-utils";
@@ -15,8 +15,8 @@ export const OutliersStep: React.FC<PageStepProps> = React.memo(props => {
     const [reload, refreshReload] = React.useState(0);
     const [qualityFilters, setQualityFilters] = React.useState(defaultOutlierParams);
     const loading = useLoading();
-
-    const { runAnalysisOutlier, isLoading } = useAnalysisOutlier({
+    const snackbar = useSnackbar();
+    const { runAnalysisOutlier, isLoading, error } = useAnalysisOutlier({
         onSucess: qualityAnalysis => {
             refreshReload(reload + 1);
             updateAnalysis(qualityAnalysis);
@@ -27,6 +27,10 @@ export const OutliersStep: React.FC<PageStepProps> = React.memo(props => {
         if (isLoading) loading.show(isLoading, i18n.t("Running analysis..."));
         else loading.hide();
     }, [isLoading, loading]);
+
+    React.useEffect(() => {
+        if (error) snackbar.error(error);
+    }, [error, snackbar]);
 
     const runAnalysis = () => {
         runAnalysisOutlier(

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Dropdown, useLoading } from "@eyeseetea/d2-ui-components";
+import { Dropdown, useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
 
 import i18n from "$/utils/i18n";
 import { StepAnalysis } from "$/webapp/pages/analysis/steps/StepAnalysis";
@@ -24,6 +24,7 @@ export const GeneralPractitionersStep: React.FC<PageStepProps> = React.memo(prop
         handleChange,
         valueChange,
         isLoading,
+        error,
     } = useGeneralPractitionersStep({
         analysis: analysis,
         section: section,
@@ -31,11 +32,16 @@ export const GeneralPractitionersStep: React.FC<PageStepProps> = React.memo(prop
     });
 
     const loading = useLoading();
+    const snackbar = useSnackbar();
 
     useEffect(() => {
         if (isLoading) loading.show(isLoading, i18n.t("Running analysis..."));
         else loading.hide();
     }, [isLoading, loading]);
+
+    useEffect(() => {
+        if (error) snackbar.error(error);
+    }, [error, snackbar]);
 
     const onClick = () => {
         runAnalysis();

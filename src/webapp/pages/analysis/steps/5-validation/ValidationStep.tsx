@@ -1,6 +1,6 @@
 import React from "react";
 import i18n from "$/utils/i18n";
-import { Dropdown, useLoading } from "@eyeseetea/d2-ui-components";
+import { Dropdown, useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
 import styled from "styled-components";
 import { useValidationStep } from "./useValidationStep";
 import { PageStepProps } from "../../AnalysisPage";
@@ -15,13 +15,19 @@ export const ValidationStep: React.FC<PageStepProps> = React.memo(props => {
         reload,
         selectedValidationRule,
         isLoading,
+        error,
     } = useValidationStep({ analysis, section, updateAnalysis });
     const loading = useLoading();
+    const snackbar = useSnackbar();
 
     React.useEffect(() => {
         if (isLoading) loading.show(isLoading, i18n.t("Running analysis..."));
         else loading.hide();
     }, [isLoading, loading]);
+
+    React.useEffect(() => {
+        if (error) snackbar.error(error);
+    }, [error, snackbar]);
 
     return (
         <StepAnalysis

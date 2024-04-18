@@ -5,7 +5,7 @@ import { useNursingMidwiferyStep } from "./useNursingMidwiferyStep";
 import { SelectMultiCheckboxes } from "$/webapp/components/selectmulti-checkboxes/SelectMultiCheckboxes";
 import { StepAnalysis } from "../StepAnalysis";
 import { PageStepProps } from "../../AnalysisPage";
-import { useLoading } from "@eyeseetea/d2-ui-components";
+import { useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
 
 export const NursingMidwiferyStep: React.FC<PageStepProps> = React.memo(props => {
     const { analysis, section, title, updateAnalysis } = props;
@@ -16,12 +16,19 @@ export const NursingMidwiferyStep: React.FC<PageStepProps> = React.memo(props =>
         reload,
         runAnalysis,
         isLoading,
+        error,
     } = useNursingMidwiferyStep({ analysis, section, updateAnalysis });
     const loading = useLoading();
+    const snackbar = useSnackbar();
+
     React.useEffect(() => {
         if (isLoading) loading.show(isLoading, i18n.t("Running analysis..."));
         else loading.hide();
     }, [isLoading, loading]);
+
+    React.useEffect(() => {
+        if (error) snackbar.error(error);
+    }, [error, snackbar]);
 
     return (
         <StepAnalysis

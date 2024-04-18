@@ -5,7 +5,7 @@ import { useDisaggregatesStep } from "./useDisaggregatesStep";
 import { SelectMultiCheckboxes } from "$/webapp/components/selectmulti-checkboxes/SelectMultiCheckboxes";
 import { StepAnalysis } from "../StepAnalysis";
 import { PageStepProps } from "../../AnalysisPage";
-import { useLoading } from "@eyeseetea/d2-ui-components/loading";
+import { useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
 
 export const DisaggregatesStep: React.FC<PageStepProps> = React.memo(props => {
     const { analysis, section, title, updateAnalysis } = props;
@@ -16,12 +16,14 @@ export const DisaggregatesStep: React.FC<PageStepProps> = React.memo(props => {
         runAnalysis,
         selectedDisagregations,
         isLoading,
+        error,
     } = useDisaggregatesStep({
         analysis: analysis,
         updateAnalysis,
         sectionId: section.id,
     });
     const loading = useLoading();
+    const snackbar = useSnackbar();
 
     const onClick = () => {
         runAnalysis();
@@ -31,6 +33,10 @@ export const DisaggregatesStep: React.FC<PageStepProps> = React.memo(props => {
         if (isLoading) loading.show(isLoading, i18n.t("Running analysis..."));
         else loading.hide();
     }, [isLoading, loading]);
+
+    useEffect(() => {
+        if (error) snackbar.error(error);
+    }, [error, snackbar]);
 
     return (
         <StepAnalysis

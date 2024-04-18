@@ -11,6 +11,7 @@ export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
     const { compositionRoot } = useAppContext();
     const snackbar = useSnackbar();
     const [isLoading, setLoading] = React.useState<boolean>(false);
+    const [error, setError] = React.useState<string | undefined>(undefined);
     const [reload, refreshReload] = React.useState(0);
     const [disaggregations, setDisaggregations] = React.useState<{ value: Id; text: string }[]>([]);
     const [selectedDisaggregations, setSelectedDissagregations] = React.useState<string[]>([]);
@@ -50,7 +51,7 @@ export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
                     setLoading(false);
                 },
                 err => {
-                    snackbar.error(err.message);
+                    setError(err.message);
                     setLoading(false);
                 }
             );
@@ -59,7 +60,6 @@ export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
         compositionRoot.nursingMidwifery.validate,
         reload,
         updateAnalysis,
-        snackbar,
         selectedDisaggregations,
         section.id,
     ]);
@@ -72,6 +72,7 @@ export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
         handleChange,
         runAnalysis,
         isLoading,
+        error,
     };
 }
 

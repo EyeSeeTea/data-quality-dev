@@ -43,6 +43,8 @@ export function useGeneralPractitionersStep(props: UseGeneralPractitionersStepPr
     const [selectedDisaggregations, setSelectedDissagregations] = React.useState<string[]>([]);
     const [threshold, setThreshold] = React.useState<string>("1");
     const [isLoading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | undefined>(undefined);
+
     const handleChange = (values: string[]) => {
         setSelectedDissagregations(values);
     };
@@ -86,7 +88,7 @@ export function useGeneralPractitionersStep(props: UseGeneralPractitionersStepPr
                     setLoading(false);
                 },
                 err => {
-                    snackbar.error(err.message);
+                    setError(err.message);
                     setLoading(false);
                 }
             );
@@ -96,7 +98,6 @@ export function useGeneralPractitionersStep(props: UseGeneralPractitionersStepPr
         compositionRoot.practitioners.run,
         reload,
         updateAnalysis,
-        snackbar,
         threshold,
         selectedDisaggregations,
     ]);
@@ -113,6 +114,7 @@ export function useGeneralPractitionersStep(props: UseGeneralPractitionersStepPr
         valueChange,
         threshold,
         isLoading,
+        error,
     };
 }
 

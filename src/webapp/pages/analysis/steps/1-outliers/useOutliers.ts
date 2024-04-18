@@ -1,5 +1,5 @@
 import React from "react";
-import { useSnackbar } from "@eyeseetea/d2-ui-components";
+
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { Id } from "$/domain/entities/Ref";
@@ -25,8 +25,8 @@ export const algorithmList = [
 export function useAnalysisOutlier(props: UseRunAnalysisProps) {
     const { onSucess } = props;
     const { compositionRoot } = useAppContext();
-    const snackbar = useSnackbar();
     const [isLoading, setLoading] = React.useState<boolean>(false);
+    const [error, setError] = React.useState<string | undefined>(undefined);
 
     const runAnalysisOutlier = React.useCallback(
         (algorithm: string, analysisId: Id, sectionId: Id, threshold: string) => {
@@ -44,15 +44,16 @@ export function useAnalysisOutlier(props: UseRunAnalysisProps) {
                         onSucess(qualityAnalysis);
                     },
                     err => {
-                        snackbar.error(err.message);
+                        setError(err.message);
+                        // snackbar.error(err.message);
                         setLoading(false);
                     }
                 );
         },
-        [compositionRoot.outlier.run, snackbar, onSucess]
+        [compositionRoot.outlier.run, onSucess]
     );
 
-    return { runAnalysisOutlier, isLoading };
+    return { runAnalysisOutlier, isLoading, error };
 }
 
 type UseRunAnalysisProps = { onSucess: (qualityAnalysis: QualityAnalysis) => void };
