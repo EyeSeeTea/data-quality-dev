@@ -80,7 +80,8 @@ export class SaveIssueUseCase {
             const loggedInUsersWithEmail = this.getLoggedInUsersWithEmail(users);
             const usersInCountry = this.getUsersInIssueCountry(loggedInUsersWithEmail, issue);
             const usersInRegion = this.getUsersInIssueRegion(loggedInUsersWithEmail, issue);
-            return Future.success(usersInCountry ? usersInCountry : usersInRegion);
+            const targetUsers = usersInCountry.length > 0 ? usersInCountry : usersInRegion;
+            return Future.success(targetUsers);
         });
     }
 
