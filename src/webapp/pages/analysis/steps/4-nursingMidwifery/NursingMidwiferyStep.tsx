@@ -15,13 +15,13 @@ export const NursingMidwiferyStep: React.FC<PageStepProps> = React.memo(props =>
         handleChange,
         reload,
         runAnalysis,
-        isAnalysisLoading,
+        isLoading,
     } = useNursingMidwiferyStep({ analysis, section, updateAnalysis });
     const loading = useLoading();
     React.useEffect(() => {
-        if (isAnalysisLoading) loading.show(isAnalysisLoading, i18n.t("Running analysis..."));
+        if (isLoading) loading.show(isLoading, i18n.t("Running analysis..."));
         else loading.hide();
-    }, [isAnalysisLoading, loading]);
+    }, [isLoading, loading]);
 
     return (
         <StepAnalysis
