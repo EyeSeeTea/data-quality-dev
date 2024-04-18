@@ -1,7 +1,6 @@
 import React from "react";
-import i18n from "$/utils/i18n";
 import { useAppContext } from "$/webapp/contexts/app-context";
-import { useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
+import { useSnackbar } from "@eyeseetea/d2-ui-components";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 import { UpdateAnalysisState } from "../../AnalysisPage";
@@ -11,8 +10,7 @@ export function useValidationStep(props: UseValidationStepProps) {
     const { analysis, section, updateAnalysis } = props;
     const { compositionRoot, validationRuleGroups } = useAppContext();
     const snackbar = useSnackbar();
-    const loading = useLoading();
-
+    const [isLoading, setLoading] = React.useState<boolean>(false);
     const [reload, refreshReload] = React.useState(0);
     const [selectedValidationRule, setSelectedValidationRule] = React.useState<Maybe<string>>("");
 
@@ -21,7 +19,7 @@ export function useValidationStep(props: UseValidationStepProps) {
     };
 
     const runAnalysis = React.useCallback(() => {
-        loading.show(true, i18n.t("Running analysis..."));
+        setLoading(true);
         compositionRoot.validationRules.run
             .execute({
                 qualityAnalysisId: analysis.id,
@@ -32,15 +30,14 @@ export function useValidationStep(props: UseValidationStepProps) {
                 analysis => {
                     refreshReload(reload + 1);
                     updateAnalysis(analysis);
-                    loading.show(false);
+                    setLoading(false);
                 },
                 err => {
                     snackbar.error(err.message);
-                    loading.show(false);
+                    setLoading(false);
                 }
             );
     }, [
-        loading,
         compositionRoot.validationRules.run,
         analysis.id,
         selectedValidationRule,
@@ -64,6 +61,7 @@ export function useValidationStep(props: UseValidationStepProps) {
         runAnalysis,
         selectedValidationRule,
         setSelectedValidationRule,
+        isLoading,
     };
 }
 

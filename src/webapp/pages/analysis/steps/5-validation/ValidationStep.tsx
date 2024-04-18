@@ -1,6 +1,6 @@
 import React from "react";
 import i18n from "$/utils/i18n";
-import { Dropdown } from "@eyeseetea/d2-ui-components";
+import { Dropdown, useLoading } from "@eyeseetea/d2-ui-components";
 import styled from "styled-components";
 import { useValidationStep } from "./useValidationStep";
 import { PageStepProps } from "../../AnalysisPage";
@@ -8,8 +8,20 @@ import { StepAnalysis } from "../StepAnalysis";
 
 export const ValidationStep: React.FC<PageStepProps> = React.memo(props => {
     const { analysis, section, title, updateAnalysis } = props;
-    const { validationRules, handleChange, runAnalysis, reload, selectedValidationRule } =
-        useValidationStep({ analysis, section, updateAnalysis });
+    const {
+        validationRules,
+        handleChange,
+        runAnalysis,
+        reload,
+        selectedValidationRule,
+        isLoading,
+    } = useValidationStep({ analysis, section, updateAnalysis });
+    const loading = useLoading();
+
+    React.useEffect(() => {
+        if (isLoading) loading.show(isLoading, i18n.t("Running analysis..."));
+        else loading.hide();
+    }, [isLoading, loading]);
 
     return (
         <StepAnalysis
