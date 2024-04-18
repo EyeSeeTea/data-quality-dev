@@ -1,7 +1,5 @@
 import React from "react";
-import { useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
-
-import i18n from "$/utils/i18n";
+import { useSnackbar } from "@eyeseetea/d2-ui-components";
 import { Id } from "$/domain/entities/Ref";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
@@ -12,8 +10,7 @@ export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
     const { analysis, section, updateAnalysis } = props;
     const { compositionRoot } = useAppContext();
     const snackbar = useSnackbar();
-    const loading = useLoading();
-
+    const [isAnalysisLoading, setAnalysisLoading] = React.useState<boolean>(false);
     const [reload, refreshReload] = React.useState(0);
     const [disaggregations, setDisaggregations] = React.useState<{ value: Id; text: string }[]>([]);
     const [selectedDisaggregations, setSelectedDissagregations] = React.useState<string[]>([]);
@@ -32,14 +29,14 @@ export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
                 snackbar.error(error.message);
             }
         );
-    }, [section.id, compositionRoot.nursingMidwifery.getDisaggregations, loading, snackbar]);
+    }, [section.id, compositionRoot.nursingMidwifery.getDisaggregations, snackbar]);
 
     const handleChange = (values: string[]) => {
         setSelectedDissagregations(values);
     };
 
     const runAnalysis = React.useCallback(() => {
-        loading.show(true, i18n.t("Running analysis..."));
+        setAnalysisLoading(true);
         compositionRoot.nursingMidwifery.validate
             .execute({
                 analysisId: analysis.id,
@@ -50,17 +47,16 @@ export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
                 analysis => {
                     refreshReload(reload + 1);
                     updateAnalysis(analysis);
-                    loading.hide();
+                    setAnalysisLoading(false);
                 },
                 err => {
                     snackbar.error(err.message);
-                    loading.hide();
+                    setAnalysisLoading(false);
                 }
             );
     }, [
         analysis,
         compositionRoot.nursingMidwifery.validate,
-        loading,
         reload,
         updateAnalysis,
         snackbar,
@@ -75,6 +71,7 @@ export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
         selectedDisaggregations,
         handleChange,
         runAnalysis,
+        isAnalysisLoading,
     };
 }
 
