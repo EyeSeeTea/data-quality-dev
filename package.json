@@ -41,7 +41,8 @@
         "styled-jsx": "3.4.5",
         "typed-immutable-map": "^0.1.1",
         "xlsx": "^0.18.5",
-        "zustand": "4.4.7"
+        "zustand": "4.4.7",
+        "eslint-plugin-no-relative-import-paths": "^1.5.3"
     },
     "devDependencies": {
         "@babel/core": "^7.0.0-0",
