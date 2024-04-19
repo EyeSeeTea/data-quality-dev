@@ -4,8 +4,8 @@ import { Dropdown } from "@eyeseetea/d2-ui-components";
 import i18n from "$/utils/i18n";
 import { algorithmList, thresholdList, useAnalysisOutlier } from "./useOutliers";
 import { Maybe } from "$/utils/ts-utils";
-import { StepAnalysis } from "../StepAnalysis";
-import { PageStepProps } from "../../AnalysisPage";
+import { StepAnalysis } from "$/webapp/pages/analysis/steps/StepAnalysis";
+import { PageStepProps } from "$/webapp/pages/analysis/AnalysisPage";
 
 const defaultOutlierParams = { algorithm: "Z_SCORE", threshold: "3" };
 

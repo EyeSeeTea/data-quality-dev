@@ -3,8 +3,8 @@ import i18n from "$/utils/i18n";
 import styled from "styled-components";
 import { useDisaggregatesStep } from "./useDisaggregatesStep";
 import { SelectMultiCheckboxes } from "$/webapp/components/selectmulti-checkboxes/SelectMultiCheckboxes";
-import { StepAnalysis } from "../StepAnalysis";
-import { PageStepProps } from "../../AnalysisPage";
+import { StepAnalysis } from "$/webapp/pages/analysis/steps/StepAnalysis";
+import { PageStepProps } from "$/webapp/pages/analysis/AnalysisPage";
 
 export const DisaggregatesStep: React.FC<PageStepProps> = React.memo(props => {
     const { analysis, section, title, updateAnalysis } = props;

@@ -7,13 +7,13 @@ import { QualityAnalysisRepository } from "$/domain/repositories/QualityAnalysis
 import _ from "$/domain/entities/generic/Collection";
 import { UCIssue } from "./common/UCIssue";
 import { UCAnalysis } from "./common/UCAnalysis";
-import { ValidationRuleAnalysisRepository } from "../repositories/ValidationRuleAnalysisRepository";
-import { ValidationRuleAnalysis } from "../entities/ValidationRuleAnalysis";
-import { QualityAnalysisIssue } from "../entities/QualityAnalysisIssue";
-import { ValidationRuleGroupRepository } from "../repositories/ValidationRuleGroupRepository";
-import { ValidationRuleGroup } from "../entities/ValidationRuleGroup";
-import { MetadataItem } from "../entities/MetadataItem";
-import { CountryRepository } from "../repositories/CountryRepository";
+import { ValidationRuleAnalysisRepository } from "$/domain/repositories/ValidationRuleAnalysisRepository";
+import { ValidationRuleAnalysis } from "$/domain/entities/ValidationRuleAnalysis";
+import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
+import { ValidationRuleGroupRepository } from "$/domain/repositories/ValidationRuleGroupRepository";
+import { ValidationRuleGroup } from "$/domain/entities/ValidationRuleGroup";
+import { MetadataItem } from "$/domain/entities/MetadataItem";
+import { CountryRepository } from "$/domain/repositories/CountryRepository";
 
 export class RunValidationsUseCase {
     private issueUseCase: UCIssue;

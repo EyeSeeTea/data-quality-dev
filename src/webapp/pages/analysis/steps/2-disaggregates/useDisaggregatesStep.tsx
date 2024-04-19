@@ -6,7 +6,7 @@ import { useAppContext } from "$/webapp/contexts/app-context";
 import { Id } from "$/domain/entities/Ref";
 import { Option } from "$/webapp/components/selectmulti-checkboxes/SelectMultiCheckboxes";
 import _ from "$/domain/entities/generic/Collection";
-import { UpdateAnalysisState } from "../../AnalysisPage";
+import { UpdateAnalysisState } from "$/webapp/pages/analysis/AnalysisPage";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 
 export function useDisaggregatesStep(props: UseDisaggregatesStepProps) {

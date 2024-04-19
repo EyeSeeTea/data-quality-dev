@@ -5,7 +5,7 @@ import i18n from "$/utils/i18n";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
 import React from "react";
-import { UpdateAnalysisState } from "../../AnalysisPage";
+import { UpdateAnalysisState } from "$/webapp/pages/analysis/AnalysisPage";
 
 const doubleCountsList = [
     {

@@ -1,9 +1,9 @@
-import { FutureData } from "../../data/api-futures";
+import { FutureData } from "$/data/api-futures";
 import {
     QualityAnalysisOptions,
     QualityAnalysisPaginated,
     QualityAnalysisRepository,
-} from "../repositories/QualityAnalysisRepository";
+} from "$/domain/repositories/QualityAnalysisRepository";
 
 export class GetQualityAnalysisUseCase {
     constructor(private qualityAnalysisRepository: QualityAnalysisRepository) {}

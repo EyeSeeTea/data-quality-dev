@@ -5,7 +5,7 @@ import { Module } from "$/domain/entities/Module";
 import { ModuleRepository } from "$/domain/repositories/ModuleRepository";
 import { FutureData, apiToFuture } from "$/data/api-futures";
 import { Future } from "$/domain/entities/generic/Future";
-import { getDefaultModules } from "../common/D2Module";
+import { getDefaultModules } from "$/data/common/D2Module";
 import { DataElement } from "$/domain/entities/DataElement";
 import _ from "$/domain/entities/generic/Collection";
 import { Maybe } from "$/utils/ts-utils";

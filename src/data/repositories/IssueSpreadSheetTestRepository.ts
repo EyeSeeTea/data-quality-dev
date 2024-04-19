@@ -1,7 +1,7 @@
 import _ from "lodash";
 
 import { IssueExportRepository } from "$/domain/repositories/IssueExportRepository";
-import { FutureData } from "../api-futures";
+import { FutureData } from "$/data/api-futures";
 import { Future } from "$/domain/entities/generic/Future";
 
 export class IssueSpreadSheetTestRepository implements IssueExportRepository {

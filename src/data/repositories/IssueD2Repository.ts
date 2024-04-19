@@ -1,7 +1,7 @@
 import { D2Api, D2TrackerEvent, DataValue } from "$/types/d2-api";
 import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
 import { GetIssuesOptions, IssueRepository } from "$/domain/repositories/IssueRepository";
-import { FutureData, apiToFuture } from "../api-futures";
+import { FutureData, apiToFuture } from "$/data/api-futures";
 import { RowsPaginated } from "$/domain/entities/Pagination";
 import { Future } from "$/domain/entities/generic/Future";
 import { logger } from "$/utils/logger";
@@ -20,8 +20,8 @@ import { HashMap } from "$/domain/entities/generic/HashMap";
 import { Maybe } from "$/utils/ts-utils";
 import { IssueAction } from "$/domain/entities/IssueAction";
 import { IssueStatus } from "$/domain/entities/IssueStatus";
-import { getDefaultModules } from "../common/D2Module";
-import { getProgramStageIndexById } from "../common/utils";
+import { getDefaultModules } from "$/data/common/D2Module";
+import { getProgramStageIndexById } from "$/data/common/utils";
 
 export class IssueD2Repository implements IssueRepository {
     d2DataElement: D2DataElement;

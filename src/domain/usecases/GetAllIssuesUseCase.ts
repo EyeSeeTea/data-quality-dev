@@ -1,6 +1,6 @@
 import { FutureData } from "$/data/api-futures";
-import { RowsPaginated } from "../entities/Pagination";
-import { QualityAnalysisIssue } from "../entities/QualityAnalysisIssue";
+import { RowsPaginated } from "$/domain/entities/Pagination";
+import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
 import { GetIssuesOptions, IssueRepository } from "$/domain/repositories/IssueRepository";
 
 export class GetAllIssuesUseCase {

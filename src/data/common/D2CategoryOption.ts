@@ -1,8 +1,8 @@
-import { D2Api } from "../../types/d2-api";
-import { FutureData, apiToFuture } from "../api-futures";
-import { Id } from "../../domain/entities/Ref";
-import _ from "../../domain/entities/generic/Collection";
-import { CategoryOption } from "../../domain/entities/CategoryOption";
+import { D2Api } from "$/types/d2-api";
+import { FutureData, apiToFuture } from "$/data/api-futures";
+import { Id } from "$/domain/entities/Ref";
+import _ from "$/domain/entities/generic/Collection";
+import { CategoryOption } from "$/domain/entities/CategoryOption";
 import { Maybe } from "$/utils/ts-utils";
 
 export class D2CategoryOption {

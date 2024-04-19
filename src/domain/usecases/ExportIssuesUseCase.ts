@@ -1,8 +1,8 @@
 import { FutureData } from "$/data/api-futures";
 import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
 import { Id } from "$/domain/entities/Ref";
-import { IssueExportRepository } from "../repositories/IssueExportRepository";
-import { GetIssuesOptions, IssueRepository } from "../repositories/IssueRepository";
+import { IssueExportRepository } from "$/domain/repositories/IssueExportRepository";
+import { GetIssuesOptions, IssueRepository } from "$/domain/repositories/IssueRepository";
 import { UCIssue } from "./common/UCIssue";
 
 export class ExportIssuesUseCase {

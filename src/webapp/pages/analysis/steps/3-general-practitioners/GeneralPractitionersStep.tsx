@@ -6,7 +6,7 @@ import { StepAnalysis } from "$/webapp/pages/analysis/steps/StepAnalysis";
 import styled from "styled-components";
 import { useGeneralPractitionersStep } from "./useGeneralPractitionersStep";
 import { SelectMultiCheckboxes } from "$/webapp/components/selectmulti-checkboxes/SelectMultiCheckboxes";
-import { PageStepProps } from "../../AnalysisPage";
+import { PageStepProps } from "$/webapp/pages/analysis/AnalysisPage";
 import { EmptyState } from "$/webapp/components/empty-state/EmptyState";
 import { Typography } from "@material-ui/core";
 import React from "react";

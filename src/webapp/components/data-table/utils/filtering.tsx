@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { TableObject } from "../types";
+import { TableObject } from "$/webapp/components/data-table/types";
 
 export function filterObjects<T extends TableObject>(
     objects: T[],

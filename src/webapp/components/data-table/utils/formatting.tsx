@@ -2,7 +2,7 @@ import _ from "lodash";
 import moment from "moment";
 import { ReactNode } from "react";
 import Linkify from "linkify-react";
-import { ReferenceObject, RowConfig, TableColumn } from "../types";
+import { ReferenceObject, RowConfig, TableColumn } from "$/webapp/components/data-table/types";
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 function defaultFormatter(value: any): ReactNode {

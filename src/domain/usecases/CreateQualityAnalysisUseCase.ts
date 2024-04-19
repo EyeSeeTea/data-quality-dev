@@ -1,15 +1,15 @@
 import { Id } from "$/domain/entities/Ref";
 import { getUid } from "$/utils/uid";
-import { FutureData } from "../../data/api-futures";
-import { QualityAnalysis } from "../entities/QualityAnalysis";
-import { QualityAnalysisSection } from "../entities/QualityAnalysisSection";
-import { getErrors } from "../entities/generic/Errors";
-import { Future } from "../entities/generic/Future";
-import { AnalysisSectionRepository } from "../repositories/AnalysisSectionRepository";
-import { QualityAnalysisRepository } from "../repositories/QualityAnalysisRepository";
-import { SequentialRepository } from "../repositories/SequentialRepository";
-import { SettingsRepository } from "../repositories/SettingsRepository";
-import { UserRepository } from "../repositories/UserRepository";
+import { FutureData } from "$/data/api-futures";
+import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
+import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
+import { getErrors } from "$/domain/entities/generic/Errors";
+import { Future } from "$/domain/entities/generic/Future";
+import { AnalysisSectionRepository } from "$/domain/repositories/AnalysisSectionRepository";
+import { QualityAnalysisRepository } from "$/domain/repositories/QualityAnalysisRepository";
+import { SequentialRepository } from "$/domain/repositories/SequentialRepository";
+import { SettingsRepository } from "$/domain/repositories/SettingsRepository";
+import { UserRepository } from "$/domain/repositories/UserRepository";
 
 export class CreateQualityAnalysisUseCase {
     constructor(

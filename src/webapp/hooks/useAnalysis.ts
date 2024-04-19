@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Id } from "$/domain/entities/Ref";
-import { useAppContext } from "../contexts/app-context";
+import { useAppContext } from "$/webapp/contexts/app-context";
 import { useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import i18n from "$/utils/i18n";
