@@ -1,5 +1,4 @@
 import React from "react";
-import { useSnackbar } from "@eyeseetea/d2-ui-components";
 import { Id } from "$/domain/entities/Ref";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
@@ -9,7 +8,6 @@ import { UpdateAnalysisState } from "../../AnalysisPage";
 export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
     const { analysis, section, updateAnalysis } = props;
     const { compositionRoot } = useAppContext();
-    const snackbar = useSnackbar();
     const [isLoading, setLoading] = React.useState<boolean>(false);
     const [error, setError] = React.useState<string | undefined>(undefined);
     const [reload, refreshReload] = React.useState(0);
@@ -27,10 +25,10 @@ export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
                 setSelectedDissagregations(selectedDisaggregations.map(item => item.value));
             },
             error => {
-                snackbar.error(error.message);
+                setError(error.message);
             }
         );
-    }, [section.id, compositionRoot.nursingMidwifery.getDisaggregations, snackbar]);
+    }, [section.id, compositionRoot.nursingMidwifery.getDisaggregations]);
 
     const handleChange = (values: string[]) => {
         setSelectedDissagregations(values);
