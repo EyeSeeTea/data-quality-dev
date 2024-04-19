@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Dropdown, useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
+import React from "react";
+import { Dropdown } from "@eyeseetea/d2-ui-components";
 
 import i18n from "$/utils/i18n";
 import { StepAnalysis } from "$/webapp/pages/analysis/steps/StepAnalysis";
@@ -10,6 +10,7 @@ import { SelectMultiCheckboxes } from "$/webapp/components/selectmulti-checkboxe
 import { PageStepProps } from "../../AnalysisPage";
 import { EmptyState } from "$/webapp/components/empty-state/EmptyState";
 import { Typography } from "@material-ui/core";
+import { UserFeedbackContainer } from "$/webapp/components/user-feedback-container/UserFeedbackContainer";
 
 export const GeneralPractitionersStep: React.FC<PageStepProps> = React.memo(props => {
     const { analysis, section, title, updateAnalysis } = props;
@@ -31,24 +32,12 @@ export const GeneralPractitionersStep: React.FC<PageStepProps> = React.memo(prop
         updateAnalysis: updateAnalysis,
     });
 
-    const loading = useLoading();
-    const snackbar = useSnackbar();
-
-    useEffect(() => {
-        if (isLoading) loading.show(isLoading, i18n.t("Running analysis..."));
-        else loading.hide();
-    }, [isLoading, loading]);
-
-    useEffect(() => {
-        if (error) snackbar.error(error);
-    }, [error, snackbar]);
-
     const onClick = () => {
         runAnalysis();
     };
 
     return analysis.module.name !== "NHWA Module 2" ? (
-        <>
+        <UserFeedbackContainer isLoading={isLoading} error={error}>
             <StepAnalysis
                 id={analysis.id}
                 onRun={onClick}
@@ -71,7 +60,7 @@ export const GeneralPractitionersStep: React.FC<PageStepProps> = React.memo(prop
                     label={i18n.t("Double Counts Threshold")}
                 />
             </StepAnalysis>
-        </>
+        </UserFeedbackContainer>
     ) : (
         <>
             <AnalysisHeader>

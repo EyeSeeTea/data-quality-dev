@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import i18n from "$/utils/i18n";
 import styled from "styled-components";
 import { useDisaggregatesStep } from "./useDisaggregatesStep";
 import { SelectMultiCheckboxes } from "$/webapp/components/selectmulti-checkboxes/SelectMultiCheckboxes";
 import { StepAnalysis } from "../StepAnalysis";
 import { PageStepProps } from "../../AnalysisPage";
-import { useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
+import { UserFeedbackContainer } from "$/webapp/components/user-feedback-container/UserFeedbackContainer";
 
 export const DisaggregatesStep: React.FC<PageStepProps> = React.memo(props => {
     const { analysis, section, title, updateAnalysis } = props;
@@ -22,39 +22,30 @@ export const DisaggregatesStep: React.FC<PageStepProps> = React.memo(props => {
         updateAnalysis,
         sectionId: section.id,
     });
-    const loading = useLoading();
-    const snackbar = useSnackbar();
 
     const onClick = () => {
         runAnalysis();
     };
 
-    useEffect(() => {
-        if (isLoading) loading.show(isLoading, i18n.t("Running analysis..."));
-        else loading.hide();
-    }, [isLoading, loading]);
-
-    useEffect(() => {
-        if (error) snackbar.error(error);
-    }, [error, snackbar]);
-
     return (
-        <StepAnalysis
-            id={analysis.id}
-            onRun={onClick}
-            reload={reload}
-            section={section}
-            title={title}
-        >
-            <FiltersContainer>
-                <SelectMultiCheckboxes
-                    options={disaggregations}
-                    onChange={handleChange}
-                    value={selectedDisagregations}
-                    label={i18n.t("CatCombos")}
-                />
-            </FiltersContainer>
-        </StepAnalysis>
+        <UserFeedbackContainer isLoading={isLoading} error={error}>
+            <StepAnalysis
+                id={analysis.id}
+                onRun={onClick}
+                reload={reload}
+                section={section}
+                title={title}
+            >
+                <FiltersContainer>
+                    <SelectMultiCheckboxes
+                        options={disaggregations}
+                        onChange={handleChange}
+                        value={selectedDisagregations}
+                        label={i18n.t("CatCombos")}
+                    />
+                </FiltersContainer>
+            </StepAnalysis>
+        </UserFeedbackContainer>
     );
 });
 
