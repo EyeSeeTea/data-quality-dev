@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2024-04-12T08:46:18.632Z\n"
+"POT-Creation-Date: 2024-04-12T08:52:28.566Z\n"
 "PO-Revision-Date: 2018-10-25T09:02:35.143Z\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,6 +36,9 @@ msgid "Follow Up"
 msgstr ""
 
 msgid "Status"
+msgstr ""
+
+msgid "Action"
 msgstr ""
 
 msgid "Action Description"
@@ -134,12 +137,12 @@ msgstr ""
 msgid "Select all {{total}} items in all pages"
 msgstr ""
 
-msgid "Category"
-msgstr ""
-
 msgid ""
 "No user with Capture rights and Organisation Unit associated to the issue "
 "was found"
+msgstr ""
+
+msgid "Updating Issue..."
 msgstr ""
 
 msgid "Issue Updated"
@@ -175,6 +178,9 @@ msgstr ""
 msgid "Contact emails copied"
 msgstr ""
 
+msgid "Exporting Issues..."
+msgstr ""
+
 msgid "Issues exported"
 msgstr ""
 
@@ -206,6 +212,9 @@ msgid "Removing..."
 msgstr ""
 
 msgid "Quality Analysis deleted"
+msgstr ""
+
+msgid "Updating Status..."
 msgstr ""
 
 msgid "Quality Analysis updated"
