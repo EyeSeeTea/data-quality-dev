@@ -45,7 +45,6 @@ export function useAnalysisOutlier(props: UseRunAnalysisProps) {
                     },
                     err => {
                         setError(err.message);
-                        // snackbar.error(err.message);
                         setLoading(false);
                     }
                 );
