@@ -2,10 +2,11 @@ import i18n from "$/utils/i18n";
 import { useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
 import React from "react";
 import { ReactNode } from "react";
+import { Maybe } from "$/utils/ts-utils";
 
 export type UserFeedbackProps = {
     isLoading: boolean;
-    error: string | undefined;
+    error: Maybe<string>;
     children: ReactNode;
 };
 
