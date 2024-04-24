@@ -3,6 +3,7 @@ import React from "react";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { Id } from "$/domain/entities/Ref";
+import { Maybe } from "$/utils/ts-utils";
 
 export const thresholdList = [
     { value: "1", text: "1.0" },
@@ -26,7 +27,7 @@ export function useAnalysisOutlier(props: UseRunAnalysisProps) {
     const { onSucess } = props;
     const { compositionRoot } = useAppContext();
     const [isLoading, setLoading] = React.useState<boolean>(false);
-    const [error, setError] = React.useState<string | undefined>(undefined);
+    const [error, setError] = React.useState<Maybe<string>>(undefined);
 
     const runAnalysisOutlier = React.useCallback(
         (algorithm: string, analysisId: Id, sectionId: Id, threshold: string) => {

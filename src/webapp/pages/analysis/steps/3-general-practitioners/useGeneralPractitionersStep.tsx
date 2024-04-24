@@ -3,8 +3,9 @@ import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection
 import { Id } from "$/domain/entities/Ref";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { useSnackbar } from "@eyeseetea/d2-ui-components";
-import React, { useState } from "react";
+import React from "react";
 import { UpdateAnalysisState } from "../../AnalysisPage";
+import { Maybe } from "$/utils/ts-utils";
 
 const doubleCountsList = [
     {
@@ -42,8 +43,8 @@ export function useGeneralPractitionersStep(props: UseGeneralPractitionersStepPr
     const [disaggregations, setDisaggregations] = React.useState<{ value: Id; text: string }[]>([]);
     const [selectedDisaggregations, setSelectedDissagregations] = React.useState<string[]>([]);
     const [threshold, setThreshold] = React.useState<string>("1");
-    const [isLoading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | undefined>(undefined);
+    const [isLoading, setLoading] = React.useState<boolean>(false);
+    const [error, setError] = React.useState<Maybe<string>>(undefined);
 
     const handleChange = (values: string[]) => {
         setSelectedDissagregations(values);

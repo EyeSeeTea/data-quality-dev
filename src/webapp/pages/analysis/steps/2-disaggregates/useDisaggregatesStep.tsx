@@ -6,6 +6,7 @@ import { Option } from "$/webapp/components/selectmulti-checkboxes/SelectMultiCh
 import _ from "$/domain/entities/generic/Collection";
 import { UpdateAnalysisState } from "../../AnalysisPage";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
+import { Maybe } from "$/utils/ts-utils";
 
 export function useDisaggregatesStep(props: UseDisaggregatesStepProps) {
     const { analysis, sectionId, updateAnalysis } = props;
@@ -14,7 +15,7 @@ export function useDisaggregatesStep(props: UseDisaggregatesStepProps) {
 
     const [reload, refreshReload] = React.useState(0);
     const [isLoading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | undefined>(undefined);
+    const [error, setError] = React.useState<Maybe<string>>(undefined);
 
     const [disaggregations, setDisaggregations] = React.useState<Option[]>([]);
     const [selectedDisagregations, setSelectedDisagregations] = React.useState<string[]>([]);

@@ -10,7 +10,7 @@ export function useValidationStep(props: UseValidationStepProps) {
     const { compositionRoot, validationRuleGroups } = useAppContext();
 
     const [isLoading, setLoading] = React.useState<boolean>(false);
-    const [error, setError] = React.useState<string | undefined>(undefined);
+    const [error, setError] = React.useState<Maybe<string>>(undefined);
 
     const [reload, refreshReload] = React.useState(0);
     const [selectedValidationRule, setSelectedValidationRule] = React.useState<Maybe<string>>("");

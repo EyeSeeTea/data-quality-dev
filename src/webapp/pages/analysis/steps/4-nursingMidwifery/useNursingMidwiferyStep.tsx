@@ -4,12 +4,13 @@ import { useAppContext } from "$/webapp/contexts/app-context";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 import { UpdateAnalysisState } from "../../AnalysisPage";
+import { Maybe } from "$/utils/ts-utils";
 
 export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
     const { analysis, section, updateAnalysis } = props;
     const { compositionRoot } = useAppContext();
     const [isLoading, setLoading] = React.useState<boolean>(false);
-    const [error, setError] = React.useState<string | undefined>(undefined);
+    const [error, setError] = React.useState<Maybe<string>>(undefined);
     const [reload, refreshReload] = React.useState(0);
     const [disaggregations, setDisaggregations] = React.useState<{ value: Id; text: string }[]>([]);
     const [selectedDisaggregations, setSelectedDissagregations] = React.useState<string[]>([]);
