@@ -92,17 +92,21 @@ export class ValidateMidwiferyAndPersonnelUseCase {
         analysis: QualityAnalysis,
         options: ValidateMidwiferyAndPersonnelOptions,
         totalIssues: number
-    ): Future<Error, QualityAnalysis> {
-        return this.issueUseCase.save(issues, analysis.id).flatMap(() => {
-            const analysisToUpdate = this.analysisUseCase.updateAnalysis(
-                analysis,
-                options.sectionId,
-                totalIssues
-            );
-            return this.analysisRepository.save([analysisToUpdate]).flatMap(() => {
-                return Future.success(analysisToUpdate);
+    ): FutureData<QualityAnalysis> {
+        return this.issueUseCase
+            .getRelatedIssues(issues, options.sectionId)
+            .flatMap(dismissedIssues => {
+                return this.issueUseCase.save(dismissedIssues, analysis.id).flatMap(() => {
+                    const analysisToUpdate = this.analysisUseCase.updateAnalysis(
+                        analysis,
+                        options.sectionId,
+                        totalIssues
+                    );
+                    return this.analysisRepository.save([analysisToUpdate]).flatMap(() => {
+                        return Future.success(analysisToUpdate);
+                    });
+                });
             });
-        });
     }
 
     private createIssues(
