@@ -25,5 +25,6 @@ export type GetIssuesOptions = {
         id: Maybe<Id>;
         followUp: Maybe<string>;
         step: Maybe<string[]>;
+        search: Maybe<string>;
     };
 };

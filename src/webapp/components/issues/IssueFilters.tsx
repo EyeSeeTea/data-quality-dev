@@ -7,7 +7,7 @@ import { periods } from "../analysis-filter/AnalysisFilter";
 import { Maybe } from "$/utils/ts-utils";
 import i18n from "$/utils/i18n";
 import { useAppContext } from "$/webapp/contexts/app-context";
-import { Dropdown, useSnackbar } from "@eyeseetea/d2-ui-components";
+import { Dropdown, SearchBox, useSnackbar } from "@eyeseetea/d2-ui-components";
 import styled from "styled-components";
 import { Button, Dialog, DialogActions, TextField } from "@material-ui/core";
 import { CountrySelector } from "../country-selector/CountrySelector";
@@ -120,6 +120,13 @@ export const IssueFilters: React.FC<IssueFiltersProps> = props => {
                     </Button>
                 </DialogActions>
             </Dialog>
+            <SearchBoxContainer>
+                <SearchBox
+                    hintText={i18n.t("Issue Number")}
+                    onChange={value => onFilterChange(value, "search")}
+                    className="searchbox"
+                />
+            </SearchBoxContainer>
             <div>
                 <TextField
                     name="countries"
@@ -181,11 +188,16 @@ export type IssueFilterState = {
     periods: Period[];
     status: Maybe<Id[]>;
     step: Maybe<Id[]>;
+    search: Maybe<string>;
 };
 
 const FilterContainer = styled.div`
-    padding: 0 1rem;
     align-items: center;
     display: flex;
     gap: 1rem;
+    padding: 0 5px;
+`;
+
+const SearchBoxContainer = styled.div`
+    align-self: flex-end;
 `;

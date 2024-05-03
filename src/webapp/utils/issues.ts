@@ -11,6 +11,7 @@ export const initialFilters: GetIssuesOptions["filters"] = {
     id: undefined,
     followUp: undefined,
     step: [],
+    search: undefined,
 };
 
 export function mapIssueStatusAndActionToColor(buttonStatus: string) {
