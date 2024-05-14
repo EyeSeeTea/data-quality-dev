@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Wizard, WizardStep, useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
 import { ClassNameMap } from "@material-ui/styles";
 import { makeStyles } from "@material-ui/core";
-import { Wizard, WizardStep } from "@eyeseetea/d2-ui-components";
 import SettingsIcon from "@material-ui/icons/Settings";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import styled from "styled-components";
@@ -139,13 +139,24 @@ export const AnalysisPage: React.FC<PageProps> = React.memo(() => {
     const id = useParams<{ id: string }>();
     const [currentSection, setSection] = React.useState<string>("outliers");
     const history = useHistory();
+    const loading = useLoading();
+    const snackbar = useSnackbar();
     const classes = useStyles();
 
     const onBack = () => {
         history.push("/");
     };
 
-    const { analysis, setAnalysis } = useAnalysisById(id);
+    const { analysis, setAnalysis, isLoading, error } = useAnalysisById(id);
+
+    useEffect(() => {
+        if (isLoading) loading.show();
+        else loading.hide();
+    }, [isLoading, loading]);
+
+    useEffect(() => {
+        if (error) snackbar.error(error);
+    }, [error, snackbar]);
 
     const analysisSteps = React.useMemo(() => {
         if (!analysis) return [];
