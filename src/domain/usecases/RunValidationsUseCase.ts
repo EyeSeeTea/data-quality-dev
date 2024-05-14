@@ -53,7 +53,11 @@ export class RunValidationsUseCase {
                                     options,
                                     validationRuleGroup
                                 );
-                                return this.saveIssues(issuesToSave, analysis).flatMap(() => {
+                                return this.saveIssues(
+                                    issuesToSave,
+                                    analysis,
+                                    options.sectionId
+                                ).flatMap(() => {
                                     const analysisUpdate = this.analysisUseCase.updateAnalysis(
                                         analysis,
                                         options.sectionId,
@@ -148,10 +152,13 @@ export class RunValidationsUseCase {
 
     private saveIssues(
         issues: QualityAnalysisIssue[],
-        analysis: QualityAnalysis
+        analysis: QualityAnalysis,
+        sectionId: Id
     ): FutureData<void> {
         if (issues.length === 0) return Future.success(undefined);
-        return this.issueUseCase.save(issues, analysis.id);
+        return this.issueUseCase.getRelatedIssues(issues, sectionId).flatMap(dismissedIssues => {
+            return this.issueUseCase.save(dismissedIssues, analysis.id);
+        });
     }
 }
 

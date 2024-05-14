@@ -259,9 +259,8 @@ const useStyles = makeStyles((theme: Theme) =>
         toolbar: {
             display: "flex",
             flexWrap: "wrap",
-            paddingLeft: 0,
-            paddingRight: 0,
-            marginBottom: "1rem",
+            paddingInline: 0,
+            marginBlockEnd: "1rem",
         },
         paper: {
             flex: "1 1 0%",
