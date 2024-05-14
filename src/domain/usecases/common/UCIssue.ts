@@ -160,6 +160,7 @@ export class UCIssue {
                 periods: [],
                 status: ["4"],
                 step: undefined,
+                search: undefined,
             },
             { initialPage: 1, issues: [] }
         ).map(existingIssues => {

@@ -98,39 +98,6 @@ msgstr ""
 msgid "Save Config Analysis"
 msgstr ""
 
-msgid "Columns to show in table"
-msgstr ""
-
-msgid "Close"
-msgstr ""
-
-msgid "Actions"
-msgstr ""
-
-msgid "Column settings"
-msgstr ""
-
-msgid "Loading details..."
-msgstr ""
-
-msgid "No detail fields provided"
-msgstr ""
-
-msgid "Column"
-msgstr ""
-
-msgid "Clear selection"
-msgstr ""
-
-msgid "There are {{total}} items selected in all pages."
-msgstr ""
-
-msgid "All {{total}} items on this page are selected."
-msgstr ""
-
-msgid "Select all {{total}} items in all pages"
-msgstr ""
-
 msgid ""
 "No user with Capture rights and Organisation Unit associated to the issue "
 "was found"
@@ -155,6 +122,12 @@ msgid "Issue"
 msgstr ""
 
 msgid "{{countryNames}} and {{moreCountriesCount}} more"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Issue Number"
 msgstr ""
 
 msgid "Countries"
@@ -182,9 +155,6 @@ msgid "Export"
 msgstr ""
 
 msgid "Extend Follow-Up + Contact Emails"
-msgstr ""
-
-msgid "Issue Number"
 msgstr ""
 
 msgid "Back"

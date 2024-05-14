@@ -62,24 +62,6 @@ export class RunOutlierUseCase {
         });
     }
 
-    private getRelatedAnalysis(sectionId: Id): FutureData<QualityAnalysisIssue[]> {
-        return this.issueUseCase.getAllIssues(
-            {
-                analysisIds: undefined,
-                sectionId: sectionId,
-                countries: [],
-                actions: undefined,
-                followUp: undefined,
-                id: undefined,
-                name: undefined,
-                periods: [],
-                status: ["4"],
-                step: undefined,
-            },
-            { initialPage: 1, issues: [] }
-        );
-    }
-
     private getNumericDataElements(moduleId: Id): FutureData<DataElement[]> {
         return this.moduleRepository.getByIds([moduleId]).flatMap(modules => {
             const module = modules[0];
