@@ -1,11 +1,11 @@
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 import { Id } from "$/domain/entities/Ref";
-import i18n from "$/utils/i18n";
 import { useAppContext } from "$/webapp/contexts/app-context";
-import { useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
+import { useSnackbar } from "@eyeseetea/d2-ui-components";
 import React from "react";
 import { UpdateAnalysisState } from "$/webapp/pages/analysis/AnalysisPage";
+import { Maybe } from "$/utils/ts-utils";
 
 const doubleCountsList = [
     {
@@ -38,12 +38,13 @@ export function useGeneralPractitionersStep(props: UseGeneralPractitionersStepPr
     const { analysis, section, updateAnalysis } = props;
     const { compositionRoot } = useAppContext();
     const snackbar = useSnackbar();
-    const loading = useLoading();
 
     const [reload, refreshReload] = React.useState(0);
     const [disaggregations, setDisaggregations] = React.useState<{ value: Id; text: string }[]>([]);
     const [selectedDisaggregations, setSelectedDissagregations] = React.useState<string[]>([]);
     const [threshold, setThreshold] = React.useState<string>("1");
+    const [isLoading, setLoading] = React.useState<boolean>(false);
+    const [error, setError] = React.useState<Maybe<string>>(undefined);
 
     const handleChange = (values: string[]) => {
         setSelectedDissagregations(values);
@@ -73,7 +74,7 @@ export function useGeneralPractitionersStep(props: UseGeneralPractitionersStepPr
     }, [analysis?.module.id, compositionRoot.modules.getDisaggregations, snackbar]);
 
     const runAnalysis = React.useCallback(() => {
-        loading.show(true, i18n.t("Running analysis..."));
+        setLoading(true);
         compositionRoot.practitioners.run
             .execute({
                 analysisId: analysis.id,
@@ -85,21 +86,19 @@ export function useGeneralPractitionersStep(props: UseGeneralPractitionersStepPr
                 analysis => {
                     refreshReload(reload + 1);
                     updateAnalysis(analysis);
-                    loading.hide();
+                    setLoading(false);
                 },
                 err => {
-                    snackbar.error(err.message);
-                    loading.hide();
+                    setError(err.message);
+                    setLoading(false);
                 }
             );
     }, [
         analysis,
         section.id,
         compositionRoot.practitioners.run,
-        loading,
         reload,
         updateAnalysis,
-        snackbar,
         threshold,
         selectedDisaggregations,
     ]);
@@ -115,6 +114,8 @@ export function useGeneralPractitionersStep(props: UseGeneralPractitionersStepPr
         updateAnalysis,
         valueChange,
         threshold,
+        isLoading,
+        error,
     };
 }
 

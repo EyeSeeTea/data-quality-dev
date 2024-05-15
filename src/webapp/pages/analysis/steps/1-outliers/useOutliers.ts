@@ -1,10 +1,9 @@
 import React from "react";
-import { useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
 
-import i18n from "$/utils/i18n";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { Id } from "$/domain/entities/Ref";
+import { Maybe } from "$/utils/ts-utils";
 
 export const thresholdList = [
     { value: "1", text: "1.0" },
@@ -27,12 +26,12 @@ export const algorithmList = [
 export function useAnalysisOutlier(props: UseRunAnalysisProps) {
     const { onSucess } = props;
     const { compositionRoot } = useAppContext();
-    const snackbar = useSnackbar();
-    const loading = useLoading();
+    const [isLoading, setLoading] = React.useState<boolean>(false);
+    const [error, setError] = React.useState<Maybe<string>>(undefined);
 
     const runAnalysisOutlier = React.useCallback(
         (algorithm: string, analysisId: Id, sectionId: Id, threshold: string) => {
-            loading.show(true, i18n.t("Running analysis..."));
+            setLoading(true);
             compositionRoot.outlier.run
                 .execute({
                     sectionId: sectionId,
@@ -42,19 +41,19 @@ export function useAnalysisOutlier(props: UseRunAnalysisProps) {
                 })
                 .run(
                     qualityAnalysis => {
-                        loading.hide();
+                        setLoading(false);
                         onSucess(qualityAnalysis);
                     },
                     err => {
-                        snackbar.error(err.message);
-                        loading.hide();
+                        setError(err.message);
+                        setLoading(false);
                     }
                 );
         },
-        [compositionRoot.outlier.run, loading, snackbar, onSucess]
+        [compositionRoot.outlier.run, onSucess]
     );
 
-    return { runAnalysisOutlier };
+    return { runAnalysisOutlier, isLoading, error };
 }
 
 type UseRunAnalysisProps = { onSucess: (qualityAnalysis: QualityAnalysis) => void };

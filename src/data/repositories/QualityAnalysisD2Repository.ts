@@ -18,13 +18,13 @@ import { HashMap } from "$/domain/entities/generic/HashMap";
 import { Maybe } from "$/utils/ts-utils";
 import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
 import { Future } from "$/domain/entities/generic/Future";
-import { MetadataItem } from "$/domain/entities/MetadataItem";
+import { MetadataItem, ProgramStage } from "$/domain/entities/MetadataItem";
 import {
     QualityAnalysisStatus,
     qualityAnalysisStatus,
 } from "$/domain/entities/QualityAnalysisStatus";
 import { Module } from "$/domain/entities/Module";
-import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
+import { QualityAnalysisSection, SECTION_PENDING_STATE } from "$/domain/entities/QualityAnalysisSection";
 import { D2User } from "$/data/common/D2User";
 import { D2CategoryOption } from "$/data/common/D2CategoryOption";
 import { D2DataElement } from "$/data/common/D2DataElement";
@@ -71,7 +71,10 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
                 .value();
 
             return Future.joinObj({
-                sectionInformation: this.getSectionInformation(teiIds),
+                sectionInformation: this.getSectionInformation(
+                    teiIds,
+                    this.metadata.programs.qualityIssues.programStages
+                ),
             }).map(({ sectionInformation }) => {
                 return {
                     pagination: {
@@ -160,13 +163,16 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
         });
     }
 
-    private getSectionInformation(teiIds: Id[]) {
+    private getSectionInformation(teiIds: Id[], programStages: ProgramStage[]) {
         const dataStore = this.api.dataStore(DATA_QUALITY_NAMESPACE);
         const $requests = _(teiIds)
             .map(id => {
                 return apiToFuture(dataStore.get<Maybe<D2AnalysisDataStore>>(id)).map(
                     d2Response => {
-                        return { id: id, extraInfo: d2Response?.sections };
+                        return {
+                            id: id,
+                            extraInfo: this.getSectionsInfoFromStorage(programStages, d2Response),
+                        };
                     }
                 );
             })
@@ -182,6 +188,16 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
                 .compact()
                 .value();
             return onlyDefinedStatus;
+        });
+    }
+
+    private getSectionsInfoFromStorage(
+        programStages: ProgramStage[],
+        response: Maybe<D2AnalysisDataStore>
+    ): SectionInfo[] {
+        return programStages.map(programStage => {
+            const section = response?.sections?.find(section => section.id === programStage.id);
+            return { id: programStage.id, status: section?.status || SECTION_PENDING_STATE };
         });
     }
 

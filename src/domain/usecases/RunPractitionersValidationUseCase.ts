@@ -100,15 +100,21 @@ export class RunPractitionersValidationUseCase {
                                 issues.length
                             );
 
-                            return this.issueUseCase
-                                .save(issues, analysisToUpdate.id)
-                                .flatMap(() => {
-                                    return this.analysisRepository
-                                        .save([analysisToUpdate])
-                                        .map(() => analysisToUpdate);
-                                });
+                            return this.saveIssues(issues, analysisToUpdate, options.sectionId);
                         });
                     });
+            });
+        });
+    }
+
+    private saveIssues(
+        issues: QualityAnalysisIssue[],
+        analysis: QualityAnalysis,
+        sectionId: Id
+    ): FutureData<QualityAnalysis> {
+        return this.issueUseCase.getRelatedIssues(issues, sectionId).flatMap(dismissedIssues => {
+            return this.issueUseCase.save(dismissedIssues, analysis.id).flatMap(() => {
+                return this.analysisRepository.save([analysis]).map(() => analysis);
             });
         });
     }

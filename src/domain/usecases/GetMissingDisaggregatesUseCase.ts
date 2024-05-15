@@ -88,18 +88,30 @@ export class GetMissingDisaggregatesUseCase {
 
                     const allIssues = [...issues, ...issueMissingCombos];
 
-                    return this.issueUseCase.save(allIssues, analysis.id).flatMap(() => {
-                        const analysisUpdate = this.analysisUseCase.updateAnalysis(
-                            analysis,
-                            options.sectionId,
-                            allIssues.length
-                        );
-                        return this.analysisRepository.save([analysisUpdate]).flatMap(() => {
-                            return Future.success(analysisUpdate);
-                        });
-                    });
+                    return this.saveIssues(allIssues, analysis, options.sectionId);
                 });
         });
+    }
+
+    private saveIssues(
+        issues: QualityAnalysisIssue[],
+        analysis: QualityAnalysis,
+        sectionId: Id
+    ): FutureData<QualityAnalysis> {
+        return this.issueUseCase
+            .getRelatedIssues(issues, sectionId)
+            .flatMap(issuesWithDissmised => {
+                return this.issueUseCase.save(issuesWithDissmised, analysis.id).flatMap(() => {
+                    const analysisUpdate = this.analysisUseCase.updateAnalysis(
+                        analysis,
+                        sectionId,
+                        issuesWithDissmised.length
+                    );
+                    return this.analysisRepository.save([analysisUpdate]).flatMap(() => {
+                        return Future.success(analysisUpdate);
+                    });
+                });
+            });
     }
 
     private createIssuesFromMissingAggregate(

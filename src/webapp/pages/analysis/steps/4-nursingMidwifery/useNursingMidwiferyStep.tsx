@@ -1,19 +1,16 @@
 import React from "react";
-import { useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
-
-import i18n from "$/utils/i18n";
 import { Id } from "$/domain/entities/Ref";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 import { UpdateAnalysisState } from "$/webapp/pages/analysis/AnalysisPage";
+import { Maybe } from "$/utils/ts-utils";
 
 export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
     const { analysis, section, updateAnalysis } = props;
     const { compositionRoot } = useAppContext();
-    const snackbar = useSnackbar();
-    const loading = useLoading();
-
+    const [isLoading, setLoading] = React.useState<boolean>(false);
+    const [error, setError] = React.useState<Maybe<string>>(undefined);
     const [reload, refreshReload] = React.useState(0);
     const [disaggregations, setDisaggregations] = React.useState<{ value: Id; text: string }[]>([]);
     const [selectedDisaggregations, setSelectedDissagregations] = React.useState<string[]>([]);
@@ -29,17 +26,17 @@ export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
                 setSelectedDissagregations(selectedDisaggregations.map(item => item.value));
             },
             error => {
-                snackbar.error(error.message);
+                setError(error.message);
             }
         );
-    }, [section.id, compositionRoot.nursingMidwifery.getDisaggregations, loading, snackbar]);
+    }, [section.id, compositionRoot.nursingMidwifery.getDisaggregations]);
 
     const handleChange = (values: string[]) => {
         setSelectedDissagregations(values);
     };
 
     const runAnalysis = React.useCallback(() => {
-        loading.show(true, i18n.t("Running analysis..."));
+        setLoading(true);
         compositionRoot.nursingMidwifery.validate
             .execute({
                 analysisId: analysis.id,
@@ -50,20 +47,18 @@ export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
                 analysis => {
                     refreshReload(reload + 1);
                     updateAnalysis(analysis);
-                    loading.hide();
+                    setLoading(false);
                 },
                 err => {
-                    snackbar.error(err.message);
-                    loading.hide();
+                    setError(err.message);
+                    setLoading(false);
                 }
             );
     }, [
         analysis,
         compositionRoot.nursingMidwifery.validate,
-        loading,
         reload,
         updateAnalysis,
-        snackbar,
         selectedDisaggregations,
         section.id,
     ]);
@@ -75,6 +70,8 @@ export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
         selectedDisaggregations,
         handleChange,
         runAnalysis,
+        isLoading,
+        error,
     };
 }
 
