@@ -24,7 +24,10 @@ import {
     qualityAnalysisStatus,
 } from "$/domain/entities/QualityAnalysisStatus";
 import { Module } from "$/domain/entities/Module";
-import { QualityAnalysisSection, SECTION_PENDING_STATE } from "$/domain/entities/QualityAnalysisSection";
+import {
+    QualityAnalysisSection,
+    SECTION_PENDING_STATE,
+} from "$/domain/entities/QualityAnalysisSection";
 import { D2User } from "$/data/common/D2User";
 import { D2CategoryOption } from "$/data/common/D2CategoryOption";
 import { D2DataElement } from "$/data/common/D2DataElement";
