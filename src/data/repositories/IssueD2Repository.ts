@@ -82,8 +82,7 @@ export class IssueD2Repository implements IssueRepository {
                 return Future.success({
                     pagination: {
                         pageSize: d2Response.pageSize,
-                        // @ts-ignore
-                        pageCount: d2Response.pageCount,
+                        pageCount: d2Response.pageCount || 0,
                         page: d2Response.page,
                         total: d2Response.total || 0,
                     },

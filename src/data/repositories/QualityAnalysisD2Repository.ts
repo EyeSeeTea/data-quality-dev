@@ -62,7 +62,6 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
                 pageSize: options.pagination.pageSize,
                 trackedEntity: options.filters.ids ? options.filters.ids.join(";") : undefined,
                 attribute: this.buildFilters(options.filters)?.join(",") || undefined,
-                // @ts-ignore
                 order: this.buildOrder(options.sorting) || undefined,
                 totalPages: true,
             })
@@ -82,8 +81,7 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
                 return {
                     pagination: {
                         pageSize: d2Response.pageSize,
-                        // @ts-ignore
-                        pageCount: d2Response.pageCount,
+                        pageCount: d2Response.pageCount || 0,
                         page: d2Response.page,
                         total: d2Response.total || 0,
                     },
