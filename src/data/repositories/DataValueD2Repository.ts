@@ -4,7 +4,7 @@ import {
     DataValueRepository,
     GetDataValueOptions,
 } from "$/domain/repositories/DataValueRepository";
-import { FutureData, apiToFuture } from "../api-futures";
+import { FutureData, apiToFuture } from "$/data/api-futures";
 import { DataValueSetsDataValue } from "@eyeseetea/d2-api/api";
 
 export class DataValueD2Repository implements DataValueRepository {

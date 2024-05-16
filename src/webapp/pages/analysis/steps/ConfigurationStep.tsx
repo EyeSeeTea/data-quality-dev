@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { ConfigurationForm } from "$/webapp/components/configuration-form/ConfigurationForm";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { useAnalysisMethods } from "$/webapp/hooks/useQualityAnalysisTable";
-import { UpdateAnalysisState } from "../AnalysisPage";
+import { UpdateAnalysisState } from "$/webapp/pages/analysis/AnalysisPage";
 
 export type ConfigurationStepProps = {
     analysis: QualityAnalysis;

@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 
-import App from "../App";
-import { getTestContext } from "../../../../utils/tests";
+import App from "$/webapp/pages/app/App";
+import { getTestContext } from "$/utils/tests";
 import { Provider } from "@dhis2/app-runtime";
 import { MetadataItem } from "$/domain/entities/MetadataItem";
 import { getD2APiFromInstance } from "$/utils/d2-api";

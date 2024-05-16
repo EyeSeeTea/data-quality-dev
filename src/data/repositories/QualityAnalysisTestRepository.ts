@@ -1,10 +1,10 @@
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
-import { Future } from "../../domain/entities/generic/Future";
+import { Future } from "$/domain/entities/generic/Future";
 import {
     QualityAnalysisPaginated,
     QualityAnalysisRepository,
-} from "../../domain/repositories/QualityAnalysisRepository";
-import { FutureData } from "../api-futures";
+} from "$/domain/repositories/QualityAnalysisRepository";
+import { FutureData } from "$/data/api-futures";
 
 export class QualityAnalysisTestRepository implements QualityAnalysisRepository {
     getById(): FutureData<QualityAnalysis> {

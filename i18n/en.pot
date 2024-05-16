@@ -199,7 +199,7 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-msgid "Loading Analysis..."
+msgid "Running analysis..."
 msgstr ""
 
 msgid "Creating Data Quality Report..."
@@ -239,9 +239,6 @@ msgid "Algorithm"
 msgstr ""
 
 msgid "Threshold"
-msgstr ""
-
-msgid "Running analysis..."
 msgstr ""
 
 msgid "CatCombos"

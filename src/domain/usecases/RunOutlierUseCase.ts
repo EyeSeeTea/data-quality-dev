@@ -11,6 +11,7 @@ import { ModuleRepository } from "$/domain/repositories/ModuleRepository";
 import { DataElement } from "$/domain/entities/DataElement";
 import { UCIssue } from "./common/UCIssue";
 import { UCAnalysis } from "./common/UCAnalysis";
+import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
 
 export class RunOutlierUseCase {
     private issueUseCase: UCIssue;
@@ -38,7 +39,13 @@ export class RunOutlierUseCase {
                     return this.issueUseCase
                         .getTotalIssuesBySection(analysis, options.sectionId)
                         .flatMap(totalIssues => {
-                            return this.saveIssues(outliers, analysis, totalIssues, options);
+                            const issues = this.generateIssuesFromOutliers(
+                                outliers,
+                                analysis,
+                                totalIssues,
+                                options
+                            );
+                            return this.saveIssues(issues, analysis, options);
                         })
                         .flatMap(() => {
                             const analysisToUpdate = this.analysisUseCase.updateAnalysis(
@@ -53,6 +60,24 @@ export class RunOutlierUseCase {
                 });
             });
         });
+    }
+
+    private getRelatedAnalysis(sectionId: Id): FutureData<QualityAnalysisIssue[]> {
+        return this.issueUseCase.getAllIssues(
+            {
+                analysisIds: undefined,
+                sectionId: sectionId,
+                countries: [],
+                actions: undefined,
+                followUp: undefined,
+                id: undefined,
+                name: undefined,
+                periods: [],
+                status: ["4"],
+                step: undefined,
+            },
+            { initialPage: 1, issues: [] }
+        );
     }
 
     private getNumericDataElements(moduleId: Id): FutureData<DataElement[]> {
@@ -89,18 +114,18 @@ export class RunOutlierUseCase {
         });
     }
 
-    private saveIssues(
+    private generateIssuesFromOutliers(
         outliers: Outlier[],
         analysis: QualityAnalysis,
         totalIssues: number,
         options: RunOutlierUseCaseOptions
-    ): FutureData<void> {
-        if (outliers.length === 0) return Future.success(undefined);
+    ): QualityAnalysisIssue[] {
+        if (outliers.length === 0) return [];
         const sectionNumber = this.issueUseCase.getSectionNumber(
             analysis.sections,
             options.sectionId
         );
-        const issuesToSave = outliers.map((outlier, index) => {
+        return outliers.map((outlier, index) => {
             const currentNumber = totalIssues + 1 + index;
             const prefix = `${analysis.sequential.value}-${sectionNumber}`;
             const issueNumber = this.issueUseCase.generateIssueNumber(currentNumber, prefix);
@@ -117,7 +142,18 @@ export class RunOutlierUseCase {
                 options.sectionId
             );
         });
-        return this.issueUseCase.save(issuesToSave, analysis.id);
+    }
+
+    private saveIssues(
+        issuesToSave: QualityAnalysisIssue[],
+        analysis: QualityAnalysis,
+        options: RunOutlierUseCaseOptions
+    ): FutureData<void> {
+        return this.issueUseCase
+            .getRelatedIssues(issuesToSave, options.sectionId)
+            .flatMap(existingIssues => {
+                return this.issueUseCase.save(existingIssues, analysis.id);
+            });
     }
 
     private getDescriptionIssue(outlier: Outlier, options: RunOutlierUseCaseOptions): string {

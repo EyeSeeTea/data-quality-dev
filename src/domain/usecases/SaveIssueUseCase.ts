@@ -12,7 +12,7 @@ import { QualityAnalysisRepository } from "$/domain/repositories/QualityAnalysis
 import { UserRepository } from "$/domain/repositories/UserRepository";
 import _ from "$/domain/entities/generic/Collection";
 import { Maybe } from "$/utils/ts-utils";
-import { IssueRepository } from "../repositories/IssueRepository";
+import { IssueRepository } from "$/domain/repositories/IssueRepository";
 
 export class SaveIssueUseCase {
     constructor(

@@ -1,8 +1,8 @@
-import { D2Api } from "../../types/d2-api";
-import { FutureData, apiToFuture } from "../api-futures";
-import { Id } from "../../domain/entities/Ref";
-import _ from "../../domain/entities/generic/Collection";
-import { DataElement } from "../../domain/entities/DataElement";
+import { D2Api } from "$/types/d2-api";
+import { FutureData, apiToFuture } from "$/data/api-futures";
+import { Id } from "$/domain/entities/Ref";
+import _ from "$/domain/entities/generic/Collection";
+import { DataElement } from "$/domain/entities/DataElement";
 
 export class D2DataElement {
     constructor(private api: D2Api) {}

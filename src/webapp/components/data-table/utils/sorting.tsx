@@ -1,5 +1,10 @@
 import _ from "lodash";
-import { ReferenceObject, TableColumn, TablePagination, TableSorting } from "../types";
+import {
+    ReferenceObject,
+    TableColumn,
+    TablePagination,
+    TableSorting,
+} from "$/webapp/components/data-table/types";
 import { formatRowValue } from "./formatting";
 import { ReactNode } from "react";
 

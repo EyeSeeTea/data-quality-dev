@@ -143,6 +143,11 @@ msgid ""
 msgstr ""
 
 msgid "Updating Issue..."
+"No user with Capture rights and Organisation Unit associated to the issue "
+"was found"
+msgstr ""
+
+msgid "Updating Issue..."
 msgstr ""
 
 msgid "Issue Updated"
@@ -199,7 +204,7 @@ msgstr "Volver"
 msgid "Help"
 msgstr "Ayuda"
 
-msgid "Loading Analysis..."
+msgid "Running analysis..."
 msgstr ""
 
 msgid "Creating Data Quality Report..."
@@ -239,9 +244,6 @@ msgid "Algorithm"
 msgstr ""
 
 msgid "Threshold"
-msgstr ""
-
-msgid "Running analysis..."
 msgstr ""
 
 msgid "CatCombos"

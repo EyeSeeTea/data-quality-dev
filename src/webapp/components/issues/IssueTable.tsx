@@ -6,7 +6,7 @@ import {
     useObjectsTable,
     useSnackbar,
 } from "@eyeseetea/d2-ui-components";
-import { ObjectsTable } from "../data-table/ObjectsTable";
+import { ObjectsTable } from "$/webapp/components/data-table/ObjectsTable";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
 import { GetIssuesOptions } from "$/domain/repositories/IssueRepository";

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Menu } from "@material-ui/core";
 import { MenuItem } from "material-ui";
-import { ButtonTag } from "../tag/ButtonTag";
+import { ButtonTag } from "$/webapp/components/tag/ButtonTag";
 import { mapIssueStatusAndActionToColor } from "$/webapp/utils/issues";
 
 export const SelectorInline: React.FC<SelectorInlineProps> = React.memo(props => {

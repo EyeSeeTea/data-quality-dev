@@ -1,3 +1,4 @@
+import React from "react";
 import { Dropdown } from "@eyeseetea/d2-ui-components";
 
 import i18n from "$/utils/i18n";
@@ -6,10 +7,10 @@ import { StepAnalysis } from "$/webapp/pages/analysis/steps/StepAnalysis";
 import styled from "styled-components";
 import { useGeneralPractitionersStep } from "./useGeneralPractitionersStep";
 import { SelectMultiCheckboxes } from "$/webapp/components/selectmulti-checkboxes/SelectMultiCheckboxes";
-import { PageStepProps } from "../../AnalysisPage";
+import { PageStepProps } from "$/webapp/pages/analysis/AnalysisPage";
 import { EmptyState } from "$/webapp/components/empty-state/EmptyState";
 import { Typography } from "@material-ui/core";
-import React from "react";
+import { UserFeedbackContainer } from "$/webapp/components/user-feedback-container/UserFeedbackContainer";
 
 export const GeneralPractitionersStep: React.FC<PageStepProps> = React.memo(props => {
     const { analysis, section, title, updateAnalysis } = props;
@@ -23,6 +24,8 @@ export const GeneralPractitionersStep: React.FC<PageStepProps> = React.memo(prop
         threshold,
         handleChange,
         valueChange,
+        isLoading,
+        error,
     } = useGeneralPractitionersStep({
         analysis: analysis,
         section: section,
@@ -34,7 +37,7 @@ export const GeneralPractitionersStep: React.FC<PageStepProps> = React.memo(prop
     };
 
     return analysis.module.name !== "NHWA Module 2" ? (
-        <>
+        <UserFeedbackContainer isLoading={isLoading} error={error}>
             <StepAnalysis
                 id={analysis.id}
                 onRun={onClick}
@@ -57,7 +60,7 @@ export const GeneralPractitionersStep: React.FC<PageStepProps> = React.memo(prop
                     label={i18n.t("Double Counts Threshold")}
                 />
             </StepAnalysis>
-        </>
+        </UserFeedbackContainer>
     ) : (
         <>
             <AnalysisHeader>

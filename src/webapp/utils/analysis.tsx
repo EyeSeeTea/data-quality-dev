@@ -1,11 +1,11 @@
 import i18n from "$/utils/i18n";
-import { ProgressStatus } from "../components/progress-status/ProgressStatus";
+import { ProgressStatus } from "$/webapp/components/progress-status/ProgressStatus";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { TableColumn } from "@eyeseetea/d2-ui-components";
 import { Tooltip } from "@material-ui/core";
 
 import styled from "styled-components";
-import { Tag } from "../components/tag/Tag";
+import { Tag } from "$/webapp/components/tag/Tag";
 
 function mapAnalysisStatusToColor(sectionStatus: string) {
     switch (sectionStatus) {

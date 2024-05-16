@@ -1,5 +1,5 @@
 import React from "react";
-import { useAppContext } from "../contexts/app-context";
+import { useAppContext } from "$/webapp/contexts/app-context";
 import { useSnackbar } from "@eyeseetea/d2-ui-components";
 import { Module } from "$/domain/entities/Module";
 

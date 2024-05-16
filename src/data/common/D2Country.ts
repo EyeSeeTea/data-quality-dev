@@ -1,5 +1,5 @@
 import { D2Api } from "$/types/d2-api";
-import { FutureData, apiToFuture } from "../api-futures";
+import { FutureData, apiToFuture } from "$/data/api-futures";
 import { Id } from "$/domain/entities/Ref";
 import _ from "$/domain/entities/generic/Collection";
 import { Country } from "$/domain/entities/Country";
