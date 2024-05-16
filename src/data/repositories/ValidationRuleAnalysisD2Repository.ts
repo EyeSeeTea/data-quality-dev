@@ -1,7 +1,7 @@
 import { ValidationRuleAnalysis } from "$/domain/entities/ValidationRuleAnalysis";
 import { D2Api } from "$/types/d2-api";
 import { Id } from "$/domain/entities/Ref";
-import { FutureData, apiToFuture } from "../api-futures";
+import { FutureData, apiToFuture } from "$/data/api-futures";
 import {
     ValidationRuleAnalysisRepository,
     ValidationRuleOptions,

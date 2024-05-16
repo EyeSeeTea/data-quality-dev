@@ -6,7 +6,7 @@ import _, { Collection } from "$/domain/entities/generic/Collection";
 import { Module } from "$/domain/entities/Module";
 import { qualityAnalysisStatus } from "$/domain/entities/QualityAnalysisStatus";
 import { Maybe } from "$/utils/ts-utils";
-import { MenuButton } from "../menu-button/MenuButton";
+import { MenuButton } from "$/webapp/components/menu-button/MenuButton";
 import { Id } from "$/domain/entities/Ref";
 
 const currentYear = new Date().getFullYear();

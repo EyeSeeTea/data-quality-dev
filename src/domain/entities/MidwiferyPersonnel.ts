@@ -1,6 +1,6 @@
 import { Maybe } from "$/utils/ts-utils";
 import { NamedRef } from "@eyeseetea/d2-logger/domain/entities/Base";
-import { convertToNumberOrZero } from "../usecases/common/utils";
+import { convertToNumberOrZero } from "$/domain/usecases/common/utils";
 import { DataElement } from "./DataElement";
 import { DataValue } from "./DataValue";
 import { Struct } from "./generic/Struct";

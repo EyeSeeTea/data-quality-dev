@@ -2,7 +2,7 @@ import React from "react";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
-import { UpdateAnalysisState } from "../../AnalysisPage";
+import { UpdateAnalysisState } from "$/webapp/pages/analysis/AnalysisPage";
 import { Maybe } from "$/utils/ts-utils";
 
 export function useValidationStep(props: UseValidationStepProps) {

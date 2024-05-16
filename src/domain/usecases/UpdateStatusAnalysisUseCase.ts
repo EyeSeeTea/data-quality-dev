@@ -2,7 +2,7 @@ import { FutureData } from "$/data/api-futures";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { QualityAnalysisStatus } from "$/domain/entities/QualityAnalysisStatus";
 import { Id } from "$/domain/entities/Ref";
-import { QualityAnalysisRepository } from "../repositories/QualityAnalysisRepository";
+import { QualityAnalysisRepository } from "$/domain/repositories/QualityAnalysisRepository";
 
 export class UpdateStatusAnalysisUseCase {
     constructor(private qualityAnalysisRepository: QualityAnalysisRepository) {}

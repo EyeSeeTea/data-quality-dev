@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { createAdminUser, createNonAdminUser, createUserWithGroups } from "./userFixtures";
-import { UserGroup } from "../UserGroup";
+import { UserGroup } from "$/domain/entities/UserGroup";
 
 describe("User", () => {
     it("should be admin if has a role with authority ALL", () => {

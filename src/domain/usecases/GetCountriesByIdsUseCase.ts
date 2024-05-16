@@ -2,7 +2,7 @@ import { FutureData } from "$/data/api-futures";
 import { Country } from "$/domain/entities/Country";
 import { Id } from "$/domain/entities/Ref";
 import { Future } from "$/domain/entities/generic/Future";
-import { CountryRepository } from "../repositories/CountryRepository";
+import { CountryRepository } from "$/domain/repositories/CountryRepository";
 
 export class GetCountriesByIdsUseCase {
     constructor(private countryRepository: CountryRepository) {}

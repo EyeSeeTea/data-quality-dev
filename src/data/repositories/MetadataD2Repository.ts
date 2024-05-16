@@ -1,11 +1,11 @@
 import _ from "lodash";
 
-import { D2Api, MetadataPick } from "../../types/d2-api";
-import { FutureData, apiToFuture } from "../api-futures";
-import { MetadataRepository } from "../../domain/repositories/MetadataRepository";
-import { MetadataItem } from "../../domain/entities/MetadataItem";
-import rec from "../../domain/entities/generic/Rec";
-import { Future } from "../../domain/entities/generic/Future";
+import { D2Api, MetadataPick } from "$/types/d2-api";
+import { FutureData, apiToFuture } from "$/data/api-futures";
+import { MetadataRepository } from "$/domain/repositories/MetadataRepository";
+import { MetadataItem } from "$/domain/entities/MetadataItem";
+import rec from "$/domain/entities/generic/Rec";
+import { Future } from "$/domain/entities/generic/Future";
 
 const metadataCodes = {
     organisationUnits: { global: "WHO-HQ" },

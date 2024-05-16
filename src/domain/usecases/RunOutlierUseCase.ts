@@ -11,7 +11,7 @@ import { ModuleRepository } from "$/domain/repositories/ModuleRepository";
 import { DataElement } from "$/domain/entities/DataElement";
 import { UCIssue } from "./common/UCIssue";
 import { UCAnalysis } from "./common/UCAnalysis";
-import { QualityAnalysisIssue } from "../entities/QualityAnalysisIssue";
+import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
 
 export class RunOutlierUseCase {
     private issueUseCase: UCIssue;

@@ -1,7 +1,12 @@
 import _ from "lodash";
 import { MouseEvent } from "react";
 
-import { ReferenceObject, TableAction, TableNotification, TableSelection } from "../types";
+import {
+    ReferenceObject,
+    TableAction,
+    TableNotification,
+    TableSelection,
+} from "$/webapp/components/data-table/types";
 import i18n from "$/utils/i18n";
 
 export function updateSelection<T extends ReferenceObject>(selected: TableSelection[], row: T) {
