@@ -2,16 +2,16 @@ import React from "react";
 
 import { Id, Period } from "$/domain/entities/Ref";
 import { GetIssuesOptions } from "$/domain/repositories/IssueRepository";
-import { SelectMultiCheckboxes } from "../selectmulti-checkboxes/SelectMultiCheckboxes";
-import { periods } from "../analysis-filter/AnalysisFilter";
+import { SelectMultiCheckboxes } from "$/webapp/components/selectmulti-checkboxes/SelectMultiCheckboxes";
+import { periods } from "$/webapp/components/analysis-filter/AnalysisFilter";
 import { Maybe } from "$/utils/ts-utils";
 import i18n from "$/utils/i18n";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { Dropdown, SearchBox, useSnackbar } from "@eyeseetea/d2-ui-components";
 import styled from "styled-components";
 import { Button, Dialog, DialogActions, TextField } from "@material-ui/core";
-import { CountrySelector } from "../country-selector/CountrySelector";
-import { getIdFromCountriesPaths } from "../configuration-form/ConfigurationForm";
+import { CountrySelector } from "$/webapp/components/country-selector/CountrySelector";
+import { getIdFromCountriesPaths } from "$/webapp/components/configuration-form/ConfigurationForm";
 import { Country } from "$/domain/entities/Country";
 
 const followUpItems = [

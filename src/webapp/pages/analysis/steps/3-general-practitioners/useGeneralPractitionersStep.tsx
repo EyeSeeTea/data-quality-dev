@@ -4,7 +4,7 @@ import { Id } from "$/domain/entities/Ref";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { useSnackbar } from "@eyeseetea/d2-ui-components";
 import React from "react";
-import { UpdateAnalysisState } from "../../AnalysisPage";
+import { UpdateAnalysisState } from "$/webapp/pages/analysis/AnalysisPage";
 import { Maybe } from "$/utils/ts-utils";
 
 const doubleCountsList = [

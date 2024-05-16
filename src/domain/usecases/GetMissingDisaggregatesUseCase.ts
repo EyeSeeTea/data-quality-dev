@@ -17,7 +17,7 @@ import { UCIssue } from "./common/UCIssue";
 import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
 import { MissingDisaggregates } from "$/domain/entities/MissingDisaggregates";
 import { getCurrentSection } from "./common/utils";
-import { SettingsRepository } from "../repositories/SettingsRepository";
+import { SettingsRepository } from "$/domain/repositories/SettingsRepository";
 import { SectionDisaggregation, SectionSetting, Settings } from "$/domain/entities/Settings";
 import { MissingComboValue } from "$/domain/entities/MissingComboValue";
 

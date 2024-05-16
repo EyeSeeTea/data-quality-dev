@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-04-19T12:52:35.588Z\n"
-"PO-Revision-Date: 2024-04-19T12:52:35.589Z\n"
+"POT-Creation-Date: 2024-05-15T07:48:56.601Z\n"
+"PO-Revision-Date: 2024-05-15T07:48:56.602Z\n"
 
 msgid "ID"
 msgstr ""
@@ -87,6 +87,12 @@ msgid "End Date"
 msgstr ""
 
 msgid "New Data Quality Report"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "List"
 msgstr ""
 
 msgid "Name"
@@ -233,6 +239,12 @@ msgid "Are you sure you want to {{action}} the selected rows?"
 msgstr ""
 
 msgid "Yes, {{actionButton}}"
+msgstr ""
+
+msgid "Hello {{name}}"
+msgstr ""
+
+msgid "Detail page"
 msgstr ""
 
 msgid "Progress"

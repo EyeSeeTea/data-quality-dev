@@ -2,7 +2,7 @@ import { MetadataItem } from "$/domain/entities/MetadataItem";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 import { Future } from "$/domain/entities/generic/Future";
 import { AnalysisSectionRepository } from "$/domain/repositories/AnalysisSectionRepository";
-import { FutureData } from "../api-futures";
+import { FutureData } from "$/data/api-futures";
 
 export class AnalysisSectionD2Repository implements AnalysisSectionRepository {
     constructor(private metadata: MetadataItem) {}

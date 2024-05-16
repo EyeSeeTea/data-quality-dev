@@ -1,6 +1,6 @@
 import { FutureData } from "$/data/api-futures";
-import { DateISOString, Id } from "../entities/Ref";
-import { ValidationRuleAnalysis } from "../entities/ValidationRuleAnalysis";
+import { DateISOString, Id } from "$/domain/entities/Ref";
+import { ValidationRuleAnalysis } from "$/domain/entities/ValidationRuleAnalysis";
 
 export interface ValidationRuleAnalysisRepository {
     get(options: ValidationRuleOptions): FutureData<ValidationRuleAnalysis[]>;

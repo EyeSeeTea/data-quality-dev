@@ -1,5 +1,5 @@
-import { User, UserRole } from "../User";
-import { UserGroup } from "../UserGroup";
+import { User, UserRole } from "$/domain/entities/User";
+import { UserGroup } from "$/domain/entities/UserGroup";
 
 export function createAdminUser(): User {
     const adminRoles = [{ id: "Hg7n0MwzUQn", name: "Super user", authorities: ["ALL"] }];

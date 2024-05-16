@@ -4,38 +4,38 @@ import {
     D2TrackerEvent,
     D2Api,
     D2TrackerTrackedEntity,
-} from "../../types/d2-api";
+} from "$/types/d2-api";
 import {
     QualityAnalysisOptions,
     QualityAnalysisPaginated,
     QualityAnalysisRepository,
-} from "../../domain/repositories/QualityAnalysisRepository";
-import { FutureData, apiToFuture } from "../api-futures";
-import { QualityAnalysis } from "../../domain/entities/QualityAnalysis";
-import { Id } from "../../domain/entities/Ref";
-import _ from "../../domain/entities/generic/Collection";
-import { HashMap } from "../../domain/entities/generic/HashMap";
-import { Maybe } from "../../utils/ts-utils";
-import { QualityAnalysisIssue } from "../../domain/entities/QualityAnalysisIssue";
-import { Future } from "../../domain/entities/generic/Future";
-import { MetadataItem, ProgramStage } from "../../domain/entities/MetadataItem";
+} from "$/domain/repositories/QualityAnalysisRepository";
+import { FutureData, apiToFuture } from "$/data/api-futures";
+import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
+import { Id } from "$/domain/entities/Ref";
+import _ from "$/domain/entities/generic/Collection";
+import { HashMap } from "$/domain/entities/generic/HashMap";
+import { Maybe } from "$/utils/ts-utils";
+import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
+import { Future } from "$/domain/entities/generic/Future";
+import { MetadataItem, ProgramStage } from "$/domain/entities/MetadataItem";
 import {
     QualityAnalysisStatus,
     qualityAnalysisStatus,
-} from "../../domain/entities/QualityAnalysisStatus";
+} from "$/domain/entities/QualityAnalysisStatus";
 import { Module } from "$/domain/entities/Module";
 import {
     QualityAnalysisSection,
     SECTION_PENDING_STATE,
-} from "../../domain/entities/QualityAnalysisSection";
-import { D2User } from "../common/D2User";
-import { D2CategoryOption } from "../common/D2CategoryOption";
-import { D2DataElement } from "../common/D2DataElement";
-import { D2OrgUnit } from "../common/D2Country";
-import { getUid } from "../../utils/uid";
+} from "$/domain/entities/QualityAnalysisSection";
+import { D2User } from "$/data/common/D2User";
+import { D2CategoryOption } from "$/data/common/D2CategoryOption";
+import { D2DataElement } from "$/data/common/D2DataElement";
+import { D2OrgUnit } from "$/data/common/D2Country";
+import { getUid } from "$/utils/uid";
 import { DATA_QUALITY_NAMESPACE } from "$/domain/entities/Settings";
-import { getDefaultModules } from "../common/D2Module";
-import { getProgramStageIndexById } from "../common/utils";
+import { getDefaultModules } from "$/data/common/D2Module";
+import { getProgramStageIndexById } from "$/data/common/utils";
 
 export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
     d2DataElement: D2DataElement;

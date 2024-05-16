@@ -2,7 +2,7 @@ import { UserGroup } from "$/domain/entities/UserGroup";
 import { Future } from "$/domain/entities/generic/Future";
 import { User } from "$/domain/entities/User";
 import { D2Api, MetadataPick } from "$/types/d2-api";
-import { apiToFuture, FutureData } from "../api-futures";
+import { apiToFuture, FutureData } from "$/data/api-futures";
 import _ from "$/domain/entities/generic/Collection";
 
 export class D2User {

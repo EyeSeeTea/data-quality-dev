@@ -3,7 +3,7 @@ import { ValidationRuleGroup } from "$/domain/entities/ValidationRuleGroup";
 import { Future } from "$/domain/entities/generic/Future";
 import { ValidationRuleGroupRepository } from "$/domain/repositories/ValidationRuleGroupRepository";
 import { D2Api } from "$/types/d2-api";
-import { FutureData, apiToFuture } from "../api-futures";
+import { FutureData, apiToFuture } from "$/data/api-futures";
 
 export class ValidationRuleD2Repository implements ValidationRuleGroupRepository {
     constructor(private api: D2Api) {}

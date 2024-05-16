@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Id } from "$/domain/entities/Ref";
-import { useAppContext } from "../contexts/app-context";
+import { useAppContext } from "$/webapp/contexts/app-context";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { Maybe } from "$/utils/ts-utils";
 

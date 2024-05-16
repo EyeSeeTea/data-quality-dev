@@ -1,5 +1,5 @@
 import * as XLSX from "xlsx";
-import { FutureData } from "../api-futures";
+import { FutureData } from "$/data/api-futures";
 import { Future } from "$/domain/entities/generic/Future";
 
 export interface Workbook {

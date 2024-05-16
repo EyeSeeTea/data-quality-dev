@@ -1,7 +1,7 @@
 import { Id } from "$/domain/entities/Ref";
-import { FutureData } from "../../data/api-futures";
-import { QualityAnalysis } from "../entities/QualityAnalysis";
-import { QualityAnalysisRepository } from "../repositories/QualityAnalysisRepository";
+import { FutureData } from "$/data/api-futures";
+import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
+import { QualityAnalysisRepository } from "$/domain/repositories/QualityAnalysisRepository";
 
 export class SaveConfigAnalysisUseCase {
     constructor(private qualityAnalysisRepository: QualityAnalysisRepository) {}

@@ -6,7 +6,7 @@ import i18n from "$/utils/i18n";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { Maybe } from "$/utils/ts-utils";
-import { periods } from "../analysis-filter/AnalysisFilter";
+import { periods } from "$/webapp/components/analysis-filter/AnalysisFilter";
 import { Id } from "$/domain/entities/Ref";
 import _ from "$/domain/entities/generic/Collection";
 import { Country } from "$/domain/entities/Country";

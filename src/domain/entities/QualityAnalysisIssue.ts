@@ -1,4 +1,4 @@
-import { Maybe } from "../../utils/ts-utils";
+import { Maybe } from "$/utils/ts-utils";
 import { Country } from "./Country";
 import { Struct } from "./generic/Struct";
 import { IssueAction } from "./IssueAction";

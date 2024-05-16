@@ -2,7 +2,7 @@ import { D2Api } from "$/types/d2-api";
 
 import { Sequential } from "$/domain/entities/Sequential";
 import { SequentialRepository } from "$/domain/repositories/SequentialRepository";
-import { FutureData, apiToFuture } from "../api-futures";
+import { FutureData, apiToFuture } from "$/data/api-futures";
 import { MetadataItem } from "$/domain/entities/MetadataItem";
 import { DateISOString, Id } from "$/domain/entities/Ref";
 
