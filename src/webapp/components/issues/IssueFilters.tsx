@@ -195,7 +195,8 @@ const FilterContainer = styled.div`
     align-items: center;
     display: flex;
     gap: 1rem;
-    padding: 0 5px;
+    padding-inline: 5px;
+    padding-block: 0;
 `;
 
 const SearchBoxContainer = styled.div`

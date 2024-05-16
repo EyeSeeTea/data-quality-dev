@@ -265,17 +265,16 @@ const useStyles = makeStyles((theme: Theme) =>
         paper: {
             flex: "1 1 0%",
             display: "inline-table",
-            marginLeft: "5px",
-            marginRight: "5px",
             height: "100%",
+            marginInline: "5px",
         },
         tableWrapper: {
             display: "flex",
             flex: "1 1 0%",
-            paddingBottom: theme.spacing(2),
-            marginTop: "5px",
             height: 300,
+            marginBlockStart: "5px",
             overflow: "scroll",
+            paddingBlockEnd: theme.spacing(2),
             scrollBehavior: "smooth",
         },
     })
