@@ -79,7 +79,9 @@ export class SaveIssueUseCase {
         return this.userRepository.getByIds(userIds).flatMap(users => {
             const loggedInUsersWithEmail = this.getLoggedInUsersWithEmail(users);
             const usersInCountry = this.getUsersInIssueCountry(loggedInUsersWithEmail, issue);
-            return Future.success(usersInCountry);
+            const usersInRegion = this.getUsersInIssueRegion(loggedInUsersWithEmail, issue);
+            const targetUsers = usersInCountry.length > 0 ? usersInCountry : usersInRegion;
+            return Future.success(targetUsers);
         });
     }
 
@@ -90,6 +92,24 @@ export class SaveIssueUseCase {
                     country => country.writeAccess && country.id === issue.country?.id
                 );
                 return userIsInIssueCountry ? user : undefined;
+            })
+            .compact()
+            .value();
+    }
+
+    private getUsersInIssueRegion(users: User[], issue: QualityAnalysisIssue): User[] {
+        const firstPathSegmentRegex = /[^/]+/;
+        return _(users)
+            .map(user => {
+                const userInIssueRegion = user.countries.some(country => {
+                    if (!issue.country) return false;
+                    return (
+                        country.writeAccess &&
+                        firstPathSegmentRegex.test(country.path) ===
+                            firstPathSegmentRegex.test(issue.country.path)
+                    );
+                });
+                return userInIssueRegion ? user : undefined;
             })
             .compact()
             .value();

@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-05-15T07:48:56.601Z\n"
-"PO-Revision-Date: 2024-05-15T07:48:56.602Z\n"
+"POT-Creation-Date: 2024-05-16T07:04:50.457Z\n"
+"PO-Revision-Date: 2024-05-16T07:04:50.458Z\n"
 
 msgid "ID"
 msgstr ""
@@ -89,12 +89,6 @@ msgstr ""
 msgid "New Data Quality Report"
 msgstr ""
 
-msgid "Add"
-msgstr ""
-
-msgid "List"
-msgstr ""
-
 msgid "Name"
 msgstr ""
 
@@ -105,8 +99,8 @@ msgid "Save Config Analysis"
 msgstr ""
 
 msgid ""
-"No user with Capture rights and Organisation Unit associated to the issue "
-"was found"
+"No user with Capture rights and Organisation Unit or Region associated to "
+"the issue was found"
 msgstr ""
 
 msgid "Updating Issue..."
@@ -239,12 +233,6 @@ msgid "Are you sure you want to {{action}} the selected rows?"
 msgstr ""
 
 msgid "Yes, {{actionButton}}"
-msgstr ""
-
-msgid "Hello {{name}}"
-msgstr ""
-
-msgid "Detail page"
 msgstr ""
 
 msgid "Progress"

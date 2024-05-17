@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2024-05-15T07:48:56.601Z\n"
+"POT-Creation-Date: 2024-05-16T07:04:50.457Z\n"
 "PO-Revision-Date: 2018-10-25T09:02:35.143Z\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -89,12 +89,6 @@ msgstr ""
 msgid "New Data Quality Report"
 msgstr ""
 
-msgid "Add"
-msgstr "Añadir"
-
-msgid "List"
-msgstr "Listar"
-
 msgid "Name"
 msgstr ""
 
@@ -105,8 +99,8 @@ msgid "Save Config Analysis"
 msgstr ""
 
 msgid ""
-"No user with Capture rights and Organisation Unit associated to the issue "
-"was found"
+"No user with Capture rights and Organisation Unit or Region associated to "
+"the issue was found"
 msgstr ""
 
 msgid "Updating Issue..."
@@ -241,14 +235,17 @@ msgstr ""
 msgid "Yes, {{actionButton}}"
 msgstr ""
 
-msgid "Hello {{name}}"
-msgstr "Hola {{name}}"
-
-msgid "Detail page"
-msgstr ""
-
 msgid "Progress"
 msgstr ""
 
 msgid "Last Modification"
 msgstr ""
+
+#~ msgid "Add"
+#~ msgstr "Añadir"
+
+#~ msgid "List"
+#~ msgstr "Listar"
+
+#~ msgid "Hello {{name}}"
+#~ msgstr "Hola {{name}}"
