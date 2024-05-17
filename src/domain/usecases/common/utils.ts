@@ -56,6 +56,7 @@ export function getIssues(
                 id: undefined,
                 followUp: undefined,
                 step: undefined,
+                search: undefined,
             },
             pagination: { page: 1, pageSize: 10 },
             sorting: { field: "number", order: "asc" },

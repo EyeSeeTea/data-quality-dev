@@ -5,8 +5,8 @@ import {
     useLoading,
     useObjectsTable,
     useSnackbar,
+    ObjectsTable,
 } from "@eyeseetea/d2-ui-components";
-import { ObjectsTable } from "$/webapp/components/data-table/ObjectsTable";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
 import { GetIssuesOptions } from "$/domain/repositories/IssueRepository";
@@ -18,6 +18,7 @@ import { Maybe } from "$/utils/ts-utils";
 import CloudDownload from "@material-ui/icons/CloudDownload";
 import { useTableUtils } from "$/webapp/hooks/useTable";
 import { useIssueColumns } from "./IssueColumns";
+import { Theme, createStyles, makeStyles } from "@material-ui/core";
 
 export function useCopyContactEmails(props: UseCopyContactEmailsProps) {
     const { onSuccess } = props;
@@ -113,6 +114,7 @@ export function useTableConfig(props: UseTableConfigProps) {
                       },
                   ]
                 : undefined,
+            stickyHeader: true,
             actions: [
                 {
                     name: "Extend Contact Emails",
@@ -132,7 +134,6 @@ export function useTableConfig(props: UseTableConfigProps) {
                 pageSizeInitialValue: 20,
                 renderPosition: { bottom: true, top: false },
             },
-            searchBoxLabel: i18n.t("Issue Number"),
             onReorderColumns: saveColumns,
         };
     }, [
@@ -159,7 +160,7 @@ export function useGetRows(
     const { compositionRoot } = useAppContext();
     const [loading, setLoading] = React.useState(false);
     const getRows = React.useCallback<GetRows<QualityAnalysisIssue>>(
-        (search, pagination, sorting) => {
+        (_search, pagination, sorting) => {
             return new Promise((resolve, reject) => {
                 if (reloadKey < 0 || refreshIssue < 0)
                     return resolve({
@@ -175,7 +176,7 @@ export function useGetRows(
                         filters: {
                             actions: filters.actions,
                             countries: filters.countries,
-                            name: search,
+                            name: filters.search,
                             periods: filters.periods,
                             status: filters.status,
                             analysisIds: [analysisId],
@@ -183,6 +184,7 @@ export function useGetRows(
                             id: undefined,
                             followUp: filters.followUp,
                             step: filters.step,
+                            search: filters.search,
                         },
                     })
                     .run(
@@ -207,6 +209,7 @@ export function useGetRows(
             filters.status,
             filters.followUp,
             filters.step,
+            filters.search,
             analysisId,
             sectionId,
         ]
@@ -218,6 +221,7 @@ export function useGetRows(
 export const IssueTable: React.FC<IssueTableProps> = React.memo(props => {
     const { analysisId, reload, sectionId, showExport, showStepFilter } = props;
     const [filters, setFilters] = React.useState(initialFilters);
+    const customClasses = useStyles();
 
     const { tableConfig, refresh } = useTableConfig({
         filters,
@@ -239,8 +243,42 @@ export const IssueTable: React.FC<IssueTableProps> = React.memo(props => {
         );
     }, [filters, showStepFilter]);
 
-    return <ObjectsTable loading={loading} {...config} filterComponents={filterComponents} />;
+    return (
+        <ObjectsTable
+            loading={loading}
+            {...config}
+            customClasses={customClasses}
+            filterComponents={filterComponents}
+            onChangeSearch={undefined}
+        />
+    );
 });
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        toolbar: {
+            display: "flex",
+            flexWrap: "wrap",
+            paddingInline: 0,
+            marginBlockEnd: "1rem",
+        },
+        paper: {
+            flex: "1 1 0%",
+            display: "inline-table",
+            height: "100%",
+            marginInline: "5px",
+        },
+        tableWrapper: {
+            display: "flex",
+            flex: "1 1 0%",
+            height: 300,
+            marginBlockStart: "5px",
+            overflow: "scroll",
+            paddingBlockEnd: theme.spacing(2),
+            scrollBehavior: "smooth",
+        },
+    })
+);
 
 type IssueTableProps = {
     analysisId: Id;

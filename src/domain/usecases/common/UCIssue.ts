@@ -88,6 +88,7 @@ export class UCIssue {
                     id: undefined,
                     followUp: undefined,
                     step: undefined,
+                    search: undefined,
                 },
                 pagination: { page: 1, pageSize: 10 },
                 sorting: { field: "number", order: "asc" },
@@ -159,6 +160,7 @@ export class UCIssue {
                 periods: [],
                 status: ["4"],
                 step: undefined,
+                search: undefined,
             },
             { initialPage: 1, issues: [] }
         ).map(existingIssues => {
