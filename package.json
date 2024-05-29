@@ -104,7 +104,7 @@
         "postinstall": "yarn localize",
         "prebuild": "yarn localize && yarn test",
         "manifest": "d2-manifest package.json build/manifest.webapp",
-        "build-folder": "rm -rf build/ && d2-manifest package.json manifest.webapp && tsc && vite build --outDir=build && yarn run manifest && cp -r i18n icon.png build",
+        "build-folder": "rm -rf build/ && d2-manifest package.json manifest.webapp && tsc && vite build --outDir=build && yarn run manifest && cp -r i18n nhwa-icon.webp build",
         "build": "VITE_DHIS2_BASE_URL='' VITE_DHIS2_AUTH='' yarn build-folder && rm -f $npm_package_name.zip && cd build && zip --quiet -r ../$npm_package_name.zip *",
         "prettify": "prettier \"./**/*.{js,jsx,json,css,ts,tsx}\" --write",
         "extract-pot": "yarn d2-i18n-extract -p src/ -o i18n/",
