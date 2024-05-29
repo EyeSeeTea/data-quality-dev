@@ -11,6 +11,8 @@ import { SequentialRepository } from "$/domain/repositories/SequentialRepository
 import { SettingsRepository } from "$/domain/repositories/SettingsRepository";
 import { UserRepository } from "$/domain/repositories/UserRepository";
 
+const previousYear = (new Date().getFullYear() - 1).toString();
+
 export class CreateQualityAnalysisUseCase {
     constructor(
         private qualityAnalysisRepository: QualityAnalysisRepository,
@@ -33,7 +35,7 @@ export class CreateQualityAnalysisUseCase {
             );
 
             return QualityAnalysis.build({
-                endDate: defaultSettings.endDate,
+                endDate: previousYear,
                 id: getUid(`quality-analysis_${new Date().getTime()}`),
                 module: options.qualityAnalysis.module,
                 name: qualityAnalysisName,
@@ -43,7 +45,7 @@ export class CreateQualityAnalysisUseCase {
                         status: QualityAnalysisSection.getInitialStatus(),
                     });
                 }),
-                startDate: defaultSettings.startDate,
+                startDate: previousYear,
                 status: "In Progress",
                 lastModification: "",
                 countriesAnalysis: defaultSettings.countryIds,
