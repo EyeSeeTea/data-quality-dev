@@ -18,7 +18,6 @@ import { Maybe } from "$/utils/ts-utils";
 import CloudDownload from "@material-ui/icons/CloudDownload";
 import { useTableUtils } from "$/webapp/hooks/useTable";
 import { useIssueColumns } from "./IssueColumns";
-import { Theme, createStyles, makeStyles } from "@material-ui/core";
 
 export function useCopyContactEmails(props: UseCopyContactEmailsProps) {
     const { onSuccess } = props;
@@ -221,7 +220,6 @@ export function useGetRows(
 export const IssueTable: React.FC<IssueTableProps> = React.memo(props => {
     const { analysisId, reload, sectionId, showExport, showStepFilter } = props;
     const [filters, setFilters] = React.useState(initialFilters);
-    const customClasses = useStyles();
 
     const { tableConfig, refresh } = useTableConfig({
         filters,
@@ -247,38 +245,11 @@ export const IssueTable: React.FC<IssueTableProps> = React.memo(props => {
         <ObjectsTable
             loading={loading}
             {...config}
-            customClasses={customClasses}
             filterComponents={filterComponents}
             onChangeSearch={undefined}
         />
     );
 });
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        toolbar: {
-            display: "flex",
-            flexWrap: "wrap",
-            paddingInline: 0,
-            marginBlockEnd: "1rem",
-        },
-        paper: {
-            flex: "1 1 0%",
-            display: "inline-table",
-            height: "100%",
-            marginInline: "5px",
-        },
-        tableWrapper: {
-            display: "flex",
-            flex: "1 1 0%",
-            height: 300,
-            marginBlockStart: "5px",
-            overflow: "scroll",
-            paddingBlockEnd: theme.spacing(2),
-            scrollBehavior: "smooth",
-        },
-    })
-);
 
 type IssueTableProps = {
     analysisId: Id;
