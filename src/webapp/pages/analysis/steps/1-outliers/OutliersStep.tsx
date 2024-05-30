@@ -7,19 +7,17 @@ import { StepAnalysis } from "$/webapp/pages/analysis/steps/StepAnalysis";
 import { PageStepProps } from "$/webapp/pages/analysis/AnalysisPage";
 import { UserFeedbackContainer } from "$/webapp/components/user-feedback-container/UserFeedbackContainer";
 
-const defaultOutlierParams = { algorithm: "Z_SCORE", threshold: "3" };
-
 export const OutliersStep: React.FC<PageStepProps> = React.memo(props => {
     const { title, analysis, section, updateAnalysis } = props;
 
     const [reload, refreshReload] = React.useState(0);
-    const [qualityFilters, setQualityFilters] = React.useState(defaultOutlierParams);
-    const { runAnalysisOutlier, isLoading, error } = useAnalysisOutlier({
-        onSucess: qualityAnalysis => {
-            refreshReload(reload + 1);
-            updateAnalysis(qualityAnalysis);
-        },
-    });
+    const { runAnalysisOutlier, isLoading, error, qualityFilters, setQualityFilters } =
+        useAnalysisOutlier({
+            onSucess: qualityAnalysis => {
+                refreshReload(reload + 1);
+                updateAnalysis(qualityAnalysis);
+            },
+        });
 
     const runAnalysis = () => {
         runAnalysisOutlier(
@@ -32,9 +30,12 @@ export const OutliersStep: React.FC<PageStepProps> = React.memo(props => {
 
     const onFilterChange = React.useCallback<
         (value: Maybe<string>, filterAttribute: string) => void
-    >((value, filterAttribute) => {
-        setQualityFilters(prev => ({ ...prev, [filterAttribute]: value }));
-    }, []);
+    >(
+        (value, filterAttribute) => {
+            setQualityFilters(prev => ({ ...prev, [filterAttribute]: value }));
+        },
+        [setQualityFilters]
+    );
 
     if (!analysis) return null;
 
