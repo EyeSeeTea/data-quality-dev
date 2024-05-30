@@ -46,6 +46,7 @@ export const OutliersStep: React.FC<PageStepProps> = React.memo(props => {
                 reload={reload}
                 section={section}
                 title={title}
+                allowRerun={section.status === "success"}
             >
                 <Dropdown
                     hideEmpty
