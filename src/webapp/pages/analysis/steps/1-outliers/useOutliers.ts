@@ -32,6 +32,15 @@ export function useAnalysisOutlier(props: UseRunAnalysisProps) {
     const [error, setError] = React.useState<Maybe<string>>(undefined);
     const [qualityFilters, setQualityFilters] = React.useState(defaultOutlierParams);
 
+    const onFilterChange = React.useCallback<
+        (value: Maybe<string>, filterAttribute: string) => void
+    >(
+        (value, filterAttribute) => {
+            setQualityFilters(prev => ({ ...prev, [filterAttribute]: value }));
+        },
+        [setQualityFilters]
+    );
+
     const runAnalysisOutlier = React.useCallback(
         (algorithm: string, analysisId: Id, sectionId: Id, threshold: string) => {
             setLoading(true);
@@ -56,7 +65,14 @@ export function useAnalysisOutlier(props: UseRunAnalysisProps) {
         [compositionRoot.outlier.run, onSucess]
     );
 
-    return { runAnalysisOutlier, isLoading, error, qualityFilters, setQualityFilters };
+    return {
+        runAnalysisOutlier,
+        isLoading,
+        error,
+        qualityFilters,
+        setQualityFilters,
+        onFilterChange,
+    };
 }
 
 type UseRunAnalysisProps = { onSucess: (qualityAnalysis: QualityAnalysis) => void };

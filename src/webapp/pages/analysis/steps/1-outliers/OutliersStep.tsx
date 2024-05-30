@@ -2,7 +2,6 @@ import React from "react";
 import { Dropdown } from "@eyeseetea/d2-ui-components";
 import i18n from "$/utils/i18n";
 import { algorithmList, thresholdList, useAnalysisOutlier } from "./useOutliers";
-import { Maybe } from "$/utils/ts-utils";
 import { StepAnalysis } from "$/webapp/pages/analysis/steps/StepAnalysis";
 import { PageStepProps } from "$/webapp/pages/analysis/AnalysisPage";
 import { UserFeedbackContainer } from "$/webapp/components/user-feedback-container/UserFeedbackContainer";
@@ -11,7 +10,7 @@ export const OutliersStep: React.FC<PageStepProps> = React.memo(props => {
     const { title, analysis, section, updateAnalysis } = props;
 
     const [reload, refreshReload] = React.useState(0);
-    const { runAnalysisOutlier, isLoading, error, qualityFilters, setQualityFilters } =
+    const { runAnalysisOutlier, isLoading, error, qualityFilters, onFilterChange } =
         useAnalysisOutlier({
             onSucess: qualityAnalysis => {
                 refreshReload(reload + 1);
@@ -27,15 +26,6 @@ export const OutliersStep: React.FC<PageStepProps> = React.memo(props => {
             qualityFilters.threshold
         );
     };
-
-    const onFilterChange = React.useCallback<
-        (value: Maybe<string>, filterAttribute: string) => void
-    >(
-        (value, filterAttribute) => {
-            setQualityFilters(prev => ({ ...prev, [filterAttribute]: value }));
-        },
-        [setQualityFilters]
-    );
 
     if (!analysis) return null;
 
