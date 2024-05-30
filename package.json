@@ -117,7 +117,8 @@
         "name": "NHWA Data Quality",
         "description": "NWHA Data Quality",
         "icons": {
-            "968": "nhwa-icon-968.webp"
+            "968": "nhwa-icon-968.webp",
+            "48": "nhwa-icon-48.webp"
         },
         "developer": {
             "url": "https://www.eyeseetea.com/",
