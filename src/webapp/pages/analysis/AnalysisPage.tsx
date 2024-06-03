@@ -20,6 +20,8 @@ import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection
 import { Maybe } from "$/utils/ts-utils";
 import { SummaryStep } from "./SummaryStep";
 
+const defaultOutlierParams = { algorithm: "Z_SCORE", threshold: "3" };
+
 const useStyles = makeStyles(() => ({
     circle: {
         alignItems: "center",
@@ -77,7 +79,10 @@ function buildStepsFromSections(
     analysis: QualityAnalysis,
     updateAnalysis: UpdateAnalysisState,
     currentSection: Maybe<string>,
-    classes: ClassNameMap<"circle" | "pending" | "completed" | "error" | "largeIcon">
+    classes: ClassNameMap<"circle" | "pending" | "completed" | "error" | "largeIcon">,
+
+    qualityFilters: { algorithm: string; threshold: string },
+    onQualityFilterChange: (value: Maybe<string>, filterAttribute: string) => void
 ): WizardStep[] {
     const sectionSteps = _(analysis.sections)
         .map((section): Maybe<WizardStep & { id: string }> => {
@@ -107,6 +112,8 @@ function buildStepsFromSections(
                         section={section}
                         title={section.description || section.name}
                         updateAnalysis={updateAnalysis}
+                        qualityFilters={qualityFilters}
+                        updateQualityFilters={onQualityFilterChange}
                     />
                 ),
             };
@@ -142,7 +149,16 @@ export const AnalysisPage: React.FC<PageProps> = React.memo(() => {
     const loading = useLoading();
     const snackbar = useSnackbar();
     const classes = useStyles();
+    const [qualityFilters, setQualityFilters] = React.useState(defaultOutlierParams);
 
+    const onFilterChange = React.useCallback<
+        (value: Maybe<string>, filterAttribute: string) => void
+    >(
+        (value, filterAttribute) => {
+            setQualityFilters(prev => ({ ...prev, [filterAttribute]: value }));
+        },
+        [setQualityFilters]
+    );
     const onBack = () => {
         history.push("/");
     };
@@ -160,8 +176,15 @@ export const AnalysisPage: React.FC<PageProps> = React.memo(() => {
 
     const analysisSteps = React.useMemo(() => {
         if (!analysis) return [];
-        return buildStepsFromSections(analysis, setAnalysis, currentSection, classes);
-    }, [analysis, setAnalysis, currentSection, classes]);
+        return buildStepsFromSections(
+            analysis,
+            setAnalysis,
+            currentSection,
+            classes,
+            qualityFilters,
+            onFilterChange
+        );
+    }, [analysis, setAnalysis, currentSection, classes, onFilterChange, qualityFilters]);
 
     const onStepChange = React.useCallback(
         (value: string) => {
@@ -206,6 +229,8 @@ export type PageStepProps = {
     section: QualityAnalysisSection;
     updateAnalysis: UpdateAnalysisState;
     title: string;
+    qualityFilters: { algorithm: string; threshold: string };
+    updateQualityFilters: (value: Maybe<string>, filterAttribute: string) => void;
 };
 
 export type UpdateAnalysisState = React.Dispatch<React.SetStateAction<Maybe<QualityAnalysis>>>;

@@ -7,23 +7,23 @@ import { PageStepProps } from "$/webapp/pages/analysis/AnalysisPage";
 import { UserFeedbackContainer } from "$/webapp/components/user-feedback-container/UserFeedbackContainer";
 
 export const OutliersStep: React.FC<PageStepProps> = React.memo(props => {
-    const { title, analysis, section, updateAnalysis } = props;
+    const { title, analysis, section, updateAnalysis, updateQualityFilters, qualityFilters } =
+        props;
 
     const [reload, refreshReload] = React.useState(0);
-    const { runAnalysisOutlier, isLoading, error, qualityFilters, onFilterChange } =
-        useAnalysisOutlier({
-            onSucess: qualityAnalysis => {
-                refreshReload(reload + 1);
-                updateAnalysis(qualityAnalysis);
-            },
-        });
+    const { runAnalysisOutlier, isLoading, error } = useAnalysisOutlier({
+        onSucess: qualityAnalysis => {
+            refreshReload(reload + 1);
+            updateAnalysis(qualityAnalysis);
+        },
+    });
 
     const runAnalysis = () => {
         runAnalysisOutlier(
-            qualityFilters.algorithm,
             analysis.id,
             section.id,
-            qualityFilters.threshold
+            qualityFilters.threshold,
+            qualityFilters.algorithm
         );
     };
 
@@ -42,14 +42,14 @@ export const OutliersStep: React.FC<PageStepProps> = React.memo(props => {
                 <Dropdown
                     hideEmpty
                     items={algorithmList}
-                    onChange={value => onFilterChange(value, "algorithm")}
+                    onChange={value => updateQualityFilters(value, "algorithm")}
                     value={qualityFilters.algorithm}
                     label={i18n.t("Algorithm")}
                 />
                 <Dropdown
                     hideEmpty
                     items={thresholdList}
-                    onChange={value => onFilterChange(value, "threshold")}
+                    onChange={value => updateQualityFilters(value, "threshold")}
                     value={qualityFilters.threshold}
                     label={i18n.t("Threshold")}
                 />

@@ -23,23 +23,11 @@ export const algorithmList = [
     { value: "MIN_MAX", text: "Minmax values" },
 ];
 
-const defaultOutlierParams = { algorithm: "Z_SCORE", threshold: "3" };
-
 export function useAnalysisOutlier(props: UseRunAnalysisProps) {
     const { onSucess } = props;
     const { compositionRoot } = useAppContext();
     const [isLoading, setLoading] = React.useState<boolean>(false);
     const [error, setError] = React.useState<Maybe<string>>(undefined);
-    const [qualityFilters, setQualityFilters] = React.useState(defaultOutlierParams);
-
-    const onFilterChange = React.useCallback<
-        (value: Maybe<string>, filterAttribute: string) => void
-    >(
-        (value, filterAttribute) => {
-            setQualityFilters(prev => ({ ...prev, [filterAttribute]: value }));
-        },
-        [setQualityFilters]
-    );
 
     const runAnalysisOutlier = React.useCallback(
         (algorithm: string, analysisId: Id, sectionId: Id, threshold: string) => {
@@ -69,9 +57,6 @@ export function useAnalysisOutlier(props: UseRunAnalysisProps) {
         runAnalysisOutlier,
         isLoading,
         error,
-        qualityFilters,
-        setQualityFilters,
-        onFilterChange,
     };
 }
 
