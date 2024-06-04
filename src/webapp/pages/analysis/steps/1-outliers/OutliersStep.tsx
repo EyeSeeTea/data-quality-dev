@@ -19,12 +19,12 @@ export const OutliersStep: React.FC<PageStepProps> = React.memo(props => {
     });
 
     const runAnalysis = () => {
-        runAnalysisOutlier(
-            analysis.id,
-            section.id,
-            qualityFilters.threshold,
-            qualityFilters.algorithm
-        );
+        runAnalysisOutlier({
+            algorithm: qualityFilters.algorithm,
+            analysisId: analysis.id,
+            sectionId: section.id,
+            threshold: qualityFilters.threshold,
+        });
     };
 
     if (!analysis) return null;
