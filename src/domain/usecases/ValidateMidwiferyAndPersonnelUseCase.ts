@@ -296,15 +296,7 @@ export class ValidateMidwiferyAndPersonnelUseCase {
         } else if (sectionDisaggregation.type === "key_occupations") {
             return [["2. Nursing Personnel", "3. Midwifery Personnel"]];
         } else {
-            return [
-                ["2 - Nursing Personnel", "3 - Midwifery personnel"],
-                ["2.1 - Nursing Professionals", "3.1 - Midwifery Professionals"],
-                [
-                    "2.2 - Nursing Associate Professionals",
-                    "3.2 - Midwifery Associate Professionals",
-                ],
-                ["2.3 - Nurses not further defined", "3.3 - Midwives not further defined"],
-            ];
+            return [["2 - Nursing Personnel", "3 - Midwifery personnel"]];
         }
     }
 
