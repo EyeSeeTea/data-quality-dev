@@ -9,16 +9,17 @@ import { IssueTable } from "$/webapp/components/issues/IssueTable";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 
 export const StepAnalysis: React.FC<StepContainerProps> = React.memo(props => {
-    const { children, id, onRun, reload, section, title } = props;
+    const { children, id, onRun, reload, section, title, allowRerun } = props;
 
     const isPending = QualityAnalysisSection.isPending(section);
+    const showRunButton = isPending || allowRerun;
 
     return (
         <Container>
             <>
                 <AnalysisHeader>
                     <StyledTypography variant="h2">{title}</StyledTypography>
-                    {isPending && (
+                    {showRunButton && (
                         <FiltersContainer>
                             {children}
                             <Button
@@ -75,4 +76,5 @@ type StepContainerProps = {
     section: QualityAnalysisSection;
     title: string;
     onRun: () => void;
+    allowRerun?: boolean;
 };

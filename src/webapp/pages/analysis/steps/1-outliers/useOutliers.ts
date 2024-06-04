@@ -30,7 +30,8 @@ export function useAnalysisOutlier(props: UseRunAnalysisProps) {
     const [error, setError] = React.useState<Maybe<string>>(undefined);
 
     const runAnalysisOutlier = React.useCallback(
-        (algorithm: string, analysisId: Id, sectionId: Id, threshold: string) => {
+        (options: RunAnalysisOptionsProps) => {
+            const { sectionId, algorithm, analysisId, threshold } = options;
             setLoading(true);
             compositionRoot.outlier.run
                 .execute({
@@ -53,7 +54,17 @@ export function useAnalysisOutlier(props: UseRunAnalysisProps) {
         [compositionRoot.outlier.run, onSucess]
     );
 
-    return { runAnalysisOutlier, isLoading, error };
+    return {
+        runAnalysisOutlier,
+        isLoading,
+        error,
+    };
 }
 
 type UseRunAnalysisProps = { onSucess: (qualityAnalysis: QualityAnalysis) => void };
+type RunAnalysisOptionsProps = {
+    algorithm: string;
+    analysisId: Id;
+    sectionId: Id;
+    threshold: string;
+};
