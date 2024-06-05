@@ -1,33 +1,32 @@
 import React from "react";
 
 import { Id } from "$/domain/entities/Ref";
-import { useAppContext } from "../contexts/app-context";
-import { useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
+import { useAppContext } from "$/webapp/contexts/app-context";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
-import i18n from "$/utils/i18n";
+import { Maybe } from "$/utils/ts-utils";
 
 export function useAnalysisById(props: UseAnalysisByIdProps) {
     const { id } = props;
     const { compositionRoot } = useAppContext();
-    const snackbar = useSnackbar();
-    const loading = useLoading();
+    const [isLoading, setLoading] = React.useState<boolean>(false);
     const [analysis, setAnalysis] = React.useState<QualityAnalysis>();
+    const [error, setError] = React.useState<Maybe<string>>(undefined);
 
     React.useEffect(() => {
-        loading.show(true, i18n.t("Loading Analysis..."));
+        setLoading(true);
         compositionRoot.qualityAnalysis.getById.execute(id).run(
             analysis => {
                 setAnalysis(analysis);
-                loading.hide();
+                setLoading(false);
             },
             err => {
-                loading.hide();
-                snackbar.error(err.message);
+                setLoading(false);
+                setError(err.message);
             }
         );
-    }, [compositionRoot.qualityAnalysis.getById, loading, snackbar, id]);
+    }, [compositionRoot.qualityAnalysis.getById, id]);
 
-    return { analysis, setAnalysis };
+    return { analysis, setAnalysis, isLoading, error };
 }
 
 type UseAnalysisByIdProps = { id: Id };

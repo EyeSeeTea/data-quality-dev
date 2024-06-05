@@ -1,8 +1,8 @@
-import { D2Api } from "../../types/d2-api";
-import { FutureData, apiToFuture } from "../api-futures";
-import { Id } from "../../domain/entities/Ref";
-import _ from "../../domain/entities/generic/Collection";
-import { DataElement } from "../../domain/entities/DataElement";
+import { D2Api } from "$/types/d2-api";
+import { FutureData, apiToFuture } from "$/data/api-futures";
+import { Id } from "$/domain/entities/Ref";
+import _ from "$/domain/entities/generic/Collection";
+import { DataElement } from "$/domain/entities/DataElement";
 
 export class D2DataElement {
     constructor(private api: D2Api) {}
@@ -13,6 +13,8 @@ export class D2DataElement {
                 .get({
                     fields: {
                         id: true,
+                        formName: true,
+                        code: true,
                         displayFormName: true,
                         displayName: true,
                         displayShortName: true,
@@ -29,6 +31,8 @@ export class D2DataElement {
                     return d2Response.data.objects.map((d2DataElement): DataElement => {
                         return {
                             id: d2DataElement.id,
+                            code: d2DataElement.code,
+                            originalName: d2DataElement.formName,
                             name:
                                 d2DataElement.displayFormName ||
                                 d2DataElement.displayShortName ||

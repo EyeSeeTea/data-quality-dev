@@ -26,7 +26,7 @@ function getContactEmailNotification(
     if (field === "followUp" && value === true && !emailChanged) {
         snackbar.warning(
             i18n.t(
-                "No user with Capture rights and Organisation Unit associated to the issue was found"
+                "No user with Capture rights and Organisation Unit or Region associated to the issue was found"
             )
         );
     }

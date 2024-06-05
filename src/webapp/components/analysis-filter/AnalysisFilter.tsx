@@ -6,12 +6,12 @@ import _, { Collection } from "$/domain/entities/generic/Collection";
 import { Module } from "$/domain/entities/Module";
 import { qualityAnalysisStatus } from "$/domain/entities/QualityAnalysisStatus";
 import { Maybe } from "$/utils/ts-utils";
-import { MenuButton } from "../menu-button/MenuButton";
+import { MenuButton } from "$/webapp/components/menu-button/MenuButton";
 import { Id } from "$/domain/entities/Ref";
 
 const currentYear = new Date().getFullYear();
 
-export const periods = Collection.range(currentYear - 5, currentYear + 1)
+export const periods = Collection.range(2000, currentYear + 1)
     .map(period => {
         return { value: period.toString(), text: period.toString() };
     })

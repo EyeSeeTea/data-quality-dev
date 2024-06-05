@@ -12,7 +12,12 @@ export function useIssueColumns() {
         const issueColumns: TableColumn<QualityAnalysisIssue>[] = [
             { name: "number", text: i18n.t("Issue"), sortable: true },
             { name: "country", text: i18n.t("Country"), sortable: false },
-            { name: "period", text: i18n.t("Period"), sortable: false },
+            {
+                name: "period",
+                text: i18n.t("Period"),
+                sortable: false,
+                getValue: value => value.period,
+            },
             { name: "dataElement", text: i18n.t("Data Element"), sortable: false },
             {
                 name: "categoryOption",

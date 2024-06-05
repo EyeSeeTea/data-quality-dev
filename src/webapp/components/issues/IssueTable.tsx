@@ -5,8 +5,8 @@ import {
     useLoading,
     useObjectsTable,
     useSnackbar,
+    ObjectsTable,
 } from "@eyeseetea/d2-ui-components";
-import { ObjectsTable } from "../data-table/ObjectsTable";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
 import { GetIssuesOptions } from "$/domain/repositories/IssueRepository";
@@ -113,6 +113,7 @@ export function useTableConfig(props: UseTableConfigProps) {
                       },
                   ]
                 : undefined,
+            stickyHeader: true,
             actions: [
                 {
                     name: "Extend Contact Emails",
@@ -132,7 +133,6 @@ export function useTableConfig(props: UseTableConfigProps) {
                 pageSizeInitialValue: 20,
                 renderPosition: { bottom: true, top: false },
             },
-            searchBoxLabel: i18n.t("Issue Number"),
             onReorderColumns: saveColumns,
         };
     }, [
@@ -159,7 +159,7 @@ export function useGetRows(
     const { compositionRoot } = useAppContext();
     const [loading, setLoading] = React.useState(false);
     const getRows = React.useCallback<GetRows<QualityAnalysisIssue>>(
-        (search, pagination, sorting) => {
+        (_search, pagination, sorting) => {
             return new Promise((resolve, reject) => {
                 if (reloadKey < 0 || refreshIssue < 0)
                     return resolve({
@@ -175,7 +175,7 @@ export function useGetRows(
                         filters: {
                             actions: filters.actions,
                             countries: filters.countries,
-                            name: search,
+                            name: filters.search,
                             periods: filters.periods,
                             status: filters.status,
                             analysisIds: [analysisId],
@@ -183,6 +183,7 @@ export function useGetRows(
                             id: undefined,
                             followUp: filters.followUp,
                             step: filters.step,
+                            search: filters.search,
                         },
                     })
                     .run(
@@ -207,6 +208,7 @@ export function useGetRows(
             filters.status,
             filters.followUp,
             filters.step,
+            filters.search,
             analysisId,
             sectionId,
         ]
@@ -239,7 +241,14 @@ export const IssueTable: React.FC<IssueTableProps> = React.memo(props => {
         );
     }, [filters, showStepFilter]);
 
-    return <ObjectsTable loading={loading} {...config} filterComponents={filterComponents} />;
+    return (
+        <ObjectsTable
+            loading={loading}
+            {...config}
+            filterComponents={filterComponents}
+            onChangeSearch={undefined}
+        />
+    );
 });
 
 type IssueTableProps = {

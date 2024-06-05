@@ -1,6 +1,6 @@
 import { Outlier } from "$/domain/entities/Outlier";
 import { OutlierRepository } from "$/domain/repositories/OutlierRepository";
-import { FutureData } from "../api-futures";
+import { FutureData } from "$/data/api-futures";
 
 export class OutlierTestRepository implements OutlierRepository {
     export(): FutureData<Outlier[]> {

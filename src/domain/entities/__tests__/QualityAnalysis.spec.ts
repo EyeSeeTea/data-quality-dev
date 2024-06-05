@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { QualityAnalysis, QualityAnalysisAttrs } from "../QualityAnalysis";
+import { QualityAnalysis, QualityAnalysisAttrs } from "$/domain/entities/QualityAnalysis";
 
 function createQualityAnalysis(data: Partial<QualityAnalysisAttrs>) {
     return QualityAnalysis.build({

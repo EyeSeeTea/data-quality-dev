@@ -1,6 +1,6 @@
 import { D2Api } from "$/types/d2-api";
 import { OutlierOptions, OutlierRepository } from "$/domain/repositories/OutlierRepository";
-import { FutureData, apiToFuture } from "../api-futures";
+import { FutureData, apiToFuture } from "$/data/api-futures";
 import { Id, Period } from "$/domain/entities/Ref";
 import { Outlier } from "$/domain/entities/Outlier";
 import { Maybe } from "$/utils/ts-utils";

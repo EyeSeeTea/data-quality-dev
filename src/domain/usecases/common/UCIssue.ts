@@ -10,6 +10,7 @@ import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { RowsPaginated } from "$/domain/entities/Pagination";
 import { IssueAction } from "$/domain/entities/IssueAction";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
+import { DismissedAnalysis } from "$/domain/entities/DismissedAnalysis";
 
 export class UCIssue {
     constructor(private issueRepository: IssueRepository) {}
@@ -45,7 +46,7 @@ export class UCIssue {
             azureUrl: "",
             period: period,
             country: { id: countryId, name: "", path: "", writeAccess: false },
-            dataElement: { id: dataElementId, name: "" },
+            dataElement: dataElementId ? { id: dataElementId, name: "" } : undefined,
             categoryOption: { id: categoryOptionComboId, name: "" },
             description: description,
             followUp: false,
@@ -87,6 +88,7 @@ export class UCIssue {
                     id: undefined,
                     followUp: undefined,
                     step: undefined,
+                    search: undefined,
                 },
                 pagination: { page: 1, pageSize: 10 },
                 sorting: { field: "number", order: "asc" },
@@ -140,6 +142,34 @@ export class UCIssue {
         const stepNumber =
             section.position < 10 ? `0${section.position}` : String(section.position);
         return `S${stepNumber}`;
+    }
+
+    getRelatedIssues(
+        issues: QualityAnalysisIssue[],
+        sectionId: Id
+    ): FutureData<QualityAnalysisIssue[]> {
+        return this.getAllIssues(
+            {
+                analysisIds: undefined,
+                sectionId: sectionId,
+                countries: [],
+                actions: undefined,
+                followUp: undefined,
+                id: undefined,
+                name: undefined,
+                periods: [],
+                status: ["4"],
+                step: undefined,
+                search: undefined,
+            },
+            { initialPage: 1, issues: [] }
+        ).map(existingIssues => {
+            const dimissedAnalysis = new DismissedAnalysis({
+                existingIssues: existingIssues,
+                newIssues: issues,
+            });
+            return dimissedAnalysis.mergeDuplicates();
+        });
     }
 }
 

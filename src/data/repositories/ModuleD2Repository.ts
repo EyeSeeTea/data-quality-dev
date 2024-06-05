@@ -5,7 +5,7 @@ import { Module } from "$/domain/entities/Module";
 import { ModuleRepository } from "$/domain/repositories/ModuleRepository";
 import { FutureData, apiToFuture } from "$/data/api-futures";
 import { Future } from "$/domain/entities/generic/Future";
-import { getDefaultModules } from "../common/D2Module";
+import { getDefaultModules } from "$/data/common/D2Module";
 import { DataElement } from "$/domain/entities/DataElement";
 import _ from "$/domain/entities/generic/Collection";
 import { Maybe } from "$/utils/ts-utils";
@@ -28,11 +28,14 @@ export class ModuleD2Repository implements ModuleRepository {
                     dataSetElements: {
                         dataElement: {
                             id: true,
+                            code: true,
+                            formName: true,
                             displayFormName: true,
                             valueType: true,
                             categoryCombo: {
                                 id: true,
                                 code: true,
+                                name: true,
                                 displayName: true,
                                 categories: {
                                     id: true,
@@ -79,6 +82,8 @@ export class ModuleD2Repository implements ModuleRepository {
                                 d2DataSetElement.dataElement.categoryCombo;
                             return {
                                 id: d2DataSetElement.dataElement.id,
+                                code: d2DataSetElement.dataElement.code,
+                                originalName: d2DataSetElement.dataElement.formName,
                                 name: d2DataSetElement.dataElement.displayFormName,
                                 isNumber:
                                     d2DataSetElement.dataElement.valueType === "NUMBER" ||

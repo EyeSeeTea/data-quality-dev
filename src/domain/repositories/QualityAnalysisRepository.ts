@@ -1,6 +1,6 @@
-import { FutureData } from "../../data/api-futures";
-import { Maybe } from "../../utils/ts-utils";
-import { QualityAnalysis } from "../entities/QualityAnalysis";
+import { FutureData } from "$/data/api-futures";
+import { Maybe } from "$/utils/ts-utils";
+import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { Id } from "$/domain/entities/Ref";
 
 export interface QualityAnalysisRepository {

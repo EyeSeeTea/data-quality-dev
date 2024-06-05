@@ -1,8 +1,8 @@
 import { RowsPaginated } from "$/domain/entities/Pagination";
 import { Id, Period } from "$/domain/entities/Ref";
 import { Maybe } from "$/utils/ts-utils";
-import { FutureData } from "../../data/api-futures";
-import { QualityAnalysisIssue } from "../entities/QualityAnalysisIssue";
+import { FutureData } from "$/data/api-futures";
+import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
 import { Pagination } from "$/domain/entities/Pagination";
 
 export interface IssueRepository {
@@ -25,5 +25,6 @@ export type GetIssuesOptions = {
         id: Maybe<Id>;
         followUp: Maybe<string>;
         step: Maybe<string[]>;
+        search: Maybe<string>;
     };
 };

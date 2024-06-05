@@ -1,21 +1,21 @@
-import React from "react";
-import { useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
-
-import i18n from "$/utils/i18n";
+import React, { useState } from "react";
+import { useSnackbar } from "@eyeseetea/d2-ui-components";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { Id } from "$/domain/entities/Ref";
 import { Option } from "$/webapp/components/selectmulti-checkboxes/SelectMultiCheckboxes";
 import _ from "$/domain/entities/generic/Collection";
-import { UpdateAnalysisState } from "../../AnalysisPage";
+import { UpdateAnalysisState } from "$/webapp/pages/analysis/AnalysisPage";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
+import { Maybe } from "$/utils/ts-utils";
 
 export function useDisaggregatesStep(props: UseDisaggregatesStepProps) {
     const { analysis, sectionId, updateAnalysis } = props;
     const { compositionRoot } = useAppContext();
     const snackbar = useSnackbar();
-    const loading = useLoading();
 
     const [reload, refreshReload] = React.useState(0);
+    const [isLoading, setLoading] = useState<boolean>(false);
+    const [error, setError] = React.useState<Maybe<string>>(undefined);
 
     const [disaggregations, setDisaggregations] = React.useState<Option[]>([]);
     const [selectedDisagregations, setSelectedDisagregations] = React.useState<string[]>([]);
@@ -44,7 +44,7 @@ export function useDisaggregatesStep(props: UseDisaggregatesStepProps) {
 
     const runAnalysis = () => {
         if (!analysis) return false;
-        loading.show(true, i18n.t("Running analysis..."));
+        setLoading(true);
         compositionRoot.missingDisaggregates.get
             .execute({
                 analysisId: analysis.id,
@@ -55,11 +55,11 @@ export function useDisaggregatesStep(props: UseDisaggregatesStepProps) {
                 result => {
                     refreshReload(reload + 1);
                     updateAnalysis(result);
-                    loading.hide();
+                    setLoading(false);
                 },
                 err => {
-                    snackbar.error(err.message);
-                    loading.hide();
+                    setError(err.message);
+                    setLoading(false);
                 }
             );
     };
@@ -71,6 +71,8 @@ export function useDisaggregatesStep(props: UseDisaggregatesStepProps) {
         runAnalysis,
         selectedDisagregations,
         reload,
+        isLoading,
+        error,
     };
 }
 

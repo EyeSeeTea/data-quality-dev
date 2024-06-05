@@ -1,11 +1,11 @@
 import React from "react";
 import i18n from "@dhis2/d2-i18n";
 import { Provider } from "@dhis2/app-runtime";
-import { D2Api } from "../../../types/d2-api";
-import { setupLogger } from "../../../utils/logger";
+import { D2Api } from "$/types/d2-api";
+import { setupLogger } from "$/utils/logger";
 import App from "./App";
-import { CompositionRoot, getWebappCompositionRoot } from "../../../CompositionRoot";
-import { MetadataD2Repository } from "../../../data/repositories/MetadataD2Repository";
+import { CompositionRoot, getWebappCompositionRoot } from "$/CompositionRoot";
+import { MetadataD2Repository } from "$/data/repositories/MetadataD2Repository";
 import { MetadataItem } from "$/domain/entities/MetadataItem";
 
 export function Dhis2App(_props: {}) {

@@ -5,8 +5,8 @@ import {
     QualityAnalysisIssueAttrs,
 } from "$/domain/entities/QualityAnalysisIssue";
 import { IssueExportRepository } from "$/domain/repositories/IssueExportRepository";
-import { FutureData } from "../api-futures";
-import { Workbook, WorkbookSheet, exportToSpreadsheet } from "../common/SpreadSheet";
+import { FutureData } from "$/data/api-futures";
+import { Workbook, WorkbookSheet, exportToSpreadsheet } from "$/data/common/SpreadSheet";
 import i18n from "$/utils/i18n";
 import { MetadataItem } from "$/domain/entities/MetadataItem";
 

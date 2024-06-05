@@ -1,5 +1,5 @@
 import { TrackerProgramLogger, initLogger } from "@eyeseetea/d2-logger";
-import { Id } from "../domain/entities/Ref";
+import { Id } from "$/domain/entities/Ref";
 
 export let logger: TrackerProgramLogger;
 

@@ -11,7 +11,7 @@ export interface QualityAnalysisSectionAttrs {
     position: number;
 }
 
-const SECTION_PENDING_STATE = "pending";
+export const SECTION_PENDING_STATE = "pending";
 
 export class QualityAnalysisSection extends Struct<QualityAnalysisSectionAttrs>() {
     static getInitialStatus(): string {

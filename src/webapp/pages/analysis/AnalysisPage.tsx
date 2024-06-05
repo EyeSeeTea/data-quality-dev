@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Wizard, WizardStep, useLoading, useSnackbar } from "@eyeseetea/d2-ui-components";
 import { ClassNameMap } from "@material-ui/styles";
 import { makeStyles } from "@material-ui/core";
-import { Wizard, WizardStep } from "@eyeseetea/d2-ui-components";
 import SettingsIcon from "@material-ui/icons/Settings";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import styled from "styled-components";
@@ -19,6 +19,8 @@ import _ from "$/domain/entities/generic/Collection";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 import { Maybe } from "$/utils/ts-utils";
 import { SummaryStep } from "./SummaryStep";
+
+const defaultOutlierParams = { algorithm: "Z_SCORE", threshold: "3" };
 
 const useStyles = makeStyles(() => ({
     circle: {
@@ -77,7 +79,10 @@ function buildStepsFromSections(
     analysis: QualityAnalysis,
     updateAnalysis: UpdateAnalysisState,
     currentSection: Maybe<string>,
-    classes: ClassNameMap<"circle" | "pending" | "completed" | "error" | "largeIcon">
+    classes: ClassNameMap<"circle" | "pending" | "completed" | "error" | "largeIcon">,
+
+    qualityFilters: { algorithm: string; threshold: string },
+    onQualityFilterChange: (value: Maybe<string>, filterAttribute: string) => void
 ): WizardStep[] {
     const sectionSteps = _(analysis.sections)
         .map((section): Maybe<WizardStep & { id: string }> => {
@@ -107,6 +112,8 @@ function buildStepsFromSections(
                         section={section}
                         title={section.description || section.name}
                         updateAnalysis={updateAnalysis}
+                        qualityFilters={qualityFilters}
+                        updateQualityFilters={onQualityFilterChange}
                     />
                 ),
             };
@@ -139,18 +146,45 @@ export const AnalysisPage: React.FC<PageProps> = React.memo(() => {
     const id = useParams<{ id: string }>();
     const [currentSection, setSection] = React.useState<string>("outliers");
     const history = useHistory();
+    const loading = useLoading();
+    const snackbar = useSnackbar();
     const classes = useStyles();
+    const [qualityFilters, setQualityFilters] = React.useState(defaultOutlierParams);
 
+    const onFilterChange = React.useCallback<
+        (value: Maybe<string>, filterAttribute: string) => void
+    >(
+        (value, filterAttribute) => {
+            setQualityFilters(prev => ({ ...prev, [filterAttribute]: value }));
+        },
+        [setQualityFilters]
+    );
     const onBack = () => {
         history.push("/");
     };
 
-    const { analysis, setAnalysis } = useAnalysisById(id);
+    const { analysis, setAnalysis, isLoading, error } = useAnalysisById(id);
+
+    useEffect(() => {
+        if (isLoading) loading.show();
+        else loading.hide();
+    }, [isLoading, loading]);
+
+    useEffect(() => {
+        if (error) snackbar.error(error);
+    }, [error, snackbar]);
 
     const analysisSteps = React.useMemo(() => {
         if (!analysis) return [];
-        return buildStepsFromSections(analysis, setAnalysis, currentSection, classes);
-    }, [analysis, setAnalysis, currentSection, classes]);
+        return buildStepsFromSections(
+            analysis,
+            setAnalysis,
+            currentSection,
+            classes,
+            qualityFilters,
+            onFilterChange
+        );
+    }, [analysis, setAnalysis, currentSection, classes, onFilterChange, qualityFilters]);
 
     const onStepChange = React.useCallback(
         (value: string) => {
@@ -195,6 +229,8 @@ export type PageStepProps = {
     section: QualityAnalysisSection;
     updateAnalysis: UpdateAnalysisState;
     title: string;
+    qualityFilters: { algorithm: string; threshold: string };
+    updateQualityFilters: (value: Maybe<string>, filterAttribute: string) => void;
 };
 
 export type UpdateAnalysisState = React.Dispatch<React.SetStateAction<Maybe<QualityAnalysis>>>;

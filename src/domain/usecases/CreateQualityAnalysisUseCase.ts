@@ -1,15 +1,17 @@
 import { Id } from "$/domain/entities/Ref";
 import { getUid } from "$/utils/uid";
-import { FutureData } from "../../data/api-futures";
-import { QualityAnalysis } from "../entities/QualityAnalysis";
-import { QualityAnalysisSection } from "../entities/QualityAnalysisSection";
-import { getErrors } from "../entities/generic/Errors";
-import { Future } from "../entities/generic/Future";
-import { AnalysisSectionRepository } from "../repositories/AnalysisSectionRepository";
-import { QualityAnalysisRepository } from "../repositories/QualityAnalysisRepository";
-import { SequentialRepository } from "../repositories/SequentialRepository";
-import { SettingsRepository } from "../repositories/SettingsRepository";
-import { UserRepository } from "../repositories/UserRepository";
+import { FutureData } from "$/data/api-futures";
+import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
+import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
+import { getErrors } from "$/domain/entities/generic/Errors";
+import { Future } from "$/domain/entities/generic/Future";
+import { AnalysisSectionRepository } from "$/domain/repositories/AnalysisSectionRepository";
+import { QualityAnalysisRepository } from "$/domain/repositories/QualityAnalysisRepository";
+import { SequentialRepository } from "$/domain/repositories/SequentialRepository";
+import { SettingsRepository } from "$/domain/repositories/SettingsRepository";
+import { UserRepository } from "$/domain/repositories/UserRepository";
+
+const previousYear = (new Date().getFullYear() - 1).toString();
 
 export class CreateQualityAnalysisUseCase {
     constructor(
@@ -33,7 +35,7 @@ export class CreateQualityAnalysisUseCase {
             );
 
             return QualityAnalysis.build({
-                endDate: defaultSettings.endDate,
+                endDate: previousYear,
                 id: getUid(`quality-analysis_${new Date().getTime()}`),
                 module: options.qualityAnalysis.module,
                 name: qualityAnalysisName,
@@ -43,7 +45,7 @@ export class CreateQualityAnalysisUseCase {
                         status: QualityAnalysisSection.getInitialStatus(),
                     });
                 }),
-                startDate: defaultSettings.startDate,
+                startDate: previousYear,
                 status: "In Progress",
                 lastModification: "",
                 countriesAnalysis: defaultSettings.countryIds,

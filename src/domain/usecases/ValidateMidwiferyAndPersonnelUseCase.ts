@@ -92,17 +92,21 @@ export class ValidateMidwiferyAndPersonnelUseCase {
         analysis: QualityAnalysis,
         options: ValidateMidwiferyAndPersonnelOptions,
         totalIssues: number
-    ): Future<Error, QualityAnalysis> {
-        return this.issueUseCase.save(issues, analysis.id).flatMap(() => {
-            const analysisToUpdate = this.analysisUseCase.updateAnalysis(
-                analysis,
-                options.sectionId,
-                totalIssues
-            );
-            return this.analysisRepository.save([analysisToUpdate]).flatMap(() => {
-                return Future.success(analysisToUpdate);
+    ): FutureData<QualityAnalysis> {
+        return this.issueUseCase
+            .getRelatedIssues(issues, options.sectionId)
+            .flatMap(dismissedIssues => {
+                return this.issueUseCase.save(dismissedIssues, analysis.id).flatMap(() => {
+                    const analysisToUpdate = this.analysisUseCase.updateAnalysis(
+                        analysis,
+                        options.sectionId,
+                        totalIssues
+                    );
+                    return this.analysisRepository.save([analysisToUpdate]).flatMap(() => {
+                        return Future.success(analysisToUpdate);
+                    });
+                });
             });
-        });
     }
 
     private createIssues(
@@ -197,8 +201,8 @@ export class ValidateMidwiferyAndPersonnelUseCase {
             .flatMap(dataElementToCheck => {
                 const [nursing, midwifery] = dataElementToCheck;
                 if (!nursing || !midwifery) return [];
-                const personnelDe = dataElements.find(de => de.name.includes(nursing));
-                const midwiferyDe = dataElements.find(de => de.name.includes(midwifery));
+                const personnelDe = dataElements.find(de => de.originalName.includes(nursing));
+                const midwiferyDe = dataElements.find(de => de.originalName.includes(midwifery));
 
                 if (!personnelDe || !midwiferyDe) return [];
 
@@ -292,15 +296,7 @@ export class ValidateMidwiferyAndPersonnelUseCase {
         } else if (sectionDisaggregation.type === "key_occupations") {
             return [["2. Nursing Personnel", "3. Midwifery Personnel"]];
         } else {
-            return [
-                ["2 - Nursing Personnel", "3 - Midwifery personnel"],
-                ["2.1 - Nursing Professionals", "3.1 - Midwifery Professionals"],
-                [
-                    "2.2 - Nursing Associate Professionals",
-                    "3.2 - Midwifery Associate Professionals",
-                ],
-                ["2.3 - Nurses not further defined", "3.3 - Midwives not further defined"],
-            ];
+            return [["2 - Nursing Personnel", "3 - Midwifery personnel"]];
         }
     }
 
