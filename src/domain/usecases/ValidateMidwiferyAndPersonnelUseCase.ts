@@ -201,8 +201,8 @@ export class ValidateMidwiferyAndPersonnelUseCase {
             .flatMap(dataElementToCheck => {
                 const [nursing, midwifery] = dataElementToCheck;
                 if (!nursing || !midwifery) return [];
-                const personnelDe = dataElements.find(de => de.name.includes(nursing));
-                const midwiferyDe = dataElements.find(de => de.name.includes(midwifery));
+                const personnelDe = dataElements.find(de => de.originalName.includes(nursing));
+                const midwiferyDe = dataElements.find(de => de.originalName.includes(midwifery));
 
                 if (!personnelDe || !midwiferyDe) return [];
 

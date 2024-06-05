@@ -13,6 +13,8 @@ export class D2DataElement {
                 .get({
                     fields: {
                         id: true,
+                        formName: true,
+                        code: true,
                         displayFormName: true,
                         displayName: true,
                         displayShortName: true,
@@ -29,6 +31,8 @@ export class D2DataElement {
                     return d2Response.data.objects.map((d2DataElement): DataElement => {
                         return {
                             id: d2DataElement.id,
+                            code: d2DataElement.code,
+                            originalName: d2DataElement.formName,
                             name:
                                 d2DataElement.displayFormName ||
                                 d2DataElement.displayShortName ||

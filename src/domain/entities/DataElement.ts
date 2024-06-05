@@ -1,7 +1,8 @@
 import { Maybe } from "$/utils/ts-utils";
-import { NamedRef } from "./Ref";
+import { NamedCodeRef, NamedRef } from "./Ref";
 
-export type DataElement = NamedRef & {
+export type DataElement = NamedCodeRef & {
+    originalName: string;
     isNumber: boolean;
     disaggregation: Maybe<NamedRef & { options: NamedRef[] }>;
 };

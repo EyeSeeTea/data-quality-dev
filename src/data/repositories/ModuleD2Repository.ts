@@ -28,11 +28,14 @@ export class ModuleD2Repository implements ModuleRepository {
                     dataSetElements: {
                         dataElement: {
                             id: true,
+                            code: true,
+                            formName: true,
                             displayFormName: true,
                             valueType: true,
                             categoryCombo: {
                                 id: true,
                                 code: true,
+                                name: true,
                                 displayName: true,
                                 categories: {
                                     id: true,
@@ -79,6 +82,8 @@ export class ModuleD2Repository implements ModuleRepository {
                                 d2DataSetElement.dataElement.categoryCombo;
                             return {
                                 id: d2DataSetElement.dataElement.id,
+                                code: d2DataSetElement.dataElement.code,
+                                originalName: d2DataSetElement.dataElement.formName,
                                 name: d2DataSetElement.dataElement.displayFormName,
                                 isNumber:
                                     d2DataSetElement.dataElement.valueType === "NUMBER" ||
