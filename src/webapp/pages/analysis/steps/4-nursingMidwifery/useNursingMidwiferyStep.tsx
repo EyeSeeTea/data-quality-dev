@@ -5,6 +5,7 @@ import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 import { UpdateAnalysisState } from "$/webapp/pages/analysis/AnalysisPage";
 import { Maybe } from "$/utils/ts-utils";
+import _ from "$/domain/entities/generic/Collection";
 
 export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
     const { analysis, section, updateAnalysis } = props;
@@ -23,7 +24,12 @@ export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
                     text: item.name,
                 }));
                 setDisaggregations(selectedDisaggregations);
-                setSelectedDissagregations(selectedDisaggregations.map(item => item.value));
+                setSelectedDissagregations(
+                    _(selectedDisaggregations)
+                        .map(item => (item.text === "Total" ? item.value : undefined))
+                        .compact()
+                        .value()
+                );
             },
             error => {
                 setError(error.message);

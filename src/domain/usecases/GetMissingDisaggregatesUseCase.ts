@@ -360,15 +360,15 @@ export class GetMissingDisaggregatesUseCase {
         dataElements: DataElement[]
     ) {
         if (disaggregationSetting.type === "combos") {
-            return dataElements.filter(de => {
+            return dataElements.filter(dataElement => {
                 return (
-                    de.name.split(separator)[0] === disaggregationSetting.id &&
-                    de.disaggregation?.id === disaggregationSetting.disaggregationId
+                    dataElement.name.split(separator)[0] === disaggregationSetting.id &&
+                    dataElement.disaggregation?.id === disaggregationSetting.disaggregationId
                 );
             });
         } else {
-            return dataElements.filter(de => {
-                return de.disaggregation?.id === disaggregationSetting.id;
+            return dataElements.filter(dataElement => {
+                return dataElement.disaggregation?.id === disaggregationSetting.id;
             });
         }
     }
