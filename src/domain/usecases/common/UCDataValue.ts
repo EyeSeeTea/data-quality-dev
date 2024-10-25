@@ -10,13 +10,16 @@ export class UCDataValue {
     constructor(private dataValueRepository: DataValueRepository) {}
 
     get(countriesIds: Id[], moduleIds: Id[], periods: Period[]): FutureData<DataValue[]> {
+        const [startDate, endDate] = periods;
+        if (!startDate || !endDate) throw new Error("Invalid period");
+        const periodsToSearch = _.range(Number(startDate), Number(endDate) + 1);
         const $requests = _(countriesIds)
             .chunk(1)
             .map(countryIds => {
                 return this.dataValueRepository.get({
                     moduleIds: moduleIds,
                     countriesIds: countryIds,
-                    period: _(periods).uniq().value(),
+                    period: periodsToSearch.map(period => String(period)),
                 });
             })
             .value();
