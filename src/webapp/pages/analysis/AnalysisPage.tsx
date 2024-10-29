@@ -78,9 +78,7 @@ function StepIcon(props: {
 function buildStepsFromSections(
     analysis: QualityAnalysis,
     updateAnalysis: UpdateAnalysisState,
-    currentSection: Maybe<string>,
     classes: ClassNameMap<"circle" | "pending" | "completed" | "error" | "largeIcon">,
-
     qualityFilters: { algorithm: string; threshold: string },
     onQualityFilterChange: (value: Maybe<string>, filterAttribute: string) => void
 ): WizardStep[] {
@@ -123,7 +121,7 @@ function buildStepsFromSections(
 
     return [
         {
-            key: "Configuration",
+            key: "configuration",
             label: i18n.t("Configuration"),
             component: () => (
                 <ConfigurationStep updateAnalysis={updateAnalysis} analysis={analysis} />
@@ -179,12 +177,11 @@ export const AnalysisPage: React.FC<PageProps> = React.memo(() => {
         return buildStepsFromSections(
             analysis,
             setAnalysis,
-            currentSection,
             classes,
             qualityFilters,
             onFilterChange
         );
-    }, [analysis, setAnalysis, currentSection, classes, onFilterChange, qualityFilters]);
+    }, [analysis, setAnalysis, classes, onFilterChange, qualityFilters]);
 
     const onStepChange = React.useCallback(
         (value: string) => {
@@ -208,7 +205,7 @@ export const AnalysisPage: React.FC<PageProps> = React.memo(() => {
             <PageHeader title={`${analysis.name} - ${currentSection}`} onBackClick={onBack} />
             <Stepper
                 lastClickableStepIndex={analysisSteps.length}
-                initialStepKey={firstSectionName}
+                initialStepKey="configuration"
                 steps={analysisSteps}
                 onStepChange={onStepChange}
             />
