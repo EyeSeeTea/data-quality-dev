@@ -26,12 +26,28 @@ export class QualityAnalysis extends Struct<QualityAnalysisAttrs>() {
     static build(
         attrs: QualityAnalysisAttrs
     ): Either<ValidationError<QualityAnalysis>[], QualityAnalysis> {
-        const qualityAnalysis = new QualityAnalysis({
-            ...attrs,
-            name: attrs.name,
-        });
+        const qualityAnalysis = new QualityAnalysis({ ...attrs, name: attrs.name });
+        const errors: ValidationError<QualityAnalysis>[] = QualityAnalysis.getErrors(
+            qualityAnalysis,
+            { validateCountries: false }
+        );
+        return errors.length === 0 ? Either.success(qualityAnalysis) : Either.error(errors);
+    }
 
-        const errors: ValidationError<QualityAnalysis>[] = [
+    private static getErrors(
+        qualityAnalysis: QualityAnalysis,
+        options: { validateCountries: boolean }
+    ): ValidationError<QualityAnalysis>[] {
+        const countryProperty = options.validateCountries
+            ? [
+                  {
+                      property: "countriesAnalysis" as const,
+                      errors: validateRequired(qualityAnalysis.countriesAnalysis),
+                      value: qualityAnalysis.countriesAnalysis,
+                  },
+              ]
+            : [];
+        return [
             {
                 property: "name" as const,
                 errors: validateRequired(qualityAnalysis.name),
@@ -57,13 +73,19 @@ export class QualityAnalysis extends Struct<QualityAnalysisAttrs>() {
                 errors: validateRequired(qualityAnalysis.status),
                 value: qualityAnalysis.status,
             },
+            ...countryProperty,
         ].filter(validation => validation.errors.length > 0);
+    }
 
-        if (errors.length === 0) {
-            return Either.success(qualityAnalysis);
-        } else {
-            return Either.error(errors);
-        }
+    static updateConfiguration(
+        attrs: QualityAnalysisAttrs
+    ): Either<ValidationError<QualityAnalysis>[], QualityAnalysis> {
+        const qualityAnalysis = this.build(attrs).get();
+        const errors: ValidationError<QualityAnalysis>[] = QualityAnalysis.getErrors(
+            qualityAnalysis,
+            { validateCountries: true }
+        );
+        return errors.length === 0 ? Either.success(qualityAnalysis) : Either.error(errors);
     }
 
     static hasExecutedSections(qualityAnalysis: QualityAnalysis): boolean {
@@ -77,6 +99,7 @@ export class QualityAnalysis extends Struct<QualityAnalysisAttrs>() {
         const formattedDate = date.toISOString().replace(/[-:T.]/g, "_");
         return `${prefix} - ${formattedDate}`;
     }
+
     static isModuleTwo(qualityAnalysis: QualityAnalysis): boolean {
         return qualityAnalysis.module.code === MODULE_2_CODE;
     }

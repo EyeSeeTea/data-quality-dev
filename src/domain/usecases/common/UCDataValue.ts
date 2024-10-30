@@ -5,11 +5,15 @@ import { DataValue } from "$/domain/entities/DataValue";
 import { Id, Period } from "$/domain/entities/Ref";
 import { DataValueRepository } from "$/domain/repositories/DataValueRepository";
 import { Future } from "$/domain/entities/generic/Future";
+import i18n from "$/utils/i18n";
 
 export class UCDataValue {
     constructor(private dataValueRepository: DataValueRepository) {}
 
     get(countriesIds: Id[], moduleIds: Id[], periods: Period[]): FutureData<DataValue[]> {
+        if (countriesIds.length === 0)
+            throw new Error(i18n.t("Select at least one organisation unit"));
+
         const [startDate, endDate] = periods;
         if (!startDate || !endDate) throw new Error("Invalid period");
         const periodsToSearch = _.range(Number(startDate), Number(endDate) + 1);

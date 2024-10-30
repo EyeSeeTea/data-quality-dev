@@ -49,9 +49,7 @@ export class CreateQualityAnalysisUseCase {
                 status: "In Progress",
                 lastModification: "",
                 countriesAnalysis: defaultSettings.countryIds,
-                sequential: {
-                    value: `DQ-${sequential.value}`,
-                },
+                sequential: { value: `DQ-${sequential.value}` },
             }).match({
                 error: errors => {
                     const errorMessages = getErrors(errors);

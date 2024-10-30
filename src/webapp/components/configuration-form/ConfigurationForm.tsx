@@ -12,6 +12,7 @@ import _ from "$/domain/entities/generic/Collection";
 import { Country } from "$/domain/entities/Country";
 import styled from "styled-components";
 import { getDefaultModules } from "$/data/common/D2Module";
+import { Alert } from "@material-ui/lab";
 
 export function getIdFromCountriesPaths(paths: string[]): string[] {
     return _(paths)
@@ -60,11 +61,7 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
     }, [countries]);
 
     const modules = getDefaultModules(metadata);
-
-    const moduleItems = modules.map(module => ({
-        value: module.id,
-        text: module.name,
-    }));
+    const moduleItems = modules.map(module => ({ value: module.id, text: module.name }));
 
     const onFormSubmit = React.useCallback(
         (e: React.FormEvent<HTMLFormElement>) => {
@@ -111,6 +108,14 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
 
     return (
         <Form onSubmit={onFormSubmit}>
+            {selectedOrgUnits.length === 0 && (
+                <AlertContainer>
+                    <Alert severity="error">
+                        {i18n.t("Select at least one organisation unit")}
+                    </Alert>
+                </AlertContainer>
+            )}
+
             <FormControlsContainer>
                 <StyledTextField
                     inputRef={inputRef}
@@ -205,4 +210,8 @@ const OrgUnitContainer = styled.div<{ $disabled?: boolean }>`
 
 const ActionsContainer = styled.div`
     text-align: right;
+`;
+
+const AlertContainer = styled.div`
+    margin-block: 1em;
 `;
