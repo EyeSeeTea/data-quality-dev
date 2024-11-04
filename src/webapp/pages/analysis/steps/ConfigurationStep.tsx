@@ -11,12 +11,13 @@ import { UpdateAnalysisState } from "$/webapp/pages/analysis/AnalysisPage";
 export type ConfigurationStepProps = {
     analysis: QualityAnalysis;
     updateAnalysis: UpdateAnalysisState;
+    updateCountry: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const noop = () => {};
 
 export const ConfigurationStep: React.FC<ConfigurationStepProps> = React.memo(props => {
-    const { analysis, updateAnalysis } = props;
+    const { analysis, updateAnalysis, updateCountry } = props;
     const { saveQualityAnalysis } = useAnalysisMethods({
         onSuccess: noop,
         onRemove: noop,
@@ -37,7 +38,11 @@ export const ConfigurationStep: React.FC<ConfigurationStepProps> = React.memo(pr
             <TitleContainer>
                 <StyledTypography variant="h2">{i18n.t("Configuration")}</StyledTypography>
             </TitleContainer>
-            <ConfigurationForm initialData={analysis} onSave={onSave} />
+            <ConfigurationForm
+                updateCountry={updateCountry}
+                initialData={analysis}
+                onSave={onSave}
+            />
         </Container>
     );
 });

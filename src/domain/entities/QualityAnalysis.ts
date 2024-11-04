@@ -42,7 +42,10 @@ export class QualityAnalysis extends Struct<QualityAnalysisAttrs>() {
             ? [
                   {
                       property: "countriesAnalysis" as const,
-                      errors: validateRequired(qualityAnalysis.countriesAnalysis),
+                      errors: validateRequired(
+                          qualityAnalysis.countriesAnalysis,
+                          "country_validation"
+                      ),
                       value: qualityAnalysis.countriesAnalysis,
                   },
               ]

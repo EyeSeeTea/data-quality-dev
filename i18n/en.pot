@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-05-16T07:04:50.457Z\n"
-"PO-Revision-Date: 2024-05-16T07:04:50.458Z\n"
+"POT-Creation-Date: 2024-10-30T13:32:55.750Z\n"
+"PO-Revision-Date: 2024-10-30T13:32:55.750Z\n"
 
 msgid "ID"
 msgstr ""
@@ -54,6 +54,9 @@ msgid "Yes"
 msgstr ""
 
 msgid "No"
+msgstr ""
+
+msgid "Select at least one organisation unit"
 msgstr ""
 
 msgid "Cannot be blank: {{fieldName}}"

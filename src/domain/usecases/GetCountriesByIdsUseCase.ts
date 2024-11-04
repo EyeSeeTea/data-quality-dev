@@ -11,11 +11,6 @@ export class GetCountriesByIdsUseCase {
     execute(ids: Id[]): FutureData<Country[]> {
         if (ids.length === 0) return Future.success([]);
 
-        return this.countryRepository.getByIds(ids).map(countries => {
-            const excludeGlobal = countries.filter(
-                country => country.id !== this.config.organisationUnits.global.id
-            );
-            return excludeGlobal;
-        });
+        return this.countryRepository.getByIds(ids);
     }
 }

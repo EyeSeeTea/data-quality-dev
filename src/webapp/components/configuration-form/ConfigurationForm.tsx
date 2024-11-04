@@ -45,7 +45,7 @@ export function useCountries(props: UseCountriesProps) {
 }
 
 export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(props => {
-    const { initialData, onSave } = props;
+    const { initialData, onSave, updateCountry } = props;
     const { api, currentUser, metadata } = useAppContext();
     const { countries } = useCountries({ ids: initialData.countriesAnalysis });
     const [formData, setFormData] = React.useState<QualityAnalysis>(() => {
@@ -101,6 +101,7 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
 
     const onOrgUnitsChange = (value: Id[]) => {
         setSelectedOrgUnits(value);
+        updateCountry(value.length > 0);
     };
 
     const disableSave = QualityAnalysis.hasExecutedSections(formData);
@@ -177,6 +178,7 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
 type ConfigurationFormProps = {
     initialData: QualityAnalysis;
     onSave: (data: QualityAnalysis) => void;
+    updateCountry: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 type UseCountriesProps = { ids: Id[] };
