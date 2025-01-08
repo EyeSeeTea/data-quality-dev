@@ -4,6 +4,7 @@ import {
     D2TrackerEvent,
     D2Api,
     D2TrackerTrackedEntity,
+    TrackedEntitiesGetResponse,
 } from "$/types/d2-api";
 import {
     QualityAnalysisOptions,
@@ -35,7 +36,7 @@ import { D2OrgUnit } from "$/data/common/D2Country";
 import { getUid } from "$/utils/uid";
 import { DATA_QUALITY_NAMESPACE } from "$/domain/entities/Settings";
 import { getDefaultModules } from "$/data/common/D2Module";
-import { getProgramStageIndexById } from "$/data/common/utils";
+import { buildTrackerResponse, getProgramStageIndexById } from "$/data/common/utils";
 
 export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
     d2DataElement: D2DataElement;
@@ -67,8 +68,8 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
                 totalPages: true,
             })
         ).flatMap(d2Response => {
-            const instances = d2Response.instances;
-            const teiIds = _(d2Response.instances)
+            const instances = buildTrackerResponse(d2Response).instances;
+            const teiIds = _(instances)
                 .map(instance => instance.trackedEntity)
                 .compact()
                 .value();
@@ -240,10 +241,9 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
                 trackedEntity: qaIds.join(";"),
             })
         ).flatMap(d2Response => {
+            const instances = buildTrackerResponse(d2Response).instances;
             const qualityAnalysisToPost = qaIds.map(qaId => {
-                const existingTei = d2Response.instances.find(
-                    d2Tei => d2Tei.trackedEntity === qaId
-                );
+                const existingTei = instances.find(d2Tei => d2Tei.trackedEntity === qaId);
                 const qAnalysis = qualityAnalysis.find(qai => qai.id === qaId);
                 if (!qAnalysis) {
                     throw Error(`Cannot find qualityAnalysis: ${qaId}`);

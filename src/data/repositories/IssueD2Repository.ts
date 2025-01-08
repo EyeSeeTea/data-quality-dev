@@ -21,7 +21,11 @@ import { Maybe } from "$/utils/ts-utils";
 import { IssueAction } from "$/domain/entities/IssueAction";
 import { IssueStatus } from "$/domain/entities/IssueStatus";
 import { getDefaultModules } from "$/data/common/D2Module";
-import { getProgramStageIndexById } from "$/data/common/utils";
+import {
+    buildTrackerEventsResponse,
+    buildTrackerResponse,
+    getProgramStageIndexById,
+} from "$/data/common/utils";
 
 export class IssueD2Repository implements IssueRepository {
     d2DataElement: D2DataElement;
@@ -61,7 +65,7 @@ export class IssueD2Repository implements IssueRepository {
                 event: filters.id ? filters.id : undefined,
             })
         ).flatMap(d2Response => {
-            const instances = d2Response.instances;
+            const instances = buildTrackerEventsResponse(d2Response).instances;
             const orgUnitIds = this.getRelatedIdsFromDataValues(
                 instances,
                 this.getDataElementIdOrThrow("country")
@@ -100,7 +104,7 @@ export class IssueD2Repository implements IssueRepository {
                 event: id ? id : undefined,
             })
         ).flatMap(d2Response => {
-            const d2Event = d2Response.instances[0];
+            const d2Event = buildTrackerEventsResponse(d2Response).instances[0];
             if (!d2Event) return Future.error(new Error(`Cannot found event: ${id}`));
 
             const orgUnitIds = this.getRelatedIdsFromDataValues(
@@ -146,7 +150,8 @@ export class IssueD2Repository implements IssueRepository {
                 trackedEntity: analysisId,
             })
         ).flatMap(d2Response => {
-            const tei = d2Response.instances.find(tei => tei.trackedEntity === analysisId);
+            const instances = buildTrackerResponse(d2Response).instances;
+            const tei = instances.find(tei => tei.trackedEntity === analysisId);
             if (!tei) return Future.error(new Error(`Cannot found TEI: ${tei}`));
             const enrollment = _(tei.enrollments || []).first();
             if (!enrollment)
