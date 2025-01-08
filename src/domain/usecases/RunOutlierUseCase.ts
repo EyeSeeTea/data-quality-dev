@@ -34,7 +34,8 @@ export class RunOutlierUseCase {
                     analysis.startDate,
                     analysis.endDate,
                     analysis.countriesAnalysis,
-                    dataElements.map(dataElement => dataElement.id)
+                    dataElements.map(dataElement => dataElement.id),
+                    analysis.module.id
                 ).flatMap(outliers => {
                     return this.issueUseCase
                         .getTotalIssuesBySection(analysis, options.sectionId)
@@ -75,7 +76,8 @@ export class RunOutlierUseCase {
         startDate: string,
         endDate: string,
         countryIds: Id[],
-        dataElements: Id[]
+        dataElements: Id[],
+        moduleId: Id
     ): FutureData<Outlier[]> {
         const $requests = _(dataElements)
             .chunk(100)
@@ -85,7 +87,7 @@ export class RunOutlierUseCase {
                     countryIds: countryIds,
                     endDate: endDate,
                     startDate: startDate,
-                    moduleId: undefined,
+                    moduleId: moduleId,
                     threshold: options.threshold,
                     dataElementIds: dataElementsIds,
                 });
