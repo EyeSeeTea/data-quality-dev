@@ -4,7 +4,6 @@ import {
     D2TrackerEvent,
     D2Api,
     D2TrackerTrackedEntity,
-    TrackedEntitiesGetResponse,
 } from "$/types/d2-api";
 import {
     QualityAnalysisOptions,
