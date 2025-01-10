@@ -19,6 +19,7 @@ import _ from "$/domain/entities/generic/Collection";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 import { Maybe } from "$/utils/ts-utils";
 import { SummaryStep } from "./SummaryStep";
+import { getErrors } from "$/domain/entities/generic/Errors";
 
 const defaultOutlierParams = { algorithm: "Z_SCORE", threshold: "3" };
 
@@ -78,11 +79,10 @@ function StepIcon(props: {
 function buildStepsFromSections(
     analysis: QualityAnalysis,
     updateAnalysis: UpdateAnalysisState,
-    currentSection: Maybe<string>,
     classes: ClassNameMap<"circle" | "pending" | "completed" | "error" | "largeIcon">,
-
     qualityFilters: { algorithm: string; threshold: string },
-    onQualityFilterChange: (value: Maybe<string>, filterAttribute: string) => void
+    onQualityFilterChange: (value: Maybe<string>, filterAttribute: string) => void,
+    setCountrySelected: React.Dispatch<React.SetStateAction<boolean>>
 ): WizardStep[] {
     const sectionSteps = _(analysis.sections)
         .map((section): Maybe<WizardStep & { id: string }> => {
@@ -106,6 +106,7 @@ function buildStepsFromSections(
                 ),
                 key: section.name.toLowerCase(),
                 label: section.name,
+                props: { analysis: analysis },
                 component: () => (
                     <StepComponent
                         analysis={analysis}
@@ -123,10 +124,15 @@ function buildStepsFromSections(
 
     return [
         {
-            key: "Configuration",
+            key: "configuration",
             label: i18n.t("Configuration"),
+            props: { analysis },
             component: () => (
-                <ConfigurationStep updateAnalysis={updateAnalysis} analysis={analysis} />
+                <ConfigurationStep
+                    updateCountry={setCountrySelected}
+                    updateAnalysis={updateAnalysis}
+                    analysis={analysis}
+                />
             ),
             completed: false,
             icon: <SettingsIcon className={classes.largeIcon} />,
@@ -135,6 +141,7 @@ function buildStepsFromSections(
         {
             icon: <ListAltIcon className={classes.largeIcon} />,
             key: "Summary",
+            props: { analysis },
             label: i18n.t("Summary"),
             component: () => <SummaryStep analysis={analysis} name={i18n.t("Summary")} />,
             completed: false,
@@ -164,6 +171,7 @@ export const AnalysisPage: React.FC<PageProps> = React.memo(() => {
     };
 
     const { analysis, setAnalysis, isLoading, error } = useAnalysisById(id);
+    const [countrySelected, setCountrySelected] = React.useState(false);
 
     useEffect(() => {
         if (isLoading) loading.show();
@@ -179,12 +187,12 @@ export const AnalysisPage: React.FC<PageProps> = React.memo(() => {
         return buildStepsFromSections(
             analysis,
             setAnalysis,
-            currentSection,
             classes,
             qualityFilters,
-            onFilterChange
+            onFilterChange,
+            setCountrySelected
         );
-    }, [analysis, setAnalysis, currentSection, classes, onFilterChange, qualityFilters]);
+    }, [analysis, setAnalysis, classes, onFilterChange, qualityFilters, setCountrySelected]);
 
     const onStepChange = React.useCallback(
         (value: string) => {
@@ -193,6 +201,25 @@ export const AnalysisPage: React.FC<PageProps> = React.memo(() => {
             setSection(section?.name || value);
         },
         [analysis]
+    );
+
+    const validateAnalysis = React.useCallback(
+        async (currentStep: WizardStep) => {
+            if (!currentStep.props) return Promise.resolve([]);
+            const currentAnalysis = currentStep.props as { analysis: QualityAnalysis };
+            return QualityAnalysis.updateConfiguration(currentAnalysis.analysis).match({
+                success: () => {
+                    return Promise.resolve([]);
+                },
+                error: errors => {
+                    const errorMessage = countrySelected
+                        ? i18n.t("You must save the Analysis configuration before running any step")
+                        : getErrors(errors);
+                    return Promise.resolve([errorMessage]);
+                },
+            });
+        },
+        [countrySelected]
     );
 
     if (!analysis) return null;
@@ -208,9 +235,11 @@ export const AnalysisPage: React.FC<PageProps> = React.memo(() => {
             <PageHeader title={`${analysis.name} - ${currentSection}`} onBackClick={onBack} />
             <Stepper
                 lastClickableStepIndex={analysisSteps.length}
-                initialStepKey={firstSectionName}
+                initialStepKey="configuration"
                 steps={analysisSteps}
                 onStepChange={onStepChange}
+                onStepChangeRequest={validateAnalysis}
+                useSnackFeedback
             />
         </PageContainer>
     );

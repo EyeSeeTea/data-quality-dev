@@ -48,11 +48,6 @@ export class Settings extends Struct<SettingsAttrs>() {
                 errors: validateRequired(settings.startDate),
                 value: settings.startDate,
             },
-            {
-                property: "countryIds" as const,
-                errors: validateRequired(settings.countryIds),
-                value: settings.countryIds,
-            },
         ].filter(validation => validation.errors.length > 0);
 
         if (errors.length === 0) {
