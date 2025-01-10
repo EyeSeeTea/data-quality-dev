@@ -14,6 +14,7 @@ import { ValidationRuleGroupRepository } from "$/domain/repositories/ValidationR
 import { ValidationRuleGroup } from "$/domain/entities/ValidationRuleGroup";
 import { MetadataItem } from "$/domain/entities/MetadataItem";
 import { CountryRepository } from "$/domain/repositories/CountryRepository";
+import i18n from "$/utils/i18n";
 
 export class RunValidationsUseCase {
     private issueUseCase: UCIssue;
@@ -39,6 +40,8 @@ export class RunValidationsUseCase {
                 options.validationRuleGroupId
             ),
         }).flatMap(({ analysis, validationRuleGroup }) => {
+            if (analysis.countriesAnalysis.length === 0)
+                return Future.error(new Error(i18n.t("Select at least one organisation unit")));
             const checkAllCountries = this.isGlobalInCountries(analysis.countriesAnalysis);
             return this.getAllCountries(checkAllCountries, analysis).flatMap(countriesIds => {
                 return this.getValidationRuleAnalysis(analysis, countriesIds, options).flatMap(
