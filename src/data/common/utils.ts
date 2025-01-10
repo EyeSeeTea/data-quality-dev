@@ -16,13 +16,7 @@ export function buildTrackerResponse(
         trackedEntities?: TrackedEntitiesGetResponse["instances"];
     }
 ): TrackedEntitiesGetResponse {
-    if (!response.instances && response.trackedEntities) {
-        return { ...response, instances: response.trackedEntities };
-    } else if (!response.trackedEntities && response.instances) {
-        return response;
-    } else {
-        return response;
-    }
+    return { ...response, instances: response.instances || response.trackedEntities };
 }
 
 export function buildTrackerEventsResponse(
@@ -30,11 +24,5 @@ export function buildTrackerEventsResponse(
         events?: TrackerEventsResponse["instances"];
     }
 ): TrackerEventsResponse {
-    if (!response.instances && response.events) {
-        return { ...response, instances: response.events };
-    } else if (!response.events && response.instances) {
-        return response;
-    } else {
-        return response;
-    }
+    return { ...response, instances: response.instances || response.events };
 }
