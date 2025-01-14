@@ -16,10 +16,12 @@ import { IssueRepository } from "$/domain/repositories/IssueRepository";
 import { UCIssue } from "./common/UCIssue";
 import { UCAnalysis } from "./common/UCAnalysis";
 import i18n from "$/utils/i18n";
+import { UCDataValue } from "$/domain/usecases/common/UCDataValue";
 
 export class RunPractitionersValidationUseCase {
     issueUseCase: UCIssue;
     analysysUseCase: UCAnalysis;
+    private dataValueUseCase: UCDataValue;
 
     constructor(
         private analysisRepository: QualityAnalysisRepository,
@@ -29,6 +31,7 @@ export class RunPractitionersValidationUseCase {
     ) {
         this.analysysUseCase = new UCAnalysis(this.analysisRepository);
         this.issueUseCase = new UCIssue(this.issueRepository);
+        this.dataValueUseCase = new UCDataValue(this.dataValueRepository);
     }
 
     execute(options: PractitionersValidationOptions): FutureData<QualityAnalysis> {
@@ -346,20 +349,11 @@ export class RunPractitionersValidationUseCase {
     }
 
     private getDataValues(qualityAnalysis: QualityAnalysis): FutureData<DataValue[]> {
-        const $requests = _(qualityAnalysis.countriesAnalysis)
-            .chunk(1)
-            .map(countryIds => {
-                return this.dataValueRepository.get({
-                    moduleIds: [qualityAnalysis.module.id],
-                    countriesIds: countryIds,
-                    period: _([qualityAnalysis.startDate, qualityAnalysis.endDate]).uniq().value(),
-                });
-            })
-            .value();
-
-        return Future.sequential($requests).flatMap(result => {
-            return Future.success(_(result).flatten().value());
-        });
+        return this.dataValueUseCase.get(
+            qualityAnalysis.countriesAnalysis,
+            [qualityAnalysis.module.id],
+            [qualityAnalysis.startDate, qualityAnalysis.endDate]
+        );
     }
 
     private getDataElementsByDisaggregationIds(

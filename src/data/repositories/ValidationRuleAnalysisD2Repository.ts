@@ -9,11 +9,14 @@ import {
 import { ValidationRule } from "$/domain/entities/ValidationRuleGroup";
 import _ from "$/domain/entities/generic/Collection";
 import { Future } from "$/domain/entities/generic/Future";
+import i18n from "$/utils/i18n";
 
 export class ValidationRuleAnalysisD2Repository implements ValidationRuleAnalysisRepository {
     constructor(private api: D2Api) {}
 
     get(options: ValidationRuleOptions): FutureData<ValidationRuleAnalysis[]> {
+        if (!options.countryId)
+            return Future.error(new Error(i18n.t("Select at least one organisation unit")));
         return apiToFuture(
             this.api.request<D2ValidationRuleAnalysis[]>({
                 method: "post",
