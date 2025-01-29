@@ -154,7 +154,7 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
                     onChange={onOrgUnitsChange}
                     selected={selectedOrgUnits}
                     levels={[1, 2, 3]}
-                    selectableLevels={[1, 2, 3]}
+                    selectableLevels={[2, 3]}
                     rootIds={currentUser.countries.map(country => country.id)}
                     withElevation={false}
                 />
