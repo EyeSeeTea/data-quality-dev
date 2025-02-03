@@ -60,7 +60,10 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
                 program: this.getIdOrThrow(this.metadata.programs.qualityIssues?.id),
                 page: options.pagination.page,
                 pageSize: options.pagination.pageSize,
-                trackedEntity: options.filters.ids ? options.filters.ids.join(";") : undefined,
+                // TODO: Update d2-api to support para "trackedEntities" since "trackedEntity"
+                // is deprecated
+                // @ts-ignore
+                trackedEntities: options.filters.ids ? options.filters.ids.join(";") : undefined,
                 attribute: this.buildFilters(options.filters)?.join(",") || undefined,
                 // @ts-ignore
                 order: this.buildOrder(options.sorting) || undefined,
