@@ -17,12 +17,10 @@ export class UCIssue {
 
     save(issues: QualityAnalysisIssue[], qualityAnalysisId: Id): FutureData<void> {
         if (issues.length === 0) return Future.success(undefined);
-        const concurrencyRequest = 10;
-        const $requests = Future.parallel(
+        const $requests = Future.sequential(
             _(issues)
                 .map(issue => this.issueRepository.create(issue, qualityAnalysisId))
-                .value(),
-            { concurrency: concurrencyRequest }
+                .value()
         );
 
         return $requests.flatMap(() => {
