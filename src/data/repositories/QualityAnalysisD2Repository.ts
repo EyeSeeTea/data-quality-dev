@@ -64,7 +64,7 @@ export class QualityAnalysisD2Repository implements QualityAnalysisRepository {
                 // is deprecated
                 // @ts-ignore
                 trackedEntities: options.filters.ids ? options.filters.ids.join(";") : undefined,
-                attribute: this.buildFilters(options.filters)?.join(",") || undefined,
+                filter: this.buildFilters(options.filters)?.join(",") || undefined,
                 // @ts-ignore
                 order: this.buildOrder(options.sorting) || undefined,
                 totalPages: true,
