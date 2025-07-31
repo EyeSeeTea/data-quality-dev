@@ -12,7 +12,7 @@ type UseManualStepProps = {
     updateAnalysis: UpdateAnalysisState;
 };
 
-export function useManualStep(props: UseManualStepProps) {
+export function useManualIssuesStep(props: UseManualStepProps) {
     const { analysis, section, updateAnalysis } = props;
 
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -35,8 +35,9 @@ export function useManualStep(props: UseManualStepProps) {
                 closeAddIssueDialog();
             },
             onClose: closeAddIssueDialog,
+            analysis: analysis,
         });
-    }, [onAddIssues, closeAddIssueDialog]);
+    }, [onAddIssues, closeAddIssueDialog, analysis]);
 
     return {
         isLoading,

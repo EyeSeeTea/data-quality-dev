@@ -2,16 +2,16 @@ import React from "react";
 
 import { UserFeedbackContainer } from "$/webapp/components/user-feedback-container/UserFeedbackContainer";
 import { StepAnalysis } from "$/webapp/pages/analysis/steps/StepAnalysis";
-import { useManualStep } from "$/webapp/pages/analysis/steps/6-manual/useManualStep";
+import { useManualIssuesStep } from "$/webapp/pages/analysis/steps/6-manual-issues/useManualIssuesStep";
 import { PageStepProps } from "$/webapp/pages/analysis/AnalysisPage";
 import i18n from "$/utils/i18n";
 import { AddIssueDialog } from "$/webapp/components/add-issue-dialog/AddIssueDialog";
 
-export const ManualStep: React.FC<PageStepProps> = props => {
+export const ManualIssuesStep: React.FC<PageStepProps> = props => {
     const { analysis, section, title, updateAnalysis } = props;
 
     const { isLoading, error, reload, openAddIssueDialog, addIssueDialogProps, onAddIssues } =
-        useManualStep({ analysis, section, updateAnalysis });
+        useManualIssuesStep({ analysis, section, updateAnalysis });
     return (
         <UserFeedbackContainer isLoading={isLoading} error={error}>
             {addIssueDialogProps && <AddIssueDialog {...addIssueDialogProps} />}
