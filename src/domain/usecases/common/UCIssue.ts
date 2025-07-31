@@ -11,6 +11,7 @@ import { RowsPaginated } from "$/domain/entities/Pagination";
 import { IssueAction } from "$/domain/entities/IssueAction";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 import { DismissedAnalysis } from "$/domain/entities/DismissedAnalysis";
+import { Maybe } from "$/utils/ts-utils";
 
 export class UCIssue {
     constructor(private issueRepository: IssueRepository) {}
@@ -43,9 +44,13 @@ export class UCIssue {
             number: issueNumber,
             azureUrl: "",
             period: period,
-            country: { id: countryId, name: "", path: "", writeAccess: false },
+            country: countryId
+                ? { id: countryId, name: "", path: "", writeAccess: false }
+                : undefined,
             dataElement: dataElementId ? { id: dataElementId, name: "" } : undefined,
-            categoryOption: { id: categoryOptionComboId, name: "" },
+            categoryOption: categoryOptionComboId
+                ? { id: categoryOptionComboId, name: "" }
+                : undefined,
             description: description,
             followUp: false,
             status: IssueStatus.create({
@@ -172,9 +177,9 @@ export class UCIssue {
 }
 
 type DefaultIssue = {
-    categoryOptionComboId: Id;
-    countryId: Id;
-    dataElementId: Id;
+    categoryOptionComboId: Maybe<Id>;
+    countryId: Maybe<Id>;
+    dataElementId: Maybe<Id>;
     description: string;
     issueNumber: string;
     period: Period;
