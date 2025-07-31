@@ -4,6 +4,7 @@ import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 import { UpdateAnalysisState } from "$/webapp/pages/analysis/AnalysisPage";
 import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
+import { AddIssueDialogProps } from "$/webapp/components/add-issue-dialog/AddIssueDialog";
 
 type UseManualStepProps = {
     analysis: QualityAnalysis;
@@ -17,15 +18,25 @@ export function useManualStep(props: UseManualStepProps) {
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const [error, setError] = React.useState<Maybe<string>>(undefined);
     const [reload, refreshReload] = React.useState(0);
-    const [addIssueDialogProps, setAddIssueDialogProps] = React.useState();
-
-    const openAddIssueDialog = React.useCallback(() => {
-        // setAddIssueDialogProps()
-    }, []);
+    const [addIssueDialogProps, setAddIssueDialogProps] = React.useState<AddIssueDialogProps>();
 
     const onAddIssues = React.useCallback((issues: QualityAnalysisIssue[]) => {
         console.log(issues);
     }, []);
+
+    const closeAddIssueDialog = React.useCallback(() => {
+        setAddIssueDialogProps(undefined);
+    }, []);
+
+    const openAddIssueDialog = React.useCallback(() => {
+        setAddIssueDialogProps({
+            onAddIssue: (issues: QualityAnalysisIssue[]) => {
+                onAddIssues(issues);
+                closeAddIssueDialog();
+            },
+            onClose: closeAddIssueDialog,
+        });
+    }, [onAddIssues, closeAddIssueDialog]);
 
     return {
         isLoading,
