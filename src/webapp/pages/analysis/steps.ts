@@ -3,6 +3,7 @@ import { DisaggregatesStep } from "./steps/2-disaggregates/DisaggregatesStep";
 import { NursingMidwiferyStep } from "./steps/4-nursingMidwifery/NursingMidwiferyStep";
 import { OutliersStep } from "./steps/1-outliers/OutliersStep";
 import { ValidationStep } from "./steps/5-validation/ValidationStep";
+import { ManualStep } from "$/webapp/pages/analysis/steps/6-manual/ManualStep";
 
 const sectionsComponents = [
     {
@@ -24,6 +25,10 @@ const sectionsComponents = [
     {
         name: "Validation",
         component: ValidationStep,
+    },
+    {
+        name: "Manual",
+        component: ManualStep,
     },
 ];
 
