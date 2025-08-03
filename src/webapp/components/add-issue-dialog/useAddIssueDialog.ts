@@ -1,29 +1,43 @@
 import React from "react";
+import { useSnackbar } from "@eyeseetea/d2-ui-components";
 
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { Id } from "$/domain/entities/Ref";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
-import { useSnackbar } from "@eyeseetea/d2-ui-components";
 import { DataElement } from "$/domain/entities/DataElement";
 import _ from "$/domain/entities/generic/Collection";
 import { Maybe } from "$/utils/ts-utils";
+import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
+import { IssueTemplate } from "$/domain/usecases/CreateIssueUseCase";
+import { getIdFromCountriesPaths } from "$/webapp/components/configuration-form/ConfigurationForm";
 
 type UseAddIssueDialogProps = {
     analysis: QualityAnalysis;
+    onAddIssue: (issues: QualityAnalysisIssue[]) => void;
 };
 
 export function useAddIssueDialog(props: UseAddIssueDialogProps) {
-    const { analysis } = props;
+    const { analysis, onAddIssue } = props;
     const { compositionRoot } = useAppContext();
     const snackBar = useSnackbar();
 
     const [addIssueForm, updateAddIssueForm] = React.useState<AddIssueForm>({
-        orgUnits: [],
+        orgUnitPaths: [],
         periods: [],
-        dataElement: "",
-        categoryOptions: [],
+        dataElementId: undefined,
+        categoryOptionIds: [],
+        description: undefined,
     });
     const [dataElements, setDataElements] = React.useState<DataElement[]>([]);
+
+    const issues = React.useMemo(
+        () =>
+            buildAllIssues({
+                ...addIssueForm,
+                orgUnitIds: getIdFromCountriesPaths(addIssueForm.orgUnitPaths),
+            }),
+        [addIssueForm]
+    );
 
     const dataElementOptions = React.useMemo(
         () =>
@@ -38,10 +52,10 @@ export function useAddIssueDialog(props: UseAddIssueDialogProps) {
         [dataElements]
     );
     const categoryOptionOptions = React.useMemo(() => {
-        if (addIssueForm.dataElement) {
+        if (addIssueForm.dataElementId) {
             return (
                 dataElementsMap
-                    .get(addIssueForm.dataElement)
+                    .get(addIssueForm.dataElementId)
                     ?.disaggregation?.options.map(({ id, name }) => ({ text: name, value: id })) ??
                 []
             );
@@ -62,9 +76,15 @@ export function useAddIssueDialog(props: UseAddIssueDialogProps) {
         });
     }, [analysis]);
 
+    const onSave = React.useCallback(() => {
+        console.log(analysis, issues);
+        onAddIssue([]);
+    }, [onAddIssue, analysis, issues]);
+
     const updateForm = React.useCallback(
         (field: keyof AddIssueForm) => (value: Maybe<Id[]>) => {
-            const newValue = field === "dataElement" && value ? value[0] : value;
+            const newValue =
+                ["dataElementId", "description"].includes(field) && value ? value[0] : value;
             updateAddIssueForm(prev => ({
                 ...prev,
                 [field]: newValue,
@@ -79,7 +99,6 @@ export function useAddIssueDialog(props: UseAddIssueDialogProps) {
                 const module = modules[0];
                 if (module) {
                     setDataElements(module.dataElements);
-                    console.log(module);
                 }
             },
             err => {
@@ -94,12 +113,42 @@ export function useAddIssueDialog(props: UseAddIssueDialogProps) {
         dataElementOptions,
         categoryOptionOptions,
         periodOptions,
+        onSave,
+        issuesToAddCount: issues.length,
     };
 }
 
+function cartesianProduct<T>(arrays: T[][]): T[][] {
+    return arrays.reduce<T[][]>((acc, curr) => acc.flatMap(a => curr.map(c => [...a, c])), [[]]);
+}
+
+type BuildIssueProps = Omit<AddIssueForm, "orgUnitPaths"> & { orgUnitIds: Id[] };
+function buildAllIssues(props: BuildIssueProps): IssueTemplate[] {
+    const { orgUnitIds, periods, dataElementId, categoryOptionIds, description } = props;
+
+    if (!orgUnitIds.length && !periods.length && !dataElementId && !description) {
+        return [];
+    }
+
+    const periodsList = periods.length > 0 ? periods : [""];
+    const categoryList = categoryOptionIds.length > 0 ? categoryOptionIds : [""];
+    const orgUnitList = orgUnitIds.length > 0 ? orgUnitIds : [""];
+
+    const product = cartesianProduct<string>([periodsList, categoryList, orgUnitList]);
+
+    return product.map(([period, categoryOption, orgUnit]) => ({
+        period,
+        categoryOptionComboId: categoryOption,
+        countryId: orgUnit,
+        description: description || "",
+        dataElementId: dataElementId,
+    }));
+}
+
 type AddIssueForm = {
-    orgUnits: Id[];
+    orgUnitPaths: Id[];
     periods: Id[];
-    dataElement: Maybe<Id>;
-    categoryOptions: Id[];
+    dataElementId: Maybe<Id>;
+    categoryOptionIds: Id[];
+    description: Maybe<string>;
 };

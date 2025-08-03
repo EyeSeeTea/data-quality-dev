@@ -182,6 +182,6 @@ type DefaultIssue = {
     dataElementId: Maybe<Id>;
     description: string;
     issueNumber: string;
-    period: Period;
+    period: Maybe<Period>;
     correlative: string;
 };

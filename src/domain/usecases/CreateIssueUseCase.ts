@@ -2,11 +2,20 @@ import { FutureData } from "$/data/api-futures";
 import { IssueRepository } from "$/domain/repositories/IssueRepository";
 import { UCIssue } from "$/domain/usecases/common/UCIssue";
 import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
-import { Id } from "$/domain/entities/Ref";
+import { Id, Period } from "$/domain/entities/Ref";
 import { Future } from "$/domain/entities/generic/Future";
 import { UCAnalysis } from "$/domain/usecases/common/UCAnalysis";
 import { QualityAnalysisRepository } from "$/domain/repositories/QualityAnalysisRepository";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
+import { Maybe } from "$/utils/ts-utils";
+
+export type IssueTemplate = {
+    categoryOptionComboId: Maybe<Id>;
+    countryId: Maybe<Id>;
+    dataElementId: Maybe<Id>;
+    description: string;
+    period: Maybe<Period>;
+};
 
 export class CreateIssueUseCase {
     private issueUseCase: UCIssue;
@@ -57,9 +66,9 @@ export class CreateIssueUseCase {
             const issueNumber = this.issueUseCase.generateIssueNumber(currentNumber, prefix);
             return this.issueUseCase.buildDefaultIssue(
                 {
-                    categoryOptionComboId: issue.categoryOption?.id,
-                    countryId: issue.country?.id,
-                    dataElementId: issue.dataElement?.id,
+                    categoryOptionComboId: issue.categoryOptionComboId,
+                    countryId: issue.countryId,
+                    dataElementId: issue.dataElementId,
                     period: issue.period,
                     description: issue.description,
                     correlative: String(currentNumber),
@@ -72,7 +81,7 @@ export class CreateIssueUseCase {
 }
 
 type CreateIssueUseCaseOptions = {
-    issues: QualityAnalysisIssue[];
+    issues: IssueTemplate[];
     qualityAnalysisId: Id;
     sectionId: Id;
 };

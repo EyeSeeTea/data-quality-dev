@@ -205,7 +205,7 @@ export class IssueD2Repository implements IssueRepository {
                         },
                         {
                             id: this.metadata.dataElements.period.id,
-                            value: issue.period,
+                            value: issue.period || "",
                         },
                         {
                             id: this.metadata.dataElements.categoryOption.id,

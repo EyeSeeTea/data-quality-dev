@@ -6,12 +6,14 @@ import {
     OrgUnitsSelector,
 } from "@eyeseetea/d2-ui-components";
 import styled from "styled-components";
+import { TextField } from "@material-ui/core";
 
 import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { useAddIssueDialog } from "$/webapp/components/add-issue-dialog/useAddIssueDialog";
 import { Maybe } from "$/utils/ts-utils";
+import i18n from "$/utils/i18n";
 
 export type AddIssueDialogProps = {
     onAddIssue: (issues: QualityAnalysisIssue[]) => void;
@@ -22,60 +24,84 @@ export type AddIssueDialogProps = {
 export const AddIssueDialog: React.FC<AddIssueDialogProps> = props => {
     const { onAddIssue, onClose, analysis } = props;
 
-    console.log(analysis);
-
     const { api, currentUser } = useAppContext();
-    const { addIssueForm, updateForm, dataElementOptions, categoryOptionOptions, periodOptions } =
-        useAddIssueDialog({ analysis });
-
-    const onSave = React.useCallback(() => {
-        onAddIssue([]);
-    }, [onAddIssue]);
+    const {
+        addIssueForm,
+        updateForm,
+        dataElementOptions,
+        categoryOptionOptions,
+        periodOptions,
+        onSave,
+        issuesToAddCount,
+    } = useAddIssueDialog({ analysis, onAddIssue });
 
     const onUpdateDataElement = React.useCallback(
-        (value: Maybe<string>) => updateForm("dataElement")(value !== undefined ? [value] : value),
+        (value: Maybe<string>) =>
+            updateForm("dataElementId")(value !== undefined ? [value] : value),
         [updateForm]
     );
 
-    const disableCategoryOptions = !addIssueForm.dataElement;
+    const onUpdateDescription = React.useCallback(
+        (ev: React.ChangeEvent<HTMLInputElement>) => updateForm("description")([ev.target.value]),
+        [updateForm]
+    );
+
+    const disableCategoryOptions = !addIssueForm.dataElementId;
+    const disableSave = issuesToAddCount <= 0 || !addIssueForm.description;
+    const saveText = i18n.t("Add Issues ({{count}})", { count: issuesToAddCount });
 
     return (
         <ConfirmationDialog
             isOpen
-            title={"Add Issue"}
+            title={i18n.t("Add Issue")}
+            saveText={saveText}
             onSave={onSave}
             onCancel={onClose}
             maxWidth={"lg"}
             fullWidth
+            disableSave={disableSave}
         >
             <FormControlsContainer>
-                <FormWrapper>
-                    <Dropdown
-                        items={dataElementOptions}
-                        onChange={onUpdateDataElement}
-                        value={addIssueForm.dataElement}
-                        label={"Data Element"}
-                    />
-                    <Field $disabled={disableCategoryOptions}>
-                        <MultipleDropdown
-                            items={categoryOptionOptions}
-                            onChange={updateForm("categoryOptions")}
-                            values={addIssueForm.categoryOptions}
-                            label={"Category Options"}
-                        />
-                    </Field>
-                    <MultipleDropdown
+                <StyledTextField
+                    value={addIssueForm.description}
+                    onChange={onUpdateDescription}
+                    label={i18n.t("Description")}
+                    multiline={true}
+                    minRows={3}
+                    variant="outlined"
+                    required
+                />
+                <FieldWrapper>
+                    <StyledMultipleDropdown
                         items={periodOptions}
                         onChange={updateForm("periods")}
                         values={addIssueForm.periods}
-                        label={"Periods"}
+                        label={i18n.t("Periods")}
                     />
-                </FormWrapper>
+                </FieldWrapper>
+                <FieldWrapper>
+                    <StyledDropdown
+                        items={dataElementOptions}
+                        onChange={onUpdateDataElement}
+                        value={addIssueForm.dataElementId}
+                        label={i18n.t("Data Element")}
+                    />
+                </FieldWrapper>
+                <FieldWrapper>
+                    <Field $disabled={disableCategoryOptions}>
+                        <StyledMultipleDropdown
+                            items={categoryOptionOptions}
+                            onChange={updateForm("categoryOptionIds")}
+                            values={addIssueForm.categoryOptionIds}
+                            label={i18n.t("Category Options")}
+                        />
+                    </Field>
+                </FieldWrapper>
             </FormControlsContainer>
             <OrgUnitsSelector
                 api={api}
-                onChange={updateForm("orgUnits")}
-                selected={addIssueForm.orgUnits}
+                onChange={updateForm("orgUnitPaths")}
+                selected={addIssueForm.orgUnitPaths}
                 levels={[1, 2, 3]}
                 selectableLevels={[2, 3]}
                 rootIds={currentUser.countries.map(country => country.id)}
@@ -90,18 +116,30 @@ const FormControlsContainer = styled.div`
     display: flex;
     gap: 1.5rem;
     width: 100%;
-    align-items: center;
-    justify-content: space-between;
     margin-block-end: 1.25rem;
     flex-wrap: wrap;
+    flex-direction: column;
 `;
 
-const FormWrapper = styled.div`
+const FieldWrapper = styled.div`
     display: flex;
     gap: 1rem;
+`;
+
+const StyledMultipleDropdown = styled(MultipleDropdown)`
+    width: 50%;
+`;
+
+const StyledDropdown = styled(Dropdown)`
+    width: 50%;
+`;
+
+const StyledTextField = styled(TextField)`
+    width: 100%;
 `;
 
 const Field = styled.div<{ $disabled?: boolean }>`
     pointer-events: ${props => (props.$disabled ? "none" : "auto")};
     opacity: ${props => (props.$disabled ? "0.7" : "1")};
+    width: 100%;
 `;
