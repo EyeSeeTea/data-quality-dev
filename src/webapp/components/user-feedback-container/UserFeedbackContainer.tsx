@@ -8,17 +8,19 @@ export type UserFeedbackProps = {
     isLoading: boolean;
     error: Maybe<string>;
     children: ReactNode;
+    loadingText?: string;
 };
 
 export const UserFeedbackContainer: React.FC<UserFeedbackProps> = React.memo(props => {
     const { isLoading, error, children } = props;
+    const loadingText = props.loadingText || i18n.t("Running analysis...");
     const loading = useLoading();
     const snackbar = useSnackbar();
 
     React.useEffect(() => {
-        if (isLoading) loading.show(isLoading, i18n.t("Running analysis..."));
+        if (isLoading) loading.show(isLoading, loadingText);
         else loading.hide();
-    }, [isLoading, loading]);
+    }, [isLoading, loading, loadingText]);
 
     React.useEffect(() => {
         if (error) snackbar.error(error);
