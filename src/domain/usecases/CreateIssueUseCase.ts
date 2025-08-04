@@ -29,15 +29,26 @@ export class CreateIssueUseCase {
         this.analysisUseCase = new UCAnalysis(this.analysisRepository);
     }
 
-    execute(options: CreateIssueUseCaseOptions): FutureData<void> {
+    execute(options: CreateIssueUseCaseOptions): FutureData<Maybe<QualityAnalysis>> {
         const { qualityAnalysisId, sectionId, issues } = options;
 
-        return this.fetchAnalysisAndTotalIssues(qualityAnalysisId, sectionId)
-            .map(analysisAndTotalIssues =>
-                this.buildIssues({ issues, sectionId, ...analysisAndTotalIssues })
-            )
-            .flatMap(issuesToCreate => this.issueUseCase.save(issuesToCreate, qualityAnalysisId))
-            .flatMap(() => Future.success(undefined));
+        if (issues.length <= 0) return Future.success(undefined);
+
+        return this.fetchAnalysisAndTotalIssues(qualityAnalysisId, sectionId).flatMap(
+            analysisAndTotalIssues => {
+                const issuesToCreate = this.buildIssues({
+                    issues,
+                    sectionId,
+                    ...analysisAndTotalIssues,
+                });
+                const analysisUpdate = this.analysisUseCase.updateAnalysis(
+                    analysisAndTotalIssues.analysis,
+                    sectionId,
+                    issues.length + analysisAndTotalIssues.totalIssues
+                );
+                return this.saveIssuesAndUpdateAnalysis(issuesToCreate, analysisUpdate);
+            }
+        );
     }
 
     private fetchAnalysisAndTotalIssues(
@@ -77,6 +88,15 @@ export class CreateIssueUseCase {
                 sectionId
             );
         });
+    }
+
+    private saveIssuesAndUpdateAnalysis(
+        issues: QualityAnalysisIssue[],
+        analysis: QualityAnalysis
+    ): FutureData<QualityAnalysis> {
+        return this.issueUseCase
+            .save(issues, analysis.id)
+            .flatMap(() => this.analysisRepository.save([analysis]).map(() => analysis));
     }
 }
 

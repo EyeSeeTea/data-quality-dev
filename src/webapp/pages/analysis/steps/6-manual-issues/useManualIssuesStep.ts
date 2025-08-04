@@ -3,8 +3,9 @@ import { Maybe } from "$/utils/ts-utils";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
 import { UpdateAnalysisState } from "$/webapp/pages/analysis/AnalysisPage";
-import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
 import { AddIssueDialogProps } from "$/webapp/components/add-issue-dialog/AddIssueDialog";
+import { IssueTemplate } from "$/domain/usecases/CreateIssueUseCase";
+import { useAppContext } from "$/webapp/contexts/app-context";
 
 type UseManualStepProps = {
     analysis: QualityAnalysis;
@@ -14,15 +15,36 @@ type UseManualStepProps = {
 
 export function useManualIssuesStep(props: UseManualStepProps) {
     const { analysis, section, updateAnalysis } = props;
+    const { compositionRoot } = useAppContext();
 
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const [error, setError] = React.useState<Maybe<string>>(undefined);
-    const [reload, refreshReload] = React.useState(0);
     const [addIssueDialogProps, setAddIssueDialogProps] = React.useState<AddIssueDialogProps>();
 
-    const onAddIssues = React.useCallback((issues: QualityAnalysisIssue[]) => {
-        console.log(issues);
-    }, []);
+    const onAddIssues = React.useCallback(
+        (issues: IssueTemplate[]) => {
+            setIsLoading(true);
+            compositionRoot.issues.create
+                .execute({
+                    qualityAnalysisId: analysis.id,
+                    issues: issues,
+                    sectionId: section.id,
+                })
+                .run(
+                    analysis => {
+                        if (analysis) {
+                            updateAnalysis(analysis);
+                        }
+                        setIsLoading(false);
+                    },
+                    err => {
+                        setError(err.message);
+                        setIsLoading(false);
+                    }
+                );
+        },
+        [compositionRoot, section, analysis, updateAnalysis]
+    );
 
     const closeAddIssueDialog = React.useCallback(() => {
         setAddIssueDialogProps(undefined);
@@ -30,7 +52,7 @@ export function useManualIssuesStep(props: UseManualStepProps) {
 
     const openAddIssueDialog = React.useCallback(() => {
         setAddIssueDialogProps({
-            onAddIssue: (issues: QualityAnalysisIssue[]) => {
+            onAddIssue: (issues: IssueTemplate[]) => {
                 onAddIssues(issues);
                 closeAddIssueDialog();
             },
@@ -42,7 +64,6 @@ export function useManualIssuesStep(props: UseManualStepProps) {
     return {
         isLoading,
         error,
-        reload,
         addIssueDialogProps,
         openAddIssueDialog,
         onAddIssues,

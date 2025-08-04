@@ -8,15 +8,15 @@ import {
 import styled from "styled-components";
 import { TextField } from "@material-ui/core";
 
-import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
 import { useAppContext } from "$/webapp/contexts/app-context";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { useAddIssueDialog } from "$/webapp/components/add-issue-dialog/useAddIssueDialog";
 import { Maybe } from "$/utils/ts-utils";
 import i18n from "$/utils/i18n";
+import { IssueTemplate } from "$/domain/usecases/CreateIssueUseCase";
 
 export type AddIssueDialogProps = {
-    onAddIssue: (issues: QualityAnalysisIssue[]) => void;
+    onAddIssue: (issues: IssueTemplate[]) => void;
     onClose: () => void;
     analysis: QualityAnalysis;
 };

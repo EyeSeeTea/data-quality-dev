@@ -10,8 +10,11 @@ import { AddIssueDialog } from "$/webapp/components/add-issue-dialog/AddIssueDia
 export const ManualIssuesStep: React.FC<PageStepProps> = props => {
     const { analysis, section, title, updateAnalysis } = props;
 
-    const { isLoading, error, reload, openAddIssueDialog, addIssueDialogProps, onAddIssues } =
-        useManualIssuesStep({ analysis, section, updateAnalysis });
+    const { isLoading, error, openAddIssueDialog, addIssueDialogProps } = useManualIssuesStep({
+        analysis,
+        section,
+        updateAnalysis,
+    });
     return (
         <UserFeedbackContainer isLoading={isLoading} error={error}>
             {addIssueDialogProps && <AddIssueDialog {...addIssueDialogProps} />}
@@ -19,7 +22,7 @@ export const ManualIssuesStep: React.FC<PageStepProps> = props => {
                 id={analysis.id}
                 section={section}
                 title={title}
-                reload={reload}
+                reload={0}
                 onRun={openAddIssueDialog}
                 allowRerun
                 runButtonText={i18n.t("New Issue")}

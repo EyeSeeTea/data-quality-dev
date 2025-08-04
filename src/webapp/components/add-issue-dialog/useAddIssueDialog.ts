@@ -7,13 +7,12 @@ import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { DataElement } from "$/domain/entities/DataElement";
 import _ from "$/domain/entities/generic/Collection";
 import { Maybe } from "$/utils/ts-utils";
-import { QualityAnalysisIssue } from "$/domain/entities/QualityAnalysisIssue";
 import { IssueTemplate } from "$/domain/usecases/CreateIssueUseCase";
 import { getIdFromCountriesPaths } from "$/webapp/components/configuration-form/ConfigurationForm";
 
 type UseAddIssueDialogProps = {
     analysis: QualityAnalysis;
-    onAddIssue: (issues: QualityAnalysisIssue[]) => void;
+    onAddIssue: (issues: IssueTemplate[]) => void;
 };
 
 export function useAddIssueDialog(props: UseAddIssueDialogProps) {
@@ -77,9 +76,8 @@ export function useAddIssueDialog(props: UseAddIssueDialogProps) {
     }, [analysis]);
 
     const onSave = React.useCallback(() => {
-        console.log(analysis, issues);
-        onAddIssue([]);
-    }, [onAddIssue, analysis, issues]);
+        onAddIssue(issues);
+    }, [onAddIssue, issues]);
 
     const updateForm = React.useCallback(
         (field: keyof AddIssueForm) => (value: Maybe<Id[]>) => {
