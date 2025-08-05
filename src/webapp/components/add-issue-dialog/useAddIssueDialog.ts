@@ -9,6 +9,7 @@ import _ from "$/domain/entities/generic/Collection";
 import { Maybe } from "$/utils/ts-utils";
 import { IssueTemplate } from "$/domain/usecases/CreateIssueUseCase";
 import { getIdFromCountriesPaths } from "$/webapp/components/configuration-form/ConfigurationForm";
+import { generatePeriodYearOptions } from "$/webapp/utils/form";
 
 type UseAddIssueDialogProps = {
     analysis: QualityAnalysis;
@@ -67,12 +68,8 @@ export function useAddIssueDialog(props: UseAddIssueDialogProps) {
         const { startDate, endDate } = analysis;
         const startYear = parseInt(startDate);
         const endYear = parseInt(endDate);
-        const yearCount = endYear - startYear + 1;
 
-        return Array.from({ length: yearCount }, (_, i) => {
-            const year = (startYear + i).toString();
-            return { value: year, text: year };
-        });
+        return generatePeriodYearOptions(startYear, endYear);
     }, [analysis]);
 
     const onSave = React.useCallback(() => {
