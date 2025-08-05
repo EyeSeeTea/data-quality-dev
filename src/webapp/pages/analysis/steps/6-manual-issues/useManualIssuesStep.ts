@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Maybe } from "$/utils/ts-utils";
 import { QualityAnalysis } from "$/domain/entities/QualityAnalysis";
 import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection";
