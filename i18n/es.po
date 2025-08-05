@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2024-11-04T15:12:23.322Z\n"
+"POT-Creation-Date: 2025-08-05T04:13:03.639Z\n"
 "PO-Revision-Date: 2018-10-25T09:02:35.143Z\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -66,6 +66,15 @@ msgid "No disaggregations selected"
 msgstr ""
 
 msgid "This analysis is not available for this module"
+msgstr ""
+
+msgid "Add Issue"
+msgstr ""
+
+msgid "Periods"
+msgstr ""
+
+msgid "Category Options"
 msgstr ""
 
 msgid "Open analysis"
@@ -134,9 +143,6 @@ msgid "Issue Number"
 msgstr ""
 
 msgid "Countries"
-msgstr ""
-
-msgid "Periods"
 msgstr ""
 
 msgid "Step"
@@ -224,6 +230,12 @@ msgid "The selected step is not available for the selected module"
 msgstr ""
 
 msgid "Validation Rule Group"
+msgstr ""
+
+msgid "New Issue"
+msgstr ""
+
+msgid "No Issues Found"
 msgstr ""
 
 msgid "Run"
