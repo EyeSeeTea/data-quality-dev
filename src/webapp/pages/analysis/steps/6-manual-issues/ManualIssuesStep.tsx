@@ -16,7 +16,11 @@ export const ManualIssuesStep: React.FC<PageStepProps> = props => {
         updateAnalysis,
     });
     return (
-        <UserFeedbackContainer isLoading={isLoading} error={error}>
+        <UserFeedbackContainer
+            isLoading={isLoading}
+            error={error}
+            loadingText={i18n.t("Adding issues...")}
+        >
             {addIssueDialogProps && <AddIssueDialog {...addIssueDialogProps} />}
             <StepAnalysis
                 id={analysis.id}
