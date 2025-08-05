@@ -171,7 +171,7 @@ export class UCIssue {
                 existingIssues: existingIssues,
                 newIssues: issues,
             });
-            return dimissedAnalysis.mergeDuplicates();
+            return dimissedAnalysis.inheritDismissedDuplicates();
         });
     }
 }
