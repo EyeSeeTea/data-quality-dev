@@ -26,7 +26,7 @@ export function useAddIssueDialog(props: UseAddIssueDialogProps) {
         periods: [],
         dataElementId: undefined,
         categoryOptionIds: [],
-        description: undefined,
+        description: "",
     });
     const [dataElements, setDataElements] = React.useState<DataElement[]>([]);
 
@@ -113,10 +113,6 @@ export function useAddIssueDialog(props: UseAddIssueDialogProps) {
     };
 }
 
-function cartesianProduct<T>(arrays: T[][]): T[][] {
-    return arrays.reduce<T[][]>((acc, curr) => acc.flatMap(a => curr.map(c => [...a, c])), [[]]);
-}
-
 type BuildIssueProps = Omit<AddIssueForm, "orgUnitPaths"> & { orgUnitIds: Id[] };
 function buildAllIssues(props: BuildIssueProps): IssueTemplate[] {
     const { orgUnitIds, periods, dataElementId, categoryOptionIds, description } = props;
@@ -129,13 +125,13 @@ function buildAllIssues(props: BuildIssueProps): IssueTemplate[] {
     const categoryList = categoryOptionIds.length > 0 ? categoryOptionIds : [""];
     const orgUnitList = orgUnitIds.length > 0 ? orgUnitIds : [""];
 
-    const product = cartesianProduct<string>([periodsList, categoryList, orgUnitList]);
+    const product = _([periodsList, categoryList, orgUnitList]).cartesian().value();
 
     return product.map(([period, categoryOption, orgUnit]) => ({
         period,
         categoryOptionComboId: categoryOption,
         countryId: orgUnit,
-        description: description || "",
+        description: description,
         dataElementId: dataElementId,
     }));
 }
@@ -145,5 +141,5 @@ type AddIssueForm = {
     periods: Id[];
     dataElementId: Maybe<Id>;
     categoryOptionIds: Id[];
-    description: Maybe<string>;
+    description: string;
 };

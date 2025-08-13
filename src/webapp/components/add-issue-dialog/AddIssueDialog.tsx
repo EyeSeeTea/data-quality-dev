@@ -14,6 +14,7 @@ import { useAddIssueDialog } from "$/webapp/components/add-issue-dialog/useAddIs
 import { Maybe } from "$/utils/ts-utils";
 import i18n from "$/utils/i18n";
 import { IssueTemplate } from "$/domain/usecases/CreateIssueUseCase";
+import { ORG_UNIT_LEVELS, ORG_UNIT_SELECTABLE_LEVELS } from "$/webapp/utils/form";
 
 export type AddIssueDialogProps = {
     onAddIssue: (issues: IssueTemplate[]) => void;
@@ -47,7 +48,7 @@ export const AddIssueDialog: React.FC<AddIssueDialogProps> = props => {
     );
 
     const disableCategoryOptions = !addIssueForm.dataElementId;
-    const disableSave = issuesToAddCount <= 0 || !addIssueForm.description;
+    const disableSave = issuesToAddCount <= 0 || !addIssueForm.description.trim();
     const saveText = i18n.t("Add Issues ({{count}})", { count: issuesToAddCount });
 
     return (
@@ -102,8 +103,8 @@ export const AddIssueDialog: React.FC<AddIssueDialogProps> = props => {
                 api={api}
                 onChange={updateForm("orgUnitPaths")}
                 selected={addIssueForm.orgUnitPaths}
-                levels={[1, 2, 3]}
-                selectableLevels={[2, 3]}
+                levels={ORG_UNIT_LEVELS}
+                selectableLevels={ORG_UNIT_SELECTABLE_LEVELS}
                 rootIds={currentUser.countries.map(country => country.id)}
                 withElevation={false}
                 selectableIds={analysis.countriesAnalysis}
