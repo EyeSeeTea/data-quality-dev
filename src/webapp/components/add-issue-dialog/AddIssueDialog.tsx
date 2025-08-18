@@ -15,6 +15,7 @@ import { Maybe } from "$/utils/ts-utils";
 import i18n from "$/utils/i18n";
 import { IssueTemplate } from "$/domain/usecases/CreateIssueUseCase";
 import { ORG_UNIT_LEVELS, ORG_UNIT_SELECTABLE_LEVELS } from "$/webapp/utils/form";
+import { Ref } from "$/domain/entities/Ref";
 
 export type AddIssueDialogProps = {
     onAddIssue: (issues: IssueTemplate[]) => void;
@@ -36,6 +37,8 @@ export const AddIssueDialog: React.FC<AddIssueDialogProps> = props => {
         issuesToAddCount,
     } = useAddIssueDialog({ analysis, onAddIssue });
 
+    const [loadedSelectableCountries, setLoadedSelectableCountries] = React.useState<string[]>([]);
+
     const onUpdateDataElement = React.useCallback(
         (value: Maybe<string>) =>
             updateForm("dataElementId")(value !== undefined ? [value] : value),
@@ -45,6 +48,23 @@ export const AddIssueDialog: React.FC<AddIssueDialogProps> = props => {
     const onUpdateDescription = React.useCallback(
         (ev: React.ChangeEvent<HTMLInputElement>) => updateForm("description")([ev.target.value]),
         [updateForm]
+    );
+
+    const selectableCountries = React.useMemo(
+        () => [...analysis.countriesAnalysis, ...loadedSelectableCountries],
+        [analysis, loadedSelectableCountries]
+    );
+
+    const addChildrenOuToSelectable = React.useCallback(
+        (children: OrgUnit[]) => {
+            //all children have the same parent
+            const parent = children[0]?.parent;
+            if (parent && parent.id && analysis.countriesAnalysis.includes(parent.id)) {
+                const childrenIds = children.map(child => child.id);
+                setLoadedSelectableCountries(prev => [...prev, ...childrenIds]);
+            }
+        },
+        [analysis]
     );
 
     const disableCategoryOptions = !addIssueForm.dataElementId;
@@ -107,11 +127,16 @@ export const AddIssueDialog: React.FC<AddIssueDialogProps> = props => {
                 selectableLevels={ORG_UNIT_SELECTABLE_LEVELS}
                 rootIds={currentUser.countries.map(country => country.id)}
                 withElevation={false}
-                selectableIds={analysis.countriesAnalysis}
+                selectableIds={selectableCountries}
+                onChildrenLoaded={{
+                    fn: addChildrenOuToSelectable,
+                }}
             />
         </ConfirmationDialog>
     );
 };
+
+type OrgUnit = { parent: Ref; id: string };
 
 const FormControlsContainer = styled.div`
     display: flex;
