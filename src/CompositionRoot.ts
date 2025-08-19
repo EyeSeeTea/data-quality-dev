@@ -66,6 +66,7 @@ import { ExportIssuesUseCase } from "$/domain/usecases/ExportIssuesUseCase";
 import { IssueExportRepository } from "$/domain/repositories/IssueExportRepository";
 import { IssueSpreadSheetRepository } from "./data/repositories/IssueSpreadSheetRepository";
 import { IssueSpreadSheetTestRepository } from "./data/repositories/IssueSpreadSheetTestRepository";
+import { CreateIssueUseCase } from "$/domain/usecases/CreateIssueUseCase";
 
 export type CompositionRoot = ReturnType<typeof getCompositionRoot>;
 
@@ -158,6 +159,10 @@ function getCompositionRoot(repositories: Repositories, metadata: MetadataItem) 
             export: new ExportIssuesUseCase(
                 repositories.issueRepository,
                 repositories.issueExportRepository
+            ),
+            create: new CreateIssueUseCase(
+                repositories.qualityAnalysisRepository,
+                repositories.issueRepository
             ),
         },
         settings: { get: new GetSettingsUseCase(repositories.settingsRepository) },

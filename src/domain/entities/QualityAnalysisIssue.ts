@@ -11,7 +11,7 @@ export interface QualityAnalysisIssueAttrs {
     id: Id;
     number: IssueNumber;
     azureUrl: string;
-    period: IssuePeriod;
+    period: Maybe<IssuePeriod>;
     country: Maybe<Country>;
     dataElement: Maybe<NamedRef>;
     categoryOption: Maybe<NamedRef>;

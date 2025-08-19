@@ -11,6 +11,8 @@ import { QualityAnalysisSection } from "$/domain/entities/QualityAnalysisSection
 export const StepAnalysis: React.FC<StepContainerProps> = React.memo(props => {
     const { children, id, onRun, reload, section, title, allowRerun } = props;
 
+    const runButtonText = props.runButtonText || i18n.t("Run");
+    const emptyMessage = props.emptyMessage || i18n.t("Run to get results");
     const isPending = QualityAnalysisSection.isPending(section);
     const showRunButton = isPending || allowRerun;
 
@@ -28,14 +30,12 @@ export const StepAnalysis: React.FC<StepContainerProps> = React.memo(props => {
                                 size="small"
                                 onClick={() => onRun()}
                             >
-                                {i18n.t("Run")}
+                                {runButtonText}
                             </Button>
                         </FiltersContainer>
                     )}
                 </AnalysisHeader>
-                {isPending && (
-                    <EmptyState message={i18n.t("Run to get results")} variant="neutral" />
-                )}
+                {isPending && <EmptyState message={emptyMessage} variant="neutral" />}
                 {section.status === "success" && (
                     <EmptyState message={i18n.t("No Issues found")} variant="success" />
                 )}
@@ -77,4 +77,6 @@ type StepContainerProps = {
     title: string;
     onRun: () => void;
     allowRerun?: boolean;
+    emptyMessage?: string;
+    runButtonText?: string;
 };

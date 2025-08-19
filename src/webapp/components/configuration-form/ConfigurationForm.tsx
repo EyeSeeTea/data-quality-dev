@@ -13,6 +13,7 @@ import { Country } from "$/domain/entities/Country";
 import styled from "styled-components";
 import { getDefaultModules } from "$/data/common/D2Module";
 import { Alert } from "@material-ui/lab";
+import { ORG_UNIT_LEVELS, ORG_UNIT_SELECTABLE_LEVELS } from "$/webapp/utils/form";
 
 export function getIdFromCountriesPaths(paths: string[]): string[] {
     return _(paths)
@@ -159,8 +160,8 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = React.memo(pr
                     api={api}
                     onChange={onOrgUnitsChange}
                     selected={selectedOrgUnits}
-                    levels={[1, 2, 3]}
-                    selectableLevels={[2, 3]}
+                    levels={ORG_UNIT_LEVELS}
+                    selectableLevels={ORG_UNIT_SELECTABLE_LEVELS}
                     rootIds={currentUser.countries.map(country => country.id)}
                     withElevation={false}
                 />

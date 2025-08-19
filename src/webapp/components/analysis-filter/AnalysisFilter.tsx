@@ -2,21 +2,16 @@ import React from "react";
 import { Dropdown } from "@eyeseetea/d2-ui-components";
 
 import i18n from "$/utils/i18n";
-import _, { Collection } from "$/domain/entities/generic/Collection";
 import { Module } from "$/domain/entities/Module";
 import { qualityAnalysisStatus } from "$/domain/entities/QualityAnalysisStatus";
 import { Maybe } from "$/utils/ts-utils";
 import { MenuButton } from "$/webapp/components/menu-button/MenuButton";
 import { Id } from "$/domain/entities/Ref";
+import { generatePeriodYearOptions } from "$/webapp/utils/form";
 
 const currentYear = new Date().getFullYear();
 
-export const periods = Collection.range(2000, currentYear + 1)
-    .map(period => {
-        return { value: period.toString(), text: period.toString() };
-    })
-    .reverse()
-    .value();
+export const periods = generatePeriodYearOptions(2000, currentYear);
 
 type AnalysisFiltersProps = {
     modules: Module[];
