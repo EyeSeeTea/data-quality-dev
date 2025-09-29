@@ -145,6 +145,11 @@ export class RunPractitionersValidationUseCase {
             .compact()
             .value();
 
+        const child1XORChild2DataElements = _(dataElements)
+            .map(dataElement => this.isChild1XORChild2(dataElement))
+            .compact()
+            .value();
+
         const doubleCountDataElements = _(dataElements)
             .map(dataElement => {
                 const { children } = dataElement;
@@ -185,6 +190,29 @@ export class RunPractitionersValidationUseCase {
             );
         });
 
+        const child1XOR2Issues = child1XORChild2DataElements.map((dataElement, index) => {
+            const childDataElement = dataElement.child.dataElement;
+            const childDataValue = dataElement.child.dataValue;
+            if (!childDataValue || !childDataElement) {
+                const de = childDataElement || dataElement.dataElementParent;
+
+                const message = childDataElement
+                    ? `Cannot get dataValue for dataElement: ${de.id}-${de.name}`
+                    : `Cannot get child dataElement or dataValue for parent dataElement: ${de.id}-${de.name}`;
+
+                console.warn(message);
+                return undefined;
+            }
+
+            return this.buildIssueFromDataValue(
+                `Values for ${childDataElement.name} are missing`,
+                childDataValue,
+                totalIssues + missingIssues.length + (index + 1),
+                analysis,
+                options
+            );
+        });
+
         const doubleCountedIssues = doubleCountDataElements.map((dataElement, index) => {
             const dataValue = dataElement.dataValue
                 ? dataElement.dataValue
@@ -204,13 +232,13 @@ export class RunPractitionersValidationUseCase {
             return this.buildIssueFromDataValue(
                 description,
                 dataValue,
-                totalIssues + missingIssues.length + (index + 1),
+                totalIssues + child1XOR2Issues.length + missingIssues.length + (index + 1),
                 analysis,
                 options
             );
         });
 
-        return _([...missingIssues, ...doubleCountedIssues])
+        return _([...missingIssues, ...child1XOR2Issues, ...doubleCountedIssues])
             .compact()
             .value();
     }
@@ -262,6 +290,72 @@ export class RunPractitionersValidationUseCase {
             .map(deChild => convertToNumberOrZero(deChild.dataValue?.value))
             .sum();
         return sumChildren === convertToNumberOrZero(value);
+    }
+
+    private isChild1XORChild2(dataElement: DataElementsLevelWithValues): Maybe<
+        DataElementsLevelWithValues & {
+            result: string;
+            child: DataElementWithValue;
+            childPrefix: string;
+        }
+    > {
+        const x_1 = this.findChild(1, dataElement);
+        const x_2 = this.findChild(2, dataElement);
+
+        if (!x_1) return undefined;
+        if (!x_2) return undefined;
+
+        const firstHasValue = convertToNumberOrZero(x_1.dataValue?.value) > 0;
+        const secondHasValue = convertToNumberOrZero(x_2.dataValue?.value) > 0;
+
+        if (x_1.dataValue && firstHasValue && !secondHasValue) {
+            return {
+                ...dataElement,
+                result: "issue",
+                child: this.buildChildFromSibling(x_2, x_1.dataValue),
+                childPrefix: "X.2",
+            };
+        } else if (!firstHasValue && x_2.dataValue && secondHasValue) {
+            return {
+                ...dataElement,
+                result: "issue",
+                child: this.buildChildFromSibling(x_1, x_2.dataValue),
+                childPrefix: "X.1",
+            };
+        } else {
+            return undefined;
+        }
+    }
+
+    private findChild(
+        x: number,
+        dataElementGroup: DataElementsLevelWithValues
+    ): Maybe<DataElementWithValue> {
+        const { children, dataElementParent } = dataElementGroup;
+        const parentLevel = dataElementParent.name.split(" - ")[0];
+
+        return children.find(de => {
+            const level = de.dataElement.name.split(" - ")[0];
+            return level === `${parentLevel}.${x}`;
+        });
+    }
+
+    private buildChildFromSibling(
+        childDataElement: DataElementWithValue,
+        siblingDataValue: DataValue
+    ): DataElementWithValue {
+        const dataValue = childDataElement.dataValue
+            ? childDataElement.dataValue
+            : {
+                  ...siblingDataValue,
+                  dataElementId: childDataElement.dataElement.id,
+                  value: "",
+              };
+
+        return {
+            ...childDataElement,
+            dataValue,
+        };
     }
 
     private buildDataElementsWithDataValues(
