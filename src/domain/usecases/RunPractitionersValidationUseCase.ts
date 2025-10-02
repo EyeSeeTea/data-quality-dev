@@ -296,7 +296,6 @@ export class RunPractitionersValidationUseCase {
         DataElementsLevelWithValues & {
             result: string;
             child: DataElementWithValue;
-            childPrefix: string;
         }
     > {
         const x_1 = this.findChild(1, dataElement);
@@ -313,14 +312,12 @@ export class RunPractitionersValidationUseCase {
                 ...dataElement,
                 result: "issue",
                 child: this.buildChildFromSibling(x_2, x_1.dataValue),
-                childPrefix: "X.2",
             };
         } else if (!firstHasValue && x_2.dataValue && secondHasValue) {
             return {
                 ...dataElement,
                 result: "issue",
                 child: this.buildChildFromSibling(x_1, x_2.dataValue),
-                childPrefix: "X.1",
             };
         } else {
             return undefined;
