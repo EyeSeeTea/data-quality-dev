@@ -15,11 +15,11 @@ const sectionsComponents = [
         component: DisaggregatesStep,
     },
     {
-        name: "General Practitioners",
+        name: "Double counts and missing GP",
         component: GeneralPractitionersStep,
     },
     {
-        name: "Nursing/Midwifery",
+        name: "Missing Nurses",
         component: NursingMidwiferyStep,
     },
     {
