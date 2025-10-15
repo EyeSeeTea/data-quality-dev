@@ -145,8 +145,8 @@ export class RunPractitionersValidationUseCase {
             .compact()
             .value();
 
-        const child1XORChild2DataElements = _(dataElements)
-            .map(dataElement => this.isChild1XORChild2(dataElement))
+        const child1_1XORChild1_2DataElements = _(dataElements)
+            .map(dataElement => this.isChild1XORChild2(dataElement, 1))
             .compact()
             .value();
 
@@ -190,7 +190,7 @@ export class RunPractitionersValidationUseCase {
             );
         });
 
-        const child1XOR2Issues = child1XORChild2DataElements.map((dataElement, index) => {
+        const child1XOR2Issues = child1_1XORChild1_2DataElements.map((dataElement, index) => {
             const childDataElement = dataElement.child.dataElement;
             const childDataValue = dataElement.child.dataValue;
             if (!childDataValue || !childDataElement) {
@@ -292,14 +292,17 @@ export class RunPractitionersValidationUseCase {
         return sumChildren === convertToNumberOrZero(value);
     }
 
-    private isChild1XORChild2(dataElement: DataElementsLevelWithValues): Maybe<
+    private isChild1XORChild2(
+        dataElement: DataElementsLevelWithValues,
+        parent?: number
+    ): Maybe<
         DataElementsLevelWithValues & {
             result: string;
             child: DataElementWithValue;
         }
     > {
-        const x_1 = this.findChild(1, dataElement);
-        const x_2 = this.findChild(2, dataElement);
+        const x_1 = this.findChild(1, dataElement, parent);
+        const x_2 = this.findChild(2, dataElement, parent);
 
         if (!x_1) return undefined;
         if (!x_2) return undefined;
@@ -325,15 +328,18 @@ export class RunPractitionersValidationUseCase {
     }
 
     private findChild(
-        x: number,
-        dataElementGroup: DataElementsLevelWithValues
+        childLevel: number,
+        dataElementGroup: DataElementsLevelWithValues,
+        parent?: number
     ): Maybe<DataElementWithValue> {
         const { children, dataElementParent } = dataElementGroup;
         const parentLevel = dataElementParent.name.split(" - ")[0];
 
+        if (parent !== undefined && String(parent) !== parentLevel) return undefined;
+
         return children.find(de => {
             const level = de.dataElement.name.split(" - ")[0];
-            return level === `${parentLevel}.${x}`;
+            return level === `${parentLevel}.${childLevel}`;
         });
     }
 
