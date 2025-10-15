@@ -6,7 +6,7 @@ import { Future } from "$/domain/entities/generic/Future";
 import { DataElement } from "$/domain/entities/DataElement";
 import { ModuleRepository } from "$/domain/repositories/ModuleRepository";
 import { QualityAnalysisRepository } from "$/domain/repositories/QualityAnalysisRepository";
-import { convertToNumberOrZero, getCurrentSection } from "./common/utils";
+import { convertToNumberOrZero, getCurrentSection, isNumerical } from "./common/utils";
 import { Maybe } from "$/utils/ts-utils";
 import { DataValue } from "$/domain/entities/DataValue";
 import { DataValueRepository } from "$/domain/repositories/DataValueRepository";
@@ -304,8 +304,8 @@ export class RunPractitionersValidationUseCase {
         if (!x_1) return undefined;
         if (!x_2) return undefined;
 
-        const firstHasValue = convertToNumberOrZero(x_1.dataValue?.value) > 0;
-        const secondHasValue = convertToNumberOrZero(x_2.dataValue?.value) > 0;
+        const firstHasValue = isNumerical(x_1.dataValue?.value);
+        const secondHasValue = isNumerical(x_2.dataValue?.value);
 
         if (x_1.dataValue && firstHasValue && !secondHasValue) {
             return {
