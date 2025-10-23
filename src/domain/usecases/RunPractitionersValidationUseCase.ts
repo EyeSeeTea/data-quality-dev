@@ -140,7 +140,18 @@ export class RunPractitionersValidationUseCase {
 
                 if (isParentEqualToChildren || isThirdValueTotal) return undefined;
 
-                return { ...dataElement, result: "issue" };
+                const baseIssue = { ...dataElement, result: "issue" };
+                if (!isParentEqualToChildren) {
+                    return {
+                        ...baseIssue,
+                        issueMessage: `Value for autocalculated ${dataElement.dataElementParent.name} is incorrect`,
+                    };
+                } else {
+                    return {
+                        ...baseIssue,
+                        issueMessage: `Values for ${dataElement.dataElementParent.name} subcategories are missing`,
+                    };
+                }
             })
             .compact()
             .value();
@@ -182,7 +193,7 @@ export class RunPractitionersValidationUseCase {
             }
 
             return this.buildIssueFromDataValue(
-                `Values for ${dataElement.dataElementParent.name} subcategories are missing`,
+                dataElement.issueMessage,
                 dataValue,
                 totalIssues + (index + 1),
                 analysis,
