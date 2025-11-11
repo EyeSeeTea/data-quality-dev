@@ -8,7 +8,7 @@ export type DismissedAnalysisAttrs = {
 };
 
 export class DismissedAnalysis extends Struct<DismissedAnalysisAttrs>() {
-    mergeDuplicates(): QualityAnalysisIssue[] {
+    inheritDismissedDuplicates(): QualityAnalysisIssue[] {
         const dismissedIssues = this.existingIssues.filter(issue => issue.status?.code === "4");
         const issues = _(this.newIssues)
             .map(issue => {

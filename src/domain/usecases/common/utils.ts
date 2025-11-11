@@ -69,3 +69,7 @@ export function getIssues(
 export function convertToNumberOrZero(value: Maybe<string>): number {
     return Number(value) || 0;
 }
+
+export function isNumerical(value: Maybe<string>): boolean {
+    return !isNaN(Number(value));
+}

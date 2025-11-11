@@ -24,12 +24,7 @@ export function useNursingMidwiferyStep(props: UseNursingMidwiferyStepProps) {
                     text: item.name,
                 }));
                 setDisaggregations(selectedDisaggregations);
-                setSelectedDissagregations(
-                    _(selectedDisaggregations)
-                        .map(item => (item.text === "Total" ? item.value : undefined))
-                        .compact()
-                        .value()
-                );
+                setSelectedDissagregations(selectedDisaggregations.map(item => item.value));
             },
             error => {
                 setError(error.message);
